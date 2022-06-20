@@ -9,6 +9,10 @@ import kr.co.javajoy.lms.vo.Subject;
 
 @Mapper
 public interface SubjectMapper {
+	// 강좌 입력
+	int insertSubject(Subject subject);
+	// 강좌 리스트(운영자 용) 출력
 	List<Subject> selectSubjectByPage(Map<String, Object> map);
+	// 강좌 총 수
 	int selectTotalCount();
 }

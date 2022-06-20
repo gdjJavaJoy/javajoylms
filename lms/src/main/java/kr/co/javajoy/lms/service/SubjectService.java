@@ -17,6 +17,11 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class SubjectService {
 @Autowired SubjectMapper subjectMapper;
+
+	// 강좌 입력
+	public int addSubject(Subject subject) {
+		return subjectMapper.insertSubject(subject);
+	}
 	
 	// 강좌 리스트(운영자용) 출력
 	public Map<String, Object> getSubjectByPage(int currentPage, int rowPerPage) {

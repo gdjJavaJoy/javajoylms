@@ -14,7 +14,10 @@
 </head>
 <body>
 <div class="container">
-    <h1>getSubjectByPage</h1>
+    <h1>강좌 리스트</h1>
+	    <div>
+	   		<a class="btn btn-primary" href="${pageContext.request.contextPath}/addSubject">강좌 추가</a>
+	    </div>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -51,7 +54,9 @@
             </c:forEach>
         </tbody>
     </table>
-    
+    <div>
+    	강좌 검색
+    </div>
    <ul class="pager">
       <li class="previous"><a href="${pageContext.request.contextPath}/getSubjectByPage?currentPage=${currentPage-1}">이전</a></li>
       <li class="next"><a href="${pageContext.request.contextPath}/getSubjectByPage?currentPage=${currentPage+1}">다음</a></li>
