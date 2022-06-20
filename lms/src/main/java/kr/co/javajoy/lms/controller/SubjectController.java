@@ -22,7 +22,7 @@ public class SubjectController {
 	@GetMapping("/addSubject")
 	public String addSubject() {
 		// addSubject.jsp 불러옴
-		return "addSubject";
+		return "subject/addSubject";
 	}
 	
 	// 강좌 입력 액션
@@ -47,6 +47,6 @@ public class SubjectController {
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", map.get("lastPage"));
 		
-		return "getSubjectByPage";
+		return "subject/getSubjectByPage";
 	}
 }
