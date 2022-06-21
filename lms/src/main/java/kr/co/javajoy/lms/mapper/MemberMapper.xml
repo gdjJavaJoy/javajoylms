@@ -13,12 +13,7 @@
 	   FROM member_id
 	   WHERE member_id = #{memberId}
 	</select>
-	<select id="selectMemberId" 
-	        resultType="String">
-		SELECT
-			member_id memberId
-	   FROM member_id
-	</select>
+	
 	<insert id="insertMemberId"
 			parameterType="kr.co.javajoy.lms.vo.SignupForm">
 		INSERT INTO member_id (
