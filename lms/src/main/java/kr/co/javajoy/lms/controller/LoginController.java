@@ -33,11 +33,11 @@ public class LoginController {
 	public String login(HttpSession session
 						,@RequestParam(value="memberId") String memberId
 						,@RequestParam(value="memberPw") String memberPw) {
-		log.debug(CF.YHJ + "LoginController.login.memberId : " + memberId);
-		log.debug(CF.YHJ + "LoginController.login.memberPw : " + memberPw);
+		log.debug(CF.YHJ + "LoginController.login.memberId : " + memberId + CF.RESET);
+		log.debug(CF.YHJ + "LoginController.login.memberPw : " + memberPw  + CF.RESET);
 		
 		String result = loginService.login(memberId, memberPw); // 로그인
-		log.debug(CF.YHJ + "LoginController.login.result : " + result);
+		log.debug(CF.YHJ + "LoginController.login.result : " + result + CF.RESET);
 		
 		// 로그인 실패 시
 		if(result == null) {
@@ -53,7 +53,7 @@ public class LoginController {
 	public String findMemberId(HttpSession session) {
 		// 로그인이 되어있을 시
 		if (session.getAttribute("memberId") != null) {
-			log.debug(CF.YHJ + "LoginController.login.memberId : " + session.getAttribute("memberId"));
+			log.debug(CF.YHJ + "LoginController.login.memberId : " + session.getAttribute("memberId") + CF.RESET);
 			return "redirect:index";
 		}
 		
@@ -68,12 +68,12 @@ public class LoginController {
 							,@RequestParam(value="memberName") String memberName
 							,@RequestParam(value="memberPhone") String memberPhone) {
 		
-		log.debug(CF.YHJ + "LoginController.findMemberId.memberLevel : " + memberLevel);
-		log.debug(CF.YHJ + "LoginController.findMemberId.memberName : " + memberName);
-		log.debug(CF.YHJ + "LoginController.findMemberId.memberPhone : " + memberPhone);
+		log.debug(CF.YHJ + "LoginController.findMemberId.memberLevel : " + memberLevel + CF.RESET);
+		log.debug(CF.YHJ + "LoginController.findMemberId.memberName : " + memberName + CF.RESET);
+		log.debug(CF.YHJ + "LoginController.findMemberId.memberPhone : " + memberPhone + CF.RESET);
 		
 		String memberId = loginService.findMemberId(memberLevel, memberName, memberPhone);
-		log.debug(CF.YHJ + "LoginController.findMemberId.memberId : " + memberId);
+		log.debug(CF.YHJ + "LoginController.findMemberId.memberId : " + memberId + CF.RESET);
 		
 		model.addAttribute("memberId",memberId);
 		model.addAttribute("memberName",memberName);
@@ -86,7 +86,7 @@ public class LoginController {
 	public String findMemberPw(HttpSession session) {
 		// 로그인이 되어있을 시
 		if (session.getAttribute("memberId") != null) {
-			log.debug(CF.YHJ + "LoginController.login.memberId : " + session.getAttribute("memberId"));
+			log.debug(CF.YHJ + "LoginController.login.memberId : " + session.getAttribute("memberId") + CF.RESET);
 			return "redirect:index";
 		}
 		
@@ -100,12 +100,12 @@ public class LoginController {
 							,@RequestParam(value="memberName") String memberName
 							,@RequestParam(value="memberPhone") String memberPhone) {
 		
-		log.debug(CF.YHJ + "LoginController.findMemberId.memberId : " + memberId);
-		log.debug(CF.YHJ + "LoginController.findMemberId.memberName : " + memberName);
-		log.debug(CF.YHJ + "LoginController.findMemberId.memberPhone : " + memberPhone);
+		log.debug(CF.YHJ + "LoginController.findMemberId.memberId : " + memberId + CF.RESET);
+		log.debug(CF.YHJ + "LoginController.findMemberId.memberName : " + memberName + CF.RESET);
+		log.debug(CF.YHJ + "LoginController.findMemberId.memberPhone : " + memberPhone + CF.RESET);
 		
 		String memberPw = loginService.findMemberPw(memberId, memberName, memberPhone);
-		log.debug(CF.YHJ + "LoginController.findMemberId.memberId : " + memberPw);
+		log.debug(CF.YHJ + "LoginController.findMemberId.memberId : " + memberPw + CF.RESET);
 		
 		if(memberPw == null) {
 			return "redirect:findMemberPw";

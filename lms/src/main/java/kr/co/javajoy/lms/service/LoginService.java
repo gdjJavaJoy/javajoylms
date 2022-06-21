@@ -22,15 +22,15 @@ public class LoginService {
 	// 로그인
 	public String login(String memberId, String memberPw) {
 		// 디버깅
-		log.debug(CF.YHJ + "LoginService.login.memberId : " + memberId);
-		log.debug(CF.YHJ + "LoginService.login.memberPw : " + memberPw);
+		log.debug(CF.YHJ + "LoginService.login.memberId : " + memberId + CF.RESET);
+		log.debug(CF.YHJ + "LoginService.login.memberPw : " + memberPw + CF.RESET);
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("memberId", memberId);
 		map.put("memberPw", memberPw);
 
 		String resultId = loginMapper.loginMember(map);
-		log.debug(CF.YHJ + "LoginService.login.resultId : " + resultId); // 디버깅
+		log.debug(CF.YHJ + "LoginService.login.resultId : " + resultId + CF.RESET); // 디버깅
 
 		return resultId;
 	}
@@ -38,9 +38,9 @@ public class LoginService {
 	// 아이디 찾기
 	public String findMemberId(String memberLevel, String memberName, String memberPhone) {
 		// 디버깅
-		log.debug(CF.YHJ + "LoginService.findMemberId.memberLevel : " + memberLevel);
-		log.debug(CF.YHJ + "LoginService.findMemberId.memberName : " + memberName);
-		log.debug(CF.YHJ + "LoginService.findMemberId.memberPhone : " + memberPhone);
+		log.debug(CF.YHJ + "LoginService.findMemberId.memberLevel : " + memberLevel + CF.RESET);
+		log.debug(CF.YHJ + "LoginService.findMemberId.memberName : " + memberName + CF.RESET);
+		log.debug(CF.YHJ + "LoginService.findMemberId.memberPhone : " + memberPhone + CF.RESET);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("memberName", memberName);
@@ -53,7 +53,7 @@ public class LoginService {
 			memberId = loginMapper.findStudentId(map);
 		}
 				
-		log.debug(CF.YHJ + "LoginService.findMemberId.MemberId : " + memberId); // 디버깅
+		log.debug(CF.YHJ + "LoginService.findMemberId.MemberId : " + memberId + CF.RESET); // 디버깅
 		
 		return memberId;
 	}
@@ -61,12 +61,12 @@ public class LoginService {
 	// 비밀번호 찾기
 	public String findMemberPw(String memberId, String memberName, String memberPhone) {
 		// 디버깅
-		log.debug(CF.YHJ + "LoginService.findMemberPw.memberId : " + memberId);
-		log.debug(CF.YHJ + "LoginService.findMemberPw.memberName : " + memberName);
-		log.debug(CF.YHJ + "LoginService.findMemberPw.memberPhone : " + memberPhone);
+		log.debug(CF.YHJ + "LoginService.findMemberPw.memberId : " + memberId + CF.RESET);
+		log.debug(CF.YHJ + "LoginService.findMemberPw.memberName : " + memberName + CF.RESET);
+		log.debug(CF.YHJ + "LoginService.findMemberPw.memberPhone : " + memberPhone + CF.RESET);
 		
 		String level = memberMapper.selectMemberLevel(memberId);
-		log.debug(CF.YHJ + "LoginService.findMemberPw.level : " + level);
+		log.debug(CF.YHJ + "LoginService.findMemberPw.level : " + level + CF.RESET);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("memberId", memberId);
@@ -80,7 +80,7 @@ public class LoginService {
 			memberPw = loginMapper.findStudentPw(map);
 		}
 		
-		log.debug(CF.YHJ + "LoginService.findMemberPw.memberPw : " + memberPw); // 디버깅
+		log.debug(CF.YHJ + "LoginService.findMemberPw.memberPw : " + memberPw + CF.RESET); // 디버깅
 		
 		return memberPw;
 	}
