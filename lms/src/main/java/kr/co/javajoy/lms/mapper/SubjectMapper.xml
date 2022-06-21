@@ -57,5 +57,68 @@
 	<select id="selectTotalCount"
 			resultType="int">
 		SELECT COUNT(*) FROM subject
-	</select>			
+	</select>		
+	
+	<!-- 강사 리스트 -->
+	<select id="selectTeacherId"
+			resultType="String">
+		SELECT member_id FROM teacher
+	</select>
+	
+	<!-- 강좌 상세 보기 -->		
+	<select id="selectSubjectOne"
+			parameterType="int"
+			resultType="kr.co.javajoy.lms.vo.Subject">
+		SELECT
+			subject_no subjectNo
+			,teacher_id teacherId
+			,admin_id adminId
+			,subject_name subjectName
+			,subject_student_max subjectStudentMax
+			,subject_info subjectInfo
+			,subject_start_date subjectStartDate
+			,subject_finish_date subjectFinishDate
+			,subject_start_time subjectStartTime
+			,subject_end_time subjectEndTime
+			,create_date createDate
+			,update_date updateDate
+		FROM subject
+		WHERE subject_no = #{subjectNo}
+	</select>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,5 +1,6 @@
 package kr.co.javajoy.lms.controller;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.service.SubjectService;
 import kr.co.javajoy.lms.vo.Subject;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +22,10 @@ public class SubjectController {
 	
 	// 강좌 입력 폼
 	@GetMapping("/addSubject")
-	public String addSubject() {
+	public String addSubject(Model model) {
+		// 강사 리스트 출력
+		ArrayList<String> teacherList = subjectService.getTeacherId();
+		model.addAttribute("teacherList", teacherList);
 		// addSubject.jsp 불러옴
 		return "subject/addSubject";
 	}
@@ -30,8 +35,8 @@ public class SubjectController {
 	public String addSubject(Subject subject) {
 		int row = subjectService.addSubject(subject);
 		// 디버깅
-		log.debug("[박범진] SubjectController.addSubject.param.subject : ", subject);
-		log.debug("[박범진] SubjectController.addSubject.row : ", row);
+		log.debug(CF.PBJ + "SubjectController.addSubject.param.subject : ", subject);
+		log.debug(CF.PBJ + "SubjectController.addSubject.row : ", row);
 		// 강좌 입력 성공 시, 강좌 리스트로
 		return "redirect:/getSubjectByPage";
 	}
@@ -49,4 +54,46 @@ public class SubjectController {
 		
 		return "subject/getSubjectByPage";
 	}
+	
+	// 강좌 상세보기
+	@GetMapping("/getSubjectOne")
+	public String getSubjectOne(Model model, @RequestParam(name="subjectNo") int subjectNo) {
+		// 디버깅
+		log.debug(CF.PBJ + "SubjectController.getSubjectOne.param.subjectNo : ", subjectNo);
+		
+		Subject subject = subjectService.getSubjectOne(subjectNo);
+		model.addAttribute("subject", subject);
+		return "subject/getSubjectOne";
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

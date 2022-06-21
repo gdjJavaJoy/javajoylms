@@ -880,18 +880,18 @@
                           </div>
                         </div>
                       </td>
-						<td class="px-4 py-3 text-sm">${s.subjectNo}</td>
-						<td class="px-4 py-3 text-xs">${s.teacherId}</td>
-						<td class="px-4 py-3 text-sm">${s.adminId}</td>
-						<td class="px-4 py-3 text-sm">${s.subjectName}</td>
-						<td class="px-4 py-3 text-sm">${s.subjectStudentMax}</td>
-						<td class="px-4 py-3 text-sm">${s.subjectInfo}</td>
-						<td class="px-4 py-3 text-sm">${s.subjectStartDate}</td>
-						<td class="px-4 py-3 text-sm">${s.subjectFinishDate}</td>
-						<td class="px-4 py-3 text-sm">${s.subjectStartTime}</td>
-						<td class="px-4 py-3 text-sm">${s.subjectEndTime}</td>
-						<td class="px-4 py-3 text-sm">${s.createDate}</td>
-						<td class="px-4 py-3 text-sm">${s.updateDate}</td>
+						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${s.subjectNo}">${s.subjectNo}</a></td>
+						<td class="px-4 py-3 text-xs"><a href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${s.subjectNo}">${s.teacherId}</a></td>
+						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${s.subjectNo}">${s.adminId}</a></td>
+						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${s.subjectNo}">${s.subjectName}</a></td>
+						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${s.subjectNo}">${s.subjectStudentMax}</a></td>
+						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${s.subjectNo}">${s.subjectInfo}</a></td>
+						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${s.subjectNo}">${s.subjectStartDate}</a></td>
+						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${s.subjectNo}">${s.subjectFinishDate}</a></td>
+						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${s.subjectNo}">${s.subjectStartTime}</a></td>
+						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${s.subjectNo}">${s.subjectEndTime}</a></td>
+						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${s.subjectNo}">${s.createDate}</a></td>
+						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${s.subjectNo}">${s.updateDate}</a></td>
 					</tr>
                   </c:forEach>
                   </tbody>
@@ -906,9 +906,9 @@
                 <span class="col-span-2"></span>
                 <!-- Pagination -->
                 <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-                   <a href="${pageContext.request.contextPath}/getSubjectByPage?currentPage=${currentPage-1}">이전</a>
-                   <span>&nbsp/&nbsp</span>
-                   <a href="${pageContext.request.contextPath}/getSubjectByPage?currentPage=${currentPage+1}">다음</a> 
+                   <a class="btn btn-primary" href="${pageContext.request.contextPath}/getSubjectByPage?currentPage=${currentPage-1}">이전</a>
+                   <span>&nbsp / &nbsp</span>
+                   <a class="btn btn-primary" href="${pageContext.request.contextPath}/getSubjectByPage?currentPage=${currentPage+1}">다음</a> 
                 </span>
               </div>
             </div>
