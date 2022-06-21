@@ -34,6 +34,17 @@
 			</C:forEach>
 		</tbody>
 	</table>
+	<ul class="pager">
+		<C:if test="${currentPage > 1}">
+			<li class="previous"><a href="${pageContext.request.contextPath}/getNoticeByPage?currentPage=${currentPage-1}">이전</a></li>
+		</C:if>
+		<C:if test="${currentPage < lastPage}">
+			<li class="next"><a href="${pageContext.request.contextPath}/getNoticeByPage?currentPage=${currentPage+1}">다음</a></li>
+		</C:if>
+	</ul>
+	<div>
+		<a class="btn btn-default" href="${pageContext.request.contextPath}/addNotice">공지 입력</a>
+	</div>
 </div>
 </body>
 </html>

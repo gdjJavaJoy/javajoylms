@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>getNoticeByPage</title>
+<title>getNoticeOne</title>
 <!-- bootstrap을 사용하기 위한 CDN주소 -->
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -43,7 +43,13 @@
 			</table>
 				<a href="${pageContext.request.contextPath}/removeNotice?noticeId=${n.boardNo}">삭제</a>
 				<a href="${pageContext.request.contextPath}/modifyNotice?noticeId=${n.boardNo}">수정</a>
-		</C:forEach>	
+		</C:forEach>
+		<div>첨부파일</div>
+			<C:forEach var="nf" items="${boardfile}">
+				<div>
+					<a href="${pageContext.request.contextPath}/upload/${nf.boardFileName}${nr.boardFileType}" download="${nf.boardFileName}${nr.boardFileType}">${nf.boardFileName}${nr.boardFileType}</a>
+				</div>
+			</C:forEach>
 </div>
 </body>
 </html>
