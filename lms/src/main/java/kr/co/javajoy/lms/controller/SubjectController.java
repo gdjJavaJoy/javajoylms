@@ -65,6 +65,29 @@ public class SubjectController {
 		model.addAttribute("subject", subject);
 		return "subject/getSubjectOne";
 	}
+	
+	// 강좌 수정 Form
+	@GetMapping("/modifySubject")
+	public String modifySubject(Model model, @RequestParam(name = "subjectNo") int subjectNo) {
+		ArrayList<String> teacherList = subjectService.getTeacherId();
+		model.addAttribute("teacherList", teacherList);
+		// 디버깅
+		log.debug(CF.PBJ + "SubjectController.modifySubject.param.subjectNo : ", subjectNo);
+
+		Subject subject = subjectService.getSubjectOne(subjectNo);
+		model.addAttribute("subject", subject);
+		return "subject/modifySubject";
+	}
+	
+	// 강좌 수정 Action
+	@PostMapping("/modifySubject")
+	public String modifySubject(Subject subject) {
+		// 디버깅 
+		log.debug(CF.PBJ + "SubjectController.modifySubject.param.subject : ", subject);
+		int row = subjectService.modifySubject(subject);
+		// SubjectOne 컨트롤러 리디렉트
+		return "redirect:/getSubjectOne?subjectNo=" + subject.getSubjectNo();
+	}
 }
 
 

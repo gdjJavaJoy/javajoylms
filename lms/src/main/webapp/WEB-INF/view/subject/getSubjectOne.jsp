@@ -838,6 +838,10 @@
               <span>Subject List &RightArrow;</span>
             </a>
 
+			<!-- 카테고리 추가예정 -->
+			<div>카테고리6개(구현중)</div>
+			<a href="${pageContext.request.contextPath}/studentList?subjectNo=${subjectNo}">1. 수강 학생 관리</a>
+
             <!-- With avatar -->
             <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Subject View Detail</h4>
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
@@ -918,9 +922,9 @@
                 <span class="col-span-2"></span>
                 <!-- Pagination -->
                 <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-              		<a href="${pageContext.request.contextPath}/modifySubject?subjectNo=${subjectNo}">강좌 수정</a>
+              		<a href="${pageContext.request.contextPath}/modifySubject?subjectNo=${subject.subjectNo}">강좌 수정</a>
               		<span>&nbsp | &nbsp</span>
-                    <a href="${pageContext.request.contextPath}/deleteSubject?subjectNo=${subjectNo}">강좌 삭제</a> 
+                    <a href="${pageContext.request.contextPath}/deleteSubject?subjectNo=${subject.subjectNo}">강좌 삭제(미구현)</a> 
                 </span>
               </div>
             </div>

@@ -33,8 +33,8 @@
 	
 	<!-- 강좌 리스트(운영자용) -->
 	<select id="selectSubjectByPage"
-			resultType="kr.co.javajoy.lms.vo.Subject"
-			parameterType="java.util.Map">
+			parameterType="java.util.Map"
+			resultType="kr.co.javajoy.lms.vo.Subject">
 		SELECT
 			subject_no subjectNo
 			,teacher_id teacherId
@@ -85,7 +85,64 @@
 		FROM subject
 		WHERE subject_no = #{subjectNo}
 	</select>
+	
+	<!-- 강좌 수정 -->
+	<update id="updateSubject"
+			parameterType="kr.co.javajoy.lms.vo.Subject">
+		UPDATE subject SET	
+			teacher_id = #{teacherId}	
+			,admin_id = #{adminId}	
+			,subject_name = #{subjectName}	
+			,subject_student_max = #{subjectStudentMax}	
+			,subject_info = #{subjectInfo}	
+			,subject_start_date = #{subjectStartDate}	
+			,subject_finish_date = #{subjectFinishDate}	
+			,subject_start_time = #{subjectStartTime}	
+			,subject_end_time = #{subjectEndTime}	
+			,update_date = NOW()
+		WHERE subject_no = #{subjectNo}
+	</update>
+	
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

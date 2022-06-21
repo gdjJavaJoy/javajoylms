@@ -61,4 +61,50 @@ public class SubjectService {
 	public Subject getSubjectOne(int subjectNo) {
 		return subjectMapper.selectSubjectOne(subjectNo);
 	}
+	
+	// 강좌 수정 Form
+	public Subject modifySubject(int subjectNo) {
+		return subjectMapper.selectSubjectOne(subjectNo);
+	}
+
+	// 강좌 수정 Action
+	public int modifySubject(Subject subject) {
+		return subjectMapper.updateSubject(subject);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
