@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.javajoy.lms.mapper.CurriculumMapper">
+
+<select id="getCurriculumList"
+		resultType="map"
+		parameterType="java.util.Map">
+	SELECT a.member_id memberId
+		,b.language_name languageName
+		,a.curriculum_title curriculumTitle
+		,a.start_day startDay
+		,a.end_day endDay
+	FROM curriculum AS a
+	INNER JOIN language AS b
+		ON a.language_no = b.language_no
+		LIMIT 10
+</select>
+<select id="selectTotalCount" 
+		resultType="int" >
+	SELECT COUNT(*)
+	FROM curriculum
+</select>
+</mapper>
