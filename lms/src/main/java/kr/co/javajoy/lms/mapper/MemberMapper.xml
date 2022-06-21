@@ -6,4 +6,13 @@
 			member_id memberId
 	   FROM member_id
 	</select>
+	
+	<select id="selectMemberLevel" parameterType="String" resultType="String">
+		SELECT
+			level
+	   FROM member_id
+	   WHERE member_id = #{memberId}
+	</select>
+	
+	
 </mapper>

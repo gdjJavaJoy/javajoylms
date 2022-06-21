@@ -8,4 +8,40 @@
 					AND member_pw = PASSWORD(#{memberPw})
 					AND member_active = 1
 		</select>
+		
+		<select id="findTeacherId" parameterType="java.util.Map" resultType="String">
+			SELECT m.member_id memberId
+			FROM member_id m
+				INNER JOIN teacher t
+					ON m.member_id = t.member_id
+				WHERE t.teacher_name = #{memberName}
+					AND t.teacher_phone = #{memberPhone}		
+		</select>
+		
+		<select id="findStudentId" parameterType="java.util.Map" resultType="String">
+			SELECT m.member_id memberId
+			FROM member_id m
+				INNER JOIN student s
+					ON m.member_id = s.member_id
+				WHERE s.student_name = #{memberName}
+					AND s.student_phone = #{memberPhone}			
+		</select>
+		
+		<select id="findTeacherPw" parameterType="java.util.Map" resultType="String">
+			SELECT m.member_pw memberPw
+			FROM member_id m
+				INNER JOIN teacher t
+					ON m.member_id = t.member_id
+				WHERE t.teacher_name = #{memberName}
+					AND t.teacher_phone = #{memberPhone}			
+		</select>
+		
+		<select id="findStudentPw" parameterType="java.util.Map" resultType="String">
+			SELECT m.member_pw memberPw
+			FROM member_id m
+				INNER JOIN student s
+					ON m.member_id = s.member_id
+				WHERE s.student_name = #{memberName}
+					AND s.student_phone = #{memberPhone}			
+		</select>
 </mapper>

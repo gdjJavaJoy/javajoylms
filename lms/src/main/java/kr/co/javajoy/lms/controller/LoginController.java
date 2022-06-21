@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,7 +29,7 @@ public class LoginController {
 		return "login/login";
 	}
 	
-	@PostMapping("login")
+	@PostMapping("/login")
 	public String login(HttpSession session
 						,@RequestParam(value="memberId") String memberId
 						,@RequestParam(value="memberPw") String memberPw) {
@@ -46,4 +47,106 @@ public class LoginController {
 		
 		return "index";
 	}
+	
+	// 아이디 찾기
+	@GetMapping("/findMemberId")
+	public String findMemberId(HttpSession session) {
+		// 로그인이 되어있을 시
+		if (session.getAttribute("memberId") != null) {
+			log.debug(CF.YHJ + "LoginController.login.memberId : " + session.getAttribute("memberId"));
+			return "redirect:index";
+		}
+		
+		return "login/findMemberId";
+	}
+	
+	// 아이디 찾기
+	@PostMapping("/findMemberId")
+	public String findMemberId(HttpSession session
+							,Model model
+							,@RequestParam(value="memberLevel") String memberLevel
+							,@RequestParam(value="memberName") String memberName
+							,@RequestParam(value="memberPhone") String memberPhone) {
+		
+		log.debug(CF.YHJ + "LoginController.findMemberId.memberLevel : " + memberLevel);
+		log.debug(CF.YHJ + "LoginController.findMemberId.memberName : " + memberName);
+		log.debug(CF.YHJ + "LoginController.findMemberId.memberPhone : " + memberPhone);
+		
+		String memberId = loginService.findMemberId(memberLevel, memberName, memberPhone);
+		log.debug(CF.YHJ + "LoginController.findMemberId.memberId : " + memberId);
+		
+		model.addAttribute("memberId",memberId);
+		model.addAttribute("memberName",memberName);
+		
+		return "login/resultMemberId";
+	}
+	
+	// 비밀번호 찾기
+	@GetMapping("/findMemberPw")
+	public String findMemberPw(HttpSession session) {
+		// 로그인이 되어있을 시
+		if (session.getAttribute("memberId") != null) {
+			log.debug(CF.YHJ + "LoginController.login.memberId : " + session.getAttribute("memberId"));
+			return "redirect:index";
+		}
+		
+		return "login/findMemberPw";
+	}
+	
+	@PostMapping("/findMemberPw")
+	public String findMemberPw(HttpSession session
+							,Model model
+							,@RequestParam(value="memberId") String memberId
+							,@RequestParam(value="memberName") String memberName
+							,@RequestParam(value="memberPhone") String memberPhone) {
+		
+		log.debug(CF.YHJ + "LoginController.findMemberId.memberId : " + memberId);
+		log.debug(CF.YHJ + "LoginController.findMemberId.memberName : " + memberName);
+		log.debug(CF.YHJ + "LoginController.findMemberId.memberPhone : " + memberPhone);
+		
+		String memberPw = loginService.findMemberPw(memberId, memberName, memberPhone);
+		log.debug(CF.YHJ + "LoginController.findMemberId.memberId : " + memberPw);
+		
+		if(memberPw == null) {
+			return "redirect:findMemberPw";
+		}
+		
+		model.addAttribute("memberId",memberPw);
+		model.addAttribute("memberName",memberId);
+		
+		
+		
+		return "login/resultMemberPw"; // 비밀번호 수정창으로 수정해야함
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

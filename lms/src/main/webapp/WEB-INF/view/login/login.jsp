@@ -27,7 +27,7 @@
               aria-hidden="true"
               class="object-cover w-full h-full dark:hidden"
               src="./public/assets/img/login-office.jpeg"
-              alt="Office"
+              alt="Office"	
             />
             <img
               aria-hidden="true"
@@ -50,6 +50,7 @@
 	                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 	                  placeholder="학번"
 	                  name="memberId"
+	                  value="${memberId}"
 	                />
 	              </label>
 	              <label class="block mt-4 text-sm">
@@ -106,17 +107,17 @@
               <p class="mt-4">
                 <a
                   class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
-                  href="./forgot-password.html"
+                  href="${pageContext.request.contextPath}/findMemberId"
                 >
-                  Forgot your password?
+                  Forgot your ID?
                 </a>
               </p>
               <p class="mt-1">
                 <a
                   class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
-                  href="./create-account.html"
+                  href="#"
                 >
-                  Create account
+                  Forgot your password?
                 </a>
               </p>
             </div>
