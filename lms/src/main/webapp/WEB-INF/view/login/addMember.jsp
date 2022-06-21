@@ -126,6 +126,7 @@
               </label>
               <div id="insertForm">
               </div>
+               <form method="get" action="${pageContext.request.contextPath}/lms/getAddr">
               <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">
                 주소입력
@@ -134,7 +135,7 @@
                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                   placeholder="주소 입력"
                   type="text"
-                  name="memberAddr"
+                  name="keyword"
                   id="keyword"
                 />
               </label>
@@ -146,6 +147,7 @@
                 >
                  주소 검색
                 </button>
+                </form>
               <!-- You should use a button here, as the anchor is only used for the example  -->
               <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">
@@ -302,7 +304,7 @@
 	$('#addrBtn').click(function(){
 		$.ajax({
 			type:'get'
-			,url:'/getAddr'
+			,url:'/lms/getAddr'
 			,data:{keyword:$('#keyword').val()}
 			,success:function(a){
 				console.log(a);

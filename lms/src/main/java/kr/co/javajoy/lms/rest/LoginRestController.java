@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.javajoy.lms.CF;
@@ -30,8 +31,8 @@ public class LoginRestController {
 		
 		return id;
 	}
-	public class AddrController {
 		@GetMapping("/getAddr")
+		@ResponseBody
 		public String getAddr(@RequestParam(value="currentPage", defaultValue = "1") int currentPage,
 							@RequestParam(value="keyword", defaultValue = "") String keyword) {
 			// OPEN API 호출 URL 정보 설정
@@ -56,4 +57,3 @@ public class LoginRestController {
 	    	return sb.toString();
 		}
 	}
-}
