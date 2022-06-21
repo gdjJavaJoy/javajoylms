@@ -19,10 +19,12 @@
 	   		<a href="${pageContext.request.contextPath}/getSubjectByPage">이전</a>
 	    </div>
 		    <form id="addSubjectForm" method="post" name="addSujectForm" action="${pageContext.request.contextPath}/addSubject">
-		    	<div>
-		    		<input type="text" id="teacherId" name="teacherId" class="form-control" placeholder="강사이름">
-		    		<span id="teacherIdHelper" class="helper"></span>
-		    	</div>
+		    	<select class="form-control" id="teacherId" name="teacherId">
+		    		<option value="" selected disabled>강사 선택</option>
+		    			<c:forEach var="c" items="${teacherList}">
+		    				<option value="${c}">${c}</option>
+		    			</c:forEach>
+		    	</select> 
 		    	<div>
 		   			<input type="text" id="adminId" name="adminId" class="form-control" placeholder="개설 운영자 이름">
 		   		 	<span id="adminIdHelper" class="helper"></span>	
@@ -32,7 +34,7 @@
 		    		<span id="subjectNameHelper" class="helper"></span>	
 		    	</div>
 		    	<div>	
-					<input type="text" id="subjectStudentMax" name="subjectStudentMax" class="form-control" placeholder="총원">
+					<input type="number" id="subjectStudentMax" name="subjectStudentMax" class="form-control" placeholder="총원">
 					<span id="subjectStudentMaxHelper" class="helper"></span>
 		    	</div>
 		    	<div>
@@ -40,19 +42,19 @@
 		    		<span id="subjectInfoHelper" class="helper"></span>
 		    	</div>
 		    	<div>
-		    		<input type="text" id="subjectStartDate" name="subjectStartDate" class="form-control" placeholder="개강 일">
+		    		<input type="date" id="subjectStartDate" name="subjectStartDate" class="form-control" placeholder="개강 일">
 		    		<span id="subjectStartDateHelper" class="helper"></span>	
 		    	</div>
 		    	<div> 		
-		    		 <input type="text" id="subjectFinishDate" name="subjectFinishDate" class="form-control" placeholder="종강 일">
+		    		 <input type="date" id="subjectFinishDate" name="subjectFinishDate" class="form-control" placeholder="종강 일">
 		    		 <span id="subjectFinishDateHelper" class="helper"></span>	
 		    	</div>
 		    	<div>
-		    		 <input type="text" id="subjectStartTime" name="subjectStartTime" class="form-control" placeholder="강의 시작 시간">
+		    		 <input type="time" id="subjectStartTime" name="subjectStartTime" class="form-control" placeholder="강의 시작 시간">
 		    		 <span id="subjectStartTimeHelper" class="helper"></span>	
 		    	</div>
 		    	<div>
-		    		 <input type="text" id="subjectEndTime" name="subjectEndTime" class="form-control" placeholder="강의 마감 시간">
+		    		 <input type="time" id="subjectEndTime" name="subjectEndTime" class="form-control" placeholder="강의 마감 시간">
 		    		 <span id="subjectEndTimeHelper" class="helper"></span>
 		    	</div>
 		    	<div class="form-group">
@@ -63,17 +65,6 @@
 <!-- 강좌 입력 유효성 검사 -->
 	<script type="text/javascript">	
 		// 개별 유효성 검사 코드 
-		$('#teacherId').focus();
-		
-		$('#teacherId').blur(function() {
-			if ($('#teacherId').val().length == 0) {
-				$('#teacherIdHelper').text('강좌 담임강사를 입력하세요');
-				$('#teacherId').focus();
-			} else {
-				$('#teacherIdHelper').text('');
-			}
-		});
-		
 		$('#adminId').blur(function() {
 			if ($('#adminIdId').val().length == 0) {
 				$('#adminIdHelper').text('개설 운영자를 입력하세요');
@@ -148,10 +139,7 @@
 		
 		// 회원 가입 버튼을 눌렀을 시, 진행되는 이벤트 유효성 체크
 		$('#signup').click(function() {
-			if ($('#teacherId').val() == '') {
-				$('#teacherIdHelper').text('강좌 담임강사를 입력하세요');
-				$('#teacherId').focus();
-			} else if ($('#adminIdId').val() == '') {
+			if ($('#adminIdId').val() == '') {
 				$('#teacherIdHelper').text('');
 				$('#adminIdHelper').text('개설 운영자를 입력하세요');
 				$('#adminId').focus();
