@@ -33,8 +33,8 @@ public class LoginRestController {
 	}
 		@GetMapping("/getAddr")
 		@ResponseBody
-		public String getAddr(@RequestParam(value="currentPage", defaultValue = "1") int currentPage,
-							@RequestParam(value="keyword", defaultValue = "") String keyword) {
+		public String getAddr(@RequestParam(value="currentPage", defaultValue = "1") int currentPage
+							 ,@RequestParam(value="keyword", defaultValue = "") String keyword) {
 			// OPEN API 호출 URL 정보 설정
 			final int countPerPage = 10;
 			final String confmKey = "devU01TX0FVVEgyMDIyMDYyMTAxNDMyODExMjcwODU=";

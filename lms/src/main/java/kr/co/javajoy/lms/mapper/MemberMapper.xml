@@ -13,6 +13,87 @@
 	   FROM member_id
 	   WHERE member_id = #{memberId}
 	</select>
-	
+	<select id="selectMemberId" 
+	        resultType="String">
+		SELECT
+			member_id memberId
+	   FROM member_id
+	</select>
+	<insert id="insertMemberId"
+			parameterType="kr.co.javajoy.lms.vo.SignupForm">
+		INSERT INTO member_id (
+			        member_id
+			       ,member_pw
+			       ,level
+			       ,member_active
+			       ,last_login_date
+			       ,create_date
+			       ,update_date
+		) VALUES (
+		          #{memberId}
+		         ,#{memberPw}
+		         ,#{level}
+		         ,#{memberActive}
+		         ,NOW()
+		         ,NOW()
+		         ,NOW()
+		)
+	</insert>
+	<insert id="insertAdmin"
+	 	    parameterType="kr.co.javajoy.lms.vo.SignupForm">
+	    INSERT INTO admin (
+	    		    member_id
+	    		   ,admin_name
+	    		   ,admin_phone
+	    		   ,admin_address
+	    		   ,admin_detailaddress
+	    		   ,admin_email
+	    		   ,update_date
+	    ) VALUES (
+	              #{memberId}
+	             ,#{memberName}
+	             ,#{memberPhone}
+	             ,#{memberAddress}
+	             ,#{memberDetailAddress}
+	             ,#{memberEmail}
+	             ,NOW()
+	    )
+	</insert>
+	<insert id="insertTeacher"
+	        parameterType="kr.co.javajoy.lms.vo.SignupForm">
+	   INSERT INTO teacher (
+	               member_id
+	              ,teacher_name
+	              ,teacher_phone
+	              ,teacher_address
+	              ,teacher_detailaddress
+	              ,teacher_email
+	              ,teacher_join
+	              ,update_date
+	   ) VALUES (
+	   			 #{memberId}
+	   			,#{memberName}
+	   			,#{memberPhone}
+	   			,#{memberAddr}
+	   			,#{memberDetailAddr}
+	   			,#{memberJoin}
+	   			,NOW()
+	   )
+	</insert>
+	<insert id="insertStudent"
+			parameterType="kr.co.javajoy.lms.vo.SignupForm">
+	</insert>
+	<insert id="insertPassword"
+	        parameterType="kr.co.javajoy.lms.vo.SignupForm">
+		INSERT INTO password(
+				    member_id
+				   ,password
+				   ,create_date
+		) VALUES (
+				   #{memberId}
+				  ,#{memberPw]
+				  ,NOW()
+		)
+	</insert>
 	
 </mapper>

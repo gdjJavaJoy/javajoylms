@@ -43,6 +43,7 @@
               >
                 Create account
               </h1>
+               <form method="post" action="${pageContext.request.contextPath}/addMember">
               <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">
                   회원구분
@@ -57,7 +58,6 @@
                   <option value="3">학생</option>
                 </select>
               </label>
-             <form method="post" action="${pageContext.request.contextPath}/addMember">
               <label class="block text-sm">
                 <span class="text-gray-700 dark:text-gray-400">아이디</span>
                 <input
@@ -87,7 +87,18 @@
                   id="id"
                 />
               </label>
-              	<input type="text" value="1111" name="memberPw" hidden="hidden">  
+              <label class="block mt-4 text-sm">
+                <span class="text-gray-700 dark:text-gray-400">
+            	PASSWORD
+            </span>
+            <input
+              class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+              placeholder="password"
+              type="password"
+              name="memberPw"
+              id="pw"
+            />
+          </label>
 			    <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">
                 이름 
@@ -126,7 +137,6 @@
               </label>
               <div id="insertForm">
               </div>
-               <form method="get" action="${pageContext.request.contextPath}/lms/getAddr">
               <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">
                 주소입력
@@ -147,7 +157,14 @@
                 >
                  주소 검색
                 </button>
-                </form>
+                <div id="list">
+                </div>
+                <br>
+                <select
+                  class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+               	  name="memberAddress"
+               	  id="memberAddr"
+                ></select>
               <!-- You should use a button here, as the anchor is only used for the example  -->
               <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">
@@ -157,6 +174,7 @@
                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                   placeholder="상세주소"
                   type="text"
+                  name="memberDetailAddress"
                   id="memberDetailAddr"
                 />
               </label>
@@ -181,6 +199,7 @@
 	$('#level').change(function(){
 	if($(this).val() =="1") {
 		$('#insertForm').empty();
+		$('#insertForm').append('<input type="text" name="active" hidden="hidden" value="1"');
 	}	
 	else if($(this).val() == "2"){
 			  $('#insertForm').empty();
@@ -222,8 +241,8 @@
 		                  name="memberJoin"\
 		                />\
 		              </label>\
-		              </div>'
-					 
+		              </div>\
+		              <input type="text" name="active" hidden="hidden" value="4">'
 		              );
 		  } else if ($(this).val() == "3") {
 			  $('#insertForm').empty();
@@ -277,7 +296,8 @@
 	                  name="memberJoin"\
 	                />\
 	              </label>\
-	              </div>'
+	              </div>\
+	              <input type="text" name="active" hidden="hidden" value="4">'
 				 );
 		  }
 	});
@@ -297,7 +317,7 @@
 			}
 		});
 	} else {
-		alert('id는 4자 이상');
+		alert('id는 4자 이상입력해주세요');
 	}
 	
 });
@@ -315,13 +335,14 @@
 				
 				let arr = a2.results.juso; // 주소배열
 				console.log(arr);
-				for(let i=0; i<arr.length; i++) {
-					$('#list').append('<div>'+arr[i].roadAddrPart1+'<div>');
-				}
-			
+				for (let i=0; i<arr.length; i++) {
+					var addr = (arr[i].jibunAddr).replace(/\s/gi,"");
+					var obj = $("<option value="+addr+">"+arr[i].jibunAddr+'('+arr[i].zipNo+")</option>");
+					$('#memberAddr').append(obj);
+				};
+				
 			}
 		});
 	});
 </script>
-  
 </html>
