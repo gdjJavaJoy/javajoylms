@@ -825,107 +825,58 @@
         </header>
         <main class="h-full pb-16 overflow-y-auto">
           <div class="container grid px-6 mx-auto">
-            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Admin Subject</h2>
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Admin Subject Report Page</h2>
             <!-- CTA -->
             <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
-              href="${pageContext.request.contextPath}/getSubjectByPage">
+              href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${subjectNo}">
               <div class="flex items-center">
                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                 </svg>
-                <span>Subject Management Page</span>
+                <span>(강좌이름)Subject Report Management Page</span>
               </div>
-              <span>Subject List &RightArrow;</span>
+              <span>강좌로 돌아가기 &RightArrow;</span>
             </a>
 
-			<!-- 카테고리 추가예정 -->
-			<div>카테고리6개(구현중)</div>
-			<a href="${pageContext.request.contextPath}/studentList?subjectNo=${subject.subjectNo}">1. 수강 학생 관리</a>
-			<a href="${pageContext.request.contextPath}/curriculumList?subjectNo=${subject.subjectNo}">2. 커리큘럼 관리</a>
-			<a href="${pageContext.request.contextPath}/getSubjectReportListByPage?subjectNo=${subject.subjectNo}">5. 과제 게시판 관리</a>
             <!-- With avatar -->
-            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Subject View Detail</h4>
+            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">(강좌이름)Subject Report List</h4>
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto">
                 <table class="w-full whitespace-no-wrap">
-                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">강좌 번호</th>
-                    	<td class="px-4 py-3 text-sm">${subject.subjectNo}</td>
+                  <thead>
+                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">  
+                      <th class="px-4 py-3">번호</th>
+                      <th class="px-4 py-3">강좌번호</th>
+                      <th class="px-4 py-3">작성자</th>
+                      <th class="px-4 py-3">제목</th>
+                      <th class="px-4 py-3">작성시간</th>
                     </tr>
-                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">담당 강사</th>
-                    	<td class="px-4 py-3 text-sm">${subject.teacherId}</td>
-                    </tr>
-                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">강사 사진</th>
-                    	<td class="px-4 py-3 text-sm">
-	                    	<div class="flex items-center text-sm">
-	                          <!-- Avatar with inset shadow -->
-	                          <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-	                            <img
-	                              class="object-cover w-full h-full rounded-full"
-	                              src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-	                              alt=""
-	                              loading="lazy"/>
-	                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-	                          </div>
-	                        </div>
-                        </td>
-                    </tr>
-                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">개설 운영자</th>
-                    	<td class="px-4 py-3 text-sm">${subject.adminId}</td>
-                    </tr>
-                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">강좌 이름</th>
-                    	<td class="px-4 py-3 text-sm">${subject.subjectName}</td>
-                    </tr>
-                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">총원</th>
-                    	<td class="px-4 py-3 text-sm">${subject.subjectStudentMax}</td>
-                    </tr>
-                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">강좌 설명</th>
-                    	<td class="px-4 py-3 text-sm">${subject.subjectInfo}</td>
-                    </tr>
-                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">강좌 시작일</th>
-                    	<td class="px-4 py-3 text-sm">${subject.subjectStartDate}</td>
-                    </tr>
-                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">강좌 수료일</th>
-                    	<td class="px-4 py-3 text-sm">${subject.subjectFinishDate}</td>
-                    </tr>
-                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">강좌 시작시간</th>
-                    	<td class="px-4 py-3 text-sm">${subject.subjectStartTime}</td>
-                    </tr>
-                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">강좌 마감시간</th>
-                    	<td class="px-4 py-3 text-sm">${subject.subjectEndTime}</td>
-                    </tr>
-                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">create_date</th>
-                    	<td class="px-4 py-3 text-sm">${subject.createDate}</td>
-                    </tr>
-                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">update_date</th>
-                    	<td class="px-4 py-3 text-sm">${subject.updateDate}</td>
-                    </tr>
-                 </table>  
+                  </thead>
+                  <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                  <c:forEach var="s" items="${list}">
+                    <tr class="text-gray-700 dark:text-gray-400">
+						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectReportNo=${s.subjectReportNo}">${s.subjectReportNo}</a></td>
+						<td class="px-4 py-3 text-xs"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectReportNo=${s.subjectReportNo}">${s.subjectNo}</a></td>
+						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectReportNo=${s.subjectReportNo}">${s.memberId}</a></td>
+						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectReportNo=${s.subjectReportNo}">${s.subjectReportTitle}</a></td>
+						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectReportNo=${s.subjectReportNo}">${s.createDate}</a></td>
+					</tr>
+                  </c:forEach>
+                  </tbody>
+                </table>
               </div>
               <div
                 class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
               >
                 <span class="flex items-center col-span-3">
-                  <!-- 공백 -->
+                  Search : <input class="form-control" type="text"  placeholder=" 검색할 내용 입력(미구현)">
                 </span>
                 <span class="col-span-2"></span>
                 <!-- Pagination -->
                 <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-              		<a href="${pageContext.request.contextPath}/modifySubject?subjectNo=${subject.subjectNo}">강좌 수정</a>
-              		<span>&nbsp | &nbsp</span>
-                    <a href="${pageContext.request.contextPath}/deleteSubject?subjectNo=${subject.subjectNo}">강좌 삭제(미구현)</a> 
+                   <a href="${pageContext.request.contextPath}/getSubjectReportListByPage?currentPage=${currentPage-1}">이전</a>
+                   <span>&nbsp / &nbsp</span>
+                   <a href="${pageContext.request.contextPath}/getSubjectReportListByPage?currentPage=${currentPage+1}">다음</a> 
                 </span>
               </div>
             </div>
@@ -933,13 +884,5 @@
         </main>
       </div>
     </div>
-    <script>
-    // 유효성 검사 추가 예정...
-	function plus() {
-		if (confirm('강좌 개설를 정말 삭제하겠습니까?')) {
-			document.getElementById('delete').click();
-		}
-	}
-	</script>
   </body>
 </html>
