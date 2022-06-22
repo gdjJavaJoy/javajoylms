@@ -20,7 +20,7 @@ public class LoginService {
 	@Autowired MemberMapper memberMapper;
 
 	// 로그인
-	public String login(String memberId, String memberPw) {
+	public Map<String,Object> login(String memberId, String memberPw) {
 		// 디버깅
 		log.debug(CF.YHJ + "LoginService.login.memberId : " + memberId + CF.RESET);
 		log.debug(CF.YHJ + "LoginService.login.memberPw : " + memberPw + CF.RESET);
@@ -29,10 +29,21 @@ public class LoginService {
 		map.put("memberId", memberId);
 		map.put("memberPw", memberPw);
 
-		String resultId = loginMapper.loginMember(map);
-		log.debug(CF.YHJ + "LoginService.login.resultId : " + resultId + CF.RESET); // 디버깅
+		String resultId = loginMapper.loginMember(map); // 로그인
+		String memberActive = memberMapper.selectMemberActive(memberId); // active
+		String level = memberMapper.selectMemberLevel(memberId); // level 
+		
+		//디버깅
+		log.debug(CF.YHJ + "LoginService.login.resultId : " + resultId + CF.RESET);
+		log.debug(CF.YHJ + "LoginService.login.memberActive : " + memberActive + CF.RESET);
+		log.debug(CF.YHJ + "LoginService.login.level : " + level + CF.RESET);
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("memberId", resultId);
+		resultMap.put("memberActive", memberActive);
+		resultMap.put("level", level);
 
-		return resultId;
+		return resultMap;
 	}
 
 	// 아이디 찾기

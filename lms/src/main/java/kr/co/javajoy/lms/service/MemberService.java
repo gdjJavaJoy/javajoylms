@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class MemberService {
 	@Autowired MemberMapper memberMapper;
+	
 	public List<String> getMemberId() {
 		List<String> list = memberMapper.selectMemberId();
 		return list;
@@ -40,8 +41,6 @@ public class MemberService {
 		password.setMemberId(signupForm.getMemberId());
 		password.setPassword(signupForm.getMemberPw());
 		memberMapper.insertPassword(password);
-		
-		
 		
 		log.debug(CF.PSG+"MemberService.addMember.level:" +level+CF.RESET);
 		if(level.equals("'1'")){
@@ -86,8 +85,30 @@ public class MemberService {
 		}
 		return row;
 	}
+	
 	public String getMemberActive(String memberId) {
 		String active = memberMapper.selectMemberActive(memberId);
 		return active;
 	}
+	
+	// 비활성화 member 활성화
+	public void modifyMemberActive(String memberId) {
+		memberMapper.updateMemberActive(memberId);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
  }

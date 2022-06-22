@@ -8,7 +8,6 @@
 			FROM member_id
 			WHERE member_id = #{memberId} 
 					AND member_pw = PASSWORD(#{memberPw})
-					AND member_active = 1
 		</select>
 		
 		<select id="findTeacherId" 

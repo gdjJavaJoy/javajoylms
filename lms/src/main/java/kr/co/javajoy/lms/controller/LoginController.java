@@ -1,5 +1,8 @@
 package kr.co.javajoy.lms.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +24,9 @@ public class LoginController {
 	@GetMapping("/login")
 	public String login(HttpSession session) {
 		// 로그인이 되어있을 시
-		if(session.getAttribute("memberId") != null) {
-			log.debug(CF.YHJ + "LoginController.login.memberId : " + session.getAttribute("memberId"));
-			return "redirect:index";
+		if(session.getAttribute("loginUser") != null) {
+			log.debug(CF.YHJ + "LoginController.login.loginUser : " + session.getAttribute("loginUser"));
+			return "redirect:memberIndex";
 		}
 		log.debug(CF.YHJ+"login page로");
 		return "login/login";
@@ -36,25 +39,41 @@ public class LoginController {
 		log.debug(CF.YHJ + "LoginController.login.memberId : " + memberId + CF.RESET);
 		log.debug(CF.YHJ + "LoginController.login.memberPw : " + memberPw  + CF.RESET);
 		
-		String loginUser = loginService.login(memberId, memberPw); // 로그인
-		log.debug(CF.YHJ + "LoginController.login.loginUser : " + loginUser + CF.RESET);
-		
+		Map<String, Object> loginMap = loginService.login(memberId, memberPw); // 로그인
+		// 디버깅
+		log.debug(CF.YHJ + "LoginController.login.loginMap.memberId : " + loginMap.get("memberId") + CF.RESET);
+		log.debug(CF.YHJ + "LoginController.login.loginMap.memberActive : " + loginMap.get("memberActive") + CF.RESET);
+		log.debug(CF.YHJ + "LoginController.login.loginMap.level : " + loginMap.get("level") + CF.RESET);
+
 		// 로그인 실패 시
-		if(loginUser == null) {
+		if(loginMap.get("memberId") == null) {
 			return "redirect:login"; 
 		}
-		session.setAttribute("loginUser", loginUser);
+		// session에 ID 저장
+		session.setAttribute("loginUser", loginMap.get("memberId"));
 		
-		return "redirect:memberIndex";
+		// level과 active에 따른 분기	
+		if(loginMap.get("level").equals("1")) { // admin일 경우
+			log.debug(CF.YHJ + "getSubjectByPage로 이동 " + CF.RESET);
+			return "redirect:getSubjectByPage";
+		} else if( (loginMap.get("level").equals("2")) || (loginMap.get("level").equals("3")) ) { // teacher나 student일 때
+			if(loginMap.get("memberActive").equals("4")) { // teacher, student가 최초 로그인일 때
+				return "redirect:modifyPw";
+			} else if(loginMap.get("memberActive").equals("2")) { // teacher, student가 비활성화일 때
+				return "redirect:modifyMemberActive";
+			}
+			return "redirect:memberIndex"; //teacher, student 정상 로그인
+		}
+		return "errorPage";
 	}
 	
 	// 아이디 찾기
 	@GetMapping("/findMemberId")
 	public String findMemberId(HttpSession session) {
 		// 로그인이 되어있을 시
-		if (session.getAttribute("memberId") != null) {
-			log.debug(CF.YHJ + "LoginController.login.memberId : " + session.getAttribute("memberId") + CF.RESET);
-			return "redirect:index";
+		if (session.getAttribute("loginUser") != null) {
+			log.debug(CF.YHJ + "LoginController.login.memberId : " + session.getAttribute("loginUser") + CF.RESET);
+			return "redirect:memberIndex";
 		}
 		
 		return "login/findMemberId";
@@ -85,9 +104,9 @@ public class LoginController {
 	@GetMapping("/findMemberPw")
 	public String findMemberPw(HttpSession session) {
 		// 로그인이 되어있을 시
-		if (session.getAttribute("memberId") != null) {
-			log.debug(CF.YHJ + "LoginController.login.memberId : " + session.getAttribute("memberId") + CF.RESET);
-			return "redirect:index";
+		if (session.getAttribute("loginUser") != null) {
+			log.debug(CF.YHJ + "LoginController.login.memberId : " + session.getAttribute("loginUser") + CF.RESET);
+			return "redirect:memberIndex";
 		}
 		
 		return "login/findMemberPw";
