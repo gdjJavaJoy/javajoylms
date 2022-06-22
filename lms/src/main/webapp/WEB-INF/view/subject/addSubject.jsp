@@ -137,7 +137,7 @@
 			}
 		});
 		
-		// 회원 가입 버튼을 눌렀을 시, 진행되는 이벤트 유효성 체크
+		// 강좌 추가 버튼을 눌렀을 시, 진행되는 이벤트 유효성 체크
 		$('#signup').click(function() {
 			if ($('#adminIdId').val() == '') {
 				$('#teacherIdHelper').text('');

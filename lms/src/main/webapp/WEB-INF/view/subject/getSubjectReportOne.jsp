@@ -828,7 +828,7 @@
         <main class="h-full pb-16 overflow-y-auto">
           <div class="container grid px-6 mx-auto">
           	
-            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Admin Subject Report</h2>
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Admin Subject Report<a href="${pageContext.request.contextPath}/getSubjectByPage">   [Go All Subject List]</a></h2>
             <!-- CTA -->
             <c:forEach var="subjectReport" items="${subjectReport}">
 	            <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
@@ -845,10 +845,9 @@
             <!-- With avatar -->
             <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Subject Report View Detail</h4> 
               <div>
+              	<div>[첨부 파일]</div>
 		    	<c:forEach var="subjectFileList" items="${subjectFileList}">
-		    		<div>
-		    			<a href="${pageContext.request.contextPath}/file/subject_file/${subjectFileList.subjectFileName}${subjectFileList.subjectFileType}" download="${subjectFileList.subjectFileName}${subjectFileList.subjectFileType}">${subjectFileList.subjectFileName}.${subjectFileList.subjectFileType}</a>
-		    		</div>
+		    		<div><a href="${pageContext.request.contextPath}/file/subject_file/${subjectFileList.subjectFileName}${subjectFileList.subjectFileType}" download="${subjectFileList.subjectFileName}${subjectFileList.subjectFileType}"> ${subjectFileList.subjectFileName}.${subjectFileList.subjectFileType}</a></div>
 		    	</c:forEach>
    	  		  </div>
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
@@ -899,11 +898,33 @@
               	 </c:forEach>
               </div>
             </div>
-             <h1>test</h1>
-             	댓글기능 구현
-          </div>
+            <div>
+            	<!-- 댓글 -->
+            	<a href="" style="float: right;">댓글쓰기</a>
+      
+            		<table class="w-full whitespace-no-wrap">
+            			<thead>
+            				<tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+            					 <th class="px-4 py-3">작성자</th>
+			                     <th class="px-4 py-3">내용</th>
+			                     <th class="px-4 py-3"></th>
+			                     <th class="px-4 py-3">작성일</th>
+            				</tr>
+            			</thead>
+            			<tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+            			<c:forEach var="commentList" items="${commentList}">
+            				<tr class="text-gray-700 dark:text-gray-400">
+            					<td class="px-4 py-3 text-sm">${commentList.memberId}</td>
+            					<td class="px-4 py-3 text-sm">${commentList.subjectReportCommentContent}</td>
+            					<td class="px-4 py-3 text-sm"><a href="">삭제(미구현)</a></td>
+            					<td class="px-4 py-3 text-sm">${commentList.updateDate}</td>			
+            				</tr>
+            			</c:forEach>
+            			</tbody>
+            		</table>
+           		 </div>
+          	</div>
         </main>
-       
       </div>
     </div>
 <script>
@@ -911,3 +932,4 @@
 </script>
   </body>
 </html>
+            	

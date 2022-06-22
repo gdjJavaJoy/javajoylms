@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.javajoy.lms.vo.SubjectReport;
+import kr.co.javajoy.lms.vo.SubjectReportComment;
 
 @Mapper
 public interface SubjectReportMapper {
@@ -23,4 +24,10 @@ public interface SubjectReportMapper {
 	
 	// 과제 게시판 글 상세보기의 파일 리스트 출력
 	List<String> selectSubjectReportFileList(int subjectBoardNo);
+	
+	// 과제 게시판 각 글의 댓글 리스트
+	List<SubjectReportComment> selectCommentListByPage(Map<String, Object> map);
+	
+	// 각 글의 총 댓글 수
+	int selectCommentTotalCountByNotice(int subjectBoardNo);
 }

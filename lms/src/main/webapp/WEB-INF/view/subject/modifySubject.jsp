@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>강좌 수정</h1>
+    <h1>강좌 수정 <a href="${pageContext.request.contextPath}/getSubjectByPage">   [Go All Subject List]</a></h1>
 	    <div>
 	   		<a href="${pageContext.request.contextPath}/getSubjectByPage">이전</a>
 	    </div>

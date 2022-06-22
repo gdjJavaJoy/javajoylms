@@ -1,5 +1,6 @@
 package kr.co.javajoy.lms.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,19 +45,31 @@ public class SubjectReportController {
 		return "subject/getSubjectReportListByPage";
 	}
 	
-	// 공지사항 상세보기 + 파일 이름 리스트 출력
+	// 공지사항 상세보기 + 파일 이름 리스트 출력 + 댓글 리스트 출력
 	@GetMapping("/getSubjectReportOne")
 	public String getSubjectReportOne(Model model
 									,HttpServletRequest request
-									,@RequestParam(name="subjectBoardNo") int subjectBoardNo) {
+									,@RequestParam(name="subjectBoardNo") int subjectBoardNo
+									,@RequestParam(name="commentCurrentPage", defaultValue="1") int commentCurrentPage
+									,@RequestParam(name="rowPerPage", defaultValue="10") int rowPerPage) {
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.subjectBoardNo : ", subjectBoardNo);
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.commentCurrentPage : ", commentCurrentPage);
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.rowPerPage : ", rowPerPage);
 		// 파일 업로드 위치 지정
 		String path = request.getServletContext().getRealPath("/file/subject_file");
+		// 댓글 데이터 
+		Map<String, Object> map = new HashMap<>();
+		map.put("subjectBoardNo", subjectBoardNo);
+		map.put("commentCurrentPage", commentCurrentPage);
+		map.put("rowPerPage", rowPerPage);
 		
-		Map<String, Object> returnMap = subjectReportService.getSubjectReportAndFileNameList(subjectBoardNo);
+		// 댓글 데이터 + 파일 리스트 데이터
+		Map<String, Object> returnMap = subjectReportService.getSubjectReportAndFileNameListAndCommentList(map);
 		model.addAttribute("path", path);
 		model.addAttribute("subjectReport", returnMap.get("subjectReport"));
 		model.addAttribute("subjectFileList", returnMap.get("subjectFileList"));
+		model.addAttribute("commentList", returnMap.get("commentList"));
+		model.addAttribute("commentLastPage", returnMap.get("commentLastPage"));
 		
 		return "subject/getSubjectReportOne";
 	}

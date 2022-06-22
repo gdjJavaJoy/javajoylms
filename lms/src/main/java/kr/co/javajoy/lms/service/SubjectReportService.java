@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.mapper.SubjectReportMapper;
-import kr.co.javajoy.lms.vo.SubjectFile;
 import kr.co.javajoy.lms.vo.SubjectReport;
+import kr.co.javajoy.lms.vo.SubjectReportComment;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -51,17 +51,46 @@ public class SubjectReportService {
 	}
 	
 	// 과제 게시판 글 상세보기 + 파일 이름 리스트 출력
-	public Map<String, Object> getSubjectReportAndFileNameList(int subjectBoardNo) {
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameList.subjectBoardNo" + subjectBoardNo);
+	public Map<String, Object> getSubjectReportAndFileNameListAndCommentList (Map<String, Object> map) {
+		// 댓글 페이징 데이터
+		int commentCurrentPage = (int)map.get("commentCurrentPage");
+		int rowPerPage = (int)map.get("rowPerPage");
+		int startRow = (commentCurrentPage - 1) * rowPerPage;
+		int subjectBoardNo = (int)map.get("subjectBoardNo");
+		
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("startRow", startRow);
+		paramMap.put("rowPerPage", rowPerPage);
+		paramMap.put("subjectBoardNo", subjectBoardNo);
+	
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameList.subjectBoardNo :" + subjectBoardNo);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameList.startRow :" + startRow);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameList.rowPerPage :" + rowPerPage);
+		
 		// 선택된 과게 게시판 글 상세보기
 		List<SubjectReport> subjectReport = subjectReportMapper.selectSubjectReportOne(subjectBoardNo);
 		// 선택된 과제 게시판 글의 파일 리스트 
 		List<String> subjectFileList = subjectReportMapper.selectSubjectReportFileList(subjectBoardNo);
-		
+		// 선택된 과제 게시판 댓글 리스트
+		List<SubjectReportComment> commentList = subjectReportMapper.selectCommentListByPage(paramMap);
 		// 상세보기 + 파일 리스트 저장
 		Map<String, Object> returnMap = new HashMap<>();
+		// 댓글 페이징 코드
+		int commentTotalCount = subjectReportMapper.selectCommentTotalCountByNotice(subjectBoardNo);
+		int commentLastPage = commentTotalCount / (int)(map.get("rowPerPage"));
+		if(commentTotalCount % (int)(map.get("rowPerPage")) != 0) {
+			commentLastPage +=1;
+		}
+		// 상세보기 값 + 파일 리스트 + 댓글 리스트 데이터 저장
 		returnMap.put("subjectReport", subjectReport);
 		returnMap.put("subjectFileList", subjectFileList);
+		returnMap.put("commentList", commentList);
+		returnMap.put("commentLastPage", commentLastPage);
+		
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameList.subjectReport :" + subjectReport);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameList.subjectFileList :" + subjectFileList);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameList.commentList :" + commentList);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameList.commentLastPage :" + commentLastPage);
 		
 		return returnMap;
 	}
