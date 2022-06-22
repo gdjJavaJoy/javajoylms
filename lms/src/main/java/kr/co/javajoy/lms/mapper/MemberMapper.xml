@@ -15,7 +15,7 @@
 	</select>
 	
 	<insert id="insertMemberId"
-			parameterType="kr.co.javajoy.lms.vo.SignupForm">
+			parameterType="kr.co.javajoy.lms.vo.Member">
 		INSERT INTO member_id (
 			        member_id
 			       ,member_pw
@@ -23,19 +23,19 @@
 			       ,member_active
 			       ,last_login_date
 			       ,create_date
-			       ,update_date
+			       ,delete_date
 		) VALUES (
 		          #{memberId}
-		         ,#{memberPw}
-		         ,#{level}
-		         ,#{memberActive}
+		         ,PASSWORD(#{memberPw})
+		         ,${level}
+		         ,${memberActive}
 		         ,NOW()
 		         ,NOW()
 		         ,NOW()
 		)
 	</insert>
 	<insert id="insertAdmin"
-	 	    parameterType="kr.co.javajoy.lms.vo.SignupForm">
+	 	    parameterType="kr.co.javajoy.lms.vo.Admin">
 	    INSERT INTO admin (
 	    		    member_id
 	    		   ,admin_name
@@ -46,16 +46,16 @@
 	    		   ,update_date
 	    ) VALUES (
 	              #{memberId}
-	             ,#{memberName}
-	             ,#{memberPhone}
-	             ,#{memberAddress}
-	             ,#{memberDetailAddress}
-	             ,#{memberEmail}
+	             ,#{adminPw}
+	             ,#{adminName}
+	             ,#{adminAddress}
+	             ,#{adminDetailAddress}
+	             ,#{adminEmail}
 	             ,NOW()
 	    )
 	</insert>
 	<insert id="insertTeacher"
-	        parameterType="kr.co.javajoy.lms.vo.SignupForm">
+	        parameterType="kr.co.javajoy.lms.vo.Teacher">
 	   INSERT INTO teacher (
 	               member_id
 	              ,teacher_name
@@ -67,26 +67,50 @@
 	              ,update_date
 	   ) VALUES (
 	   			 #{memberId}
-	   			,#{memberName}
-	   			,#{memberPhone}
-	   			,#{memberAddr}
-	   			,#{memberDetailAddr}
-	   			,#{memberJoin}
+	   			,#{teacherName}
+	   			,#{teacherPhone}
+	   			,#{teacherAddress}
+	   			,#{teacherDetailAddress}
+	   			,#{teacherJoin}
+	   			,#{teacherJoin}
 	   			,NOW()
 	   )
 	</insert>
 	<insert id="insertStudent"
-			parameterType="kr.co.javajoy.lms.vo.SignupForm">
+			parameterType="kr.co.javajoy.lms.vo.Student">
+		INSERT INTO student (
+					member_id
+				   ,student_name
+				   ,student_gender
+				   ,student_phone
+				   ,student_address
+				   ,student_detailaddress
+				   ,student_email
+				   ,student_education
+				   ,student_register_date
+				   ,update_date
+		) VALUES (
+				   #{memberId}
+				  ,#{studentName}
+				  ,#{studentGender}
+				  ,#{studentPhone}
+				  ,#{studentAddress}
+				  ,#{studentDetailAddress}
+				  ,#{studentEmail}
+				  ,#{studentEducation}
+				  ,#{studentRegisterDate}
+				  ,NOW()
+			)	
 	</insert>
 	<insert id="insertPassword"
-	        parameterType="kr.co.javajoy.lms.vo.SignupForm">
+	        parameterType="kr.co.javajoy.lms.vo.Password">
 		INSERT INTO password(
 				    member_id
 				   ,password
 				   ,create_date
 		) VALUES (
 				   #{memberId}
-				  ,#{memberPw]
+				  ,PASSWORD('#{password}')
 				  ,NOW()
 		)
 	</insert>

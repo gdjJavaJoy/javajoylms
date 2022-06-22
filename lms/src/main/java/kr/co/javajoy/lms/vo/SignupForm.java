@@ -4,17 +4,17 @@ import lombok.Data;
 
 @Data
 public class SignupForm {
-	public int level;
-	public String memberId;
-	public String memberPw;
-	public String memberName;
-	public String memberPhone;
-	public String memberEmail;
-	public String memberAddress;
-	public String memberDetailAddress;
-	public String gender;
-	public String education;
-	public String memberJoin;
-	public String memberActive;
+	private String level;
+	private String memberId;
+	private String memberPw;
+	private String memberName;
+	private String memberPhone;
+	private String memberEmail;
+	private String memberAddress;
+	private String memberDetailAddress;
+	private String gender;
+	private String education;
+	private String memberJoin;
+	private String memberActive;
 	
 }

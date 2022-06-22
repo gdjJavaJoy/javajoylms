@@ -361,6 +361,7 @@
    });
    
 	$('#addBtn').click(function(){
+	 if($('#level').val() =="'1'") {
 		if(!/^[a-zA-z0-9]{8,16}$/.test($('#pw').val())) { // 영어 문자만 가능한 정규표현식 8자리 이상 16자리 이하
 			alert("영문, 숫자로 8자리 이상 입력하세요.");
 			$('#pw').focus();
@@ -375,6 +376,18 @@
 			return false;
 			}
 		$('#addMemberForm').submit();
+	 	} else {
+	 		if(!/^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/.test($('#memberEmail').val())){
+				// 이메일의 경우 첫글자 _가 허용되므로 첫번째 글자 검사식을 따로 두었다.
+				// 영어 대/소문자 구분
+				// @ 반드시 하나만 입력, . 반드시 하나만 입력
+				// .뒤에 최소 한글자에서 최대 3글자까지
+				alert("이메일을 정확히 입력하세요");
+				$('#memberEmail').focus();
+				return false;
+				}
+	 		$('#addMemberForm').submit();
+	 	}
 	});
 </script>
 </html> 
