@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>subjectList</title>
+<title>sbujectNoticeList</title>
 <!-- bootstrap을 사용하기 위한 CDN주소 -->
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -13,32 +13,34 @@
 </head>
 <body>
 <div class="container">
-    <h1>강의 리스트</h1>
+    <h1>강의공지사항</h1>
     <table class="table table-striped">
         <thead>
         <tr>
-			<th>강좌게시판 번호</th>
-			<th>강좌번호</th>
+			<th>공지사항번호</th>
+			<th>분반</th>
 			<th>아이디</th>
-			<th>제목</th>
-			<th>생성날짜</th>
+			<th>공지사항제목</th>
+			<th>공지사항내용</th>
+			<th>작성일</th>
         </tr>
         </thead>
         <tbody>
             <c:forEach var="s" items="${list}">
                 <tr>
-                   <td>${s.subjectDataNo}</td>
-                   <td>${s.subjectNo}</td>
+                   <td>${s.subjectNoticeNo}</td>
+                   <td>${s.subjcetNo}</td>
                    <td>${s.memberId}</td>
-                   <td>${s.subjectDataTitle}</td>
+                   <td>${s.subjectNoticeTitle}</td>
+                   <td>${s.subjectNoticeContent}</td>
                    <td>${s.createDate}</td>
                 </tr>
             </c:forEach>
         </tbody>
     </table>
    <ul class="pager">
-      <li class="previous"><a href="${pageContext.request.contextPath}/subjectDataList?currentPage=${currentPage-1}">이전</a></li>
-      <li class="next"><a href="${pageContext.request.contextPath}/subjectDataList?currentPage=${currentPage+1}">다음</a></li>
+      <li class="previous"><a href="${pageContext.request.contextPath}/curriculumList?currentPage=${currentPage-1}">이전</a></li>
+      <li class="next"><a href="${pageContext.request.contextPath}/curriculum?currentPage=${currentPage+1}">다음</a></li>
    </ul>
 </div>
 </body>

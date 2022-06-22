@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.javajoy.lms.mapper.SubjectNoticeMapper">
+<select id="getSubjectNoticeList"
+		resultType="map"
+		parameterType="java.util.Map">
+	SELECT  a.subject_notice_no subjectNoticeNo
+	        ,b.subject_no subjcetNo
+	        ,a.member_id memberId
+	        ,a.subject_notice_title subjectNoticeTitle
+	        ,a.subject_notice_content subjectNoticeContent
+	        ,a.create_date createDate
+	FROM subject_notice AS a
+		INNER JOIN subject AS b
+	    ON a.subject_notice_no = b.subject_no
+		LIMIT 10
+</select>
+	<!-- 리스트 전체 카운트 -->
+<select id="selectTotalCount" 
+		resultType="int" >
+	SELECT COUNT(*)
+	FROM curriculum
+</select>
+</mapper>
