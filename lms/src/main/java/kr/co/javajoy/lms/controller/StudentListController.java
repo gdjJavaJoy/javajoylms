@@ -8,13 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import kr.co.javajoy.lms.service.StudentService;
+import kr.co.javajoy.lms.service.StudentListService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
 public class StudentListController {
-	@Autowired StudentService studentService;
+	@Autowired StudentListService studentListService;
 	/***
 	 * 
 	 * @param model
@@ -28,7 +28,7 @@ public class StudentListController {
 			// 페이징
 		@RequestParam(name = "currentPage", defaultValue = "1") int currentPage,
 		@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
-	Map<String, Object> map = studentService.getStudentList(currentPage, rowPerPage);
+	Map<String, Object> map = studentListService.getStudentList(currentPage, rowPerPage);
 	model.addAttribute("list", map.get("list"));
 	model.addAttribute("currentPage", currentPage);
 	model.addAttribute("lastPage", map.get("lastPage"));

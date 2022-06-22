@@ -20,7 +20,7 @@ public class CurriculumService {
 	@Autowired CurriculumMapper curriculumMapper;
 	
 	// 커리큘럼 리스트 출력
-	public Map<String, Object> getcurriculumList(int currentPage, int rowPerPage) {
+	public Map<String, Object> getCurriculumList(int currentPage, int rowPerPage) {
 		// 리스트 출력 페이징
 		int startRow = (currentPage - 1) * rowPerPage;
 		

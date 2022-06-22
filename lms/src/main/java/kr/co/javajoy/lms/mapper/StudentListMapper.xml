@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.javajoy.lms.mapper.StudentMapper">
-	<!-- 학생리스트 출력 쿼리 -->
-<!--<select id="" resultType="" parameterType="">
+<mapper namespace="kr.co.javajoy.lms.mapper.StudentListMapper">
+<!-- 
+
+학생리스트 출력 쿼리
+	
+<select id="" 
+resultType="" 
+parameterType="">
 	SELECT member_id memberId
 	      ,student_name studentName
 	      ,student_gender studentGender
@@ -15,29 +20,36 @@
 	      ,update_date updateDate
 	FROM student
 </select>
-<select id="selectTotalCount" resultType="int" >
+
+<select id="selectTotalCount" 
+		resultType="int" >
 	SELECT COUNT(*)
 	FROM student
-</select>-->
-
-<select id="getStudentList" resultType="map" parameterType="java.util.Map">
-SELECT b.subject_no subjectNo
-      ,a.member_id memberId
-      ,a.student_name studentName
-      ,a.student_gender studentGender
-      ,a.student_phone studentPhone
-      ,a.student_address studentAddress
-      ,a.student_detailaddress studentDetailAddress
-      ,a.student_email studentEmail
-      ,a.student_education studentEducation
-      ,a.student_register_date studentRegisterDate
-      ,a.update_date updateDate
-FROM student AS a
-INNER JOIN subject_student AS b
-    ON a.member_id = b.member_id
-    ORDER BY 1 LIMIT 10
 </select>
-<select id="selectTotalCount" resultType="int" >
+
+-->
+
+<select id="getStudentList"
+		resultType="map"
+		parameterType="java.util.Map">
+	SELECT b.subject_no subjectNo
+	      ,a.member_id memberId
+	      ,a.student_name studentName
+	      ,a.student_gender studentGender
+	      ,a.student_phone studentPhone
+	      ,a.student_address studentAddress
+	      ,a.student_detailaddress studentDetailAddress
+	      ,a.student_email studentEmail
+	      ,a.student_education studentEducation
+	      ,a.student_register_date studentRegisterDate
+	      ,a.update_date updateDate
+	FROM student AS a
+	INNER JOIN subject_student AS b
+	    ON a.member_id = b.member_id
+	    ORDER BY 1 LIMIT 10
+</select>
+<select id="selectTotalCount" 
+		resultType="int" >
 	SELECT COUNT(*)
 	FROM student
 </select>

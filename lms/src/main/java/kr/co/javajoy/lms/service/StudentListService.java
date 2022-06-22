@@ -11,15 +11,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.javajoy.lms.CF;
-import kr.co.javajoy.lms.mapper.StudentMapper;
+import kr.co.javajoy.lms.mapper.StudentListMapper;
 import kr.co.javajoy.lms.vo.Student;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 @Transactional
-public class StudentService {
-	@Autowired StudentMapper studentMapper;
+public class StudentListService {
+	@Autowired StudentListMapper studentListMapper;
 	
 	// 학생 리스트 출력
 	public Map<String, Object> getStudentList(int currentPage, int rowPerPage) {
@@ -31,8 +31,8 @@ public class StudentService {
 		map.put("startRow", startRow);
 		
 		// Mapper에서 반환 된 값 가공
-		List<Student> list = studentMapper.getStudentList(map);
-		int totalCount = studentMapper.selectTotalCount();
+		List<Student> list = studentListMapper.getStudentList(map);
+		int totalCount = studentListMapper.selectTotalCount();
 		int lastPage = (int)(Math.ceil((double)totalCount / (double)rowPerPage));
 		
 		Map<String, Object> returnMap = new HashMap<>();

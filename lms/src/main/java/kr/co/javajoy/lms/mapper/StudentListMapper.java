@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import kr.co.javajoy.lms.vo.Student;
 
 @Mapper
-public interface StudentMapper {
+public interface StudentListMapper {
 	// 학생 리스트 출력
 	List<Student> getStudentList(Map<String, Object> map);
 	// 학생 총 수

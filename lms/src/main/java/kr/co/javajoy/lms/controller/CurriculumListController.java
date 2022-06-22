@@ -28,7 +28,7 @@ public class CurriculumListController {
 				// 페이징
 			@RequestParam(name = "currentPage", defaultValue = "1") int currentPage,
 			@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
-		Map<String, Object> map = curriculumService.getcurriculumList(currentPage, rowPerPage);
+		Map<String, Object> map = curriculumService.getCurriculumList(currentPage, rowPerPage);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", map.get("lastPage"));
