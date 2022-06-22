@@ -111,9 +111,3 @@ public class NoticeService {
 	
 }
 	
-	/*
-	// 공지사항 추가하기(파일포함)
-	public int addNotice(Board board) {
-		return noticeMapper.insertNotice(board);
-	}
-	*/

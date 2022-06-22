@@ -39,13 +39,14 @@ public class NoticeController {
 	public String getNoticeOne(Model model
 			,HttpServletRequest request
 			,@RequestParam(name = "boardNo") int boardNo) {
-		log.debug(CF.WSH + "NoticeController.getNoticeOne.notice : "+ boardNo);
+		log.debug(CF.WSH + "NoticeController.getNoticeOne.boardNo : "+ boardNo);
 		String path = request.getServletContext().getRealPath("file/board_file/");
 		
 		Map<String, Object> map = noticeService.getNoticeOne(boardNo);
 		model.addAttribute("path", path);
-		model.addAttribute("board",map.get("board"));
-		model.addAttribute("boardfile",map.get("boardfile"));
+		model.addAttribute("board", map.get("board"));
+		model.addAttribute("boardfile", map.get("boardfile"));
+		log.debug(CF.WSH + "NoticeController.getNoticeOne.map : "+ map);
 		return "board/getNoticeOne";
 	}
 	@GetMapping("/addNotice")

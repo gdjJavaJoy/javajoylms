@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="kr.co.javajoy.lms.mapper.NoticefileMapper">
-	<select id="selectNoticefileList"
+<!-- 
+	<select id="selectNoticefileNameList"
 			parameterType="int"
 			resultType="String">
 		SELECT
 			board_file_name boardFileName
+			,board_file_type boardFileType
 		FROM board_file
 		WHERE board_no = #{boardNo}
+	</select>
+-->
+	<select id="selectNoticefileList"
+			parameterType="int"
+			resultType="kr.co.javajoy.lms.vo.Boardfile">
+		SELECT
+			board_file_no boardFileNo
+			,board_file_original_name boarFileOriginalName
+			,board_file_name boardFileName
+			,board_file_type boardFileType
+			,board_file_size boardFileSize
+			,board_no boardNo
+		FROM board_file
+		WHERE board_no = #{boardNo}	
 	</select>
  	<insert id="insertNoticefile"
  			parameterType="kr.co.javajoy.lms.vo.Boardfile">
