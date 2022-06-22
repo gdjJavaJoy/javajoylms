@@ -1,19 +1,22 @@
 package kr.co.javajoy.lms.service;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.mapper.NoticeMapper;
 import kr.co.javajoy.lms.mapper.NoticefileMapper;
 import kr.co.javajoy.lms.vo.Board;
+import kr.co.javajoy.lms.vo.BoardForm;
 import kr.co.javajoy.lms.vo.Boardfile;
-import kr.co.javajoy.lms.vo.Notice;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -44,10 +47,10 @@ public class NoticeService {
 	public Map<String, Object> getNoticeOne(int boardNo) {
 		// 쿼리불러오기 조회값 저장
 		List<Board> board = noticeMapper.selectNoticeOne(boardNo); 
-		log.debug(CF.WSH + "NoticeService.getNoticeOne.board : ", board);
+		log.debug(CF.WSH + "NoticeService.getNoticeOne.board : "+board);
 		// 파일
 		List<Boardfile> boardfile = noticefileMapper.selectNoticefileList(boardNo); 
-		log.debug(CF.WSH + "NoticeService.getNoticeOne.boardfile : ", boardfile);
+		log.debug(CF.WSH + "NoticeService.getNoticeOne.boardfile : "+boardfile);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("board", board);
@@ -55,8 +58,62 @@ public class NoticeService {
 		return map;
 	}
 	
+	// 공지사항 추가하기
+	public void addNotice(BoardForm boardForm, String path) {
+		log.debug(CF.WSH + "NoticeService.addNotice.boardForm : "+ boardForm);
+		log.debug(CF.WSH + "NoticeService.addNotice.path : "+ path);
+		
+		// jsp에서 적은 파일을 Multipartfile(BoardForm)에 저장하고 다시 Board에 나눠서 저장함
+		Board board = new Board();
+		board.setMemberId(boardForm.getMemberId());
+		board.setBoardCategory(boardForm.getBoardCategory());
+		board.setBoardTitle(boardForm.getBoardTitle());
+		board.setBoardContent(boardForm.getBoardContent());
+		board.setPrivateNo(boardForm.getPrivateNo());
+		board.getBoardNo();
+		log.debug(CF.WSH + "NoticeService.addNotice.board : "+ board);
+		
+		// DB에 값을 넣는 쿼리호출
+		int row = noticeMapper.insertNotice(board);
+		log.debug(CF.WSH + "NoticeService.addNotice.boardNo : "+ board.getBoardNo());
+		
+		if(boardForm.getBoardfileList() != null && boardForm.getBoardfileList().get(0).getSize() > 0  && row == 1) {
+			log.debug(CF.WSH + "NoticeService.addNotice.파일확인 : "+"첨부된 파일이 있습니다.");
+			for(MultipartFile mf : boardForm.getBoardfileList()) {
+				Boardfile boardfile = new Boardfile();
+				String originName = mf.getOriginalFilename();
+				String ext = originName.substring(originName.lastIndexOf("."));
+				String filename = UUID.randomUUID().toString();
+				
+				filename = filename.replace("-", ""); // -를 공백으로
+				filename = filename + ext;
+				
+				boardfile.setBoardNo(board.getBoardNo());
+				boardfile.setBoardFileOriginalName(originName);
+				boardfile.setBoardFileName(filename);
+				boardfile.setBoardFileType(mf.getContentType());
+				boardfile.setBoardFileSize(mf.getSize()); // long타입 // 파일의 배열 사이즈
+				log.debug(CF.WSH + "NoticeService.addNotice.boardfile : "+ boardfile);
+				noticefileMapper.insertNoticefile(boardfile);
+				
+				try {
+					mf.transferTo(new File(path+filename));
+				} catch (Exception e) {
+					e.printStackTrace();
+					
+					throw new RuntimeException();
+				}
+			}
+		}
+		
+		// Board board
+	}
+	
+}
+	
+	/*
 	// 공지사항 추가하기(파일포함)
 	public int addNotice(Board board) {
 		return noticeMapper.insertNotice(board);
 	}
-}
+	*/

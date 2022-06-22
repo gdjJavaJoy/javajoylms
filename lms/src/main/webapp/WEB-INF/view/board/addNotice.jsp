@@ -54,11 +54,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td>사진추가</td>
+				<td>파일 업로드</td>
 				<td>
-					<button type="button" id="addFileupload">파일 업로드</button>
-					<div id="fileSection">
-					</div>
+					<input type="file" name="boardfileList" multiple="multiple">
 				</td>
 			</tr>
 		</table>

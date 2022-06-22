@@ -9,6 +9,24 @@
 		FROM board_file
 		WHERE board_no = #{boardNo}
 	</select>
- 
-
+ 	<insert id="insertNoticefile"
+ 			parameterType="kr.co.javajoy.lms.vo.Boardfile">
+ 		INSERT INTO board_file (
+ 			board_no
+ 			,board_file_original_name
+ 			,board_file_name
+ 			,board_file_type
+ 			,board_file_size
+ 			,create_date
+ 			,update_date
+ 		) VALUES (
+ 			#{boardNo}
+ 			,#{boardFileOriginalName}
+ 			,#{boardFileName}
+ 			,#{boardFileType}
+ 			,#{boardFileSize}
+ 			,NOW()
+ 			,NOW()
+ 		)
+ 	</insert>
 </mapper>

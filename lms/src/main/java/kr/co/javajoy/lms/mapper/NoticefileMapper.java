@@ -8,6 +8,8 @@ import kr.co.javajoy.lms.vo.Boardfile;
 
 @Mapper
 public interface NoticefileMapper {
-
+	// 파일 조회
 	List<Boardfile> selectNoticefileList(int boardNo);
+	// 파일 생성
+	int insertNoticefile(Boardfile boardfile);
 }

@@ -9,7 +9,7 @@ public class Boardfile {
 	private String boardFileOriginalName;
 	private String boardFileName;
 	private String boardFileType;
-	private String fileSize;
+	private long boardFileSize;
 	private String createDate;
 	private String updateDate;
 	

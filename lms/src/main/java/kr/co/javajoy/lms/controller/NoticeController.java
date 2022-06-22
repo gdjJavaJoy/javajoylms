@@ -1,5 +1,6 @@
 package kr.co.javajoy.lms.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,10 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.service.NoticeService;
-import kr.co.javajoy.lms.vo.Board;
+import kr.co.javajoy.lms.vo.BoardForm;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -37,8 +39,8 @@ public class NoticeController {
 	public String getNoticeOne(Model model
 			,HttpServletRequest request
 			,@RequestParam(name = "boardNo") int boardNo) {
-		log.debug(CF.WSH + "NoticeController.getNoticeOne.notice : ", boardNo);
-		String path = request.getServletContext().getRealPath("/upload/");
+		log.debug(CF.WSH + "NoticeController.getNoticeOne.notice : "+ boardNo);
+		String path = request.getServletContext().getRealPath("file/board_file/");
 		
 		Map<String, Object> map = noticeService.getNoticeOne(boardNo);
 		model.addAttribute("path", path);
@@ -51,12 +53,24 @@ public class NoticeController {
 		return "board/addNotice";
 	}
 	@PostMapping("/addNotice")
-	public String addNotice(Board board) {
-		log.debug(CF.WSH + "NoticeController.addNotice.board : ", board);
-		Integer row = noticeService.addNotice(board);
-		log.debug(CF.WSH + "NoticeController.addNotice.row : ", row);
+	public String addNotice(HttpServletRequest request, BoardForm boardForm) {
+		String path = request.getServletContext().getRealPath("file/board_file/");
+		log.debug(CF.WSH + "NoticeController.addNotice(Post).path : "+ path);
 		
+		log.debug(CF.WSH + "NoticeController.addNotice(Post).boardFrom : "+ boardForm);
+		List<MultipartFile> boardfileList = boardForm.getBoardfileList();
+		if(boardfileList.get(0).getSize() > 0) { // 하나 이상의 파일이 업로드 되면
+			for(MultipartFile mf : boardfileList) {
+				log.debug(CF.WSH + "NoticeController.addNotice(Post).filename : "+mf.getOriginalFilename());
+			}
+			
+		}
+		// 불러오기
+		noticeService.addNotice(boardForm, path);
 		return "redirect:/getNoticeByPage";
+		
+		
 	}
+	
 	
 }

@@ -39,6 +39,9 @@
 	</select>
 	<insert id="insertNotice"
 			parameterType="kr.co.javajoy.lms.vo.Board">
+			<selectKey resultType="int" keyProperty="boardNo" order="AFTER">
+				select last_insert_id()
+			</selectKey>
 		INSERT INTO board(
 			member_id
 			,board_category
