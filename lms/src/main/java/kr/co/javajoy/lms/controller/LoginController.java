@@ -36,16 +36,16 @@ public class LoginController {
 		log.debug(CF.YHJ + "LoginController.login.memberId : " + memberId + CF.RESET);
 		log.debug(CF.YHJ + "LoginController.login.memberPw : " + memberPw  + CF.RESET);
 		
-		String result = loginService.login(memberId, memberPw); // 로그인
-		log.debug(CF.YHJ + "LoginController.login.result : " + result + CF.RESET);
+		String loginUser = loginService.login(memberId, memberPw); // 로그인
+		log.debug(CF.YHJ + "LoginController.login.loginUser : " + loginUser + CF.RESET);
 		
 		// 로그인 실패 시
-		if(result == null) {
+		if(loginUser == null) {
 			return "redirect:login"; 
 		}
-		session.setAttribute("loginUser", result);
+		session.setAttribute("loginUser", loginUser);
 		
-		return "index";
+		return "redirect:memberIndex";
 	}
 	
 	// 아이디 찾기
