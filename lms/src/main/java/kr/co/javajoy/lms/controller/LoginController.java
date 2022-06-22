@@ -21,6 +21,14 @@ import lombok.extern.slf4j.Slf4j;
 public class LoginController {
 	@Autowired LoginService loginService;
 	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		log.debug(CF.YHJ + "LoginController.logout.loginUser : " + session.getAttribute("loginUser"));
+		session.invalidate();
+		
+		return "redirect:/login";
+	}
+	
 	@GetMapping("/login")
 	public String login(HttpSession session) {
 		// 로그인이 되어있을 시
