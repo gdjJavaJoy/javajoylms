@@ -38,10 +38,10 @@ public class CurriculumService {
 		returnMap.put("lastPage", lastPage);
 		
 		// 디버깅
-		log.debug(CF.LGN + "StudentListController.selecStudentList rowPerPage : " + CF.RESET + rowPerPage);
-		log.debug(CF.LGN + "StudentListController.selecStudentList startRow : " + CF.RESET + startRow);
-		log.debug(CF.LGN + "StudentListController.selecStudentList lastPage : " + CF.RESET + lastPage );
-		log.debug(CF.LGN + "StudentListController.selecStudentList list.size() : " + CF.RESET + list);
+		log.debug(CF.LGN + "CurriculumListController.selecCurriculumList rowPerPage : " + CF.RESET + rowPerPage);
+		log.debug(CF.LGN + "CurriculumListController.selecCurriculumList startRow : " + CF.RESET + startRow);
+		log.debug(CF.LGN + "CurriculumListController.selecCurriculumList lastPage : " + CF.RESET + lastPage );
+		log.debug(CF.LGN + "CurriculumListController.selecCurriculumList list.size() : " + CF.RESET + list);
 		return returnMap;
 	}
 }
