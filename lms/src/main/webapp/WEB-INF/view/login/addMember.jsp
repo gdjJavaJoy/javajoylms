@@ -44,18 +44,19 @@
                 Create account
               </h1>
                <form method="post" action="${pageContext.request.contextPath}/addMember">
+               <input type="text" name="memberActive" value="'1'" hidden="hidden" id="active">
               <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">
                   회원구분
                 </span>
                 <select
                   class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-               	  name="level"
-               	  id="level"
+                    name="level"
+                    id="level"
                 >
-                  <option value="1">관리자</option>
-                  <option value="2">강사</option>
-                  <option value="3">학생</option>
+                  <option value="'1'">관리자</option>
+                  <option value="'2'">강사</option>
+                  <option value="'3'">학생</option>
                 </select>
               </label>
               <label class="block text-sm">
@@ -87,9 +88,9 @@
                   id="id"
                 />
               </label>
-              <label class="block mt-4 text-sm">
+              <label class="block mt-4 text-sm" id="passwordBox">
                 <span class="text-gray-700 dark:text-gray-400">
-            	PASSWORD
+               PASSWORD
             </span>
             <input
               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
@@ -99,7 +100,7 @@
               id="pw"
             />
           </label>
-			    <label class="block mt-4 text-sm">
+             <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">
                 이름 
                 </span>
@@ -162,8 +163,8 @@
                 <br>
                 <select
                   class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-               	  name="memberAddress"
-               	  id="memberAddr"
+                    name="memberAddress"
+                    id="memberAddr"
                 ></select>
               <!-- You should use a button here, as the anchor is only used for the example  -->
               <label class="block mt-4 text-sm">
@@ -179,12 +180,12 @@
                 />
               </label>
               <button 
-              	type="submit"
+                 type="submit"
                 class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
               >
                 Create account
               </button>
-			 </form>
+          </form>
               <hr class="my-8" />
               <p class="mt-4">
               </p>
@@ -196,153 +197,166 @@
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-	$('#level').change(function(){
-	if($(this).val() =="1") {
-		$('#insertForm').empty();
-		$('#insertForm').append('<input type="text" name="active" hidden="hidden" value="1"');
-	}	
-	else if($(this).val() == "2"){
-			  $('#insertForm').empty();
-			  $('#insertForm').append('<div class="mt-4 text-sm">\
-		                <span class="text-gray-700 dark:text-gray-400">\
-		                  성별\
-		                <span>\
-		                <div class="mt-2">\
-		                  <label\
-		                    class="inline-flex items-center text-gray-600 dark:text-gray-400"\
-		                  >\
-		                    <input\
-		                      type="radio"\
-		                      class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"\
-		                      name="gender"\
-		                      value="남"\
-		                    />\
-		                    <span class="ml-2">남</span>\
-		                  </label>\
-		                  <label\
-		                    class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400"\
-		                  >\
-		                    <input\
-		                      type="radio"\
-		                      class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"\
-		                      name="gender"\
-		                      value="여"\
-		                    />\
-		                    <span class="ml-2">여</span>\
-		                  </label>\
-		                </div>\
-		                <label class="block mt-4 text-sm">\
-		                <span class="text-gray-700 dark:text-gray-400">\
-		                입사일 선택\
-		                </span>\
-		                <input\
-		                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"\
-		                  type="date"\
-		                  name="memberJoin"\
-		                />\
-		              </label>\
-		              </div>\
-		              <input type="text" name="active" hidden="hidden" value="4">'
-		              );
-		  } else if ($(this).val() == "3") {
-			  $('#insertForm').empty();
-			  $('#insertForm').append('<div class="mt-4 text-sm">\
-		                <span class="text-gray-700 dark:text-gray-400">\
-	                  성별\
-	                <span>\
-	                <div class="mt-2">\
-	                  <label\
-	                    class="inline-flex items-center text-gray-600 dark:text-gray-400"\
-	                  >\
-	                    <input\
-	                      type="radio"\
-	                      class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"\
-	                      name="gender"\
-	                      value="남"\
-	                    />\
-	                    <span class="ml-2">남</span>\
-	                  </label>\
-	                  <label\
-	                    class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400"\
-	                  >\
-	                    <input\
-	                      type="radio"\
-	                      class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"\
-	                      name="gender"\
-	                      value="여"\
-	                    />\
-	                    <span class="ml-2">여</span>\
-	                  </label>\
-	                  <label class="block mt-4 text-sm">\
-	                  <span class="text-gray-700 dark:text-gray-400">\
-	                   최종학력\
-	                  </span>\
-	                  <select\
-	                    class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"\
-	                 	  name="education"\
-	                  >\
-	                    <option value="고졸">고졸</option>\
-	                    <option value="초대졸">초대졸</option>\
-	                    <option value="대졸">대졸</option>\
-	                  </select>\
-	                </label>\
-	                <label class="block mt-4 text-sm">\
-	                <span class="text-gray-700 dark:text-gray-400">\
-	                학원 등록일\
-	                </span>\
-	                <input\
-	                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"\
-	                  type="date"\
-	                  name="memberJoin"\
-	                />\
-	              </label>\
-	              </div>\
-	              <input type="text" name="active" hidden="hidden" value="4">'
-				 );
-		  }
-	});
-	$('#btn').click(function(){
-	if($('#idck').val().length > 3) {
-		$.ajax({
-			type:'post'
-			,url:'/lms/idCheck'
-			,data:{id:$('#idck').val()}
-			,success:function(ck){
-				console.log('ck:',ck);
-				if(ck=='false') {
-					alert('이미 사용중인 아이디 입니다');
-				} else {
-					$('#id').val(ck);
-				}
-			}
-		});
-	} else {
-		alert('id는 4자 이상입력해주세요');
-	}
-	
+   $('#level').change(function(){
+       if($(this).val() =="'2'") {
+          $('#passwordBox').hide();
+          $('#pw').val('1111');
+          $('#active').val("'4'");
+          
+       }else if($(this).val() =="'3'") {
+          $('#passwordBox').hide();
+          $('#pw').val('1111');
+          $('#active').val("'4'");
+       }else {
+          $('#passwordBox').show();
+          $('#active').val("'1'");
+       }
+    });
+
+   $('#level').change(function(){
+   if($(this).val() =="'1'") {
+      $('#insertForm').empty();
+   }   
+   else if($(this).val() == "'2'"){
+           $('#insertForm').empty();
+           $('#insertForm').append('<div class="mt-4 text-sm">\
+                      <span class="text-gray-700 dark:text-gray-400">\
+                        성별\
+                      <span>\
+                      <div class="mt-2">\
+                        <label\
+                          class="inline-flex items-center text-gray-600 dark:text-gray-400"\
+                        >\
+                          <input\
+                            type="radio"\
+                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"\
+                            name="gender"\
+                            value="남"\
+                          />\
+                          <span class="ml-2">남</span>\
+                        </label>\
+                        <label\
+                          class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400"\
+                        >\
+                          <input\
+                            type="radio"\
+                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"\
+                            name="gender"\
+                            value="여"\
+                          />\
+                          <span class="ml-2">여</span>\
+                        </label>\
+                      </div>\
+                      <label class="block mt-4 text-sm">\
+                      <span class="text-gray-700 dark:text-gray-400">\
+                      입사일 선택\
+                      </span>\
+                      <input\
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"\
+                        type="date"\
+                        name="memberJoin"\
+                      />\
+                    </label>\
+                    </div>'
+                    );
+        } else if ($(this).val() == "'3'") {
+           $('#insertForm').empty();
+           $('#insertForm').append('<div class="mt-4 text-sm">\
+                      <span class="text-gray-700 dark:text-gray-400">\
+                     성별\
+                   <span>\
+                   <div class="mt-2">\
+                     <label\
+                       class="inline-flex items-center text-gray-600 dark:text-gray-400"\
+                     >\
+                       <input\
+                         type="radio"\
+                         class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"\
+                         name="gender"\
+                         value="남"\
+                       />\
+                       <span class="ml-2">남</span>\
+                     </label>\
+                     <label\
+                       class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400"\
+                     >\
+                       <input\
+                         type="radio"\
+                         class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"\
+                         name="gender"\
+                         value="여"\
+                       />\
+                       <span class="ml-2">여</span>\
+                     </label>\
+                     <label class="block mt-4 text-sm">\
+                     <span class="text-gray-700 dark:text-gray-400">\
+                      최종학력\
+                     </span>\
+                     <select\
+                       class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"\
+                         name="education"\
+                     >\
+                       <option value="고졸">고졸</option>\
+                       <option value="초대졸">초대졸</option>\
+                       <option value="대졸">대졸</option>\
+                     </select>\
+                   </label>\
+                   <label class="block mt-4 text-sm">\
+                   <span class="text-gray-700 dark:text-gray-400">\
+                   학원 등록일\
+                   </span>\
+                   <input\
+                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"\
+                     type="date"\
+                     name="memberJoin"\
+                   />\
+                 </label>\
+                 </div>'
+             );
+        }
+   });
+   $('#btn').click(function(){
+   if($('#idck').val().length > 3) {
+      $.ajax({
+         type:'post'
+         ,url:'/lms/idCheck'
+         ,data:{id:$('#idck').val()}
+         ,success:function(ck){
+            console.log('ck:',ck);
+            if(ck=='false') {
+               alert('이미 사용중인 아이디 입니다');
+            } else {
+               $('#id').val(ck);
+            }
+         }
+      });
+   } else {
+      alert('id는 4자 이상입력해주세요');
+   }
+   
 });
-	$('#addrBtn').click(function(){
-		$.ajax({
-			type:'get'
-			,url:'/lms/getAddr'
-			,data:{keyword:$('#keyword').val()}
-			,success:function(a){
-				console.log(a);
-				console.log(typeof(a));
-				var a2 = JSON.parse(a);
-				console.log(typeof(a2));
-				console.log(a2);
-				
-				let arr = a2.results.juso; // 주소배열
-				console.log(arr);
-				for (let i=0; i<arr.length; i++) {
-					var addr = (arr[i].jibunAddr).replace(/\s/gi,"");
-					var obj = $("<option value="+addr+">"+arr[i].jibunAddr+'('+arr[i].zipNo+")</option>");
-					$('#memberAddr').append(obj);
-				};
-				
-			}
-		});
-	});
+   $('#addrBtn').click(function(){
+      $.ajax({
+         type:'get'
+         ,url:'/lms/getAddr'
+         ,data:{keyword:$('#keyword').val()}
+         ,success:function(a){
+            console.log(a);
+            console.log(typeof(a));
+            var a2 = JSON.parse(a);
+            console.log(typeof(a2));
+            console.log(a2);
+            
+            let arr = a2.results.juso; // 주소배열
+            console.log(arr);
+            for (let i=0; i<arr.length; i++) {
+               var addr = (arr[i].jibunAddr).replace(/\s/gi,"");
+               var obj = $("<option value="+addr+">"+arr[i].jibunAddr+'('+arr[i].zipNo+")</option>");
+               $('#memberAddr').append(obj);
+            };
+            
+         }
+      });
+   });
 </script>
 </html> 
