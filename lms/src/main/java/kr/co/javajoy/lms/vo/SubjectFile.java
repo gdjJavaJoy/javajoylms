@@ -9,7 +9,7 @@ public class SubjectFile {
 	private String subjectFileOriginalName;
 	private String subjectFileName;
 	private String subjectFileType;
-	private String subjectFileSize;
+	private long subjectFileSize;
 	private String createDate;
 	private String updateDate;
 }

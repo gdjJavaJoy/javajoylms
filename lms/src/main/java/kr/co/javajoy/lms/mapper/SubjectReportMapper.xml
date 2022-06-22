@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.javajoy.lms.mapper.SubjectReportMapper">
+	
+	<!-- 과제 게시판 글 총 개수 -->
+	<select id="selectTotalCount"
+			resultType="int">
+		SELECT COUNT(*) FROM subject_report
+	</select>
+	
 	<!-- 과제 게시판 글 리스트 출력 -->
 	<select id="selectSubjectReportListByPage"
 			parameterType="java.util.Map"
 			resultType="kr.co.javajoy.lms.vo.SubjectReport">
 		SELECT 
-			r.subject_report_no subjectReportNo
+			b.subject_board_no subjectBoardNo
+			,r.subject_report_no subjectReportNo
 			,b.subject_no subjectNo
 			,r.member_id memberId
 			,r.subject_report_title subjectReportTitle
@@ -18,9 +26,85 @@
 		LIMIT #{startRow}, #{rowPerPage}
 	</select>
 	
-	<!-- 과제 게시판 글 총 개수 -->
-	<select id="selectTotalCount"
-			resultType="int">
-		SELECT COUNT(*) FROM subject_report
+	<!-- 과제 게시판 상세보기 -->
+	<select id="selectSubjectReportOne"
+			parameterType="int"
+			resultType="kr.co.javajoy.lms.vo.SubjectReport">
+		SELECT 
+			b.subject_board_no subjectBoardNo
+			,r.subject_report_no subjectReportNo
+			,b.subject_no subjectNo
+			,r.member_id memberId 
+			,r.subject_report_title subjectReportTitle
+			,r.subject_report_content subjectReportContent
+			,r.subject_report_period subjectReportPeriod
+			,r.create_date createDate
+		FROM subject_board AS b
+		LEFT JOIN subject_report AS r ON r.subject_report_no = b.subject_board_no
+		WHERE b.subject_board_no = #{subjectBoardNo};
+	</select>
+	
+	<!-- 과제 게시판 상세보기에 파일 이름으로된 리스트 출력 -->
+	<select id="selectSubjectReportFileNameList"
+			parameterType="int"
+			resultType="String">
+		SELECT
+			f.subject_file_name subjectFileName
+		FROM subject_board AS b
+		LEFT JOIN subject_file AS f ON f.subject_file_board_no = b.subject_board_no
+		WHERE b.subject_board_no = #{subjectBoardNo};
+	</select>
+	
+	<!-- 과제 게시판 상세보기 파일 리스트 출력 -->
+	<select id="selectSubjectReportFileList"
+			parameterType="int"
+			resultType="kr.co.javajoy.lms.vo.SubjectFile">
+		SELECT f.subject_file_name subjectFileName
+			  ,f.subject_file_type subjectFileType
+			  ,f.subject_file_size subjectFileSize
+		FROM subject_board AS b
+		LEFT JOIN subject_file AS f ON f.subject_file_board_no = b.subject_board_no
+		WHERE b.subject_board_no = #{subjectBoardNo};
 	</select>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

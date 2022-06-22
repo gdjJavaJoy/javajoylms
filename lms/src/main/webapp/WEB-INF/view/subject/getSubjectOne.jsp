@@ -840,9 +840,9 @@
 
 			<!-- 카테고리 추가예정 -->
 			<div>카테고리6개(구현중)</div>
-			<a href="${pageContext.request.contextPath}/studentList?subjectNo=${subject.subjectNo}">1. 수강 학생 관리</a>
-			<a href="${pageContext.request.contextPath}/curriculumList?subjectNo=${subject.subjectNo}">2. 커리큘럼 관리</a>
-			<a href="${pageContext.request.contextPath}/getSubjectReportListByPage?subjectNo=${subject.subjectNo}">5. 과제 게시판 관리</a>
+			<a href="${pageContext.request.contextPath}/studentList?subjectNo=${subject.subjectNo}">[이규남]1. 수강 학생 관리</a>
+			<a href="${pageContext.request.contextPath}/curriculumList?subjectNo=${subject.subjectNo}">[이규남]2. 커리큘럼 관리</a>
+			<a href="${pageContext.request.contextPath}/getSubjectReportListByPage?subjectNo=${subject.subjectNo}">[박범진]5. 과제 게시판 관리</a>
             <!-- With avatar -->
             <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Subject View Detail</h4>
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">

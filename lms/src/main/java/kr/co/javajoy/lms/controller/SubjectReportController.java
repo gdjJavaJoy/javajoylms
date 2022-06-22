@@ -2,6 +2,8 @@ package kr.co.javajoy.lms.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,4 +43,85 @@ public class SubjectReportController {
 		
 		return "subject/getSubjectReportListByPage";
 	}
+	
+	// 공지사항 상세보기 + 파일 이름 리스트 출력
+	@GetMapping("/getSubjectReportOne")
+	public String getSubjectReportOne(Model model
+									,HttpServletRequest request
+									,@RequestParam(name="subjectBoardNo") int subjectBoardNo) {
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.subjectBoardNo : ", subjectBoardNo);
+		// 파일 업로드 위치 지정
+		String path = request.getServletContext().getRealPath("/file/subject_file");
+		
+		Map<String, Object> returnMap = subjectReportService.getSubjectReportAndFileNameList(subjectBoardNo);
+		model.addAttribute("path", path);
+		model.addAttribute("subjectReport", returnMap.get("subjectReport"));
+		model.addAttribute("subjectFileList", returnMap.get("subjectFileList"));
+		
+		return "subject/getSubjectReportOne";
+	}
 }
+
+
+
+
+
+
+
+
+
+
+;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

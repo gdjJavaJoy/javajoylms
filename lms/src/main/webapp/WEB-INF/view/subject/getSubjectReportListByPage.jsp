@@ -845,7 +845,8 @@
                 <table class="w-full whitespace-no-wrap">
                   <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">  
-                      <th class="px-4 py-3">번호</th>
+                      <th class="px-4 py-3">전체글번호</th>
+                      <th class="px-4 py-3">과제번호</th>
                       <th class="px-4 py-3">강좌번호</th>
                       <th class="px-4 py-3">작성자</th>
                       <th class="px-4 py-3">제목</th>
@@ -855,11 +856,12 @@
                   <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                   <c:forEach var="s" items="${list}">
                     <tr class="text-gray-700 dark:text-gray-400">
-						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectReportNo=${s.subjectReportNo}">${s.subjectReportNo}</a></td>
-						<td class="px-4 py-3 text-xs"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectReportNo=${s.subjectReportNo}">${s.subjectNo}</a></td>
-						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectReportNo=${s.subjectReportNo}">${s.memberId}</a></td>
-						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectReportNo=${s.subjectReportNo}">${s.subjectReportTitle}</a></td>
-						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectReportNo=${s.subjectReportNo}">${s.createDate}</a></td>
+                   		<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}">${s.subjectBoardNo}</a></td>
+						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}">${s.subjectReportNo}</a></td>
+						<td class="px-4 py-3 text-xs"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}">${s.subjectNo}</a></td>
+						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}">${s.memberId}</a></td>
+						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}">${s.subjectReportTitle}</a></td>
+						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}">${s.createDate}</a></td>
 					</tr>
                   </c:forEach>
                   </tbody>
