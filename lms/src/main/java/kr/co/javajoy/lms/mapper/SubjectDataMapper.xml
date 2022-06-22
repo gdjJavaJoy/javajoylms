@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.javajoy.lms.mapper.SubjectDataMapper">
+
+<select id="getSubjectDataList"
+		resultType="map"
+		parameterType="java.util.Map">
+		<!-- 관리자(Admin) 커리큘럼 리스트 -->
+	SELECT a.subject_data_no subjectDataNo
+		  ,b.subject_no subjectNo
+		  ,a.member_id memberId
+	 	  ,a.subject_data_title subjectDataTitle
+	 	  ,a.create_date createDate
+	FROM  subject_data AS a
+	LEFT JOIN subject AS b
+		ON a.subject_data_no = b.subject_no
+		LIMIT 10
+</select>
+	<!-- 리스트 전체 카운트 -->
+<select id="selectTotalCount" 
+		resultType="int" >
+	SELECT COUNT(*)
+	FROM subject_data
+</select>
+</mapper>
