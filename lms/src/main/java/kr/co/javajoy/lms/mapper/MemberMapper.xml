@@ -17,10 +17,19 @@
 	 	 FROM member_id
 		WHERE member_id = #{memberId}
 	</select>
+	
 	<select id="selectMemberId" resultType="String">
 		SELECT
 			member_id memberId
 	   FROM member_id
+	</select>
+
+	<select id="selectResignedMemberId" 
+			resultType="String">
+		SELECT
+			member_id memberId
+		FROM member_id
+		WHERE member_active = "3"
 	</select>
 	
 	<select id="selectMemberLevel"

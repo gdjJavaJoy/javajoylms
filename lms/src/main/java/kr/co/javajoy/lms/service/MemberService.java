@@ -96,6 +96,11 @@ public class MemberService {
 		memberMapper.updateMemberActive(memberId);
 	}
 	
+	// 탈퇴한 회원 리스트 
+	public List<String> getResignedMemberId() {
+		List<String> list = memberMapper.selectResignedMemberId();
+		return list;
+	}
 	
 	
 	

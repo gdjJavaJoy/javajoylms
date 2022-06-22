@@ -32,4 +32,6 @@ public interface MemberMapper {
 	public String selectMemberActive(String memberId);
 	// 비활성화 memberActive를 활성화
 	public void updateMemberActive(String memberId);
+	// 탈퇴한 회원 추출
+	public List<String> selectResignedMemberId();
 }

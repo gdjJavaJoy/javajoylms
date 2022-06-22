@@ -42,6 +42,7 @@ public class LoginController {
 	
 	@PostMapping("/login")
 	public String login(HttpSession session
+						,Model model
 						,@RequestParam(value="memberId") String memberId
 						,@RequestParam(value="memberPw") String memberPw) {
 		log.debug(CF.YHJ + "LoginController.login.memberId : " + memberId + CF.RESET);
@@ -60,7 +61,7 @@ public class LoginController {
 		// session에 ID 저장
 		session.setAttribute("loginUser", loginMap.get("memberId"));
 		
-		// level과 active에 따른 분기	
+		// level과 active에 따른 분기
 		if(loginMap.get("level").equals("1")) { // admin일 경우
 			log.debug(CF.YHJ + "getSubjectByPage로 이동 " + CF.RESET);
 			return "redirect:getSubjectByPage";
@@ -72,7 +73,7 @@ public class LoginController {
 			}
 			return "redirect:memberIndex"; //teacher, student 정상 로그인
 		}
-		return "errorPage";
+		return "redirect:/errorPage";
 	}
 	
 	// 아이디 찾기
