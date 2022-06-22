@@ -1,6 +1,7 @@
 package kr.co.javajoy.lms.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -34,4 +35,9 @@ public interface MemberMapper {
 	public void updateMemberActive(String memberId);
 	// 탈퇴한 회원 추출
 	public List<String> selectResignedMemberId();
+
+	public int selectMemberPw(Map<String,Object> map);
+	
+	int updateMemberPassword(Password password);
+
 }

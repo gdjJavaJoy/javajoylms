@@ -6,6 +6,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,7 +62,19 @@ public class LoginRestController {
 		}
 		return sb.toString();
 	}
-
+	@GetMapping("/pwCheck")
+	public String pwCheck(HttpSession session
+						 ,@RequestParam(value="password") String password) {
+		String memberId = (String) session.getAttribute("loginUser"); // 세션에 있는 loginUser 값 변수에 저장 
+		log.debug(CF.PSG+"LgoinRestController.pwCheck.memberId :" + memberId + CF.RESET);
+		int cnt = memberService.getFindSamePw(memberId, password); 
+		log.debug(CF.PSG+"LoginRestController.pwCheck.cnt :" + cnt + CF.RESET); 
+		
+		if(cnt > 0) { // 같은 비밀번호를 한번이라도 사용한적이 있다면 
+			return "false";
+		}
+		return password;
+	}
 	@GetMapping("/resignMemberCheck")
 	public String resignMemberCheck(@RequestParam(value = "id") String id) {
 		List<String> list = memberService.getResignedMemberId();

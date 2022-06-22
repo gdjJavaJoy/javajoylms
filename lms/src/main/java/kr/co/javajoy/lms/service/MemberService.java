@@ -1,13 +1,14 @@
 package kr.co.javajoy.lms.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.javajoy.lms.CF;
-import kr.co.javajoy.lms.controller.ParkseongjunController;
 import kr.co.javajoy.lms.mapper.MemberMapper;
 import kr.co.javajoy.lms.vo.Admin;
 import kr.co.javajoy.lms.vo.Member;
@@ -85,7 +86,7 @@ public class MemberService {
 		}
 		return row;
 	}
-	
+	// 활성화 상태 조회하는 서비스 
 	public String getMemberActive(String memberId) {
 		String active = memberMapper.selectMemberActive(memberId);
 		return active;
@@ -95,7 +96,42 @@ public class MemberService {
 	public void modifyMemberActive(String memberId) {
 		memberMapper.updateMemberActive(memberId);
 	}
-	
+	// 비밀번호 변경일 
+	public int getMemberPwPeriod(String memberId) {
+		int period = memberMapper.selectMemberPwPeriod(memberId);
+		return period;
+	}
+	// level 값 받아오는서비스 
+	public String getMemberLevel(String memberId) {
+		String level = memberMapper.selectMemberLevel(memberId);
+		return level;
+	}
+	// 해당 회원이 같은비밀번호 사용하는 지 검사하는서비스 
+	public int getFindSamePw(String memberId,String password) {
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("memberId", memberId);
+		map.put("password", password);
+		int cnt = memberMapper.selectMemberPw(map);
+		log.debug(CF.PSG+"asdasdsadad"+cnt+CF.RESET);
+		return cnt;
+	}
+	public int modifyMemberPassword(Password password) {
+		int row = 0;
+		String memberId = password.getMemberId();
+		log.debug(CF.PSG +"MemberService.modifyMemberPassword.memberId : "+memberId +CF.RESET);
+		String active = memberMapper.selectMemberActive(memberId);
+		if (active.equals("4") || active.equals("2")) {
+			memberMapper.updateMemberActive(memberId);
+			memberMapper.updateMemberPassword(password);
+	  row = memberMapper.insertPassword(password);
+		} else {
+			memberMapper.updateMemberPassword(password);
+	  row = memberMapper.insertPassword(password);
+		}
+			
+		return row;
+	}
+
 	// 탈퇴한 회원 리스트 
 	public List<String> getResignedMemberId() {
 		List<String> list = memberMapper.selectResignedMemberId();
