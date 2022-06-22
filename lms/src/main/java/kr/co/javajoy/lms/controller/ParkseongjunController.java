@@ -1,11 +1,14 @@
 package kr.co.javajoy.lms.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.co.javajoy.lms.CF;
+import kr.co.javajoy.lms.mapper.MemberMapper;
 import kr.co.javajoy.lms.service.MemberService;
 import kr.co.javajoy.lms.vo.SignupForm;
 import lombok.extern.slf4j.Slf4j;
@@ -36,4 +39,17 @@ public class ParkseongjunController {
 		return "redirect:/addMember";
 		}
 	}
+	@GetMapping("/modifyPw")
+	public String modifyPw(HttpSession session) {
+		String memberId = (String) session.getAttribute("loginUser"); // 세션에 있는 loginUser 값 변수에 저장 
+		String active = memberService.getMemberActive(memberId); // memberId를 사용해서 level값 받아오기
+		
+		//디버깅
+		log.debug(CF.PSG+"ParkseongjunController.modifyPw.memberId : " + memberId+ CF.PSG);
+		log.debug(CF.PSG+"ParkseongjunController.modifyPw.active : " + active + CF.PSG);
+		
+		
+		return "index";
+	}
+	
 }

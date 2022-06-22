@@ -26,5 +26,9 @@ public interface MemberMapper {
 	int insertTeacher(Teacher teacher);
 	// 학생 추가
 	int insertStudent(Student student);
-
+	
+	int selectMemerPwPeriod(String memberId);
+	
+	String selectMemberActive(String memberId);
+		
 }

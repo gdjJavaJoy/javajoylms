@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.javajoy.lms.mapper.MemberMapper">
+	<select id="selectMemberPwPeriod"
+			parameterType="String"
+			resultType="int">
+		SELECT
+			TIMESTAMPDIFF(MONTH,)
+	</select>
+	<select id="selectMemberActive"
+			parameterType="String"
+			resultType="String">
+	 	SELECT
+	 	 	memberActive active
+	 	 FROM member_id
+		WHERE member_id = #{memberId}
+	</select>
 	<select id="selectMemberId" resultType="String">
 		SELECT
 			member_id memberId
@@ -114,5 +128,4 @@
 				  ,NOW()
 		)
 	</insert>
-	
 </mapper>

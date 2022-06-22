@@ -86,4 +86,8 @@ public class MemberService {
 		}
 		return row;
 	}
+	public String getMemberActive(String memberId) {
+		String active = memberMapper.selectMemberActive(memberId);
+		return active;
+	}
  }
