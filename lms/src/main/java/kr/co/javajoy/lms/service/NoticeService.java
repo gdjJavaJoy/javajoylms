@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.mapper.NoticeMapper;
 import kr.co.javajoy.lms.mapper.NoticefileMapper;
 import kr.co.javajoy.lms.vo.Board;
 import kr.co.javajoy.lms.vo.Boardfile;
+import kr.co.javajoy.lms.vo.Notice;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -42,16 +44,19 @@ public class NoticeService {
 	public Map<String, Object> getNoticeOne(int boardNo) {
 		// 쿼리불러오기 조회값 저장
 		List<Board> board = noticeMapper.selectNoticeOne(boardNo); 
-		log.debug(board +"----------------------------");
+		log.debug(CF.WSH + "NoticeService.getNoticeOne.board : ", board);
 		// 파일
 		List<Boardfile> boardfile = noticefileMapper.selectNoticefileList(boardNo); 
-		log.debug(boardfile +"----------------------------");
+		log.debug(CF.WSH + "NoticeService.getNoticeOne.boardfile : ", boardfile);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("board", board);
 		map.put("boardfile", boardfile);
-	
 		return map;
-		
+	}
+	
+	// 공지사항 추가하기(파일포함)
+	public int addNotice(Board board) {
+		return noticeMapper.insertNotice(board);
 	}
 }

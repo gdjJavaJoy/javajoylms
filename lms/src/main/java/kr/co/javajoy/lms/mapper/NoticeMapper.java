@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.javajoy.lms.vo.Board;
+import kr.co.javajoy.lms.vo.Notice;
 
 @Mapper
 public interface NoticeMapper {
@@ -15,5 +16,7 @@ public interface NoticeMapper {
 	int selectTotalCount();
 	// Notice One
 	List<Board>selectNoticeOne(int boardNo);
+	// add Notice
+	int insertNotice(Board board);
 
 }

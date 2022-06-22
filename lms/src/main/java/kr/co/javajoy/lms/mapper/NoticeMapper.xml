@@ -37,4 +37,24 @@
 		FROM board
 		WHERE board_no = #{boardNo}
 	</select>
+	<insert id="insertNotice"
+			parameterType="kr.co.javajoy.lms.vo.Board">
+		INSERT INTO board(
+			member_id
+			,board_category
+			,board_title
+			,board_content
+			,private_no
+			,create_date
+			,update_date
+		)VALUES(
+			#{memberId}
+			,#{boardCategory}
+			,#{boardTitle}
+			,#{boardContent}
+			,#{privateNo}
+			,NOW()
+			,NOW()
+		)
+	</insert>
 </mapper>

@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.service.NoticeService;
+import kr.co.javajoy.lms.vo.Board;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -43,6 +45,18 @@ public class NoticeController {
 		model.addAttribute("board",map.get("board"));
 		model.addAttribute("boardfile",map.get("boardfile"));
 		return "board/getNoticeOne";
+	}
+	@GetMapping("/addNotice")
+	public String addNotice() {
+		return "board/addNotice";
+	}
+	@PostMapping("/addNotice")
+	public String addNotice(Board board) {
+		log.debug(CF.WSH + "NoticeController.addNotice.board : ", board);
+		Integer row = noticeService.addNotice(board);
+		log.debug(CF.WSH + "NoticeController.addNotice.row : ", row);
+		
+		return "redirect:/getNoticeByPage";
 	}
 	
 }

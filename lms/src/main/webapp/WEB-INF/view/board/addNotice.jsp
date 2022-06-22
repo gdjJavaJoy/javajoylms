@@ -13,8 +13,57 @@
 </head>
 <body>
 <div>
-	<h1>addNotice</h1>
-	<table class="table table-striped"></table>
+	<form method="post" action="${pageContext.request.contextPath}/addNotice" enctype="multipart/form-data" id="addForm">
+		<h1>addNotice</h1>
+		<table class="table table-striped">
+			<tr>
+				<td>ID</td>
+				<td>
+					<!-- 임시 값 대입 추후 세션 추가 예정 -->
+					<input name="memberId" value="admin">
+				</td>
+			</tr>
+			<tr>
+				<td>카테고리</td>
+				<td>
+					<select name="boardCategory">
+						<option value="1">전체공지사항</option>
+						<option value="2">자유게시판</option>
+						<option value="3">전체공지</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>제목</td>
+				<td>
+					<input type="text" name="boardTitle" id="boardTitle">
+				</td>
+			</tr>
+			<tr>
+				<td>내용</td>
+				<td>
+					<input type="text" name="boardContent" id="boardContent">
+				</td>
+			</tr>
+			<tr>
+				<td>익명여부</td>
+				<td>
+					<input type="radio" name="privateNo" value="1">없음<br>
+					<input type="radio" name="privateNo" value="2">익명<br>
+					<input type="radio" name="privateNo" value="3">비밀
+				</td>
+			</tr>
+			<tr>
+				<td>사진추가</td>
+				<td>
+					<button type="button" id="addFileupload">파일 업로드</button>
+					<div id="fileSection">
+					</div>
+				</td>
+			</tr>
+		</table>
+		<button type="submit" id="addNotice">작성</button>
+	</form>
 </div>
 </body>
 </html>
