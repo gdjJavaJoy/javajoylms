@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.javajoy.lms.mapper.StudentMapper">
+	<select id="studentIndex"
+			parameterType="String"
+			resultType="kr.co.javajoy.lms.vo.Subject">
+			SELECT 
+				s.subject_no subjectNo
+				,s.teacher_id teacherId
+				,s.subject_name subjectName
+				,s.subject_start_date subjectStartDate
+				,s.subject_finish_date subjectFinishDate
+			FROM subject_student ss
+				INNER JOIN subject s
+					ON ss.subject_no = s.subject_no
+			WHERE member_id = #{memberId}
+			ORDER BY s.create_date
+	</select>
+</mapper>

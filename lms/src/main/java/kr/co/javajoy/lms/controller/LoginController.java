@@ -1,6 +1,5 @@
 package kr.co.javajoy.lms.controller;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -61,6 +60,7 @@ public class LoginController {
 		// session에 ID 저장
 		session.setAttribute("loginUser", loginMap.get("memberId"));
 		session.setAttribute("level", loginMap.get("level"));
+		
 		// level과 active에 따른 분기
 		if(loginMap.get("level").equals("1")) { // admin일 경우
 			log.debug(CF.YHJ + "getSubjectByPage로 이동 " + CF.RESET);

@@ -42,7 +42,7 @@
               Page not found. Check the address or
               <a
                 class="text-purple-600 hover:underline dark:text-purple-300"
-                href="../index.html"
+                href="${pageContext.request.contextPath}/login"
               >
                 go back
               </a>
