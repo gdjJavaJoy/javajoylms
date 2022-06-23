@@ -6,15 +6,16 @@
 		resultType="map"
 		parameterType="java.util.Map">
 		<!-- 관리자(Admin) 커리큘럼 리스트 -->
-	SELECT a.member_id memberId
-			,b.language_name languageName
-			,a.curriculum_title curriculumTitle
-			,a.start_day startDay
-			,a.end_day endDay
+	SELECT 
+		a.member_id memberId
+		,b.language_name languageName
+		,a.curriculum_title curriculumTitle
+		,a.start_day startDay
+		,a.end_day endDay
 	FROM curriculum AS a
-	INNER JOIN language AS b
+		INNER JOIN language AS b
 		ON a.language_no = b.language_no
-		LIMIT 10
+		LIMIT #{startRow}, #{rowPerPage}
 </select>
 	<!-- 리스트 전체 카운트 -->
 <select id="selectTotalCount" 

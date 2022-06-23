@@ -32,21 +32,23 @@ parameterType="">
 <select id="getStudentList"
 		resultType="map"
 		parameterType="java.util.Map">
-	SELECT b.subject_no subjectNo
-	      ,a.member_id memberId
-	      ,a.student_name studentName
-	      ,a.student_gender studentGender
-	      ,a.student_phone studentPhone
-	      ,a.student_address studentAddress
-	      ,a.student_detailaddress studentDetailAddress
-	      ,a.student_email studentEmail
-	      ,a.student_education studentEducation
-	      ,a.student_register_date studentRegisterDate
-	      ,a.update_date updateDate
+	SELECT 
+		b.subject_no subjectNo
+		,a.member_id memberId
+		,a.student_name studentName
+		,a.student_gender studentGender
+		,a.student_phone studentPhone
+		,a.student_address studentAddress
+		,a.student_detailaddress studentDetailAddress
+		,a.student_email studentEmail
+		,a.student_education studentEducation
+		,a.student_register_date studentRegisterDate
+		,a.update_date updateDate
 	FROM student AS a
-	INNER JOIN subject_student AS b
+		INNER JOIN subject_student AS b
 	    ON a.member_id = b.member_id
-	    ORDER BY 1 LIMIT 10
+	    ORDER BY subjectNo
+	    LIMIT #{startRow}, #{rowPerPage}
 </select>
 <select id="selectTotalCount" 
 		resultType="int" >

@@ -6,15 +6,16 @@
 		resultType="map"
 		parameterType="java.util.Map">
 		<!-- 관리자(Admin) 커리큘럼 리스트 -->
-	SELECT a.subject_data_no subjectDataNo
-		  ,b.subject_no subjectNo
-		  ,a.member_id memberId
-	 	  ,a.subject_data_title subjectDataTitle
-	 	  ,a.create_date createDate
+	SELECT 
+		a.subject_data_no subjectDataNo
+		,b.subject_no subjectNo
+		,a.member_id memberId
+		,a.subject_data_title subjectDataTitle
+		,a.create_date createDate
 	FROM  subject_data AS a
-	LEFT JOIN subject AS b
+		LEFT JOIN subject AS b
 		ON a.subject_data_no = b.subject_no
-		LIMIT 10
+		LIMIT #{startRow}, #{rowPerPage}
 </select>
 	<!-- 리스트 전체 카운트 -->
 <select id="selectTotalCount" 
