@@ -41,8 +41,8 @@
 					<td>${n.updateDate}</td>
 				</tr>
 			</table>
-				<a href="${pageContext.request.contextPath}/removeNotice?noticeId=${n.boardNo}">삭제</a>
-				<a href="${pageContext.request.contextPath}/modifyNotice?noticeId=${n.boardNo}">수정</a>
+				<a href="${pageContext.request.contextPath}/removeNotice?boardNo=${n.boardNo}">삭제</a>
+				<a href="${pageContext.request.contextPath}/modifyNotice?boardNo=${n.boardNo}">수정</a>
 		</C:forEach>
 		<div>첨부파일</div>
 			<C:forEach var="boardfile" items="${boardfile}">

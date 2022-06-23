@@ -105,8 +105,28 @@ public class NoticeService {
 				}
 			}
 		}
-		
-		// Board board
+	}
+	public void removefileNotice (int boardfileNo, String path) {
+			List<String> boardfileList = noticefileMapper.selectNoticefileNameListByBoardfileNo(boardfileNo);
+			log.debug(CF.WSH + "NoticeService.removefileNotice.boardfileList : "+ boardfileList);
+			for(String bfl : boardfileList ) {
+				File f = new File(path+bfl);
+				if(f.exists())
+					f.delete();
+			}
+	// 행삭제
+	noticefileMapper.deleteNoticefileOne(boardfileNo);
+	}
+	public void removeNotice(int boardNo, String path) {
+			List<String> remove = noticefileMapper.selectNoticefileNameList(boardNo);
+			for(String re : remove) {
+				File f = new File(path+re);
+				if(f.exists())
+					f.delete();
+			}
+	// boaardNo를 이용한 행삭제
+	noticefileMapper.deleteNoticefileList(boardNo);
+	noticeMapper.deleteNotice(boardNo);
 	}
 	
 }

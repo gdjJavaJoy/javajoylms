@@ -12,4 +12,12 @@ public interface NoticefileMapper {
 	List<Boardfile> selectNoticefileList(int boardNo);
 	// 파일 생성
 	int insertNoticefile(Boardfile boardfile);
+	// 파일이름 조회(삭제 전) boardfileNo를 이용해 boardfileName을 조회
+	List<String> selectNoticefileNameListByBoardfileNo(int boardfileNo);
+	// 파일 삭제
+	int deleteNoticefileOne(int boardfileNo);
+	// 파일이름 조회(삭제 전) boardNo를 이용해 boardfileName을 조회
+	List<String> selectNoticefileNameList(int boardNo);
+	// 파일 삭제
+	int deleteNoticefileList(int boardNo);
 }

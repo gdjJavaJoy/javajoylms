@@ -62,16 +62,42 @@ public class NoticeController {
 		List<MultipartFile> boardfileList = boardForm.getBoardfileList();
 		if(boardfileList.get(0).getSize() > 0) { // 하나 이상의 파일이 업로드 되면
 			for(MultipartFile mf : boardfileList) {
+				log.debug(CF.WSH + "NoticeController.addNotice(Post).boardfileList : "+boardfileList);
 				log.debug(CF.WSH + "NoticeController.addNotice(Post).filename : "+mf.getOriginalFilename());
 			}
 			
 		}
-		// 불러오기
 		noticeService.addNotice(boardForm, path);
 		return "redirect:/getNoticeByPage";
-		
-		
+	}
+	@GetMapping("/removeNoticefile") // 파일 먼저 삭제
+	public String removeNoticefile(HttpServletRequest request
+			,@RequestParam(name="boardFileNo") int boardfileNo
+			,@RequestParam(name="boardNo") int boardNo) {
+		log.debug(CF.WSH + "NoticeController.removeNoticefile(Get).boardFileNo : "+ boardfileNo);
+		log.debug(CF.WSH + "NoticeController.removeNoticefile(Get).boardNo : "+ boardNo);
+		String path = request.getServletContext().getRealPath("file/board_file/");
+			noticeService.removefileNotice(boardfileNo,path);
+		return "redirect:/modfyNotice?boardNo="+boardNo;
+	}
+	@GetMapping("/removeNotice")
+	public String removeNoice(HttpServletRequest request
+			,@RequestParam(name="boardNo") int boardNo) {
+		log.debug(CF.WSH + "NoticeController.removeNotice(Get).boardNo : "+ boardNo);
+		String path = request.getServletContext().getRealPath("file/board_file/");
+		noticeService.removeNotice(boardNo, path);
+	return "redirect:/getNoticeByPage";
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 }

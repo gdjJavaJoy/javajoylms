@@ -45,4 +45,28 @@
  			,NOW()
  		)
  	</insert>
+ 	<select id="selectNoticefileNameListByBoardfileNo"
+ 			parameterType="int"
+ 			resultType="String">
+ 		SELECT board_file_name
+ 		FROM board_file
+ 		WHERE board_file_no = #{boardFileNo}
+ 	</select>
+ 	<delete id="deleteNoticefileOne"
+ 			parameterType="int">
+ 		DELETE FROM board_file
+ 		WHERE board_fild_no = #{boardFileNo}
+ 	</delete>
+ 	<select id="selectNoticefileNameList"
+ 			parameterType="int"
+ 			resultType="String">
+ 		SELECT board_file_name
+ 		FROM board_file
+ 		WHERE board_no = #{boardNo}
+ 	</select>
+ 	<delete id="deleteNoticefileList"
+ 			parameterType="int">
+ 		DELETE FROM board_file
+ 		WHERE board_No = #{boardNo}
+ 	</delete>
 </mapper>

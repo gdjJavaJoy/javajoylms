@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-	$(document).ready(function(){
+<!-- <script>
+	$(document).ready(function() {
 		$('#addFileupload').click
 			let flag = true;
 		$('.noticefileList').each(function(){
@@ -29,12 +29,12 @@
 	
 	$('#addNotice').click(function(){
 		let flag = true;
-		if($('#noticeTitle').val() == ''){
+		if($('#boardTitle').val() == ''){
 			alert('noticeTitle 입력하세요');
-		} else if($('#noticeContent').val() == '') {
+		} else if($('#boardContent').val() == '') {
 			alert('noticeContent 입력하세요');
 		} else {
-			$('.noticefiileList').each(function(){
+			$('.noticefileList').each(function(){
 				if($(this).val() == '') {
 					flag = false;
 				}
@@ -47,6 +47,7 @@
 		}
 	});
 </script>
+ -->
 </head>
 <body>
 <div>
@@ -93,9 +94,11 @@
 			<tr>
 				<td>파일 업로드</td>
 				<td>
-				<!-- 파일 : <input type="file" name="boardfileList" multiple="multiple" > -->
-					<button type="button" id="addFileupload">파일 업로드 추가</button>
-					<div id="fileSection"></div>
+				파일 : <input type="file" name="boardfileList" multiple="multiple" >
+					<!-- <button type="button" id="addFileupload">파일 업로드 추가</button>
+					<div id="fileSection"> -->
+					
+					</div>
 				</td>
 			</tr>
 		</table>

@@ -18,5 +18,9 @@ public interface NoticeMapper {
 	List<Board>selectNoticeOne(int boardNo);
 	// add Notice
 	int insertNotice(Board board);
+	// 삭제
+	int deleteNotice(int boardNo);
+	
+	
 
 }

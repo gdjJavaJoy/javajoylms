@@ -60,4 +60,9 @@
 			,NOW()
 		)
 	</insert>
+	<delete id="deleteNotice"
+			parameterType="int">
+		DELETE FROM board
+		WHERE board_no = #{boardNo}
+	</delete>
 </mapper>
