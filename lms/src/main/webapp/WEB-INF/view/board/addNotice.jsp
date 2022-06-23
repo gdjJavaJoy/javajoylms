@@ -10,6 +10,43 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#addFileupload').click
+			let flag = true;
+		$('.noticefileList').each(function(){
+			if($(this).val() == '' ) {
+				flag = false;
+			}
+		});
+		if(flag) {
+			$('#fileSection').append("<div><input class='noticefileList' type='file' name='noticefileList'></div>")
+		} else {
+			alert('파일 첨부되지 않은 noticefileList가 존재합니다');
+		}
+	});
+	
+	$('#addNotice').click(function(){
+		let flag = true;
+		if($('#noticeTitle').val() == ''){
+			alert('noticeTitle 입력하세요');
+		} else if($('#noticeContent').val() == '') {
+			alert('noticeContent 입력하세요');
+		} else {
+			$('.noticefiileList').each(function(){
+				if($(this).val() == '') {
+					flag = false;
+				}
+			});
+			if(flag) {
+				$('#addForm').submit();
+			} else {
+				alert('파일이 첨부되지않은 noticefileList가 존재합니다');
+			}
+		}
+	});
+</script>
 </head>
 <body>
 <div>
@@ -56,7 +93,9 @@
 			<tr>
 				<td>파일 업로드</td>
 				<td>
-					<input type="file" name="boardfileList" multiple="multiple">
+				<!-- 파일 : <input type="file" name="boardfileList" multiple="multiple" > -->
+					<button type="button" id="addFileupload">파일 업로드 추가</button>
+					<div id="fileSection"></div>
 				</td>
 			</tr>
 		</table>

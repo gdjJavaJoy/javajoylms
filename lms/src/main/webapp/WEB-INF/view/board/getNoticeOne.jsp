@@ -34,20 +34,20 @@
 				</tr>
 				<tr>
 					<td>생성날짜</td>
-					<td>${n.createDate }</td>
+					<td>${n.createDate}</td>
 				</tr>
 				<tr>
 					<td>수정날짜</td>
-					<td>${n.updateDate }</td>
+					<td>${n.updateDate}</td>
 				</tr>
 			</table>
 				<a href="${pageContext.request.contextPath}/removeNotice?noticeId=${n.boardNo}">삭제</a>
 				<a href="${pageContext.request.contextPath}/modifyNotice?noticeId=${n.boardNo}">수정</a>
 		</C:forEach>
 		<div>첨부파일</div>
-			<C:forEach var="nf" items="${boardfile}">
+			<C:forEach var="boardfile" items="${boardfile}">
 				<div>
-					<a href="${pageContext.request.contextPath}/upload/${nf.boardFileName}${nr.boardFileType}" download="${nf.boardFileName}${nr.boardFileType}">${nf.boardFileName}${nr.boardFileType}</a>
+					<a href="${pageContext.request.contextPath}/file/board_file/${boardfile.boardFileName}${boardfile.boardFileType}" download="${boardfile.boardFileName}${boardfile.boardFileType}">${boardfile.boardFileName}${boardfile.boardFileType}</a>
 				</div>
 			</C:forEach>
 </div>
