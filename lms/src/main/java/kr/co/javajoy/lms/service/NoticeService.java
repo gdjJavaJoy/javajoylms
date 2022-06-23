@@ -44,6 +44,7 @@ public class NoticeService {
 	}
 	
 	// 공지사항 상세보기
+	// 수정(Get)
 	public Map<String, Object> getNoticeOne(int boardNo) {
 		// 쿼리불러오기 조회값 저장
 		List<Board> board = noticeMapper.selectNoticeOne(boardNo); 
@@ -127,6 +128,11 @@ public class NoticeService {
 	noticefileMapper.deleteNoticefileList(boardNo);
 	noticeMapper.deleteNotice(boardNo);
 	}
-	
+	// modify(Post)
+	public int modifyNotice(Board board) {
+		int row = noticeMapper.updateNotice(board);
+		log.debug(CF.WSH + "NoticeService.modifyNotice.row : "+ row);
+		return row;
+	}
 }
 	

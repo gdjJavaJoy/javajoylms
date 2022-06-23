@@ -63,4 +63,12 @@
 		DELETE FROM board
 		WHERE board_no = #{boardNo}
 	</delete>
+	<update id="updateNotice"
+			parameterType="kr.co.javajoy.lms.vo.Board">
+		UPDATE board 
+		SET board_title = #{boardTitle}
+			,board_content = #{boardContent}
+		WHERE board_no = #{boardNo}
+		
+	</update>
 </mapper>

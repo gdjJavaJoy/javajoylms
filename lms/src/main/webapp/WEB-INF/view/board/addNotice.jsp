@@ -86,9 +86,7 @@
 				</td>
 			</tr>
 		</table>
-		<c:if>
 		<button type="submit" id="addNotice">작성</button>
-		</c:if>
 	</form>
 </div>
 </body>

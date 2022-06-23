@@ -20,6 +20,8 @@ public interface NoticeMapper {
 	int insertNotice(Board board);
 	// 삭제
 	int deleteNotice(int boardNo);
+	// 수정
+	int updateNotice(Board board);
 	
 	
 

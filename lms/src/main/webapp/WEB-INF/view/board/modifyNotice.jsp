@@ -4,52 +4,52 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>getNoticeOne</title>
+<title>addNotice</title>
 <!-- bootstrap을 사용하기 위한 CDN주소 -->
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-<div class="container">
-	<h1>getNoticeOne</h1>
+<h1>modifyNotice</h1>
+	<form method="post" action="${pageContext.request.contextPath}/modifyNotice">
 		<C:forEach var="n" items="${board}">
 			<table class="table table=striped">
 				<tr>
 					<td>번호</td>
-					<td>${n.boardNo}</td>
+					<td>
+						<input type="number" value="${n.boardNo}" name="boardNo" readonly="readonly">
+					</td>
 				</tr>
 				<tr>
 					<td>아이디</td>
-					<td>${n.memberId}</td>
+					<td>
+						<input value="${n.memberId}" name="memberId" readonly="readonly">
+					</td>
 				</tr>
 				<tr>
 					<td>제목</td>
-					<td>${n.boardTitle}</td>
+					<td>
+						<input type="text" value="${n.boardTitle}" name="boardTitle">
+					</td>
 				</tr>
 				<tr>
 					<td>내용</td>
-					<td>${n.boardContent}</td>
+					<td>
+						<textarea name="boardTitle" >${n.boardContent}</textarea>
+					</td>
 				</tr>
-				<!-- <tr>
-					<td>생성날짜</td>
-					<td>${n.createDate}</td>
-				</tr>
-				<tr>
-					<td>수정날짜</td>
-					<td>${n.updateDate}</td>
-				</tr> -->
 			</table>
-				<a href="${pageContext.request.contextPath}/removeNotice?boardNo=${n.boardNo}">삭제</a>
-				<a href="${pageContext.request.contextPath}/modifyNotice?boardNo=${n.boardNo}">수정</a>
+			<button type="submit">게시글 수정</button>
 		</C:forEach>
-		<div>첨부파일</div>
-			<C:forEach var="boardfile" items="${boardfile}">
+	</form>
+	<div>첨부파일</div>
+	<C:forEach var="boardfile" items="${boardfile}">
 				<div>
-					<a href="${pageContext.request.contextPath}/file/board_file/${boardfile.boardFileName}${boardfile.boardFileType}" download="${boardfile.boardFileName}${boardfile.boardFileType}">${boardfile.boardFileName}${boardfile.boardFileType}</a>
+					${boardfile.boardFileName}${boardfile.boardFileType}<a href="${pageContext.request.contextPath}/removeNoticefile?boardfileNo=${boardfile.boardFileNo}&boardNo=${boardfile.boardNo}">삭제</a>
 				</div>
-			</C:forEach>
-</div>
+	</C:forEach>
 </body>
 </html>

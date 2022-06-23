@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.service.NoticeService;
+import kr.co.javajoy.lms.vo.Board;
 import kr.co.javajoy.lms.vo.BoardForm;
 import lombok.extern.slf4j.Slf4j;
 
@@ -90,6 +91,25 @@ public class NoticeController {
 		String path = request.getServletContext().getRealPath("file/boardFile/");
 		noticeService.removeNotice(boardNo, path);
 	return "redirect:/getNoticeByPage";
+	}
+	@GetMapping("/modifyNotice")
+	public String modifyNotice(Model model
+			,HttpServletRequest request
+			,@RequestParam(name="boardNo") int boardNo) {
+		log.debug(CF.WSH + "NoticeController.modifyNotice(Get).boardNo : "+ boardNo);
+		String path = request.getServletContext().getRealPath("file/boardFile/"); 
+		
+		Map<String, Object> map = noticeService.getNoticeOne(boardNo);
+		model.addAttribute("path", path);
+		model.addAttribute("board",map.get("board"));
+		model.addAttribute("boardfile",map.get("boardfile"));
+		return "board/modifyNotice";
+	}
+	@PostMapping("/modifyNotice")
+	public String modifyNotice(Board board) {
+		int row = noticeService.modifyNotice(board);
+		log.debug(CF.WSH + "NoticeController.modifyNotice(Post).row : "+ row);
+		return "board/getNoticeOne?boardNo="+board.getBoardNo();
 	}
 	
 	
