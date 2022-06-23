@@ -11,6 +11,47 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		let flag = true;
+		$('#addFileupload').click(function(){
+			$('.subjectReportFileList').each(function(){
+				if($(this).val() == '') {
+					flag = false;
+				}
+			});
+			
+			if(flag) {
+				$('#fileSection').append("<div><input class='subjectReportFileList' type='file' name='subjectReportFileList'></div>");
+			} else {
+				alert('파일 첨부를 다시 확인하십시오');
+			}
+		});
+		
+		$('#addSubjectReport').click(function(){
+			if($('#subjectNo').val() == '') {
+				alert('test');
+		    } else if($('#memberId').val() == '') {
+				alert('test');
+			} else if($('#subjectReportTitle').val() == '') {
+				alert('과제 게시판 제목을 설정하세오!');
+			} else if($('#subjectReportContent').val() == '') {
+				alert('과제 게시판 내용을 입력하세요!');
+			} else {
+				$('.subjectReportFileList').each(function(){
+					if($(this).val() == '') {
+						flag = false;
+					}
+				});
+				if(flag) {
+					$('#addSubjectReportForm').submit();
+				} else {
+					alert('파일 첨부를 다시 확인하십시오');
+				}
+			}
+		});
+	});
+</script>
 </head>
 <body>
 <div class="container">
@@ -18,13 +59,13 @@
 	    <div>
 	   		<a href="${pageContext.request.contextPath}/getSubjectReportListByPage?subjectNo=${subjectNo}">이전</a>
 	    </div>
-		    <form id="addSubjectReportForm" method="post" name="addSujectReportForm" action="${pageContext.request.contextPath}/addSubjectReport">
+		    <form id="addSubjectReportForm" method="post" name="addSubjectReportForm" action="${pageContext.request.contextPath}/addSubjectReport" enctype="multipart/form-data">
 		    	<div>
-		   			<input type="number" id="subjectNo" name="subjectNo" class="form-control" placeholder="강좌번호~ 이거 나중에 자동으로 받아지게 할거임">
+		   			<input type="number" id="subjectNo" name="subjectNo" class="form-control" value="12">
 		   		 	<span id="subjectNoHelper" class="helper"></span>	
 		    	</div>
 		    	<div>  	
-		    		<input type="text" id="memberId" name="memberId" class="form-control" placeholder="멤버ID 세션값받아와서 넘기게 할거임">
+		    		<input type="text" id="memberId" name="memberId" class="form-control" value="teacher">
 		    		<span id="memberIdHelper" class="helper"></span>	
 		    	</div>
 		    	<div>
@@ -33,20 +74,22 @@
 		    	</div>
 		    	<div>
 		    		<textarea id="subjectReportContent" name="subjectReportContent" class="form-control" placeholder="과제 설명 작성"></textarea>
-		    		<span id="subjectInfoHelper" class="helper"></span>
+		    		<span id="subjectReportContentHelper" class="helper"></span>
 		    	</div>
 		    	<div>
 		    		<input type="date" id="subjectReportPeriod" name="subjectReportPeriod" class="form-control" placeholder="과제 기한 설정">
 		    		<span id="subjectReportPeriodHelper" class="helper"></span>	
 		    	</div>
-		    	<div class="form-group">
-					 <button type="button" id="signup">과제 추가</button>
+		    	<div>
+		    		<button type="button" id="addFileupload">첨부파일 추가</button>
+		    		<div id="fileSection">
+		    			<!-- subject file input 태그가 추가댐 -->
+		    		</div>	
+		    	</div>
+		    	<div>
+					 <button type="button" id="addSubjectReport">과제입력</button>
 				</div>
 		    </form>
 </div>
-	<!-- 과제 게시판 입력 유효성 검사 -->
-	<script type="text/javascript">	
-		// 유효성 검사 추가 예정
-	</script>
 </body>
 </html>

@@ -126,7 +126,6 @@
 			parameterType="kr.co.javajoy.lms.vo.SubjectFile">
 		INSERT INTO subject_file (
 			subject_file_board_no
-			,subject_file_original_name
 			,subject_file_name
 			,subject_file_type
 			,subject_file_size
@@ -134,7 +133,6 @@
 			,update_date
 		) VALUES (
 			#{subjectFileBoardNo}
-			,#{subjectFileOriginalName}
 			,#{subjectFileName}
 			,#{subjectFileType}
 			,#{subjectFileSize}

@@ -85,8 +85,10 @@ public class SubjectReportController {
 	}
 	// 3-1) 과제 게시판 글 입력 + 파일 입력 Action
 	@PostMapping("/addSubjectReport")
-	public String addSubjectReport(HttpServletRequest request, SubjectReportForm subjectReportForm) {
-		String path = request.getServletContext().getRealPath("/file/subject_file");
+	public String addSubjectReport(Model model
+								,HttpServletRequest request, SubjectReportForm subjectReportForm
+								,@RequestParam(name="subjectNo") int subjectNo) {
+		String path = request.getServletContext().getRealPath("/file/subject_file/");
 		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.path : " + path);
 		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.subjectReportForm : " + subjectReportForm);
 		
@@ -97,9 +99,10 @@ public class SubjectReportController {
 				log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.filename : " + mf.getOriginalFilename());
 			}
 		}
-		
+		model.addAttribute("subjectNo", subjectNo);
+		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.subjectNo : " + subjectNo);
 		subjectReportService.addSubjectReport(subjectReportForm, path);
-		return "return:/getSubjectReportListByPage";
+		return "redirect:/getSubjectReportListByPage?subjectNo=" + subjectNo;
 	}
 	
 }
