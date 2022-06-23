@@ -138,7 +138,22 @@ public class MemberService {
 		return list;
 	}
 	
-	
+	// memberIndex에서 나오는 list 
+	public List<Map<String,Object>> memberIndex(String memberId, String level){	
+		List<Map<String,Object>> list = null;
+		
+		if(level.equals("3")) { // member가 student면
+			list = memberMapper.studentIndex(memberId);
+			log.debug(CF.YHJ + "StudentService.memberIndex.list : " + list + CF.RESET); // 디버깅
+			return list;
+		}
+
+		// 이외면 (teacher면)
+		list = memberMapper.teacherIndex(memberId);
+		log.debug(CF.YHJ + "StudentService.memberIndex.list : " + list + CF.RESET); // 디버깅
+		
+		return list;
+	}
 	
 	
 	

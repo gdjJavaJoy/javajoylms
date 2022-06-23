@@ -35,9 +35,10 @@ public interface MemberMapper {
 	public void updateMemberActive(String memberId);
 	// 탈퇴한 회원 추출
 	public List<String> selectResignedMemberId();
-
-	public int selectMemberPw(Map<String,Object> map);
-	
+	public int selectMemberPw(Map<String, Object> map);
 	int updateMemberPassword(Password password);
-
+	// 학생이 들었던 또는 듣고있는 subject리스트 출력
+	public List<Map<String, Object>> studentIndex(String memerId);
+	// 강사가 수강했던 또는 수강 중인 subject리스트 출력
+	public List<Map<String, Object>> teacherIndex(String memberId);
 }
