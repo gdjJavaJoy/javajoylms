@@ -3,9 +3,9 @@
 <mapper namespace="kr.co.javajoy.lms.mapper.SubjectDataMapper">
 
 <select id="getSubjectDataList"
-		resultType="map"
-		parameterType="java.util.Map">
-		<!-- 관리자(Admin) 커리큘럼 리스트 -->
+		parameterType="java.util.Map"
+		resultType="map">
+		<!-- 관리자(Admin) 강의자료 리스트 -->
 	SELECT 
 		a.subject_data_no subjectDataNo
 		,b.subject_no subjectNo
@@ -15,6 +15,7 @@
 	FROM  subject_data AS a
 		LEFT JOIN subject AS b
 		ON a.subject_data_no = b.subject_no
+	WHERE b.subject_no = #{subjectNo}
 		LIMIT #{startRow}, #{rowPerPage}
 </select>
 	<!-- 리스트 전체 카운트 -->

@@ -20,14 +20,14 @@ public class SubjectDataService {
 	@Autowired SubjectDataMapper subjectdataMapper;
 
 	// 강좌자료실 리스트 출력
-	public Map<String, Object> getSubjectDataList(int currentPage, int rowPerPage) {
+	public Map<String, Object> getSubjectDataList(int currentPage, int rowPerPage, int subjectNo) {
 		// 리스트 출력 페이징
 		int startRow = (currentPage - 1) * rowPerPage;
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("rowPerPage", rowPerPage);
 		map.put("startRow", startRow);
-		
+		map.put("subjectNo", subjectNo);
 		// Mapper에서 반환 된 값 가공
 		List<SubjectData> list = subjectdataMapper.getSubjectDataList(map);
 		int totalCount = subjectdataMapper.selectTotalCount();
@@ -36,6 +36,7 @@ public class SubjectDataService {
 		Map<String, Object> returnMap = new HashMap<>();
 		returnMap.put("list", list);
 		returnMap.put("lastPage", lastPage);
+		returnMap.put("subjectNo", subjectNo);
 		
 		// 디버깅
 		log.debug(CF.LGN + "StudentListController.selecStudentList rowPerPage : " + CF.RESET + rowPerPage);

@@ -3,11 +3,12 @@
 <mapper namespace="kr.co.javajoy.lms.mapper.CurriculumMapper">
 
 <select id="getCurriculumList"
-		resultType="map"
-		parameterType="java.util.Map">
+		parameterType="java.util.Map"
+		resultType="map">
 		<!-- 관리자(Admin) 커리큘럼 리스트 -->
-	SELECT 
-		a.member_id memberId
+	SELECT
+	 	a.subject_no subjectNo
+		,a.member_id memberId
 		,b.language_name languageName
 		,a.curriculum_title curriculumTitle
 		,a.start_day startDay
@@ -15,6 +16,7 @@
 	FROM curriculum AS a
 		INNER JOIN language AS b
 		ON a.language_no = b.language_no
+	WHERE a.subject_no = #{subject_no}
 		LIMIT #{startRow}, #{rowPerPage}
 </select>
 	<!-- 리스트 전체 카운트 -->

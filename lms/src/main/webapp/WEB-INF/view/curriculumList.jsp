@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>studentList</title>
+<title>curriculumList</title>
 <!-- bootstrap을 사용하기 위한 CDN주소 -->
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -17,6 +17,7 @@
     <table class="table table-striped">
         <thead>
         <tr>
+        	<th>분반</th>
 			<th>아이디</th>
 			<th>언어</th>
 			<th>커리큘럼제목</th>
@@ -27,6 +28,7 @@
         <tbody>
             <c:forEach var="s" items="${list}">
                 <tr>
+                   <td>${s.subjectNo}</td>
                    <td>${s.memberId}</td>
                    <td>${s.languageName}</td>
                    <td>${s.curriculumTitle}</td>

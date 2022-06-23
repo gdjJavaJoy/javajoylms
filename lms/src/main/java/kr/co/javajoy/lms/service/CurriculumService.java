@@ -20,14 +20,14 @@ public class CurriculumService {
 	@Autowired CurriculumMapper curriculumMapper;
 	
 	// 커리큘럼 리스트 출력
-	public Map<String, Object> getCurriculumList(int currentPage, int rowPerPage) {
+	public Map<String, Object> getCurriculumList(int currentPage, int rowPerPage, int subjectNo) {
 		// 리스트 출력 페이징
 		int startRow = (currentPage - 1) * rowPerPage;
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("rowPerPage", rowPerPage);
 		map.put("startRow", startRow);
-		
+		map.put("subjectNo", subjectNo);
 		// Mapper에서 반환 된 값 가공
 		List<Curriculum> list = curriculumMapper.getCurriculumList(map);
 		int totalCount = curriculumMapper.selectTotalCount();
@@ -36,6 +36,7 @@ public class CurriculumService {
 		Map<String, Object> returnMap = new HashMap<>();
 		returnMap.put("list", list);
 		returnMap.put("lastPage", lastPage);
+		returnMap.put("subjectNo", subjectNo);
 		
 		// 디버깅
 		log.debug(CF.LGN + "CurriculumListController.selecCurriculumList rowPerPage : " + CF.RESET + rowPerPage);

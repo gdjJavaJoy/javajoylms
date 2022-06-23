@@ -22,12 +22,8 @@
 			<th>이름</th>
 			<th>성별</th>
 			<th>전화번호</th>
-			<th>주소</th>
-			<th>상세주소</th>
-			<th>이메일</th>
 			<th>학력</th>
 			<th>등록날짜</th>
-			<th>수정일짜</th>
         </tr>
         </thead>
         <tbody>
@@ -38,12 +34,8 @@
                    <td>${s.studentName}</td>
                    <td>${s.studentGender}</td>
                    <td>${s.studentPhone}</td>
-                   <td>${s.studentAddress}</td>
-                   <td>${s.studentDetailAddress}</td>
-                   <td>${s.studentEmail}</td>
                    <td>${s.studentEducation}</td>
                    <td>${s.studentRegisterDate}</td>
-                   <td>${s.updateDate}</td>
                 </tr>
             </c:forEach>
         </tbody>

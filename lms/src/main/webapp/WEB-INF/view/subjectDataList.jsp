@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>subjectList</title>
+<title>subjectDataList</title>
 <!-- bootstrap을 사용하기 위한 CDN주소 -->
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -13,12 +13,12 @@
 </head>
 <body>
 <div class="container">
-    <h1>강의 리스트</h1>
+    <h1>강의자료 리스트</h1>
     <table class="table table-striped">
         <thead>
         <tr>
 			<th>강좌게시판 번호</th>
-			<th>강좌번호</th>
+			<th>분반</th>
 			<th>아이디</th>
 			<th>제목</th>
 			<th>생성날짜</th>
