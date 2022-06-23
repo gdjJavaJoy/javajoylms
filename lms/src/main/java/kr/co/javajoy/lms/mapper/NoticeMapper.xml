@@ -44,7 +44,6 @@
 			</selectKey>
 		INSERT INTO board(
 			member_id
-			,board_category
 			,board_title
 			,board_content
 			,private_no
@@ -52,7 +51,6 @@
 			,update_date
 		)VALUES(
 			#{memberId}
-			,#{boardCategory}
 			,#{boardTitle}
 			,#{boardContent}
 			,#{privateNo}

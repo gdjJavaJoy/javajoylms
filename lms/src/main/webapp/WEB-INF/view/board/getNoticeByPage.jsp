@@ -27,9 +27,9 @@
 			<C:forEach var="c" items="${list}">
 				<tr>
 					<td>${c.boardNo}</td>
-					<td>${c.memberId}</td>
+					<td><a href="${pageContext.request.contextPath}/getNoticeOne?boardNo=${c.boardNo}">${c.memberId}</a></td>
 					<td><a href="${pageContext.request.contextPath}/getNoticeOne?boardNo=${c.boardNo}">${c.boardTitle}</a></td>
-					<td>${c.createDate}</td>
+					<td><a href="${pageContext.request.contextPath}/getNoticeOne?boardNo=${c.boardNo}">${c.createDate}</a></td>
 				</tr>
 			</C:forEach>
 		</tbody>

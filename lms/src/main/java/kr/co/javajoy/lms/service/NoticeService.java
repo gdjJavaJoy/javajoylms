@@ -66,7 +66,6 @@ public class NoticeService {
 		// jsp에서 적은 파일을 Multipartfile(BoardForm)에 저장하고 다시 Board에 나눠서 저장함
 		Board board = new Board();
 		board.setMemberId(boardForm.getMemberId());
-		board.setBoardCategory(boardForm.getBoardCategory());
 		board.setBoardTitle(boardForm.getBoardTitle());
 		board.setBoardContent(boardForm.getBoardContent());
 		board.setPrivateNo(boardForm.getPrivateNo());

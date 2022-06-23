@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,9 +39,11 @@ public class NoticeController {
 	@GetMapping("/getNoticeOne")
 	public String getNoticeOne(Model model
 			,HttpServletRequest request
+			,HttpSession session
 			,@RequestParam(name = "boardNo") int boardNo) {
 		log.debug(CF.WSH + "NoticeController.getNoticeOne.boardNo : "+ boardNo);
-		String path = request.getServletContext().getRealPath("file/board_file/");
+		String path = request.getServletContext().getRealPath("file/boardFile/");
+		String memberId = (String)session.getAttribute("loginUser");
 		
 		Map<String, Object> map = noticeService.getNoticeOne(boardNo);
 		model.addAttribute("path", path);
@@ -55,12 +58,12 @@ public class NoticeController {
 	}
 	@PostMapping("/addNotice")
 	public String addNotice(HttpServletRequest request, BoardForm boardForm) {
-		String path = request.getServletContext().getRealPath("file/board_file/");
+		String path = request.getServletContext().getRealPath("file/boardFile/");
 		log.debug(CF.WSH + "NoticeController.addNotice(Post).path : "+ path);
 		
 		log.debug(CF.WSH + "NoticeController.addNotice(Post).boardFrom : "+ boardForm);
 		List<MultipartFile> boardfileList = boardForm.getBoardfileList();
-		if(boardfileList.get(0).getSize() > 0) { // 하나 이상의 파일이 업로드 되면
+		if(boardfileList != null && boardfileList.get(0).getSize() > 0) { // 하나 이상의 파일이 업로드 되면
 			for(MultipartFile mf : boardfileList) {
 				log.debug(CF.WSH + "NoticeController.addNotice(Post).boardfileList : "+boardfileList);
 				log.debug(CF.WSH + "NoticeController.addNotice(Post).filename : "+mf.getOriginalFilename());
@@ -76,7 +79,7 @@ public class NoticeController {
 			,@RequestParam(name="boardNo") int boardNo) {
 		log.debug(CF.WSH + "NoticeController.removeNoticefile(Get).boardFileNo : "+ boardfileNo);
 		log.debug(CF.WSH + "NoticeController.removeNoticefile(Get).boardNo : "+ boardNo);
-		String path = request.getServletContext().getRealPath("file/board_file/");
+		String path = request.getServletContext().getRealPath("file/boardFile/");
 			noticeService.removefileNotice(boardfileNo,path);
 		return "redirect:/modfyNotice?boardNo="+boardNo;
 	}
@@ -84,7 +87,7 @@ public class NoticeController {
 	public String removeNoice(HttpServletRequest request
 			,@RequestParam(name="boardNo") int boardNo) {
 		log.debug(CF.WSH + "NoticeController.removeNotice(Get).boardNo : "+ boardNo);
-		String path = request.getServletContext().getRealPath("file/board_file/");
+		String path = request.getServletContext().getRealPath("file/boardFile/");
 		noticeService.removeNotice(boardNo, path);
 	return "redirect:/getNoticeByPage";
 	}
