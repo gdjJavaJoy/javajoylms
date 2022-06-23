@@ -57,6 +57,12 @@ public class LoginController {
 		if(loginMap.get("memberId") == null) {
 			return "redirect:login"; 
 		}
+		int row = loginService.modifyLastLoginUpdate(memberId);
+		if (row == 1) {
+			log.debug(CF.PSG+"LoginController.LoginPost().modifyLastLoginUpdate 수정 성공 " +CF.RESET);
+		} else {
+			log.debug(CF.PSG+"LoginController.LoginPost().modifyLastLoginUpdate 수정 실패 " +CF.RESET);
+		}
 		// session에 ID 저장
 		session.setAttribute("loginUser", loginMap.get("memberId"));
 		session.setAttribute("level", loginMap.get("level"));

@@ -108,9 +108,10 @@ public class MemberService {
 	}
 	// 해당 회원이 같은비밀번호 사용하는 지 검사하는서비스 
 	public int getFindSamePw(String memberId,String password) {
+		log.debug(CF.PSG+password+"asdasdd"+CF.RESET);
 		Map<String, Object> map = new HashMap<String,Object>();
 		map.put("memberId", memberId);
-		map.put("password", password);
+		map.put("memberPw", password);
 		int cnt = memberMapper.selectMemberPw(map);
 		log.debug(CF.PSG+"asdasdsadad"+cnt+CF.RESET);
 		return cnt;
@@ -118,6 +119,7 @@ public class MemberService {
 	public int modifyMemberPassword(Password password) {
 		int row = 0;
 		String memberId = password.getMemberId();
+		log.debug(CF.PSG +"MemberService.modifyMemberPassword.memberPw : "+password.getPassword() +CF.RESET);
 		log.debug(CF.PSG +"MemberService.modifyMemberPassword.memberId : "+memberId +CF.RESET);
 		String active = memberMapper.selectMemberActive(memberId);
 		if (active.equals("4") || active.equals("2")) {

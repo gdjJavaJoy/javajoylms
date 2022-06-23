@@ -53,4 +53,15 @@
 				WHERE s.student_name = #{memberName}
 					AND s.student_phone = #{memberPhone}			
 		</select>
+		<update id="updatelastLoginDate"
+				parameterType="String">
+		UPDATE member_id
+			SET last_login_date = NOW()
+		WHERE member_id = #{memberId}
+		</update>
+		<update id="updateDormantMember">
+		UPDATE member_id
+		   SET member_active = "2"
+		WHERE DATEDIFF(NOW(), last_login_date) > 365
+		</update>
 </mapper>

@@ -1,17 +1,22 @@
 package kr.co.javajoy.lms.service;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.mapper.SubjectReportMapper;
+import kr.co.javajoy.lms.vo.SubjectFile;
 import kr.co.javajoy.lms.vo.SubjectReport;
 import kr.co.javajoy.lms.vo.SubjectReportComment;
+import kr.co.javajoy.lms.vo.SubjectReportForm;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -20,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SubjectReportService {
 	@Autowired SubjectReportMapper subjectReportMapper;
 	
-	// 과제 게시판 글 리스트 출력
+	// 1) 과제 게시판 글 리스트 출력
 	public Map<String, Object> getSubjectReportListByPage(int currentPage, int rowPerPage, int subjectNo) {
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.currentPage" + currentPage);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.rowPerPage" + rowPerPage);
@@ -50,7 +55,7 @@ public class SubjectReportService {
 		return returnMap;
 	}
 	
-	// 과제 게시판 글 상세보기 + 파일 이름 리스트 출력
+	// 2) 과제 게시판 글 상세보기 + 파일 이름 리스트 출력
 	public Map<String, Object> getSubjectReportAndFileNameListAndCommentList (Map<String, Object> map) {
 		// 댓글 페이징 데이터
 		int commentCurrentPage = (int)map.get("commentCurrentPage");
@@ -94,7 +99,62 @@ public class SubjectReportService {
 		
 		return returnMap;
 	}
+	
+	// 3) 과제 게시판 글 입력 + 파일 입력
+	public void addSubjectReport(SubjectReportForm subjectReportForm, String path) {
+		log.debug(CF.PBJ + "NoticeService.addNotice.path : ", path);
+		log.debug(CF.PBJ + "NoticeService.addNotice.subjectReportForm : ", subjectReportForm);
+		
+		// SubjectReportMapper
+		SubjectReport subjectReport = new SubjectReport();
+		subjectReport.setSubjectNo(subjectReport.getSubjectNo());
+		subjectReport.setMemberId(subjectReport.getMemberId());
+		subjectReport.setSubjectReportTitle(subjectReport.getSubjectReportTitle());
+		subjectReport.setSubjectReportContent(subjectReport.getSubjectReportContent());
+		subjectReport.setSubjectReportPeriod(subjectReport.getSubjectReportPeriod());
+		// subjectReport.getSubjectBoardNo() --> 0
+		int row = subjectReportMapper.insertSubjectBoard(subjectReport);
+		int row2 = subjectReportMapper.insertSubjectReport(subjectReport);
+		log.debug(CF.PBJ + "NoticeService.addNotice.row : ", row);
+		log.debug(CF.PBJ + "NoticeService.addNotice.row2 : ", row2);
+		// insert 성공시, 기본키 값이 출력됨
+		log.debug(CF.PBJ + "NoticeService.addNotice.subjectBoardNo : ", subjectReport.getSubjectBoardNo());
+		log.debug(CF.PBJ + "NoticeService.addNotice.subjectReportNo : ", subjectReport.getSubjectReportNo());
+		
+		// SubjectReportMapper -> file insert
+		if(subjectReportForm.getSubjectReportFileList() != null && subjectReportForm.getSubjectReportFileList().get(0).getSize() > 0 && row == 1 && row2 == 1) {
+			log.debug("SubjectReportService.addSubjectReport : 첨부된 파일이 있습니다.");
+			for (MultipartFile mf : subjectReportForm.getSubjectReportFileList()) {
+				SubjectFile subjectFile = new SubjectFile();
+				
+				String originName = mf.getOriginalFilename();
+				// originName에서 마지막 .문자열 위치
+				String ext = originName.substring(originName.lastIndexOf("."));
+				// 파일을 저장할 때 사용할 증븍되지않는 새로운 이름 (UUID API사용)
+				String filename = UUID.randomUUID().toString();
+				filename = filename + ext;
+				log.debug("SubjectReportService.addSubjectReport.originName : ", originName);
+				log.debug("SubjectReportService.addSubjectReport.filename : ", filename);
+				// subject_file 데이터 가공
+				subjectFile.setSubjectFileBoardNo(subjectReport.getSubjectBoardNo());
+				subjectFile.setSubjectFileName(filename);
+				subjectFile.setSubjectFileType(mf.getContentType());
+				subjectFile.setSubjectFileSize(mf.getSize());
+				log.debug("SubjectReportService.addSubjectReport.SubjectFile : ", subjectFile);
+				// 데이터베이스에 인서트
+				subjectReportMapper.insertSubjectFile(subjectFile);
+				// try + catch
+				try {
+					mf.transferTo(new File(path + filename));
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new RuntimeException();
+				}
+			}
+		}
+	}
 }
+
 
 
 
