@@ -33,7 +33,7 @@
 			COUNT(*) cnt
 	   FROM password
 	  WHERE member_id = #{memberId}
-	  	AND password = PASSWORD(#{password})
+	  	AND password = PASSWORD(#{memberPw})
 	</select>
 	<select id="selectResignedMemberId" 
 			resultType="String">
@@ -148,7 +148,7 @@
 				   ,create_date
 		) VALUES (
 				   #{memberId}
-				  ,PASSWORD('#{password}')
+				  ,PASSWORD(#{password})
 				  ,NOW()
 		)
 	</insert>

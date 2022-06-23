@@ -67,6 +67,7 @@ public class LoginRestController {
 						 ,@RequestParam(value="password") String password) {
 		String memberId = (String) session.getAttribute("loginUser"); // 세션에 있는 loginUser 값 변수에 저장 
 		log.debug(CF.PSG+"LgoinRestController.pwCheck.memberId :" + memberId + CF.RESET);
+		log.debug(CF.PSG+"LgoinRestController.pwCheck.password :" + password + CF.RESET);
 		int cnt = memberService.getFindSamePw(memberId, password); 
 		log.debug(CF.PSG+"LoginRestController.pwCheck.cnt :" + cnt + CF.RESET); 
 		
