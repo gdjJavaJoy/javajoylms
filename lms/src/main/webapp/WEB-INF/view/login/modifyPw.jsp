@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
   <head>
@@ -82,6 +83,14 @@
                 비밀번호 변경
               </button>
               </form>
+              <c:if test="${active != 4}">
+              <a
+                class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+              	href="${pageContext.request.contextPath}/memberIndex"
+              >
+               	다음에 변경하기 
+              </a>
+              </c:if>
             </div>
           </div>
         </div>
@@ -107,10 +116,11 @@
 		   }
 		});
 	});
-	$('#password').blur(function(){
+	$('#pwck').click(function(){
 		if(!/^[a-zA-z0-9]{8,16}$/.test($('#password').val())) {
 			alert("영문, 숫자로 8자리 이상 입력하세요.");
 			$('#password').focus();
+			return false;
 		} 
 	});
 	$('#confirmPw').blur(function(){
@@ -118,6 +128,7 @@
 			if($('#password').val() != $('#confirmPw').val()) {
 				alert("비밀번호가 일치하지 않습니다.");
 				$('#password').focus();
+				return false;
 			}
 		}
 	});
@@ -125,8 +136,10 @@
 		if($('#password').val()== '') {
 			alert("비밀번호를 입력해주세요");
 			$('#password').focus();
+			return false;
 		} else if ($('#password').val() != $('#confirmPw').val()){
 			alert("비밀번호가 일치하지않습니다");
+			return false;
 		} else {
 			$('#pwForm').submit();
 		}

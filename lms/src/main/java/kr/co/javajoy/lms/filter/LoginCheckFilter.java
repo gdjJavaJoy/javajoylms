@@ -13,27 +13,29 @@ import javax.servlet.http.HttpSession;
 
 import kr.co.javajoy.lms.CF;
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
-@WebFilter("/loginCheck") //모든작업 끝난 후 경로 * 로 바꿔야함 
+@WebFilter("/loginCheck") // 모든작업 끝난 후 경로 * 로 바꿔야함
 
 public class LoginCheckFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		// 선
-		//HttpServletrequest에서만 session 있다 
-		if(request instanceof HttpServletRequest) {
-		log.debug(CF.PSG +"AdminLoginFilter.브라우저를 통한 요청" + CF.RESET);
-		HttpSession session = ((HttpServletRequest)request).getSession(); // 세션정보 불러오기
-		if(session.getAttribute("loginUser") == null) { // session 에있는 loginUser 값이 Null 이면 
-			((HttpServletResponse)response).sendRedirect( 
-					((HttpServletRequest)request).getContextPath()+"/login"); // 로그인 페이지로 이동 
+		// HttpServletrequest에서만 session 있다
+		if (request instanceof HttpServletRequest) {
+			log.debug(CF.PSG + "AdminLoginFilter.브라우저를 통한 요청" + CF.RESET);
+			HttpSession session = ((HttpServletRequest) request).getSession(); // 세션정보 불러오기
+			if (session.getAttribute("loginUser") == null) { // session 에있는 loginUser 값이 Null 이면
+				((HttpServletResponse) response)
+						.sendRedirect(((HttpServletRequest) request).getContextPath() + "/login"); // 로그인 페이지로 이동
+				return;
 			}
 		} else {
-		 log.debug(CF.PSG +"브라우저가 아닌 다른 요청"+CF.RESET);
+			log.debug(CF.PSG + "브라우저가 아닌 다른 요청" + CF.RESET);
 		}
-		chain.doFilter(request, response); // 원 요청 처리 
-		
+		chain.doFilter(request, response); // 원 요청 처리
+
 		// 후
 	}
 }

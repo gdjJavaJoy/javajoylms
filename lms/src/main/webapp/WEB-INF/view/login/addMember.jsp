@@ -15,6 +15,7 @@
       defer
     ></script>
     <script src="./public/assets/js/init-alpine.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
     <div class="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
@@ -118,8 +119,8 @@
                 </span>
                 <input
                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                  placeholder="-을제외하고 입력해주세요"
-                  type="number"
+                  placeholder="전화 번호 입력해주세요"
+                  type="text"
                   id="memberPhone"
                   name="memberPhone"
                 />
@@ -196,6 +197,7 @@
       </div>
     </div>
   </body>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
    $('#level').change(function(){
@@ -256,6 +258,7 @@
                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"\
                         type="date"\
                         name="memberJoin"\
+                        id="date"\
                       />\
                     </label>\
                     </div>'
@@ -296,7 +299,9 @@
                      <select\
                        class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"\
                          name="education"\
+                         id="education"\
                      >\
+                       <option value="">::최종학력선택::</option>\
                        <option value="고졸">고졸</option>\
                        <option value="초대졸">초대졸</option>\
                        <option value="대졸">대졸</option>\
@@ -310,6 +315,7 @@
                      class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"\
                      type="date"\
                      name="memberJoin"\
+                     stundet\
                    />\
                  </label>\
                  </div>'
@@ -325,14 +331,18 @@
          ,success:function(ck){
             console.log('ck:',ck);
             if(ck=='false') {
-               alert('이미 사용중인 아이디 입니다');
+            	alert(
+            			 '이미 사용중인 아이디 입니다'
+            			);
             } else {
                $('#id').val(ck);
             }
          }
       });
    } else {
-      alert('id는 4자 이상입력해주세요');
+      alert(
+    		  'id는 4자 이상입력해주세요'
+    		  );
    }
    
 });
@@ -362,32 +372,176 @@
    
 	$('#addBtn').click(function(){
 	 if($('#level').val() =="'1'") {
-		if(!/^[a-zA-z0-9]{8,16}$/.test($('#pw').val())) { // 영어 문자만 가능한 정규표현식 8자리 이상 16자리 이하
-			alert("영문, 숫자로 8자리 이상 입력하세요.");
-			$('#pw').focus();
+		 if($('#idck').val() =='') {
+				alert('중복검사 할 id를 입력해 주세요');
+				focus('#idck');
+				return false;
+			} else if ($('#id').val() =='') {
+				alert('id 중복검사를 해주세요');
+				focus('#idck');
+				return false;
+			} else if(!/^[a-zA-z0-9]{8,16}$/.test($('#pw').val())) { // 영어 문자만 가능한 정규표현식 8자리 이상 16자리 이하
+				alert("영문, 숫자로 8자리 이상 입력하세요.");
+				$('#pw').focus();
 			return false;
-		} else if(!/^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/.test($('#memberEmail').val())){
+			} else if ($('#memberName').val() == '') {
+				alert('이름을 입력해주세요');
+				$('#memberName').focus();
+				return false;
+			} else if (! /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/.test($('#memberPhone').val())){ //핸드폰 1/2번째자리는 01로 시작함/ 번호 사이사이 대쉬는 무시
+				alert('-제외 전화번호를 입력해주세요 ');
+				$('#memberPhone').focus();
+				return false;
+			} else if(!/^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/.test($('#memberEmail').val())){
 			// 이메일의 경우 첫글자 _가 허용되므로 첫번째 글자 검사식을 따로 두었다.
 			// 영어 대/소문자 구분
 			// @ 반드시 하나만 입력, . 반드시 하나만 입력
 			// .뒤에 최소 한글자에서 최대 3글자까지
-			alert("이메일을 정확히 입력하세요");
-			$('#memberEmail').focus();
-			return false;
-			}
-		$('#addMemberForm').submit();
-	 	} else {
-	 		if(!/^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/.test($('#memberEmail').val())){
-				// 이메일의 경우 첫글자 _가 허용되므로 첫번째 글자 검사식을 따로 두었다.
-				// 영어 대/소문자 구분
-				// @ 반드시 하나만 입력, . 반드시 하나만 입력
-				// .뒤에 최소 한글자에서 최대 3글자까지
 				alert("이메일을 정확히 입력하세요");
 				$('#memberEmail').focus();
 				return false;
-				}
-	 		$('#addMemberForm').submit();
-	 	}
+			} else if($('#keyword').val() == ''){
+				alert( '주소검색창에 검색할 주소를 입력해주세요');
+				$('#keyword').focus();
+				return false;
+			} else if ($('#memberAddr').val() == '') {
+				alert('주소검색을 해주세요');
+				$('#keyword').focus();
+				return false;
+			} else if ($('#memberDetailAddress').val() == '') {
+				alert('상세주소를 입력해주세요');
+				$('#memberDetailAddress').focus();
+				return false;
+			} else {
+		$('#addMemberForm').submit();
+	 		} 
+		} else if ($('#level').val() =="'2'") {
+			if($('#idck').val() =='') {
+				alert('중복검사 할 id를 입력해 주세요');
+				focus('#idck');
+				return false;
+			} else if ($('#id').val() =='') {
+				alert('id 중복검사를 해주세요');
+				focus('#idck');
+				return false;
+			}  else if ($('#memberName').val() == '') {
+				alert('이름을 입력해주세요');
+				$('#memberName').focus();
+				return false;
+			} else if (! /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/.test($('#memberPhone').val())){ //핸드폰 1/2번째자리는 01로 시작함/ 번호 사이사이 대쉬는 무시
+				alert('-제외 전화번호를 입력해주세요 ');
+				$('#memberPhone').focus();
+				return false;
+			} else if(!/^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/.test($('#memberEmail').val())){
+					// 이메일의 경우 첫글자 _가 허용되므로 첫번째 글자 검사식을 따로 두었다.
+					// 영어 대/소문자 구분
+					// @ 반드시 하나만 입력, . 반드시 하나만 입력
+					// .뒤에 최소 한글자에서 최대 3글자까지
+				alert("이메일을 정확히 입력하세요");
+				$('#memberEmail').focus();
+				return false;
+			 } else if ($('input[name=gender]:radio:checked').length < 1) {
+				alert("성별을 선택하세요");
+				return false;
+			 } else if ($('#date').val()== '') {
+				alert('입사일을 선택하세요');
+				return false;
+			 } else if($('#keyword').val() == ''){
+				alert( '주소검색창에 검색할 주소를 입력해주세요');
+				$('#keyword').focus();
+				return false;
+			 } else if ($('#memberAddr').val() == '') {
+				alert('주소검색을 해주세요');
+				$('#keyword').focus();
+				return false;
+			} else if ($('#memberDetailAddress').val() == '') {
+				alert('상세주소를 입력해주세요');
+				$('#memberDetailAddress').focus();
+				return false;
+			} else {
+				$('#addMemberForm').submit();
+				 } 
+			 } else if ($('#level').val() =="'3'") {
+				 if($('#idck').val() =='') {
+						alert('중복검사 할 id를 입력해 주세요');
+						focus('#idck');
+						return false;
+				 } else if ($('#id').val() =='') {
+						alert('id 중복검사를 해주세요');
+						focus('#idck');
+						return false;
+				 } else if ($('#memberName').val() == '') {
+						alert('이름을 입력해주세요');
+						$('#memberName').focus();
+						return false;
+				 } else if (! /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/.test($('#memberPhone').val())){ //핸드폰 1/2번째자리는 01로 시작함/ 번호 사이사이 대쉬는 무시
+						alert('-제외 전화번호를 입력해주세요 ');
+						$('#memberPhone').focus();
+						return false;
+				 } else if(!/^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/.test($('#memberEmail').val())){
+					// 이메일의 경우 첫글자 _가 허용되므로 첫번째 글자 검사식을 따로 두었다.
+					// 영어 대/소문자 구분
+					// @ 반드시 하나만 입력, . 반드시 하나만 입력
+					// .뒤에 최소 한글자에서 최대 3글자까지
+						alert("이메일을 정확히 입력하세요");
+						$('#memberEmail').focus();
+						return false;
+				 } else if ($('#level').val() =="'2'") {
+					 if($('#idck').val() =='') {
+							alert('중복검사 할 id를 입력해 주세요');
+							focus('#idck');
+							return false;
+						} else if ($('#id').val() =='') {
+							alert('id 중복검사를 해주세요');
+							focus('#idck');
+							return false;
+						} else if(!/^[a-zA-z0-9]{8,16}$/.test($('#pw').val())) { // 영어 문자만 가능한 정규표현식 8자리 이상 16자리 이하
+							alert("영문, 숫자로 8자리 이상 입력하세요.");
+							$('#pw').focus();
+							return false;
+						} else if ($('#memberName').val() == '') {
+							alert('이름을 입력해주세요');
+							$('#memberName').focus();
+							return false;
+						} else if (! /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/.test($('#memberPhone').val())){ //핸드폰 1/2번째자리는 01로 시작함/ 번호 사이사이 대쉬는 무시
+							alert('-제외 전화번호를 입력해주세요 ');
+							$('#memberPhone').focus();
+							return false;
+						} else if(!/^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/.test($('#memberEmail').val())){
+						// 이메일의 경우 첫글자 _가 허용되므로 첫번째 글자 검사식을 따로 두었다.
+						// 영어 대/소문자 구분
+						// @ 반드시 하나만 입력, . 반드시 하나만 입력
+						// .뒤에 최소 한글자에서 최대 3글자까지
+							alert("이메일을 정확히 입력하세요");
+							$('#memberEmail').focus();
+							return false;
+						} else if ($('input[name=gender]:radio:checked').length < 1) {
+							alert("성별을 선택하세요");
+							return false;
+						} else if ($('#education').val == '') {
+							alert("최종학력을 선택하세요");
+							return false;
+						 } else if ($('#date').val()== '') {
+							 alert('학원등록일을 선택하세요');
+							 return false;
+						 } else if($('#keyword').val() == ''){
+							 alert( '주소검색창에 검색할 주소를 입력해주세요');
+							 $('#keyword').focus();
+							 return false;
+							} else if ($('#memberAddr').val() == '') {
+							 alert('주소검색을 해주세요');
+							 $('#keyword').focus();
+							 return false;
+							} else if ($('#memberDetailAddress').val() == '') {
+							 alert('상세주소를 입력해주세요');
+							 $('#memberDetailAddress').focus();
+							 return false;
+							} else {
+						$('#addMemberForm').submit();
+					 } 
+			 }
+		 } 
 	});
+	
 </script>
 </html> 
