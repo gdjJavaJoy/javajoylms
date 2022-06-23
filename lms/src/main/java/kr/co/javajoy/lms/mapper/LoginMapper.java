@@ -8,7 +8,11 @@ import org.apache.ibatis.annotations.Mapper;
 public interface LoginMapper {
 	// 로그인
 	public String loginMember(Map<String, Object> map);
-
+	
+	// 로그인 시 lastLoginDate Update
+	public int updatelastLoginDate(String memberId);
+	
+	public int updateDormantMember();
 	// 강사 아이디 찾기
 	public String findTeacherId(Map<String, Object> map);
 

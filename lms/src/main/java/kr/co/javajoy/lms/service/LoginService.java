@@ -18,7 +18,12 @@ import lombok.extern.slf4j.Slf4j;
 public class LoginService {
 	@Autowired LoginMapper loginMapper;
 	@Autowired MemberMapper memberMapper;
-
+	
+	// 휴면 계정 처리 
+	public int modifyDormantMember() {
+		int row = loginMapper.updateDormantMember();
+		return row;
+	}
 	// 로그인
 	public Map<String,Object> login(String memberId, String memberPw) {
 		// 디버깅
@@ -45,7 +50,16 @@ public class LoginService {
 
 		return resultMap;
 	}
-
+	// 로그인 시 lastLogindDate Update 
+	public int modifyLastLoginUpdate(String memberId) {
+		int row = loginMapper.updatelastLoginDate(memberId); // 로그인 시 lastLoginDateUpdate
+		if (row == 1) {
+			log.debug(CF.PSG+"LoginService.login.lastLoginDate 수정 성공"+CF.RESET);
+		} else {
+			log.debug(CF.PSG+"LoginService.login.lastLoginDate 수정 실패"+CF.RESET);
+		}
+		return row;
+	}
 	// 아이디 찾기
 	public String findMemberId(String memberLevel, String memberName, String memberPhone) {
 		// 디버깅
