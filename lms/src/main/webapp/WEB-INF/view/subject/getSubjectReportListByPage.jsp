@@ -839,7 +839,7 @@
             </a>
 
             <!-- With avatar -->
-            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">(강좌이름)Subject Report List</h4>
+            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">(강좌이름)Subject Report List<a href="${pageContext.request.contextPath}/addSubjectReport" class="text-sm" style="float: right;">과제 추가 -></a></h4>
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto">
                 <table class="w-full whitespace-no-wrap">

@@ -843,7 +843,7 @@
 	            </a>
             </c:forEach>
             <!-- With avatar -->
-            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Subject Report View Detail</h4> 
+            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Subject Report View Detail<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage" class="text-sm" style="float: right;">학생 과제 제출 게시판 -></a></h4> 
               <div>
               	<div>[첨부 파일]</div>
 		    	<c:forEach var="subjectFileList" items="${subjectFileList}">
@@ -900,7 +900,7 @@
             </div>
             <div>
             	<!-- 댓글 -->
-            	<a href="" style="float: right;">댓글쓰기</a>
+            	<a href="${pageContext.request.contextPath}/addSubjectReportComment" style="float: right;">댓글쓰기</a>
       
             		<table class="w-full whitespace-no-wrap">
             			<thead>

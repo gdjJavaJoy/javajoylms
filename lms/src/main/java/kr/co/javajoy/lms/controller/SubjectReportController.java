@@ -1,6 +1,7 @@
 package kr.co.javajoy.lms.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,10 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.service.SubjectReportService;
+import kr.co.javajoy.lms.vo.SubjectReportForm;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -20,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SubjectReportController {
 	@Autowired SubjectReportService subjectReportService;
 	
-	// 과제 게시판 글 리스트 출력 + 페이징
+	// 1) 과제 게시판 글 리스트 출력 + 페이징
 	@GetMapping("/getSubjectReportListByPage")
 	public String getSubjectReportListByPage(Model model
 										   ,@RequestParam(value="currentPage", defaultValue="1") int currentPage
@@ -45,7 +49,7 @@ public class SubjectReportController {
 		return "subject/getSubjectReportListByPage";
 	}
 	
-	// 공지사항 상세보기 + 파일 이름 리스트 출력 + 댓글 리스트 출력
+	// 2) 과제 게시판 글 상세보기 + 파일 이름 리스트 출력 + 댓글 리스트 출력
 	@GetMapping("/getSubjectReportOne")
 	public String getSubjectReportOne(Model model
 									,HttpServletRequest request
@@ -73,6 +77,31 @@ public class SubjectReportController {
 		
 		return "subject/getSubjectReportOne";
 	}
+	
+	// 3) 과제 게시판 글 입력 + 파일 입력 Form 받기
+	@GetMapping("/addSubjectReport")
+	public String addSubjectReport() {
+		return "subject/addSubjectReport";
+	}
+	// 3-1) 과제 게시판 글 입력 + 파일 입력 Action
+	@PostMapping("/addSubjectReport")
+	public String addSubjectReport(HttpServletRequest request, SubjectReportForm subjectReportForm) {
+		String path = request.getServletContext().getRealPath("/file/subject_file");
+		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.path : " + path);
+		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.subjectReportForm : " + subjectReportForm);
+		
+		List<MultipartFile> subjectReportFileList = subjectReportForm.getSubjectReportFileList();
+		// 파일이 한개 이상 업로드 되면
+		if(subjectReportFileList != null && subjectReportFileList.get(0).getSize() > 0) {
+			for(MultipartFile mf : subjectReportFileList) {
+				log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.filename : " + mf.getOriginalFilename());
+			}
+		}
+		
+		subjectReportService.addSubjectReport(subjectReportForm, path);
+		return "return:/getSubjectReportListByPage";
+	}
+	
 }
 
 

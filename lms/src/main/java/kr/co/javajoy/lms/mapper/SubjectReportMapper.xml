@@ -2,12 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.javajoy.lms.mapper.SubjectReportMapper">
 	
+	<!-- 1) 과제 게시판 글 리스트 출력 -->
+	
 	<!-- 과제 게시판 글 총 개수 -->
 	<select id="selectTotalCount"
 			resultType="int">
 		SELECT COUNT(*) FROM subject_report
 	</select>
-	
 	<!-- 과제 게시판 글 리스트 출력 -->
 	<select id="selectSubjectReportListByPage"
 			parameterType="java.util.Map"
@@ -26,6 +27,8 @@
 		LIMIT #{startRow}, #{rowPerPage}
 	</select>
 	
+	<!-- 2) 과제 게시판 글 상세보기 + 파일 이름 리스트 출력 + 댓글 리스트 출력 -->
+	
 	<!-- 과제 게시판 상세보기 -->
 	<select id="selectSubjectReportOne"
 			parameterType="int"
@@ -43,7 +46,6 @@
 		LEFT JOIN subject_report AS r ON r.subject_report_no = b.subject_board_no
 		WHERE b.subject_board_no = #{subjectBoardNo};
 	</select>
-	
 	<!-- 과제 게시판 상세보기에 파일 이름으로된 리스트 출력 -->
 	<select id="selectSubjectReportFileNameList"
 			parameterType="int"
@@ -54,7 +56,6 @@
 		LEFT JOIN subject_file AS f ON f.subject_file_board_no = b.subject_board_no
 		WHERE b.subject_board_no = #{subjectBoardNo};
 	</select>
-	
 	<!-- 과제 게시판 상세보기 파일 리스트 출력 -->
 	<select id="selectSubjectReportFileList"
 			parameterType="int"
@@ -66,7 +67,6 @@
 		LEFT JOIN subject_file AS f ON f.subject_file_board_no = b.subject_board_no
 		WHERE b.subject_board_no = #{subjectBoardNo};
 	</select>
-	
 	<!-- 글 하나당 댓글 총 개수 -->
 	<select id="selectCommentTotalCountByNotice"
 			parameterType="int"
@@ -76,7 +76,6 @@
 		LEFT JOIN subject_board AS b ON c.subject_report_no = b.subject_board_no
 		WHERE subject_board_no = #{subjectBoardNo};
 	</select>
-	
 	<!-- 과제 게시판 상세보기 댓글 리스트 출력 -->
 	<select id="selectCommentListByPage"
 			parameterType="java.util.Map"
@@ -88,6 +87,61 @@
 		LEFT JOIN subject_board AS b ON c.subject_report_no = b.subject_board_no
 		WHERE subject_board_no = #{subjectBoardNo};
 	</select>
+	
+	<!-- 3) 과제 게시판 글 입력 + 파일 입력 -->
+	
+	<!-- subject_board 글 입력 -->
+	<insert id="insertSubjectBoard" 
+			parameterType="kr.co.javajoy.lms.vo.SubjectReport">
+		 <selectKey resultType="int" keyProperty="subjectBoardNo" order="AFTER">
+				select last_insert_id()
+		 </selectKey>
+		INSERT INTO subject_board (
+			subject_no
+			,create_date
+		) VALUES (
+			#{subjectNo}
+			,NOW()
+		)
+	</insert>
+	<!-- 과제 게시판 글 입력 -->
+	<insert id="insertSubjectReport" 
+			parameterType="kr.co.javajoy.lms.vo.SubjectReport">
+		INSERT INTO subject_report (
+			member_id
+			,subject_report_title
+			,subject_report_content
+			,subject_report_period
+			,create_date
+		) VALUES (
+			#{memberId}
+			,#{subjectReportTitle}
+			,#{subjectReportContent}
+			,#{subjectReportPeriod}
+			,NOW()
+		)
+	</insert>
+	<!-- 과제 게시판 파일 입력 -->
+	<insert id="insertSubjectFile"
+			parameterType="kr.co.javajoy.lms.vo.SubjectFile">
+		INSERT INTO subject_file (
+			subject_file_board_no
+			,subject_file_original_name
+			,subject_file_name
+			,subject_file_type
+			,subject_file_size
+			,create_date
+			,update_date
+		) VALUES (
+			#{subjectFileBoardNo}
+			,#{subjectFileOriginalName}
+			,#{subjectFileName}
+			,#{subjectFileType}
+			,#{subjectFileSize}
+			,NOW()
+			,NOW()
+		)
+	</insert>
 	
 </mapper>
 
