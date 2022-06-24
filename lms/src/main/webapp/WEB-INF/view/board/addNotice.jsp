@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
 <script>
 	$(document).ready(function() {
 		$('#addFileupload').click(function(){
@@ -29,7 +28,6 @@
 	});
 	
 	$('#addNotice').click(function(){
-		let flag = true;
 		if($('#boardTitle').val() == ''){
 			alert('noticeTitle 입력하세요');
 		} else if($('#boardContent').val() == '') {
@@ -46,12 +44,14 @@
 				alert('파일이 첨부되지않은 boardfileList가 존재합니다');
 			}
 		}
+		
 	});
 });
 </script>
 </head>
 <body>
 <div>
+	<a href="${pageContext.request.contextPath}/getNoticeByPage">목록</a>
 	<form method="post" action="${pageContext.request.contextPath}/addNotice" enctype="multipart/form-data" id="addForm">
 		<h1>addNotice</h1>
 		<input type="hidden" name="privateNo" value="1" >
@@ -60,7 +60,7 @@
 				<td>ID</td>
 				<td>
 					<!-- 임시 값 대입 추후 세션 추가 예정 -->
-					<input name="memberId" value="admin" readonly="readonly">
+					<input name="memberId" value="admin" readonly="readonly" id="memberId">
 				</td>
 			</tr>
 			<tr>
@@ -81,7 +81,6 @@
 				<!-- 파일 : <input type="file" name="boardfileList" multiple="multiple" id="addfFileupload">-->
 					<button type="button" id="addFileupload">파일 업로드 추가</button>
 					<div id="fileSection"> 
-					
 					</div>
 				</td>
 			</tr>

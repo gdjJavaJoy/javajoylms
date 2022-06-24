@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 public class NoticeController {
 	@Autowired private NoticeService noticeService;
 	
+	// 리스트 보여주기
 	@GetMapping("/getNoticeByPage")
 	public String getNoticeByPage(Model model
 			,@RequestParam(name = "currentPage", defaultValue = "1") int currentPage
@@ -53,6 +54,8 @@ public class NoticeController {
 		log.debug(CF.WSH + "NoticeController.getNoticeOne.map : "+ map);
 		return "board/getNoticeOne";
 	}
+	
+	// 리스트 추가
 	@GetMapping("/addNotice")
 	public String addNotice() {
 		return "board/addNotice";
@@ -74,6 +77,8 @@ public class NoticeController {
 		noticeService.addNotice(boardForm, path);
 		return "redirect:/getNoticeByPage";
 	}
+	
+	// 리스트 삭제
 	@GetMapping("/removeNoticefile") // 파일 먼저 삭제
 	public String removeNoticefile(HttpServletRequest request
 			,@RequestParam(name="boardFileNo") int boardfileNo
@@ -82,7 +87,7 @@ public class NoticeController {
 		log.debug(CF.WSH + "NoticeController.removeNoticefile(Get).boardNo : "+ boardNo);
 		String path = request.getServletContext().getRealPath("file/boardFile/");
 			noticeService.removefileNotice(boardfileNo,path);
-		return "redirect:/modfyNotice?boardNo="+boardNo;
+		return "redirect:/modifyNotice?boardNo="+boardNo;
 	}
 	@GetMapping("/removeNotice")
 	public String removeNoice(HttpServletRequest request
@@ -92,6 +97,8 @@ public class NoticeController {
 		noticeService.removeNotice(boardNo, path);
 	return "redirect:/getNoticeByPage";
 	}
+	
+	// 리스트 수정
 	@GetMapping("/modifyNotice")
 	public String modifyNotice(Model model
 			,HttpServletRequest request
@@ -109,7 +116,7 @@ public class NoticeController {
 	public String modifyNotice(Board board) {
 		int row = noticeService.modifyNotice(board);
 		log.debug(CF.WSH + "NoticeController.modifyNotice(Post).row : "+ row);
-		return "board/getNoticeOne?boardNo="+board.getBoardNo();
+		return "redirect:/getNoticeOne?boardNo="+board.getBoardNo();
 	}
 	
 	

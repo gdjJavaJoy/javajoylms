@@ -55,7 +55,7 @@
  	<delete id="deleteNoticefileOne"
  			parameterType="int">
  		DELETE FROM board_file
- 		WHERE board_fild_no = #{boardFileNo}
+ 		WHERE board_file_no = #{boardFileNo}
  	</delete>
  	<select id="selectNoticefileNameList"
  			parameterType="int"

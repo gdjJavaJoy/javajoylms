@@ -44,7 +44,7 @@ public class NoticeService {
 	}
 	
 	// 공지사항 상세보기
-	// 수정(Get)
+	// 수정 (Get)
 	public Map<String, Object> getNoticeOne(int boardNo) {
 		// 쿼리불러오기 조회값 저장
 		List<Board> board = noticeMapper.selectNoticeOne(boardNo); 
@@ -106,6 +106,7 @@ public class NoticeService {
 			}
 		}
 	}
+	// 삭제
 	public void removefileNotice (int boardfileNo, String path) {
 			List<String> boardfileList = noticefileMapper.selectNoticefileNameListByBoardfileNo(boardfileNo);
 			log.debug(CF.WSH + "NoticeService.removefileNotice.boardfileList : "+ boardfileList);
@@ -128,10 +129,10 @@ public class NoticeService {
 	noticefileMapper.deleteNoticefileList(boardNo);
 	noticeMapper.deleteNotice(boardNo);
 	}
-	// modify(Post)
+	// 수정 (Post)
 	public int modifyNotice(Board board) {
 		int row = noticeMapper.updateNotice(board);
-		log.debug(CF.WSH + "NoticeService.modifyNotice.row : "+ row);
+		log.debug(CF.WSH + "NoticeService.modifyNotice.row : "+ board);
 		return row;
 	}
 }

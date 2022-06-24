@@ -14,6 +14,7 @@
 <body>
 <div class="container">
 	<h1>getNoticeOne</h1>
+	<a href="${pageContext.request.contextPath}/getNoticeByPage">목록</a>
 		<C:forEach var="n" items="${board}">
 			<table class="table table=striped">
 				<tr>
@@ -32,14 +33,13 @@
 					<td>내용</td>
 					<td>${n.boardContent}</td>
 				</tr>
-				<!-- <tr>
 					<td>생성날짜</td>
 					<td>${n.createDate}</td>
 				</tr>
 				<tr>
 					<td>수정날짜</td>
 					<td>${n.updateDate}</td>
-				</tr> -->
+				</tr> 
 			</table>
 				<a href="${pageContext.request.contextPath}/removeNotice?boardNo=${n.boardNo}">삭제</a>
 				<a href="${pageContext.request.contextPath}/modifyNotice?boardNo=${n.boardNo}">수정</a>
@@ -47,7 +47,7 @@
 		<div>첨부파일</div>
 			<C:forEach var="boardfile" items="${boardfile}">
 				<div>
-					<a href="${pageContext.request.contextPath}/file/board_file/${boardfile.boardFileName}${boardfile.boardFileType}" download="${boardfile.boardFileName}${boardfile.boardFileType}">${boardfile.boardFileName}${boardfile.boardFileType}</a>
+					<a href="${pageContext.request.contextPath}/file/board_file/${boardfile.boardFileName}${boardfile.boardFileType}" download="${boardfile.boardFileName}${boardfile.boardFileType}">${boardfile.boardFileOriginalName}${boardfile.boardFileType}</a>
 				</div>
 			</C:forEach>
 </div>

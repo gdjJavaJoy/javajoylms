@@ -69,6 +69,5 @@
 		SET board_title = #{boardTitle}
 			,board_content = #{boardContent}
 		WHERE board_no = #{boardNo}
-		
 	</update>
 </mapper>

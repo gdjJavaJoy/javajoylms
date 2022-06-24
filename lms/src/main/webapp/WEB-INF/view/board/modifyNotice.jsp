@@ -14,6 +14,7 @@
 </head>
 <body>
 <h1>modifyNotice</h1>
+<a href="${pageContext.request.contextPath}/getNoticeByPage">목록</a>
 	<form method="post" action="${pageContext.request.contextPath}/modifyNotice">
 		<C:forEach var="n" items="${board}">
 			<table class="table table=striped">
@@ -38,7 +39,7 @@
 				<tr>
 					<td>내용</td>
 					<td>
-						<textarea name="boardTitle" >${n.boardContent}</textarea>
+						<textarea name="boardContent" >${n.boardContent}</textarea>
 					</td>
 				</tr>
 			</table>
@@ -48,8 +49,9 @@
 	<div>첨부파일</div>
 	<C:forEach var="boardfile" items="${boardfile}">
 				<div>
-					${boardfile.boardFileName}${boardfile.boardFileType}<a href="${pageContext.request.contextPath}/removeNoticefile?boardfileNo=${boardfile.boardFileNo}&boardNo=${boardfile.boardNo}">삭제</a>
+					${boardfile.boardFileName}${boardfile.boardFileType}<a href="${pageContext.request.contextPath}/removeNoticefile?boardFileNo=${boardfile.boardFileNo}&boardNo=${boardfile.boardNo}">삭제</a>
 				</div>
 	</C:forEach>
+	
 </body>
 </html>
