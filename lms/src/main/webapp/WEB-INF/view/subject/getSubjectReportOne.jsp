@@ -900,10 +900,10 @@
               	<div class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">첨부 파일</div>
               
               	<c:choose>
-	              	<c:when test="${subjectFileList.size() == 0}">
+	              	<c:when test="${subjectFileList.size() < 0}">
 				    	<div>파일없음</div>
 				    </c:when>
-				    <c:when test="${subjectFileList.size() > 0}">
+				    <c:when test="${subjectFileList.size() >= 0}">
 				    	<c:forEach var="subjectFileList" items="${subjectFileList}">
 				    		<div>
 				    			<a href="${pageContext.request.contextPath}/file/subject_file/${subjectFileList.subjectFileOriginalName}" download="${subjectFileList.subjectFileType}">${subjectFileList.subjectFileOriginalName}</a>

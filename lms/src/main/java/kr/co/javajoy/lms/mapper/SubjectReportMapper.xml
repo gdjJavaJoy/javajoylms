@@ -69,8 +69,8 @@
 		SELECT f.subject_file_original_name subjectFileOriginalName
 			  ,f.subject_file_type subjectFileType
 			  ,f.subject_file_size subjectFileSize
-		FROM subject_board AS b
-		LEFT JOIN subject_file AS f ON f.subject_file_board_no = b.subject_board_no
+		FROM subject_file AS f
+		LEFT JOIN subject_board AS b ON f.subject_file_board_no = b.subject_board_no
 		WHERE b.subject_board_no = #{subjectBoardNo};
 	</select>
 	<!-- 글 하나당 댓글 총 개수 -->
