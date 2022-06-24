@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
 -- 테이블 데이터 lms.admin:~1 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
 INSERT INTO `admin` (`member_id`, `admin_name`, `admin_phone`, `admin_address`, `admin_detailaddress`, `admin_email`, `update_date`) VALUES
-	('admin', '유희조', '010-1111-1111', 'ㅁㄴㅇ', 'ㅁㄴㅇ', 'ㅁㄴㅇ', '2022-06-20 13:13:16');
+	('admin', '유희조', '01011111111', 'ㅁㄴㅇ', 'ㅁㄴㅇ', 'ㅁㄴㅇ', '2022-06-20 13:13:16');
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 
 -- 테이블 lms.board 구조 내보내기
@@ -46,9 +46,9 @@ CREATE TABLE IF NOT EXISTS `board` (
   `create_date` datetime NOT NULL,
   `update_date` datetime NOT NULL,
   PRIMARY KEY (`board_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 lms.board:~6 rows (대략적) 내보내기
+-- 테이블 데이터 lms.board:~21 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `board` DISABLE KEYS */;
 INSERT INTO `board` (`board_no`, `member_id`, `board_category`, `board_title`, `board_content`, `private_no`, `create_date`, `update_date`) VALUES
 	(1, 'test', '1', 'test', 'testcontent', '1', '2022-06-20 14:35:03', '2022-06-20 14:35:03'),
@@ -56,7 +56,22 @@ INSERT INTO `board` (`board_no`, `member_id`, `board_category`, `board_title`, `
 	(3, 'test3', '3', 'test3', 'testcontent3', '3', '2022-06-20 16:43:57', '2022-06-20 16:43:57'),
 	(4, 'test4', '1', 'test4', 'testcontent4', '1', '2022-06-20 16:45:18', '2022-06-20 16:45:18'),
 	(5, 'test5', '2', 'test5', 'testcontent5', '2', '2022-06-20 16:45:33', '2022-06-20 16:45:33'),
-	(6, 'test6', '3', 'test6', 'testcontent6', '3', '2022-06-20 16:46:02', '2022-06-20 16:46:02');
+	(14, '', '2', 'gggggggggggg', 'ggggggggggggggg', '2', '2022-06-21 19:58:37', '2022-06-21 19:58:37'),
+	(15, '', '1', 'gggggggggggg', 'ggggggggggggggg', '2', '2022-06-21 20:03:58', '2022-06-21 20:03:58'),
+	(16, '', '2', 'ggggggggggggsss', 'gggggggggggggggddd', '3', '2022-06-21 20:10:56', '2022-06-21 20:10:56'),
+	(17, 'admin', '2', 'yyy', 'yyy', '1', '2022-06-21 20:32:25', '2022-06-21 20:32:25'),
+	(18, '', '3', 'rd', 'dd', '1', '2022-06-21 20:33:42', '2022-06-21 20:33:42'),
+	(19, 'admin', '1', 'ddd', 'ddd', '1', '2022-06-21 20:34:35', '2022-06-21 20:34:35'),
+	(20, 'admin', '1', 'ddd', 'dddddd22222', '1', '2022-06-21 20:34:49', '2022-06-21 20:34:49'),
+	(21, 'admin', '2', 'e', '33333333333ddddd', '1', '2022-06-22 09:19:52', '2022-06-22 09:19:52'),
+	(31, 'admin', '1', 'ㅇ', 'ㅇㅇ', '2', '2022-06-22 16:25:03', '2022-06-22 16:25:03'),
+	(34, 'admindd', '2', 'd', 'd', '1', '2022-06-22 16:31:30', '2022-06-22 16:31:30'),
+	(37, 'admin', '2', 'DD', 'DD', '3', '2022-06-22 16:34:07', '2022-06-22 16:34:07'),
+	(39, 'admin', '2', 'DD', 'DD', '2', '2022-06-22 16:36:12', '2022-06-22 16:36:12'),
+	(40, 'admin', '2', 'FFFFFF', 'FFFFF', '1', '2022-06-22 16:36:23', '2022-06-22 16:36:23'),
+	(52, 'admin', '3', 'ㅇ', 'ㅇㅇ', '1', '2022-06-23 16:21:30', '2022-06-23 16:21:30'),
+	(110, 'admin', '1', '테에스ㅡ', '테에스트으', '1', '2022-06-24 13:16:32', '2022-06-24 13:16:32'),
+	(114, 'admin', '1', '123', '123', '1', '2022-06-24 16:07:26', '2022-06-24 16:07:26');
 /*!40000 ALTER TABLE `board` ENABLE KEYS */;
 
 -- 테이블 lms.board_comment 구조 내보내기
@@ -84,16 +99,21 @@ CREATE TABLE IF NOT EXISTS `board_file` (
   `board_file_original_name` varchar(50) NOT NULL,
   `board_file_name` varchar(50) NOT NULL,
   `board_file_type` varchar(50) NOT NULL,
-  `board_file_size` varchar(50) NOT NULL,
+  `board_file_size` bigint(20) NOT NULL DEFAULT 0,
   `create_date` datetime NOT NULL,
   `update_date` datetime NOT NULL,
   PRIMARY KEY (`board_file_no`),
   KEY `FK_board_file_board` (`board_no`),
   CONSTRAINT `FK_board_file_board` FOREIGN KEY (`board_no`) REFERENCES `board` (`board_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 lms.board_file:~0 rows (대략적) 내보내기
+-- 테이블 데이터 lms.board_file:~4 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `board_file` DISABLE KEYS */;
+INSERT INTO `board_file` (`board_file_no`, `board_no`, `board_file_original_name`, `board_file_name`, `board_file_type`, `board_file_size`, `create_date`, `update_date`) VALUES
+	(5, 31, '2341B34A58070D4E04.jpeg', 'a57662bcec994962b8e26498642e3388.jpeg', 'image/jpeg', 96937, '2022-06-22 16:25:03', '2022-06-22 16:25:03'),
+	(22, 52, 'ddd.zip', '6cb911f58a734748b584d0287d300dea.zip', 'application/x-zip-compressed', 1167294, '2022-06-23 16:21:30', '2022-06-23 16:21:30'),
+	(27, 110, 'cashbook.war', '9eea476dc15c4c0c8f1828f43d524a82.war', 'application/octet-stream', 539821, '2022-06-24 13:16:32', '2022-06-24 13:16:32'),
+	(30, 114, 'sakila-schema.sql', '9fd3d650c9cf4df19cb3159fd60b05cf.sql', 'application/octet-stream', 24254, '2022-06-24 16:07:26', '2022-06-24 16:07:26');
 /*!40000 ALTER TABLE `board_file` ENABLE KEYS */;
 
 -- 테이블 lms.book 구조 내보내기
@@ -121,10 +141,12 @@ CREATE TABLE IF NOT EXISTS `career` (
   PRIMARY KEY (`career_no`),
   KEY `FK_career_teacher` (`member_id`),
   CONSTRAINT `FK_career_teacher` FOREIGN KEY (`member_id`) REFERENCES `teacher` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 lms.career:~0 rows (대략적) 내보내기
+-- 테이블 데이터 lms.career:~1 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `career` DISABLE KEYS */;
+INSERT INTO `career` (`career_no`, `member_id`, `career`, `detail_career`, `update_date`) VALUES
+	(1, 'teacher', 'asdasda', 'asdasdasd', '2022-06-24 09:49:42');
 /*!40000 ALTER TABLE `career` ENABLE KEYS */;
 
 -- 테이블 lms.curriculum 구조 내보내기
@@ -142,16 +164,17 @@ CREATE TABLE IF NOT EXISTS `curriculum` (
   PRIMARY KEY (`curriculum_no`) USING BTREE,
   KEY `FK_curriculum_subject` (`subject_no`),
   CONSTRAINT `FK_curriculum_subject` FOREIGN KEY (`subject_no`) REFERENCES `subject` (`subject_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 lms.curriculum:~5 rows (대략적) 내보내기
+-- 테이블 데이터 lms.curriculum:~6 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `curriculum` DISABLE KEYS */;
 INSERT INTO `curriculum` (`curriculum_no`, `subject_no`, `member_id`, `language_no`, `curriculum_title`, `curriculum_content`, `start_day`, `end_day`, `create_date`, `update_date`) VALUES
-	(1, 1, 'teacher', 1, 'java문법1', 'java문법을 배우자', '2022-01-01', '2022-06-01', '2022-06-21 11:25:40', '2022-06-21 11:25:43'),
-	(2, 1, 'teacher1', 1, 'java알고리즘1', 'java알고리즘을 배우자', '2022-02-01', '2022-07-01', '2022-06-21 12:34:11', '2022-06-21 12:34:14'),
-	(3, 1, 'teacher2', 1, 'java웹', ' 웹을배우자', '2022-03-01', '2022-08-01', '2022-06-21 12:37:01', '2022-06-21 12:37:02'),
-	(4, 2, 'teacher3', 4, 'C+문법기초', 'C+문법기초를배우자', '2022-04-01', '2022-09-01', '2022-06-21 14:21:35', '2022-06-21 14:21:36'),
-	(5, 2, 'teacher4', 4, 'C+알고리즘', 'C+알고리즘을 배우자', '2022-05-01', '2022-10-01', '2022-06-21 14:21:36', '2022-06-21 14:21:37');
+	(1, 12, 'teacher', 1, 'java문법1', 'java문법을 배우자', '2022-01-01', '2022-06-01', '2022-06-21 11:25:40', '2022-06-21 11:25:43'),
+	(2, 12, 'teacher1', 1, 'java알고리즘1', 'java알고리즘을 배우자', '2022-02-01', '2022-07-01', '2022-06-21 12:34:11', '2022-06-21 12:34:14'),
+	(3, 12, 'teacher2', 1, 'java웹', ' 웹을배우자', '2022-03-01', '2022-08-01', '2022-06-21 12:37:01', '2022-06-21 12:37:02'),
+	(4, 12, 'teacher3', 4, 'C+문법기초', 'C+문법기초를배우자', '2022-04-01', '2022-09-01', '2022-06-21 14:21:35', '2022-06-21 14:21:36'),
+	(5, 12, 'teacher4', 4, 'C+알고리즘', 'C+알고리즘을 배우자', '2022-05-01', '2022-10-01', '2022-06-21 14:21:36', '2022-06-21 14:21:37'),
+	(6, 12, 'teacher', 1, 'asdf', 'asdf', '2022-06-23', '2022-06-23', '2022-06-23 13:18:46', '2022-06-23 13:18:47');
 /*!40000 ALTER TABLE `curriculum` ENABLE KEYS */;
 
 -- 테이블 lms.curriculum_book 구조 내보내기
@@ -199,12 +222,13 @@ CREATE TABLE IF NOT EXISTS `member_id` (
   PRIMARY KEY (`member_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 lms.member_id:~3 rows (대략적) 내보내기
+-- 테이블 데이터 lms.member_id:~4 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `member_id` DISABLE KEYS */;
 INSERT INTO `member_id` (`member_id`, `member_pw`, `level`, `member_active`, `last_login_date`, `create_date`, `delete_date`) VALUES
-	('admin', '*A4B6157319038724E3560894F7F932C8886EBFCF', '1', '1', '2022-06-20 13:12:17', '2022-06-20 13:12:17', '2022-06-20 13:12:18'),
-	('student', '*A4B6157319038724E3560894F7F932C8886EBFCF', '3', '1', '2022-06-20 13:12:45', '2022-06-20 13:12:46', '2022-06-20 13:12:47'),
-	('teacher', '*A4B6157319038724E3560894F7F932C8886EBFCF', '2', '1', '2022-06-20 13:12:33', '2022-06-20 13:12:34', '2022-06-20 13:12:35');
+	('admin', '*A4B6157319038724E3560894F7F932C8886EBFCF', '1', '1', '2022-06-24 16:08:05', '2022-06-20 13:12:17', '2022-06-20 13:12:18'),
+	('admin1', '*A4B6157319038724E3560894F7F932C8886EBFCF', '1', '1', '2022-06-24 09:37:17', '2022-06-24 09:20:26', '2022-06-24 09:20:27'),
+	('student', '*A4B6157319038724E3560894F7F932C8886EBFCF', '3', '1', '2022-06-24 16:11:42', '2022-06-20 13:12:46', '2022-06-20 13:12:47'),
+	('teacher', '*A4B6157319038724E3560894F7F932C8886EBFCF', '2', '1', '2022-06-24 13:22:55', '2022-06-20 13:12:34', '2022-06-20 13:12:35');
 /*!40000 ALTER TABLE `member_id` ENABLE KEYS */;
 
 -- 테이블 lms.member_photo 구조 내보내기
@@ -213,7 +237,7 @@ CREATE TABLE IF NOT EXISTS `member_photo` (
   `member_photo_original_name` varchar(50) NOT NULL,
   `member_photo_name` varchar(50) NOT NULL,
   `member_photo_size` varchar(50) NOT NULL,
-  `member_photo_type` varchar(50) NOT NULL,
+  `member_photo_type` bigint(20) NOT NULL,
   `update_date` datetime NOT NULL,
   PRIMARY KEY (`member_id`),
   CONSTRAINT `FK_member_photo_member_id` FOREIGN KEY (`member_id`) REFERENCES `member_id` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -231,8 +255,16 @@ CREATE TABLE IF NOT EXISTS `password` (
   PRIMARY KEY (`member_id`,`password`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 lms.password:~0 rows (대략적) 내보내기
+-- 테이블 데이터 lms.password:~7 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `password` DISABLE KEYS */;
+INSERT INTO `password` (`member_id`, `password`, `create_date`) VALUES
+	('admin', '*84AAC12F54AB666ECFC2A83C676908C8BBC381B1', '2022-02-23 09:46:31'),
+	('admin', '*8E7F219B9C5AC6251152DD189EBD8CBE9C92D1CE', '2022-02-23 09:45:18'),
+	('admin', '*A4B6157319038724E3560894F7F932C8886EBFCF', '2022-02-23 15:24:10'),
+	('admin', '*DDA7B4594264195DA8BB303516D7EC5509B7B942', '2022-02-23 09:43:47'),
+	('admin', 'a1345', '2022-02-22 13:09:19'),
+	('student', '*A4B6157319038724E3560894F7F932C8886EBFCF', '2022-06-23 19:02:14'),
+	('teacher', '*A4B6157319038724E3560894F7F932C8886EBFCF', '2022-06-23 16:44:41');
 /*!40000 ALTER TABLE `password` ENABLE KEYS */;
 
 -- 테이블 lms.receiver 구조 내보내기
@@ -282,7 +314,7 @@ CREATE TABLE IF NOT EXISTS `student_file` (
   `student_file_original_name` varchar(50) NOT NULL,
   `student_file_name` varchar(50) NOT NULL,
   `studentfile_type` varchar(50) NOT NULL,
-  `student_file_size` varchar(50) NOT NULL,
+  `student_file_size` bigint(20) NOT NULL,
   `create_date` datetime NOT NULL,
   `update_date` datetime NOT NULL,
   PRIMARY KEY (`student_file_no`) USING BTREE,
@@ -322,12 +354,12 @@ CREATE TABLE IF NOT EXISTS `subject` (
   `create_date` datetime NOT NULL,
   `update_date` datetime NOT NULL,
   PRIMARY KEY (`subject_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 lms.subject:~12 rows (대략적) 내보내기
+-- 테이블 데이터 lms.subject:~13 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `subject` DISABLE KEYS */;
 INSERT INTO `subject` (`subject_no`, `teacher_id`, `admin_id`, `subject_name`, `subject_student_max`, `subject_info`, `subject_start_date`, `subject_finish_date`, `subject_start_time`, `subject_end_time`, `create_date`, `update_date`) VALUES
-	(1, 'teacher', 'admin', '자바테스트', 99, '자바를 배워봅시다', '2022-06-20', '2022-06-20', '14:00:39', '14:00:44', '2022-06-20 14:00:47', '2022-06-20 14:00:52'),
+	(1, 'teacher', 'admin', '자바테스트', 99, '자바를 배워봅시', '2022-06-20', '2022-06-20', '14:00:39', '14:00:44', '2022-06-20 14:00:47', '2022-06-23 16:10:57'),
 	(2, 'teacher1', 'admin1', '자바테스트1', 40, '씨샵을 배워봅시다', '2022-06-20', '2022-06-20', '17:27:12', '17:27:12', '2022-06-20 17:27:13', '2022-06-20 17:27:16'),
 	(3, 'teacher', '박범진', '떠먹여주는파이썬', 99, '', '2022-06-22', '2022-06-23', '17:22:22', '18:22:22', '2022-06-20 22:36:57', '2022-06-21 15:37:58'),
 	(4, 'teacher4', '박범진', '떠먹여주는파이썬2', 99, '', '2022-06-22', '2022-06-23', '17:22:22', '18:22:22', '2022-06-20 22:38:28', '2022-06-21 15:37:52'),
@@ -338,7 +370,8 @@ INSERT INTO `subject` (`subject_no`, `teacher_id`, `admin_id`, `subject_name`, `
 	(9, 'teacher2', '박범진', '노잼코딩', 99, '', '2022-06-22', '2022-06-23', '17:22:22', '18:22:22', '2022-06-20 23:35:11', '2022-06-21 15:37:15'),
 	(10, 'teacher2', '이규남', '00데이터', 1, '', '2022-06-22', '2022-06-23', '17:22:22', '18:22:22', '2022-06-20 23:35:43', '2022-06-21 15:36:52'),
 	(11, 'teacher', '나', '인공지능', 99, 'testtetstetst', '2022-06-25', '2022-06-30', '10:09:00', '21:09:00', '2022-06-21 09:09:52', '2022-06-21 15:34:46'),
-	(12, 'teacher', '박범진', '자스', 1, 'ㅅㄷㄴㅅ', '2022-06-15', '2022-06-22', '10:21:00', '10:22:00', '2022-06-21 10:18:21', '2022-06-21 15:46:45');
+	(12, 'teacher', '박범진', '자스', 1, 'asdsadasd', '2022-06-15', '2022-06-22', '10:21:00', '10:22:00', '2022-06-21 10:18:21', '2022-06-23 16:47:42'),
+	(13, 'teacher', 'asd', '123', 12, '12', '2022-06-08', '2022-06-25', '07:08:00', '19:11:00', '2022-06-24 16:08:31', '2022-06-24 16:08:31');
 /*!40000 ALTER TABLE `subject` ENABLE KEYS */;
 
 -- 테이블 lms.subject_board 구조 내보내기
@@ -349,15 +382,13 @@ CREATE TABLE IF NOT EXISTS `subject_board` (
   PRIMARY KEY (`subject_board_no`),
   KEY `FK_subject_board_subject` (`subject_no`),
   CONSTRAINT `FK_subject_board_subject` FOREIGN KEY (`subject_no`) REFERENCES `subject` (`subject_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 lms.subject_board:~4 rows (대략적) 내보내기
+-- 테이블 데이터 lms.subject_board:~2 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `subject_board` DISABLE KEYS */;
 INSERT INTO `subject_board` (`subject_board_no`, `subject_no`, `create_date`) VALUES
-	(1, 12, '2022-06-21 16:16:22'),
-	(2, 12, '2022-06-21 16:16:28'),
-	(3, 12, '2022-06-21 16:16:44'),
-	(4, 12, '2022-06-21 16:16:53');
+	(1, 12, '2022-06-24 14:30:21'),
+	(2, 12, '2022-06-24 15:06:21');
 /*!40000 ALTER TABLE `subject_board` ENABLE KEYS */;
 
 -- 테이블 lms.subject_data 구조 내보내기
@@ -368,34 +399,37 @@ CREATE TABLE IF NOT EXISTS `subject_data` (
   `subject_data_content` varchar(50) NOT NULL,
   `create_date` datetime NOT NULL,
   PRIMARY KEY (`subject_data_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 lms.subject_data:~0 rows (대략적) 내보내기
+-- 테이블 데이터 lms.subject_data:~5 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `subject_data` DISABLE KEYS */;
+INSERT INTO `subject_data` (`subject_data_no`, `member_id`, `subject_data_title`, `subject_data_content`, `create_date`) VALUES
+	(1, 'teacher1', '자바기초1', '자바기초1', '2022-06-22 09:20:23'),
+	(2, 'teacher1', '자바기초2', '자바기초2', '2022-06-22 09:21:05'),
+	(3, 'teacher1', '자바기초3', '자바기초3', '2022-06-22 09:21:24'),
+	(4, 'teacher1', '자바기초4', '자바기초4', '2022-06-22 09:21:42'),
+	(5, 'teacher2', '자바기초5', '자바기초5', '2022-06-22 09:22:01');
 /*!40000 ALTER TABLE `subject_data` ENABLE KEYS */;
 
 -- 테이블 lms.subject_file 구조 내보내기
 CREATE TABLE IF NOT EXISTS `subject_file` (
   `subject_file_no` int(11) NOT NULL AUTO_INCREMENT,
   `subject_file_board_no` int(11) NOT NULL,
-  `subject_file_original_name` varchar(50) NOT NULL,
   `subject_file_name` varchar(50) NOT NULL,
+  `subject_file_original_name` varchar(50) NOT NULL,
   `subject_file_type` varchar(50) NOT NULL,
-  `subject_file_size` varchar(50) NOT NULL,
+  `subject_file_size` bigint(20) NOT NULL,
   `create_date` datetime NOT NULL,
   `update_date` datetime NOT NULL,
   PRIMARY KEY (`subject_file_no`),
   KEY `FK_subject_file_subject_board` (`subject_file_board_no`),
   CONSTRAINT `FK_subject_file_subject_board` FOREIGN KEY (`subject_file_board_no`) REFERENCES `subject_board` (`subject_board_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 lms.subject_file:~4 rows (대략적) 내보내기
+-- 테이블 데이터 lms.subject_file:~1 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `subject_file` DISABLE KEYS */;
-INSERT INTO `subject_file` (`subject_file_no`, `subject_file_board_no`, `subject_file_original_name`, `subject_file_name`, `subject_file_type`, `subject_file_size`, `create_date`, `update_date`) VALUES
-	(1, 1, 'test1', 'test1', 'type', 'size', '2022-06-21 16:37:34', '2022-06-21 16:37:35'),
-	(2, 1, 'test2', 'test2', 'type2', 'size2', '2022-06-21 16:39:05', '2022-06-21 16:39:06'),
-	(3, 1, 'test3', 'test3', 'type3', 'size3', '2022-06-21 16:39:24', '2022-06-21 16:39:25'),
-	(4, 2, 'test4', 'test4', 'type4', 'size4', '2022-06-21 16:39:42', '2022-06-21 16:39:44');
+INSERT INTO `subject_file` (`subject_file_no`, `subject_file_board_no`, `subject_file_name`, `subject_file_original_name`, `subject_file_type`, `subject_file_size`, `create_date`, `update_date`) VALUES
+	(1, 1, 'bd4f73dd-a256-44b0-94b9-a2a54e81bcaa.jpg', 'test.jpg', 'image/jpeg', 801324, '2022-06-24 14:30:21', '2022-06-24 14:30:21');
 /*!40000 ALTER TABLE `subject_file` ENABLE KEYS */;
 
 -- 테이블 lms.subject_notice 구조 내보내기
@@ -406,12 +440,16 @@ CREATE TABLE IF NOT EXISTS `subject_notice` (
   `subject_notice_content` text NOT NULL,
   `create_date` datetime NOT NULL,
   PRIMARY KEY (`subject_notice_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 lms.subject_notice:~1 rows (대략적) 내보내기
+-- 테이블 데이터 lms.subject_notice:~5 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `subject_notice` DISABLE KEYS */;
 INSERT INTO `subject_notice` (`subject_notice_no`, `member_id`, `subject_notice_title`, `subject_notice_content`, `create_date`) VALUES
-	(1, 'student1', '테스트1', '테스트1', '2022-06-20 17:30:14');
+	(1, 'teacher', '테스트1', '테스트1', '2022-06-20 17:30:14'),
+	(2, 'teacher1', '테스트2', '테스트2', '2022-06-22 13:30:08'),
+	(3, 'teacher1', '테스트3', '테스트3', '2022-06-22 13:30:13'),
+	(4, 'teacher1', '테스트4', '테스트4', '2022-06-22 13:30:14'),
+	(5, 'teacher2', '테스트5', '테스트5', '2022-06-22 13:30:14');
 /*!40000 ALTER TABLE `subject_notice` ENABLE KEYS */;
 
 -- 테이블 lms.subject_report 구조 내보내기
@@ -423,15 +461,13 @@ CREATE TABLE IF NOT EXISTS `subject_report` (
   `subject_report_period` datetime NOT NULL,
   `create_date` datetime NOT NULL,
   PRIMARY KEY (`subject_report_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 lms.subject_report:~4 rows (대략적) 내보내기
+-- 테이블 데이터 lms.subject_report:~2 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `subject_report` DISABLE KEYS */;
 INSERT INTO `subject_report` (`subject_report_no`, `member_id`, `subject_report_title`, `subject_report_content`, `subject_report_period`, `create_date`) VALUES
-	(1, 'teacher', 'java 문법과제', 'java 문법과제하세요', '2022-06-21 16:08:00', '2022-06-21 16:08:01'),
-	(2, 'teacher1', 'java 알고리즘과제', 'java알고리즘문제푸세요^^', '2022-06-23 16:08:39', '2022-06-21 16:08:40'),
-	(3, 'teacher', '웹다오 과제', 'dao만드세요^^', '2022-06-24 16:09:17', '2022-06-21 16:09:18'),
-	(4, 'teacher2', '스프링과제', '홈페이지만드세욬', '2022-06-25 16:09:59', '2022-06-21 16:10:03');
+	(1, 'teacher', 'java  문법 과제', 'java 문법 문제 1~10 풀이', '2022-06-30 00:00:00', '2022-06-24 14:30:21'),
+	(2, 'teacher', 'java  문법 과제 2222', '2222', '2022-06-30 00:00:00', '2022-06-24 15:06:21');
 /*!40000 ALTER TABLE `subject_report` ENABLE KEYS */;
 
 -- 테이블 lms.subject_report_comment 구조 내보내기
@@ -445,16 +481,13 @@ CREATE TABLE IF NOT EXISTS `subject_report_comment` (
   PRIMARY KEY (`subject_report_comment_no`),
   KEY `FK_subject_report_comment_subject_report` (`subject_report_no`),
   CONSTRAINT `FK_subject_report_comment_subject_report` FOREIGN KEY (`subject_report_no`) REFERENCES `subject_report` (`subject_report_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 lms.subject_report_comment:~5 rows (대략적) 내보내기
+-- 테이블 데이터 lms.subject_report_comment:~2 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `subject_report_comment` DISABLE KEYS */;
 INSERT INTO `subject_report_comment` (`subject_report_comment_no`, `subject_report_no`, `member_id`, `subject_report_comment_content`, `create_date`, `update_date`) VALUES
-	(1, 1, 'teacher', '과제해라', '2022-06-21 16:11:16', '2022-06-21 16:11:16'),
-	(2, 1, 'teacher1', '과제좀하라고', '2022-06-21 16:11:52', '2022-06-21 16:11:53'),
-	(3, 1, 'teacher', 'rhkwp123', '2022-06-21 16:12:11', '2022-06-21 16:12:12'),
-	(4, 2, 'teacher', '과제^^', '2022-06-21 16:12:24', '2022-06-21 16:12:25'),
-	(5, 2, 'teacher2', 'ㅇㅅㅇ', '2022-06-21 16:12:42', '2022-06-21 16:12:44');
+	(1, 1, 'teacher', '과제 좀 해라', '2022-06-24 15:03:56', '2022-06-24 15:03:56'),
+	(2, 1, 'teacher', '과제 좀 하라고', '2022-06-24 15:04:12', '2022-06-24 15:04:12');
 /*!40000 ALTER TABLE `subject_report_comment` ENABLE KEYS */;
 
 -- 테이블 lms.subject_report_student 구조 내보내기
@@ -485,14 +518,15 @@ CREATE TABLE IF NOT EXISTS `subject_student` (
   CONSTRAINT `FK_subject_student_subject` FOREIGN KEY (`subject_no`) REFERENCES `subject` (`subject_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 lms.subject_student:~5 rows (대략적) 내보내기
+-- 테이블 데이터 lms.subject_student:~6 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `subject_student` DISABLE KEYS */;
 INSERT INTO `subject_student` (`member_id`, `subject_no`, `update_date`) VALUES
-	('student', 1, '2022-06-20 17:28:32'),
-	('student1', 2, '2022-06-20 17:28:16'),
-	('student2', 1, '2022-06-20 17:23:24'),
-	('student3', 2, '2022-06-20 17:28:25'),
-	('student4', 1, '2022-06-20 17:26:01');
+	('student', 1, '2022-06-23 10:24:13'),
+	('student', 12, '2022-06-20 17:28:32'),
+	('student1', 12, '2022-06-20 17:28:16'),
+	('student2', 12, '2022-06-20 17:23:24'),
+	('student3', 12, '2022-06-20 17:28:25'),
+	('student4', 12, '2022-06-20 17:26:01');
 /*!40000 ALTER TABLE `subject_student` ENABLE KEYS */;
 
 -- 테이블 lms.subject_video 구조 내보내기
@@ -579,8 +613,11 @@ CREATE TABLE IF NOT EXISTS `teacher_language` (
   CONSTRAINT `FK_teacher_language_teacher` FOREIGN KEY (`member_id`) REFERENCES `teacher` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 lms.teacher_language:~0 rows (대략적) 내보내기
+-- 테이블 데이터 lms.teacher_language:~2 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `teacher_language` DISABLE KEYS */;
+INSERT INTO `teacher_language` (`language_no`, `member_id`, `update_date`) VALUES
+	(1, 'teacher', '2022-06-23 19:26:18'),
+	(2, 'teacher', '2022-06-23 19:26:24');
 /*!40000 ALTER TABLE `teacher_language` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
