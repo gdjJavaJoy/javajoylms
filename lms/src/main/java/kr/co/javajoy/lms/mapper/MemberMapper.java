@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.javajoy.lms.vo.Admin;
+import kr.co.javajoy.lms.vo.Language;
 import kr.co.javajoy.lms.vo.Member;
 import kr.co.javajoy.lms.vo.Password;
 import kr.co.javajoy.lms.vo.Student;
@@ -41,4 +42,6 @@ public interface MemberMapper {
 	public List<Map<String, Object>> studentIndex(String memerId);
 	// 강사가 수강했던 또는 수강 중인 subject리스트 출력
 	public List<Map<String, Object>> teacherIndex(String memberId);
+	// languageList
+	public List<Language> selectLanguageList();
 }

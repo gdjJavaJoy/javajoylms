@@ -14,7 +14,7 @@
 			   ,t.teacher_email teacherEmail
 			   ,t.teacher_join teacherJoin
 			   ,GROUP_CONCAT(DISTINCT l.language_name,'') languageName 
-			   ,mp.member_photo_original_name originalName
+			   ,mp.member_photo_name memberPhotoName
    FROM teacher t
 	  LEFT JOIN teacher_language tl
 		     ON t.member_id = tl.member_id
@@ -23,8 +23,32 @@
 	  LEFT JOIN member_photo mp
 		     ON mp.member_id = t.member_id
 		  WHERE t.member_id = #{memberId}
-		GROUP BY t.member_id
-		
-	
+	   GROUP BY t.member_id
 	</select>
+	<select id="selectTeacherCareer"
+			parameterType="String"
+			resultType="kr.co.javajoy.lms.vo.Career">
+		SELECT
+			career_no careerNo
+		   ,career
+   		   ,detail_career detailCareer
+		FROM
+	        career
+	  WHERE member_id = #{memberId}
+	</select>
+	<select id="selectTeacherLanguage"
+			parameterType="String"
+			resultType="java.util.Map">
+		SELECT
+			language_no languageNo
+		   ,member_id memberId
+		   ,update_date updateDate
+	   FROM teacher_language
+	  WHERE member_id = #{memberId}
+	</select>
+	<delete id="deleteCareer"
+			parameterType="int">
+		DELETE FROM career
+			WHERE career_no = #{careerNo}
+	</delete>
 </mapper>

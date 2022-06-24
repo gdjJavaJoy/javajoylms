@@ -196,5 +196,13 @@
 			WHERE c.member_id = #{memberId}
 			ORDER BY s.create_date
 	</select>
-	
+	<select id="selectLanguageList"
+			resultType="kr.co.javajoy.lms.vo.Language">
+			SELECT
+				language_no languageNo
+			   ,language_name languageName
+			   ,create_date	 createDate
+			   ,update_date	updateDate
+		   FROM language
+	</select>
 </mapper>
