@@ -56,9 +56,9 @@ public class SubjectReportController {
 									,@RequestParam(name="subjectBoardNo") int subjectBoardNo
 									,@RequestParam(name="commentCurrentPage", defaultValue="1") int commentCurrentPage
 									,@RequestParam(name="rowPerPage", defaultValue="10") int rowPerPage) {
-		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.subjectBoardNo : ", subjectBoardNo);
-		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.commentCurrentPage : ", commentCurrentPage);
-		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.rowPerPage : ", rowPerPage);
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.subjectBoardNo : " + subjectBoardNo);
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.commentCurrentPage : " + commentCurrentPage);
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.rowPerPage : " + rowPerPage);
 		// 파일 업로드 위치 지정
 		String path = request.getServletContext().getRealPath("/file/subject_file");
 		// 댓글 데이터 
@@ -96,7 +96,7 @@ public class SubjectReportController {
 		// 파일이 한개 이상 업로드 되면
 		if(subjectReportFileList != null && subjectReportFileList.get(0).getSize() > 0) {
 			for(MultipartFile mf : subjectReportFileList) {
-				log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.filename : " + mf.getOriginalFilename());
+				log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.subjectFileOriginalName : " + mf.getOriginalFilename());
 			}
 		}
 		model.addAttribute("subjectNo", subjectNo);

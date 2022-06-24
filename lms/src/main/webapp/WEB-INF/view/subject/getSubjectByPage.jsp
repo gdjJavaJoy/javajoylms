@@ -839,7 +839,7 @@
             </a>
 
             <!-- With avatar -->
-            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Subject List</h4>
+            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">모든 강좌 목록</h4>
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto">
                 <table class="w-full whitespace-no-wrap">
@@ -857,15 +857,15 @@
                   </thead>
                   <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                   <c:forEach var="s" items="${list}">
-                    <tr class="text-gray-700 dark:text-gray-400">
-                   		<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${s.subjectNo}">${s.subjectNo}</a></td>
-						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${s.subjectNo}">${s.subjectName}</a></td>
-						<td class="px-4 py-3 text-xs"><a href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${s.subjectNo}">${s.teacherName}</a></td>
-						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${s.subjectNo}">${s.subjectStudentMax}</a></td>
-						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${s.subjectNo}">${s.subjectStartTime}</a></td>
-						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${s.subjectNo}">${s.subjectEndTime}</a></td>
-						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${s.subjectNo}">${s.subjectStartDate}</a></td>
-						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${s.subjectNo}">${s.subjectFinishDate}</a></td>
+                    <tr onClick="location.href='${pageContext.request.contextPath}/getSubjectOne?subjectNo=${s.subjectNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">											
+                   		<td class="px-4 py-3 text-sm">${s.subjectNo}</td>
+						<td class="px-4 py-3 text-sm">${s.subjectName}</td>
+						<td class="px-4 py-3 text-sm">${s.teacherName}</td>
+						<td class="px-4 py-3 text-sm">${s.subjectStudentMax}</td>
+						<td class="px-4 py-3 text-sm">${s.subjectStartTime}</td>
+						<td class="px-4 py-3 text-sm">${s.subjectEndTime}</td>
+						<td class="px-4 py-3 text-sm">${s.subjectStartDate}</td>
+						<td class="px-4 py-3 text-sm">${s.subjectFinishDate}</td>
 					</tr>
                   </c:forEach>
                   </tbody>

@@ -59,7 +59,7 @@ public class SubjectController {
 	@GetMapping("/getSubjectOne")
 	public String getSubjectOne(Model model, @RequestParam(name="subjectNo") int subjectNo) {
 		// 디버깅
-		log.debug(CF.PBJ + "SubjectController.getSubjectOne.param.subjectNo : ", subjectNo);
+		log.debug(CF.PBJ + "SubjectController.getSubjectOne.param.subjectNo : " + subjectNo);
 		
 		Subject subject = subjectService.getSubjectOne(subjectNo);
 		model.addAttribute("subject", subject);
@@ -72,7 +72,7 @@ public class SubjectController {
 		ArrayList<String> teacherList = subjectService.getTeacherId();
 		model.addAttribute("teacherList", teacherList);
 		// 디버깅
-		log.debug(CF.PBJ + "SubjectController.modifySubject.param.subjectNo : ", subjectNo);
+		log.debug(CF.PBJ + "SubjectController.modifySubject.param.subjectNo : " + subjectNo);
 
 		Subject subject = subjectService.getSubjectOne(subjectNo);
 		model.addAttribute("subject", subject);

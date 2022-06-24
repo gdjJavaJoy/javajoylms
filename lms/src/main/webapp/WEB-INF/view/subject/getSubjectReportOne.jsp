@@ -839,17 +839,14 @@
 	                </svg>
 	                <span>Subject Report Management Page</span>
 	              </div>
-	              <span>Subject Report List &RightArrow;</span>
+	              <span>과제 게시판 &RightArrow;</span>
 	            </a>
             </c:forEach>
             <!-- With avatar -->
-            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Subject Report View Detail<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage" class="text-sm" style="float: right;">학생 과제 제출 게시판 -></a></h4> 
-              <div>
-              		<div>[첨부 파일]</div>
-			    	<c:forEach var="subjectFileList" items="${subjectFileList}">
-			    		<div><a href="${pageContext.request.contextPath}/file/subject_file/${subjectFileList.subjectFileName}${subjectFileList.subjectFileType}" download="${subjectFileList.subjectFileName}${subjectFileList.subjectFileType}"> ${subjectFileList.subjectFileName}.${subjectFileList.subjectFileType}</a></div>
-			    	</c:forEach>
-   	  		  </div>
+            <c:forEach var="subjectReport" items="${subjectReport}">
+           		<h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">과제 게시판 상세보기<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage" class="text-sm" style="float: right;">학생 과제 제출 -></a></h4> 
+            </c:forEach>
+            <!-- 과제 상세보기 테이블 -->
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto">
               	 <c:forEach var="subjectReport" items="${subjectReport}">
@@ -857,10 +854,6 @@
 	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
 	                    	<th class="px-4 py-3">과제 번호</th>
 	                    	<td class="px-4 py-3 text-sm">${subjectReport.subjectReportNo}</td>
-	                    </tr>
-	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-	                    	<th class="px-4 py-3">강좌 번호</th>
-	                    	<td class="px-4 py-3 text-sm">${subjectReport.subjectNo}</td>
 	                    </tr>
 	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
 	                    	<th class="px-4 py-3">강좌 이름</th>
@@ -903,6 +896,22 @@
               </div>
             </div>
             <div>
+             <div>
+              	<div class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">첨부 파일</div>
+              
+              	<c:choose>
+	              	<c:when test="${subjectFileList.size() == 0}">
+				    	<div>파일없음</div>
+				    </c:when>
+				    <c:when test="${subjectFileList.size() > 0}">
+				    	<c:forEach var="subjectFileList" items="${subjectFileList}">
+				    		<div>
+				    			<a href="${pageContext.request.contextPath}/file/subject_file/${subjectFileList.subjectFileOriginalName}" download="${subjectFileList.subjectFileType}">${subjectFileList.subjectFileOriginalName}</a>
+				    		</div>
+				    	</c:forEach>
+				    </c:when>
+			    </c:choose>
+   	  		  </div>
             	<!-- 댓글 -->
             	<a href="${pageContext.request.contextPath}/addSubjectReportComment" style="float: right;">댓글쓰기</a>
       
@@ -910,9 +919,9 @@
             			<thead>
             				<tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
             					 <th class="px-4 py-3">작성자</th>
-			                     <th class="px-4 py-3">내용</th>
-			                     <th class="px-4 py-3"></th>
+			                     <th class="px-4 py-3">내용</th>			             
 			                     <th class="px-4 py-3">작성일</th>
+			                     <th class="px-4 py-3"></th>
             				</tr>
             			</thead>
             			<tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -920,8 +929,8 @@
             				<tr class="text-gray-700 dark:text-gray-400">
             					<td class="px-4 py-3 text-sm">${commentList.memberId}</td>
             					<td class="px-4 py-3 text-sm">${commentList.subjectReportCommentContent}</td>
-            					<td class="px-4 py-3 text-sm"><a href="">삭제(미구현)</a></td>
-            					<td class="px-4 py-3 text-sm">${commentList.updateDate}</td>			
+            					<td class="px-4 py-3 text-sm">${commentList.updateDate}</td>	
+            					<td class="px-4 py-3 text-sm"><a href="">삭제(미구현)</a></td>		
             				</tr>
             			</c:forEach>
             			</tbody>

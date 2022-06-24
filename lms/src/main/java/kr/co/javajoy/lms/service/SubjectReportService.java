@@ -30,18 +30,21 @@ public class SubjectReportService {
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.currentPage" + currentPage);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.rowPerPage" + rowPerPage);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.subjectNo" + subjectNo);		
+	
 		// 페이징
 		int startRow = (currentPage - 1) * rowPerPage;
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("startRow", startRow);
 		map.put("rowPerPage", rowPerPage);
 		map.put("subjectNo", subjectNo);
+	
 		// 1) 컨트롤러에서 넘오온 변수값 가공 후 맵퍼 호출
 		List<SubjectReport> list = subjectReportMapper.selectSubjectReportListByPage(map);
 		// 2) 맵퍼에서 반환된 값을 가공 후, 컨트롤러에 변환
 		int totalCount =  subjectReportMapper.selectTotalCount(); // 과제 게시판 글 총 수
 		int lastPage = (int)(Math.ceil((double)totalCount / (double)rowPerPage)); 
 		
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.list------------" + list);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.startRow" + startRow);		
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.totalCount" + totalCount);		
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.lastPage" + lastPage);	
@@ -138,6 +141,7 @@ public class SubjectReportService {
 				// subject_file 데이터 가공
 				subjectFile.setSubjectFileBoardNo(subjectReport.getSubjectBoardNo());
 				subjectFile.setSubjectFileName(filename);
+				subjectFile.setSubjectFileOriginalName(mf.getOriginalFilename());
 				subjectFile.setSubjectFileType(mf.getContentType());
 				subjectFile.setSubjectFileSize(mf.getSize());
 				log.debug(CF.PBJ + "SubjectReportService.addSubjectReport.SubjectFile : " + subjectFile);
@@ -145,7 +149,7 @@ public class SubjectReportService {
 				subjectReportMapper.insertSubjectFile(subjectFile);
 				// try + catch
 				try {
-					mf.transferTo(new File(path + filename));
+					mf.transferTo(new File(path + originName));
 				} catch (Exception e) {
 					e.printStackTrace();
 					throw new RuntimeException();

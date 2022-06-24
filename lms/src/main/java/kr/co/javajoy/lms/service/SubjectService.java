@@ -49,10 +49,10 @@ public class SubjectService {
 		returnMap.put("lastPage", lastPage);
 		
 		// 디버깅
-		log.debug(CF.PBJ + "SubjectListController.selecSubjectListByPage rowPerPage : " + rowPerPage);
-		log.debug(CF.PBJ + "SubjectListController.selecSubjectListByPage startRow : " + startRow);
-		log.debug(CF.PBJ + "SubjectListController.selecSubjectListByPage lastPage : " + lastPage );
-		log.debug(CF.PBJ + "SubjectListController.selecSubjectListByPage list.size() : " + list.size());
+		log.debug(CF.PBJ + "SubjectService.selecSubjectListByPage rowPerPage : " + rowPerPage);
+		log.debug(CF.PBJ + "SubjectService.selecSubjectListByPage startRow : " + startRow);
+		log.debug(CF.PBJ + "SubjectService.selecSubjectListByPage lastPage : " + lastPage );
+		log.debug(CF.PBJ + "SubjectService.selecSubjectListByPage list.size() : " + list.size());
 		
 		return returnMap;
 	}

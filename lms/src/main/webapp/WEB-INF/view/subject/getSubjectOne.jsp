@@ -858,7 +858,7 @@
 				</li>
 			</ul>
             <!-- With avatar -->
-            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Subject View Detail</h4>
+            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">${subject.subjectName} 강좌 상세보기</h4>
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto">
                 <table class="w-full whitespace-no-wrap">

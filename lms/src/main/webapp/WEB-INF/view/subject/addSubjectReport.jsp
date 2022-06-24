@@ -22,7 +22,7 @@
 			});
 			
 			if(flag) {
-				$('#fileSection').append("<div><input class='subjectReportFileList' type='file' name='subjectReportFileList'></div>");
+				$('#fileSection').append("<div><input class='subjectReportFileList' type='file' id='subjectReportFileList' name='subjectReportFileList'></div>");
 			} else {
 				alert('파일 첨부를 다시 확인하십시오');
 			}
@@ -37,6 +37,8 @@
 				alert('과제 게시판 제목을 설정하세오!');
 			} else if($('#subjectReportContent').val() == '') {
 				alert('과제 게시판 내용을 입력하세요!');
+			} else if($('#subjectReportPeriod').val() == '') {
+				alert('과제 기한을 설정하세요!');
 			} else {
 				$('.subjectReportFileList').each(function(){
 					if($(this).val() == '') {

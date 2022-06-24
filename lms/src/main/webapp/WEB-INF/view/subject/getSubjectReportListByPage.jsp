@@ -833,13 +833,14 @@
                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                 </svg>
-                <span>(강좌이름)Subject Report Management Page</span>
+                <span>Subject Report Management Page</span>
               </div>
               <span>강좌로 돌아가기 &RightArrow;</span>
             </a>
-
+            
+          
             <!-- With avatar -->
-            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">(강좌이름)Subject Report List<a href="${pageContext.request.contextPath}/addSubjectReport" class="text-sm" style="float: right;">과제 추가 -></a></h4>
+            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">과제 게시판<a href="${pageContext.request.contextPath}/addSubjectReport" class="text-sm" style="float: right;">과제 추가 -></a></h4>
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto">
                 <table class="w-full whitespace-no-wrap">
@@ -853,13 +854,13 @@
                     </tr>
                   </thead>
                   <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                  <c:forEach var="s" items="${list}">
-                    <tr class="text-gray-700 dark:text-gray-400">
-						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}">${s.subjectReportNo}</a></td>
-						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}">${s.subjectName}</a></td>
-						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}">${s.memberId}</a></td>
-						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}">${s.subjectReportTitle}</a></td>
-						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}">${s.createDate}</a></td>
+                   <c:forEach var="s" items="${list}">
+                     <tr onClick="location.href='${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
+						<td class="px-4 py-3 text-sm">${s.subjectReportNo}</td>
+						<td class="px-4 py-3 text-sm">${s.subjectName}</td>
+						<td class="px-4 py-3 text-sm">${s.memberId}</td>
+						<td class="px-4 py-3 text-sm">${s.subjectReportTitle}</td>
+						<td class="px-4 py-3 text-sm">${s.createDate}</td>
 					</tr>
                   </c:forEach>
                   </tbody>

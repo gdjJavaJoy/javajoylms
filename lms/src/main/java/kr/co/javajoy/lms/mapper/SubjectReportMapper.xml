@@ -15,10 +15,13 @@
 			resultType="kr.co.javajoy.lms.vo.SubjectReport">
 		SELECT 
 			b.subject_board_no subjectBoardNo
+			,s.subject_no subjectNo
 			,r.subject_report_no subjectReportNo
 			,s.subject_name subjectName
 			,r.member_id memberId
 			,r.subject_report_title subjectReportTitle
+			,r.subject_report_content subjectReportContent
+			,r.subject_report_period subjectReportPeriod 
 			,r.create_date createDate
 		FROM subject_board AS b 
 		LEFT JOIN subject_report AS r ON r.subject_report_no = b.subject_board_no
@@ -63,7 +66,7 @@
 	<select id="selectSubjectReportFileList"
 			parameterType="int"
 			resultType="kr.co.javajoy.lms.vo.SubjectFile">
-		SELECT f.subject_file_name subjectFileName
+		SELECT f.subject_file_original_name subjectFileOriginalName
 			  ,f.subject_file_type subjectFileType
 			  ,f.subject_file_size subjectFileSize
 		FROM subject_board AS b
@@ -130,6 +133,7 @@
 		INSERT INTO subject_file (
 			subject_file_board_no
 			,subject_file_name
+			,subject_file_original_name
 			,subject_file_type
 			,subject_file_size
 			,create_date
@@ -137,6 +141,7 @@
 		) VALUES (
 			#{subjectFileBoardNo}
 			,#{subjectFileName}
+			,#{subjectFileOriginalName}
 			,#{subjectFileType}
 			,#{subjectFileSize}
 			,NOW()
