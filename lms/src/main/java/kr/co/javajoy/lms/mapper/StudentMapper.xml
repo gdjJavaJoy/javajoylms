@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.javajoy.lms.mapper.StudentMapper">
+	<select id="selectStudentOne"
+			parameterType="String"
+			resultType="kr.co.javajoy.lms.vo.Student">
+		SELECT
+			member_id memberId
+			,student_name studentName
+			,student_gender studentGender
+			,student_phone studentPhone
+			,student_address studentAddress
+			,student_detailaddress studentDetailAddress
+			,student_email studentEmail
+			,student_education studentEducation
+			,student_register_date studentRegisterDate
+		FROM student
+		WHERE member_id = #{memberId}
+	</select>
+	
+</mapper>
