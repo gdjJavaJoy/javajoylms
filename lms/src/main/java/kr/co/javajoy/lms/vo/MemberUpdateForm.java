@@ -8,7 +8,7 @@ public class MemberUpdateForm {
 	private String memberName;
 	private String memberGender;
 	private String memberPhone;
-	private String memberEamil;
+	private String memberEmail;
 	private String memberEducation;
 	private String currentMemberAddress;
 	private String changeMemberAddress;

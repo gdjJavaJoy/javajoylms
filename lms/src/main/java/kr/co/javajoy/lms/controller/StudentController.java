@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.service.StudentService;
+import kr.co.javajoy.lms.vo.MemberUpdateForm;
 import kr.co.javajoy.lms.vo.Student;
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,4 +46,23 @@ public class StudentController {
 		
 		return "/member/student/modifyStudentOne";
 	}
+	
+	@PostMapping("/modifyStudentOne")
+	public String modifyStudentOne(MemberUpdateForm memberUpdateForm) {
+		// 디버깅
+		log.debug(CF.YHJ + "StudentController.modifyStudentOne.getMemberId : " + memberUpdateForm.getMemberId());
+		log.debug(CF.YHJ + "StudentController.modifyStudentOne.getMemberName : " + memberUpdateForm.getMemberName());
+		log.debug(CF.YHJ + "StudentController.modifyStudentOne.getMemberGender : " + memberUpdateForm.getMemberGender());
+		log.debug(CF.YHJ + "StudentController.modifyStudentOne.getMemberPhone : " + memberUpdateForm.getMemberPhone());
+		log.debug(CF.YHJ + "StudentController.modifyStudentOne.getMemberEmail : " + memberUpdateForm.getMemberEmail());
+		log.debug(CF.YHJ + "StudentController.modifyStudentOne.getMemberEducation : " + memberUpdateForm.getMemberEducation());
+		log.debug(CF.YHJ + "StudentController.modifyStudentOne.getCurrentMemberAddress : " + memberUpdateForm.getCurrentMemberAddress());
+		log.debug(CF.YHJ + "StudentController.modifyStudentOne.getChangeMemberAddress : " + memberUpdateForm.getChangeMemberAddress());
+		log.debug(CF.YHJ + "StudentController.modifyStudentOne.getMemberDetailAddress : " + memberUpdateForm.getMemberDetailAddress());
+		
+		studentService.modifyStudent(memberUpdateForm);
+		
+		return "redirect:studentOne";
+	}
+	
 }

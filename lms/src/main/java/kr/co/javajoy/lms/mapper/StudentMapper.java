@@ -8,4 +8,6 @@ import kr.co.javajoy.lms.vo.Student;
 public interface StudentMapper {
 	// 학생 상세보기
 	public Student selectStudentOne(String memberId);
+	// 학생 수정
+	public void updateStudentOne(Student student);
 }

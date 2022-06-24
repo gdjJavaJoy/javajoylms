@@ -251,7 +251,7 @@ img {
 						${loginUser}님의 정보</h4>
 					<div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
 						<div class="w-full overflow-x-auto">
-							<form action="${pageContext.request.contextPath}/modifyStdentOne" method="post" id="updateForm">
+							<form action="${pageContext.request.contextPath}/modifyStudentOne" method="post" id="updateForm">
 								<table class="w-full whitespace-no-wrap">
 									<tr class="text-gray-700 dark:text-gray-400">
 										<td class="px-4 py-3">
@@ -266,6 +266,7 @@ img {
 											<div class="flex items-center text-sm">
 												<!-- Avatar with inset shadow -->
 												<div>
+													<input type="hidden" name="memberId" value="${student.memberId}">
 													<p class="font-semibold">${student.memberId}</p>
 												</div>
 											</div>

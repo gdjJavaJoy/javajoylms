@@ -17,5 +17,19 @@
 		FROM student
 		WHERE member_id = #{memberId}
 	</select>
-	
+
+	<update id="updateStudentOne"
+			parameterType="String">
+		UPDATE student SET 
+			student_name = #{studentName}
+			,student_gender = #{studentGender}
+			,student_phone = #{studentPhone}
+			,student_email = #{studentEmail}
+			,student_education = #{studentEducation}
+			,student_address = #{studentAddress}
+			,student_detailaddress = #{studentDetailAddress}
+			,update_date = NOW()
+		WHERE member_id = #{memberId}
+	</update>
+
 </mapper>
