@@ -51,6 +51,9 @@
 				<div>
 					${boardfile.boardFileName}${boardfile.boardFileType}<a href="${pageContext.request.contextPath}/removeNoticefile?boardFileNo=${boardfile.boardFileNo}&boardNo=${boardfile.boardNo}">삭제</a>
 				</div>
+				<div>
+					${boardfile.boardFileNo}<a href="${pageContext.request.contextPath}/modifyNoticefile?boardFileNo=${boardfile.boardFileNo}&boardNo=${boardfile.boardNo}">추가</a>
+				</div>
 	</C:forEach>
 	
 </body>

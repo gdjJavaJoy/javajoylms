@@ -50,6 +50,7 @@
 					<a href="${pageContext.request.contextPath}/file/board_file/${boardfile.boardFileName}${boardfile.boardFileType}" download="${boardfile.boardFileName}${boardfile.boardFileType}">${boardfile.boardFileOriginalName}${boardfile.boardFileType}</a>
 				</div>
 			</C:forEach>
+			
 </div>
 </body>
 </html>

@@ -18,6 +18,7 @@ import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.service.NoticeService;
 import kr.co.javajoy.lms.vo.Board;
 import kr.co.javajoy.lms.vo.BoardForm;
+import kr.co.javajoy.lms.vo.Boardfile;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -77,7 +78,6 @@ public class NoticeController {
 		noticeService.addNotice(boardForm, path);
 		return "redirect:/getNoticeByPage";
 	}
-	
 	// 리스트 삭제
 	@GetMapping("/removeNoticefile") // 파일 먼저 삭제
 	public String removeNoticefile(HttpServletRequest request
@@ -118,14 +118,33 @@ public class NoticeController {
 		log.debug(CF.WSH + "NoticeController.modifyNotice(Post).row : "+ row);
 		return "redirect:/getNoticeOne?boardNo="+board.getBoardNo();
 	}
+	@GetMapping("/modifyNoticefile")
+	public String modifyNoticefile(HttpServletRequest request
+			,@RequestParam(name="boardFileNo") int boardfileNo
+			,@RequestParam(name="boardNo") int boardNo) {
+		log.debug(CF.WSH + "NoticeController.modifyNoticefile(Post).boardfileNo : "+ boardfileNo);
+		log.debug(CF.WSH + "NoticeController.modifyNoticefile(Post).boardNo : "+ boardNo);
+		
+		
+		return "redirect:/modifyNotice?boardNo=\"+boardNo";
+		
+	}
 	
 	
 	
 	
-	
-	
-	
-	
+	/*
+	// 수정 시 파일 추가
+	@PostMapping("/addfileNotice")
+	public String addfileNotice(HttpServletRequest request, Boardfile boardfile) {
+		String path = request.getServletContext().getRealPath("file/boardFile/");
+		log.debug(CF.WSH + "NoticeController.addfileNotice(Post).path : "+ path);
+		log.debug(CF.WSH + "NoticeController.addNotice(Post).boardfile : "+ boardfile);
+		
+		List<MultipartFile>
+		return "modifyNotice";
+	}
+	 */
 	
 	
 	
