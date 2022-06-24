@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.javajoy.lms.CF;
-import kr.co.javajoy.lms.mapper.MemberMapper;
 import kr.co.javajoy.lms.service.MemberService;
 import kr.co.javajoy.lms.vo.Password;
 import kr.co.javajoy.lms.vo.SignupForm;

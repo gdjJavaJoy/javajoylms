@@ -98,8 +98,8 @@ public class MemberService {
 	}
 	// 비밀번호 변경일 
 	public int getMemberPwPeriod(String memberId) {
-		int period = memberMapper.selectMemberPwPeriod(memberId);
-		return period;
+		memberMapper.selectMemberPwPeriod(memberId);
+		return memberMapper.selectMemberPwPeriod(memberId);
 	}
 	// level 값 받아오는서비스 
 	public String getMemberLevel(String memberId) {

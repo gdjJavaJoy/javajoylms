@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.javajoy.lms.mapper.TeacherMapper">
+	<select id="teacherOne"
+			parameterType="String"
+			resultType="java.util.Map">
+		SELECT
+				t.member_id memberId
+			   ,t.teacher_name teacherName
+			   ,t.teacher_phone teacherPhone
+			   ,t.teacher_address teacherAddress
+			   ,t.teacher_detailaddress teacherDetailAddress
+			   ,t.teacher_gender teacherGender
+			   ,t.teacher_email teacherEmail
+			   ,t.teacher_join teacherJoin
+			   ,GROUP_CONCAT(DISTINCT l.language_name,'') languageName 
+			   ,mp.member_photo_original_name originalName
+   FROM teacher t
+	  LEFT JOIN teacher_language tl
+		     ON t.member_id = tl.member_id
+	  LEFT JOIN language l
+		     ON tl.language_no = l.language_no
+	  LEFT JOIN member_photo mp
+		     ON mp.member_id = t.member_id
+		  WHERE t.member_id = #{memberId}
+		GROUP BY t.member_id
+		
+	
+	</select>
+</mapper>
