@@ -6,6 +6,7 @@ import lombok.Data;
 public class Subject {
 	private int subjectNo;
 	private String teacherId;
+	private String teacherName; // LEFT JOIN ON teacher
 	private String adminId;
 	private String subjectName;
 	private int subjectStudentMax;

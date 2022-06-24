@@ -36,19 +36,20 @@
 			parameterType="java.util.Map"
 			resultType="kr.co.javajoy.lms.vo.Subject">
 		SELECT
-			subject_no subjectNo
-			,teacher_id teacherId
-			,admin_id adminId
-			,subject_name subjectName
-			,subject_student_max subjectStudentMax
-			,subject_info subjectInfo
-			,subject_start_date subjectStartDate
-			,subject_finish_date subjectFinishDate
-			,subject_start_time subjectStartTime
-			,subject_end_time subjectEndTime
-			,create_date createDate
-			,update_date updateDate
-		FROM subject
+			s.subject_no subjectNo
+			,t.teacher_name teacherName
+			,s.admin_id adminId
+			,s.subject_name subjectName
+			,s.subject_student_max subjectStudentMax
+			,s.subject_info subjectInfo
+			,s.subject_start_date subjectStartDate
+			,s.subject_finish_date subjectFinishDate
+			,s.subject_start_time subjectStartTime
+			,s.subject_end_time subjectEndTime
+			,s.create_date createDate
+			,s.update_date updateDate
+		FROM subject AS s
+		LEFT JOIN teacher AS t ON s.teacher_id = t.member_id
 		ORDER BY create_date DESC
 		LIMIT #{startRow}, #{rowPerPage}
 	</select>	
@@ -70,19 +71,19 @@
 			parameterType="int"
 			resultType="kr.co.javajoy.lms.vo.Subject">
 		SELECT
-			subject_no subjectNo
-			,teacher_id teacherId
-			,admin_id adminId
-			,subject_name subjectName
-			,subject_student_max subjectStudentMax
-			,subject_info subjectInfo
-			,subject_start_date subjectStartDate
-			,subject_finish_date subjectFinishDate
-			,subject_start_time subjectStartTime
-			,subject_end_time subjectEndTime
-			,create_date createDate
-			,update_date updateDate
-		FROM subject
+			s.subject_no subjectNo
+			,s.teacher_id teacherId
+			,t.teacher_name teacherName
+			,s.admin_id adminId
+			,s.subject_name subjectName
+			,s.subject_student_max subjectStudentMax
+			,s.subject_info subjectInfo
+			,s.subject_start_date subjectStartDate
+			,s.subject_finish_date subjectFinishDate
+			,s.subject_start_time subjectStartTime
+			,s.subject_end_time subjectEndTime
+		FROM subject AS s
+		LEFT JOIN teacher AS t ON s.teacher_id = t.member_id
 		WHERE subject_no = #{subjectNo}
 	</select>
 	

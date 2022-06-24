@@ -16,12 +16,13 @@
 		SELECT 
 			b.subject_board_no subjectBoardNo
 			,r.subject_report_no subjectReportNo
-			,b.subject_no subjectNo
+			,s.subject_name subjectName
 			,r.member_id memberId
 			,r.subject_report_title subjectReportTitle
 			,r.create_date createDate
 		FROM subject_board AS b 
-		LEFT join subject_report AS r ON r.subject_report_no = b.subject_board_no
+		LEFT JOIN subject_report AS r ON r.subject_report_no = b.subject_board_no
+		LEFT JOIN subject AS s ON s.subject_no = b.subject_no
 		WHERE b.subject_no = #{subjectNo}
 		ORDER BY b.create_date DESC
 		LIMIT #{startRow}, #{rowPerPage}
@@ -37,6 +38,7 @@
 			b.subject_board_no subjectBoardNo
 			,r.subject_report_no subjectReportNo
 			,b.subject_no subjectNo
+			,s.subject_name subjectName
 			,r.member_id memberId 
 			,r.subject_report_title subjectReportTitle
 			,r.subject_report_content subjectReportContent
@@ -44,6 +46,7 @@
 			,r.create_date createDate
 		FROM subject_board AS b
 		LEFT JOIN subject_report AS r ON r.subject_report_no = b.subject_board_no
+		LEFT JOIN subject AS s ON s.subject_no = b.subject_no
 		WHERE b.subject_board_no = #{subjectBoardNo};
 	</select>
 	<!-- 과제 게시판 상세보기에 파일 이름으로된 리스트 출력 -->

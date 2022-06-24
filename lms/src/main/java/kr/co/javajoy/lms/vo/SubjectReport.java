@@ -6,7 +6,8 @@ import lombok.Data;
 public class SubjectReport {
 	// subject_board
 	private int subjectBoardNo;
-	private int subjectNo;
+	private int subjectNo; // LEFT JOIN subject_board
+	private String subjectName; // LEFT JOIN subject
 	private String createDate;
 	// subject_report
 	private int subjectReportNo;

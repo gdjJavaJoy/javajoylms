@@ -844,11 +844,10 @@
               <div class="w-full overflow-x-auto">
                 <table class="w-full whitespace-no-wrap">
                   <thead>
-                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">  
-                      <th class="px-4 py-3">전체글번호</th>
-                      <th class="px-4 py-3">과제번호</th>
-                      <th class="px-4 py-3">강좌번호</th>
-                      <th class="px-4 py-3">작성자</th>
+                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">                 
+                      <th class="px-4 py-3">과제 번호</th>
+                      <th class="px-4 py-3">강좌 이름</th>
+                      <th class="px-4 py-3">작성자 ID</th>
                       <th class="px-4 py-3">제목</th>
                       <th class="px-4 py-3">작성시간</th>
                     </tr>
@@ -856,9 +855,8 @@
                   <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                   <c:forEach var="s" items="${list}">
                     <tr class="text-gray-700 dark:text-gray-400">
-                   		<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}">${s.subjectBoardNo}</a></td>
 						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}">${s.subjectReportNo}</a></td>
-						<td class="px-4 py-3 text-xs"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}">${s.subjectNo}</a></td>
+						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}">${s.subjectName}</a></td>
 						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}">${s.memberId}</a></td>
 						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}">${s.subjectReportTitle}</a></td>
 						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}">${s.createDate}</a></td>
@@ -876,9 +874,13 @@
                 <span class="col-span-2"></span>
                 <!-- Pagination -->
                 <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+               	 <c:if test="${currentPage > 1}">
                    <a href="${pageContext.request.contextPath}/getSubjectReportListByPage?currentPage=${currentPage-1}">이전</a>
-                   <span>&nbsp / &nbsp</span>
+                 </c:if>
+                   <span>&nbsp  &nbsp</span>
+                 <c:if test="${currentPage < lastPage}">
                    <a href="${pageContext.request.contextPath}/getSubjectReportListByPage?currentPage=${currentPage+1}">다음</a> 
+                 </c:if>
                 </span>
               </div>
             </div>

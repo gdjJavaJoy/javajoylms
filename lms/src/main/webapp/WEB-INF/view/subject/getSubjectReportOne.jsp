@@ -845,40 +845,44 @@
             <!-- With avatar -->
             <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Subject Report View Detail<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage" class="text-sm" style="float: right;">학생 과제 제출 게시판 -></a></h4> 
               <div>
-              	<div>[첨부 파일]</div>
-		    	<c:forEach var="subjectFileList" items="${subjectFileList}">
-		    		<div><a href="${pageContext.request.contextPath}/file/subject_file/${subjectFileList.subjectFileName}${subjectFileList.subjectFileType}" download="${subjectFileList.subjectFileName}${subjectFileList.subjectFileType}"> ${subjectFileList.subjectFileName}.${subjectFileList.subjectFileType}</a></div>
-		    	</c:forEach>
+              		<div>[첨부 파일]</div>
+			    	<c:forEach var="subjectFileList" items="${subjectFileList}">
+			    		<div><a href="${pageContext.request.contextPath}/file/subject_file/${subjectFileList.subjectFileName}${subjectFileList.subjectFileType}" download="${subjectFileList.subjectFileName}${subjectFileList.subjectFileType}"> ${subjectFileList.subjectFileName}.${subjectFileList.subjectFileType}</a></div>
+			    	</c:forEach>
    	  		  </div>
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto">
               	 <c:forEach var="subjectReport" items="${subjectReport}">
                		<table class="w-full whitespace-no-wrap">
-	                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-	                    	<th class="px-4 py-3">번호</th>
+	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+	                    	<th class="px-4 py-3">과제 번호</th>
 	                    	<td class="px-4 py-3 text-sm">${subjectReport.subjectReportNo}</td>
 	                    </tr>
-	                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
 	                    	<th class="px-4 py-3">강좌 번호</th>
 	                    	<td class="px-4 py-3 text-sm">${subjectReport.subjectNo}</td>
 	                    </tr>
-	                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-	                    	<th class="px-4 py-3">작성자</th>
+	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+	                    	<th class="px-4 py-3">강좌 이름</th>
+	                    	<td class="px-4 py-3 text-sm">${subjectReport.subjectName}</td>
+	                    </tr>
+	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+	                    	<th class="px-4 py-3">작성자 ID</th>
 	                    	<td class="px-4 py-3 text-sm">${subjectReport.memberId}</td>
 	                    </tr>
-	                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
 	                    	<th class="px-4 py-3">과제 제목</th>
 	                    	<td class="px-4 py-3 text-sm">${subjectReport.subjectReportTitle}</td>
 	                    </tr>
-	                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
 	                    	<th class="px-4 py-3">과제 내용</th>
 	                    	<td class="px-4 py-3 text-sm">${subjectReport.subjectReportContent}</td>
 	                    </tr>
-	                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
 	                    	<th class="px-4 py-3">과제 기한</th>
 	                    	<td class="px-4 py-3 text-sm">${subjectReport.subjectReportPeriod}</td>
 	                    </tr>
-	                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
 	                    	<th class="px-4 py-3">과제 생성 날짜</th>
 	                    	<td class="px-4 py-3 text-sm">${subjectReport.createDate}</td>
 	                    </tr>
