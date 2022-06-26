@@ -366,26 +366,25 @@
 				<div class="container px-6 mx-auto grid">
 					<h2
 						class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-						공지사항</h2>
+						${loginUser}님의 Dashboard ${level}</h2>
 					<!-- New Table -->
 					<div class="w-full overflow-hidden rounded-lg shadow-xs">
 						<div class="w-full overflow-x-auto">
+							<c:if test="${level eq 2}"> <!-- 강사일 때 -->
 								<table class="w-full whitespace-no-wrap">
 									<thead>
 										<tr
 											class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-											<th class="px-4 py-3">subjectName</th>
-											<th class="px-4 py-3">teacherId(담임강사)</th>
-											<th class="px-4 py-3">curriculumTitle</th>
-											<th class="px-4 py-3">memberId</th>
-											<th class="px-4 py-3">startDay</th>
-											<th class="px-4 py-3">endDay</th>
+											<th class="px-4 py-3">공지사항 번호</th>
+											<th class="px-4 py-3">회원 아이디</th>
+											<th class="px-4 py-3">제목</th>
+											<th class="px-4 py-3">생성 날짜</th>
 										</tr>
 									</thead>
-									<c:forEach var="m" items="${memberList}">
+									<c:forEach var="c" items="${list}">
 										<tbody
 											class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-											<tr onClick="location.href='${pageContext.request.contextPath}/getSubjectOne?subjectNo=${m.subjectNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
+											<tr onClick="location.href='${pageContext.request.contextPath}/getNoticeOne?boardNo=${c.boardNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
 												<td class="px-4 py-3 text-sm">${m.subjectName}</td>
 												<td class="px-4 py-3">
 													<div class="flex items-center text-sm">
@@ -393,7 +392,6 @@
 														<p class="font-semibold">${m.teacherId}</p>
 													</div>
 												</td>
-												<td class="px-4 py-3 text-sm">${c.boardNo}</td>
 												<td class="px-4 py-3 text-sm">${c.memberId}</td>
 												<td class="px-4 py-3 text-sm">${c.boardTitle}</td>
 												<td class="px-4 py-3 text-sm">${c.createDate}</td>
@@ -401,6 +399,38 @@
 										</tbody>
 									</c:forEach>
 								</table>
+							</c:if>
+							<c:if test="${level eq 3}"> <!-- 학생일 때 -->
+								<table class="w-full whitespace-no-wrap">
+									<thead>
+										<tr
+											class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+											<th class="px-4 py-3">subjectNo</th>
+											<th class="px-4 py-3">teacherId</th>
+											<th class="px-4 py-3">subjectName</th>
+											<th class="px-4 py-3">subjectStartDate</th>
+											<th class="px-4 py-3">subjectFinishDate</th>
+										</tr>
+									</thead>
+									<c:forEach var="m" items="${memberList}">
+										<tbody
+											class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+											<tr onClick="location.href='${pageContext.request.contextPath}/getSubjectOne?subjectNo=${m.subjectNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
+												<td class="px-4 py-3 text-sm">${m.subjectNo}</td>
+												<td class="px-4 py-3">
+													<div class="flex items-center text-sm">
+														<!-- Avatar with inset shadow -->
+														<p class="font-semibold">${m.teacherId}</p>
+													</div>
+												</td>
+												<td class="px-4 py-3 text-sm">${m.subjectName}</td>
+												<td class="px-4 py-3 text-sm">${m.subjectStartDate}</td>
+												<td class="px-4 py-3 text-sm">${m.subjectFinishDate}</td>
+											</tr>
+										</tbody>
+									</c:forEach>
+								</table>
+							</c:if>
 						</div>
 					</div>
 				</div>

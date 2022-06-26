@@ -41,9 +41,11 @@
 					<td>${n.updateDate}</td>
 				</tr> 
 			</table>
+		</C:forEach>
+		<C:if test="${level eq 1}">
 				<a href="${pageContext.request.contextPath}/removeNotice?boardNo=${n.boardNo}">삭제</a>
 				<a href="${pageContext.request.contextPath}/modifyNotice?boardNo=${n.boardNo}">수정</a>
-		</C:forEach>
+		</C:if>
 		<div>첨부파일</div>
 			<C:forEach var="boardfile" items="${boardfile}">
 				<div>

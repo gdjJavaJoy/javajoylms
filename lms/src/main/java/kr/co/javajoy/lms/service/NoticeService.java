@@ -58,21 +58,6 @@ public class NoticeService {
 		map.put("boardfile", boardfile);
 		return map;
 	}
-	// 공지사항 수정(Get) + 파일 추가
-	public Map<String, Object> getNoticeOneFileupdate(int boardNo) {
-		// 쿼리불러오기 조회값 저장
-		List<Board> board = noticeMapper.selectNoticeOne(boardNo); 
-		log.debug(CF.WSH + "NoticeService.getNoticeOne.board : "+board);
-		// 파일
-		List<Boardfile> boardfile = noticefileMapper.selectNoticefileList(boardNo); 
-		log.debug(CF.WSH + "NoticeService.getNoticeOne.boardfile : "+boardfile);
-		
-		Map<String, Object> map = new HashMap<>();
-		map.put("board", board);
-		map.put("boardfile", boardfile);
-		return map;
-	}
-	
 	
 	
 	// 공지사항 추가하기
@@ -152,4 +137,10 @@ public class NoticeService {
 		return row;
 	}
 }
+
+
+		
+		
+
+
 	

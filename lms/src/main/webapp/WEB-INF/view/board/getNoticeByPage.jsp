@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,26 +24,28 @@
 			</tr>
 		</thead>
 		<tbody>
-			<C:forEach var="c" items="${list}">
+			<c:forEach var="c" items="${list}">
 				<tr>
 					<td>${c.boardNo}</td>
 					<td><a href="${pageContext.request.contextPath}/getNoticeOne?boardNo=${c.boardNo}">${c.memberId}</a></td>
 					<td><a href="${pageContext.request.contextPath}/getNoticeOne?boardNo=${c.boardNo}">${c.boardTitle}</a></td>
 					<td><a href="${pageContext.request.contextPath}/getNoticeOne?boardNo=${c.boardNo}">${c.createDate}</a></td>
 				</tr>
-			</C:forEach>
+			</c:forEach>
 		</tbody>
 	</table>
 	<ul class="pager">
-		<C:if test="${currentPage > 1}">
+		<c:if test="${currentPage > 1}">
 			<li class="previous"><a href="${pageContext.request.contextPath}/getNoticeByPage?currentPage=${currentPage-1}">이전</a></li>
-		</C:if>
-		<C:if test="${currentPage < lastPage}">
+		</c:if>
+		<c:if test="${currentPage < lastPage}">
 			<li class="next"><a href="${pageContext.request.contextPath}/getNoticeByPage?currentPage=${currentPage+1}">다음</a></li>
-		</C:if>
+		</c:if>
 	</ul>
 	<div>
+	<c:if test="${level eq 1}">
 		<a class="btn btn-default" href="${pageContext.request.contextPath}/addNotice">공지 입력</a>
+	</c:if>
 	</div>
 </div>
 </body>

@@ -18,7 +18,6 @@ import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.service.NoticeService;
 import kr.co.javajoy.lms.vo.Board;
 import kr.co.javajoy.lms.vo.BoardForm;
-import kr.co.javajoy.lms.vo.Boardfile;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -28,16 +27,21 @@ public class NoticeController {
 	
 	// 리스트 보여주기
 	@GetMapping("/getNoticeByPage")
-	public String getNoticeByPage(Model model
+	public String getNoticeByPage(Model model, HttpSession session
 			,@RequestParam(name = "currentPage", defaultValue = "1") int currentPage
 			,@RequestParam(name = "rowPerPager", defaultValue = "10") int rowPerPage) { // 10개 부터 페이징처리 기능
+
+		String memberId = (String) session.getAttribute("loginUser");
+		String level = (String) session.getAttribute("level");
+		log.debug(CF.WSH + "StudentController.memberIndex.loginUser : " + session.getAttribute("loginUser") + CF.WSH);
+		log.debug(CF.WSH + "StudentController.memberIndex.level : " + session.getAttribute("level") + CF.WSH);
 		
 		Map<String, Object> map = noticeService.getNoticeByPage(currentPage, rowPerPage);
 		model.addAttribute("list",map.get("list"));
 		model.addAttribute("lastPage",map.get("lastPage"));
 		model.addAttribute("currentPage",currentPage);
 		log.debug(CF.WSH + "NoticeController.getNoticeByPage.notice : ", currentPage);
-		return "board/getNoticeByPage";
+		return "board/getNoticeByPagetest";
 	}
 	@GetMapping("/getNoticeOne")
 	public String getNoticeOne(Model model
@@ -118,33 +122,6 @@ public class NoticeController {
 		log.debug(CF.WSH + "NoticeController.modifyNotice(Post).row : "+ row);
 		return "redirect:/getNoticeOne?boardNo="+board.getBoardNo();
 	}
-	@GetMapping("/modifyNoticefile")
-	public String modifyNoticefile(HttpServletRequest request
-			,@RequestParam(name="boardFileNo") int boardfileNo
-			,@RequestParam(name="boardNo") int boardNo) {
-		log.debug(CF.WSH + "NoticeController.modifyNoticefile(Post).boardfileNo : "+ boardfileNo);
-		log.debug(CF.WSH + "NoticeController.modifyNoticefile(Post).boardNo : "+ boardNo);
-		
-		
-		return "redirect:/modifyNotice?boardNo=\"+boardNo";
-		
-	}
-	
-	
-	
-	
-	/*
-	// 수정 시 파일 추가
-	@PostMapping("/addfileNotice")
-	public String addfileNotice(HttpServletRequest request, Boardfile boardfile) {
-		String path = request.getServletContext().getRealPath("file/boardFile/");
-		log.debug(CF.WSH + "NoticeController.addfileNotice(Post).path : "+ path);
-		log.debug(CF.WSH + "NoticeController.addNotice(Post).boardfile : "+ boardfile);
-		
-		List<MultipartFile>
-		return "modifyNotice";
-	}
-	 */
 	
 	
 	

@@ -11,6 +11,43 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$('#addFileupload').click(function(){
+			let flag = true;
+		$('.boardfileList').each(function(){
+			if($(this).val() == '' ) {
+				flag = false;
+			}
+		});
+		if(flag) {
+			$('#fileSection').append("<div><input class='boardfileList' type='file' name='boardfileList'></div>");
+		} else {
+			alert('파일 첨부되지 않은 boardfileList가 존재합니다');
+		}
+	});
+	
+	$('#addNotice').click(function(){
+		if($('#boardTitle').val() == ''){
+			alert('noticeTitle 입력하세요');
+		} else if($('#boardContent').val() == '') {
+			alert('noticeContent 입력하세요');
+		} else {
+			$('.boardfileList').each(function(){
+				if($(this).val() == '') {
+					flag = false;
+				}
+			});
+			if(flag) {
+				$('#addForm').submit();
+			} else {
+				alert('파일이 첨부되지않은 boardfileList가 존재합니다');
+			}
+		}
+		
+	});
+});
+</script>
 </head>
 <body>
 <h1>modifyNotice</h1>
@@ -42,6 +79,16 @@
 						<textarea name="boardContent" >${n.boardContent}</textarea>
 					</td>
 				</tr>
+				</tr>
+				<tr>
+					<td>파일 업로드</td>
+					<td>
+					<!-- 파일 : <input type="file" name="boardfileList" multiple="multiple" id="addfFileupload">-->
+						<button type="button" id="addFileupload">파일 업로드 추가</button>
+						<div id="fileSection"> 
+						</div>
+					</td>
+			</tr>
 			</table>
 			<button type="submit">게시글 수정</button>
 		</C:forEach>
@@ -51,10 +98,7 @@
 				<div>
 					${boardfile.boardFileName}${boardfile.boardFileType}<a href="${pageContext.request.contextPath}/removeNoticefile?boardFileNo=${boardfile.boardFileNo}&boardNo=${boardfile.boardNo}">삭제</a>
 				</div>
-				<div>
-					${boardfile.boardFileNo}<a href="${pageContext.request.contextPath}/modifyNoticefile?boardFileNo=${boardfile.boardFileNo}&boardNo=${boardfile.boardNo}">추가</a>
-				</div>
 	</C:forEach>
-	
+				
 </body>
 </html>
