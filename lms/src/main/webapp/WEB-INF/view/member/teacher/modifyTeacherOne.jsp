@@ -563,6 +563,7 @@
                           <div>
                             <p class="font-semibold">
                             ${teacherOne.memberId}
+                            <input type="text" value="${teacherOne.memberId}" name="memberId" hidden="hidden">
                             </p>
                           </div>
                         </div>
@@ -628,14 +629,20 @@
                         </div>
                       </td>
                        <td class="px-4 py-3">
-                        <div class="flex items-center text-sm">
-                          <!-- Avatar with inset shadow -->
-                          <div>
-                            <p class="font-semibold"> ${teacherOne.teacherAddress}</p>
-                          </div>
-                        </div>
-                      </td>
+							<div class="flex items-center text-sm">
+								<input
+									class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+									type="text" value="${teacherOne.teacherAddress}"
+									name="currentMemberAddress" id="keyword">
+									<button
+									class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+									type="button" id="updateAddrBtn">변경할 주소 검색</button>
+									</div>
+							</td>
                        </tr>
+                       <tr id="insertForm" class="text-gray-700 dark:text-gray-400">
+										<!-- 추가될 폼 -->
+						</tr>
                        <tr class="text-gray-700 dark:text-gray-400">
                       <td class="px-4 py-3">
                         <div class="flex items-center text-sm">
@@ -653,6 +660,7 @@
                              <input
 			                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 			                  id="detailAddr"
+			                  name="memberDetailAddress"
 			                  type="text"
 			                  value="${teacherOne.teacherDetailAddress}"
 			                />
@@ -674,7 +682,32 @@
                         <div class="flex items-center text-sm">
                           <!-- Avatar with inset shadow -->
                           <div>
-                            <p class="font-semibold"> ${teacherOne.teacherGender}</p>
+                            <p class="font-semibold"> 
+                              <label
+                          class="inline-flex items-center text-gray-600 dark:text-gray-400"
+                        >
+                          <input
+                            type="radio"
+                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            name="memberGender"
+                            value="남"
+                            <c:if test="${teacherOne.teacherGender == '남'}">checked</c:if>
+                          />
+                          <span class="ml-2">남</span>
+                        </label>
+                        <label
+                          class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400"
+                        >
+                          <input
+                            type="radio"
+                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            name="memberGender"
+                            value="여"
+                            <c:if test="${teacherOne.teacherGender == '여'}">checked</c:if>
+                          />
+                          <span class="ml-2">여</span>
+                        </label>
+                            </p>
                           </div>
                         </div>
                       </td>
@@ -696,6 +729,7 @@
                               <input
 			                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 			                  id="memberEmail"
+			                  name="memberEmail"
 			                  type="text"
 			                  value="${teacherOne.teacherEmail}"
 			                />
@@ -738,10 +772,10 @@
                           <p class="font-semibold">
                           	<c:forEach var="l" items="${languageList}">
                           	   <input
-                    type="checkbox"
-                    class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                    value="${l.languageNo}" <c:forEach var="tl" items="${teacherLanguageList}"><c:if test="${l.languageNo eq tl.languageNo}">checked</c:if></c:forEach>
-                  />
+			                    type="checkbox"
+			                    class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+			                    value="${l.languageNo}" name="languageNo"<c:forEach var="tl" items="${teacherLanguageList}"><c:if test="${l.languageNo eq tl.languageNo}">checked</c:if></c:forEach>
+			                  />
                             ${l.languageName}
                             </c:forEach>
                             </p>
@@ -775,7 +809,6 @@
                       <th class="px-4 py-3">action</th>
                     </tr>
                   </thead>
-                  	
 	                  <tbody
 	                    class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
 	                  >
@@ -787,17 +820,40 @@
 	                          <div>
 	                            <p class="font-semibold">
 	                            <div>
-	                            ${c.career}
-	                            </div>
+	                            <input
+									class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+									type="text" value="${c.career}"
+									name="career" id="careerInfo">
+								<input type="number"  name="careerNo" id="careerNo" value="${c.careerNo}" hidden='hidden'>
+ 	                            </div>
 								</p>
 	                          </div>
 	                        </div>
 	                      </td>
 	                      <td class="px-4 py-3 text-sm">
-	                       	${c.detailCareer}
+	                       <input
+									class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+									type="text" value="${c.detailCareer}"
+									name="detailCareer" id="detailCareer">
 	                      </td>
 	                      <td class="px-4 py-3">
 	                      <div>
+	                       <button
+                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                            aria-label="Edit"
+                            id="modifyCareerBtn"
+                          >
+                            <svg
+                              class="w-5 h-5"
+                              aria-hidden="true"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path
+                                d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+                              ></path>
+                            </svg>
+                          </button>
                           <a
                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                             aria-label="Delete"
@@ -821,7 +877,65 @@
 	                </c:forEach>
 	              </tbody>
               	</table>
-              
+              	<form method="post" action="${pageContext.request.contextPath}/addCareer">
+              		<table class="w-full whitespace-no-wrap">
+              			<thead>
+                    <tr
+                      class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
+                    >
+                      <th class="px-4 py-3">경력입력</th>
+                      <th class="px-4 py-3">경력상세정보입력</th>
+                      <th class="px-4 py-3">경력추가</th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                  	<tr class="text-gray-700 dark:text-gray-400">
+	                      <td class="px-4 py-3">
+	                        <div class="flex items-center text-sm">
+	                          <!-- Avatar with inset shadow -->
+	                          <div>
+	                            <p class="font-semibold">
+	                            <div>
+	                             <input
+			                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+			                  id="career"
+			                  type="text"
+			                  name="career"
+			                  placeholder="경력"
+			                />
+	                            </div>
+								</p>
+	                          </div>
+	                        </div>
+	                      </td>
+	                      <td class="px-4 py-3 text-sm">
+	                      	    <div>
+	                             <input
+			                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+			                  id="detailCareer"
+			                  type="text"
+			                  name="detailCareer"
+			                  placeholder="상세경력"
+			                />
+	                            </div>
+	                      </td>
+	                      <td>
+	                      <input type="text" name="memberId" hidden="hidden" value="${loginUser}">
+	                      </td>
+	                      <td class="px-4 py-3">
+	                      <div>
+	                       <button
+			                  class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+			                  type="submit"
+			                >
+			                  경력추가
+	               		 </button>
+                        	</div>
+                      	</td>
+	                   </tr>		
+                  </tbody>
+              		</table>
+              	</form>
               </div>
             </div>
           </div>
@@ -831,5 +945,48 @@
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
+  $('#updateAddrBtn').click(function(){
+		$('#insertForm').empty();
+		$('#insertForm').append('<td class="px-4 py-3">\
+      <div class="flex items-center text-sm">\
+      <div><p class="font-semibold">변경할 주소</p></div></div></td>\
+      <td class="px-4 py-3">\
+      <div class="flex items-center text-sm">\
+      <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"\
+      name="changeMemberAddress" id="searchMemberAddress"></select></div></td>\
+		');
+		$.ajax({
+			type:'get'
+			,url:'/lms/getAddr'
+			,data:{keyword : $('#keyword').val()}
+			,success:function(a) {
+				console.log(a);
+				console.log(typeof (a));
+				var a2 = JSON.parse(a);
+				console.log(typeof (a2));
+				console.log(a2);
+
+				let arr = a2.results.juso; // 주소배열
+				console.log(arr);
+				for (let i = 0; i < arr.length; i++) {
+					var addr = (arr[i].jibunAddr).replace(/\s/gi, "");
+					var obj = $("<option value="+addr+">"+ arr[i].jibunAddr + '('+ arr[i].zipNo + ")</option>");
+					$('#searchMemberAddress').append(obj);
+				};
+			}
+		});
+	});
+  $('#modifyCareerBtn').click(function(){
+	  $.ajax({
+		  type:'post'
+		 ,url:'/lms/modifyCareer'
+		 ,data:{careerInfo : $('#careerInfo').val()
+			   ,detailCareer : $('#detailCareer').val()
+			   ,careerNo : $('#careerNo').val()}
+	  	,success:function(mc) {
+	  		console.log('mc:',mc);
+	  	}
+	  });
+  });
   </script>
 </html>
