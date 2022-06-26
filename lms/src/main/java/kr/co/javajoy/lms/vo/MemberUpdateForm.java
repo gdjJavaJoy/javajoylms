@@ -1,5 +1,7 @@
 package kr.co.javajoy.lms.vo;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -13,4 +15,5 @@ public class MemberUpdateForm {
 	private String currentMemberAddress;
 	private String changeMemberAddress;
 	private String memberDetailAddress;
+	private List<Integer> languageNo;
 }

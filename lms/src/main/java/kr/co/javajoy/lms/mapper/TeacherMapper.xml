@@ -51,4 +51,54 @@
 		DELETE FROM career
 			WHERE career_no = #{careerNo}
 	</delete>
+	<insert id="insertCareer"
+			parameterType="kr.co.javajoy.lms.vo.Career">
+		INSERT INTO career (
+					member_id
+				   ,career
+				   ,detail_career
+				   ,update_date
+				) VALUES (
+					#{memberId}
+				   ,#{career}
+				   ,#{detailCareer}
+				   ,NOW()
+				)
+	</insert>
+	<delete id="deleteTeacherLanguage"
+			parameterType="String">
+		DELETE FROM teacher_language
+			  WHERE member_id =#{memberId}
+	</delete>
+	<insert id="insertTeacherLanguage"
+			parameterType="kr.co.javajoy.lms.vo.TeacherLanguage">
+		INSERT INTO teacher_language(
+					language_no
+				   ,member_id
+				   ,update_date
+		 ) VALUES (
+		 		   #{languageNo}
+		 		  ,#{memberId}
+		 		  ,NOW()
+		 )
+	</insert>
+	<update id="updateTeacherOne"
+			parameterType="kr.co.javajoy.lms.vo.Teacher">
+	UPDATE teacher SET
+		   teacher_name = #{teacherName}
+		  ,teacher_phone = #{teacherPhone}
+		  ,teacher_gender = #{teacherGender}
+		  ,teacher_email = #{teacherEmail}
+		  ,teacher_address = #{teacherAddress}
+		  ,teacher_detailaddress = #{teacherDetailAddress}
+		  ,update_date  = NOW()
+	WHERE member_id = #{memberId}
+	</update>
+	<update id="updateTeacherCareer"
+			parameterType="kr.co.javajoy.lms.vo.Career">
+	UPDATE career SET
+		   career = #{career}
+		  ,detail_career = #{detailCareer}
+	 WHERE career_no = #{careerNo}
+	</update>
 </mapper>

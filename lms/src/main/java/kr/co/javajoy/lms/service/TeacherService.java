@@ -13,6 +13,9 @@ import kr.co.javajoy.lms.mapper.MemberMapper;
 import kr.co.javajoy.lms.mapper.TeacherMapper;
 import kr.co.javajoy.lms.vo.Career;
 import kr.co.javajoy.lms.vo.Language;
+import kr.co.javajoy.lms.vo.MemberUpdateForm;
+import kr.co.javajoy.lms.vo.Teacher;
+import kr.co.javajoy.lms.vo.TeacherLanguage;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -46,6 +49,55 @@ public class TeacherService {
 	}
 	public int removeCareer(int careerNo) {
 		return teacherMapper.deleteCareer(careerNo);
+	}
+	public int addCareer(Career career) {
+		return teacherMapper.insertCareer(career);
+	}
+	public int modifyTeacherOne(MemberUpdateForm memberUpdateForm) {
+		int row  = 0;
+		log.debug(CF.PSG+"TeacherService memberUpdateForm : " +memberUpdateForm+CF.RESET);
+		// memberUpdateform에 있는 memberId 저장
+		String memberId = memberUpdateForm.getMemberId();
+		
+		TeacherLanguage teacherLanguage = new TeacherLanguage();
+		
+		teacherMapper.deleteTeacherLanguage(memberId); // memberIdㅇ
+		for(int i=0; i<memberUpdateForm.getLanguageNo().size(); i++) {
+			log.debug(CF.PSG+"TeacherService.insertTeacherLanguageCount :" + i +CF.RESET);
+			teacherLanguage.setMemberId(memberUpdateForm.getMemberId());
+			teacherLanguage.setLanguageNo(memberUpdateForm.getLanguageNo().get(i));
+			teacherMapper.insertTeacherLanguage(teacherLanguage);
+			
+		}
+		Teacher teacher = new Teacher();
+		String changeAddress = memberUpdateForm.getChangeMemberAddress();
+		log.debug(CF.PSG+"TeacherService ChangeAddress : " +changeAddress + CF.RESET);
+		
+		teacher.setTeacherAddress(changeAddress);
+		if (teacher.getTeacherAddress() == null) {
+			teacher.setTeacherAddress(memberUpdateForm.getCurrentMemberAddress());
+		}
+		teacher.setMemberId(memberUpdateForm.getMemberId());
+		teacher.setTeacherName(memberUpdateForm.getMemberName());
+		teacher.setTeacherPhone(memberUpdateForm.getMemberPhone());
+		teacher.setTeacherEmail(memberUpdateForm.getMemberEmail());
+		teacher.setTeacherGender(memberUpdateForm.getMemberGender());
+		teacher.setTeacherDetailAddress(memberUpdateForm.getMemberDetailAddress());
+		
+		
+		
+		row = teacherMapper.updateTeacherOne(teacher);
+		
+		
+		return row;
+	}
+	public int modifyCareer(String careerInfo, String detailCareer, int careerNo) {
+		Career career = new Career();
+		career.setCareerNo(careerNo);
+		career.setCareer(careerInfo);
+		career.setDetailCareer(detailCareer);
+		
+		return teacherMapper.updateTeacherCareer(career);
 	}
 	
 }
