@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,10 +27,18 @@ public class SubjectReportController {
 	
 	// 1) 과제 게시판 글 리스트 출력 + 페이징
 	@GetMapping("/getSubjectReportListByPage")
-	public String getSubjectReportListByPage(Model model
+	public String getSubjectReportListByPage(HttpSession session
+										   ,Model model
 										   ,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 										   ,@RequestParam(value="rowPerPage", defaultValue="10") int rowPerPage
 										   ,@RequestParam(value="subjectNo") int subjectNo) {
+		// session 처리
+		String memberId = (String)session.getAttribute("loginUser");
+		String level = (String)session.getAttribute("level");
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.sessionId : " + memberId);
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.level : " + level);
+		// 운영자 + 강사 / 학생 별로 보이는 페이지가 다름...
+		
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.currentPage" +currentPage);
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.rowPerPage" +rowPerPage);
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectNo" +subjectNo);
@@ -49,13 +58,28 @@ public class SubjectReportController {
 		return "subject/getSubjectReportListByPage";
 	}
 	
+	// 1-1) 과제 게시판 리스트에서 과목번호 넘겨주기
+	@PostMapping("/getSubjectReportListByPage")
+	public String getSubjectReportListByPage(Model model
+											,@RequestParam(name="subjectNo") int subjectNo) {
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectNo : " + subjectNo);
+		model.addAttribute("subjectNo", subjectNo);
+		return "redirect:/addSubjectReport?subjectNo=" + subjectNo;
+	}
+	
 	// 2) 과제 게시판 글 상세보기 + 파일 이름 리스트 출력 + 댓글 리스트 출력
 	@GetMapping("/getSubjectReportOne")
-	public String getSubjectReportOne(Model model
+	public String getSubjectReportOne(HttpSession session
+									,Model model
 									,HttpServletRequest request
 									,@RequestParam(name="subjectBoardNo") int subjectBoardNo
 									,@RequestParam(name="commentCurrentPage", defaultValue="1") int commentCurrentPage
 									,@RequestParam(name="rowPerPage", defaultValue="10") int rowPerPage) {
+		String memberId = (String)session.getAttribute("loginUser");
+		String level = (String)session.getAttribute("level");
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.sessionId : " + memberId);
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.level : " + level);
+		// 운영자 + 강사 or  학생 별로 보이는 페이지가 다름...
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.subjectBoardNo : " + subjectBoardNo);
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.commentCurrentPage : " + commentCurrentPage);
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.rowPerPage : " + rowPerPage);
@@ -80,9 +104,24 @@ public class SubjectReportController {
 	
 	// 3) 과제 게시판 글 입력 + 파일 입력 Form 받기
 	@GetMapping("/addSubjectReport")
-	public String addSubjectReport() {
+	public String addSubjectReport(HttpSession session
+								 ,Model model
+								 ,@RequestParam(name="subjectNo") int subjectNo) {
+		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.subjectNo : " + subjectNo);
+		// session처리 : 운영자와 강사만 글을 쓸 수 있다.
+		String memberId = (String)session.getAttribute("loginUser");
+		String level = (String)session.getAttribute("level");
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.sessionId : " + memberId);
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.level : " + level);
+		// log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.subjectNo : " + subjectNo);
+		// 운영자와 강사가 아니면.. memberIndex로 redirect
+		if(level.equals("3")) {
+			return "redirect:/login";
+		}
+		model.addAttribute("subjectNo", subjectNo);
 		return "subject/addSubjectReport";
 	}
+	
 	// 3-1) 과제 게시판 글 입력 + 파일 입력 Action
 	@PostMapping("/addSubjectReport")
 	public String addSubjectReport(Model model

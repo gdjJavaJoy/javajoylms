@@ -57,17 +57,17 @@
 </head>
 <body>
 <div class="container">
-    <h1>과제 게시판 글 추가</h1>
+    <h1>${loginUser}님의 과제 추가</h1>
 	    <div>
 	   		<a href="${pageContext.request.contextPath}/getSubjectReportListByPage?subjectNo=${subjectNo}">이전</a>
 	    </div>
 		    <form id="addSubjectReportForm" method="post" name="addSubjectReportForm" action="${pageContext.request.contextPath}/addSubjectReport" enctype="multipart/form-data">
 		    	<div>
-		   			<input type="number" id="subjectNo" name="subjectNo" class="form-control" value="12">
+		   			<input type="number" id="subjectNo" name="subjectNo" class="form-control" value="${subjectNo}">
 		   		 	<span id="subjectNoHelper" class="helper"></span>	
 		    	</div>
 		    	<div>  	
-		    		<input type="text" id="memberId" name="memberId" class="form-control" value="teacher">
+		    		<input type="text" id="memberId" name="memberId" class="form-control" value="${loginUser}">
 		    		<span id="memberIdHelper" class="helper"></span>	
 		    	</div>
 		    	<div>
@@ -75,12 +75,12 @@
 		    		<span id="subjectReportTitleHelper" class="helper"></span>	
 		    	</div>
 		    	<div>
-		    		<textarea id="subjectReportContent" name="subjectReportContent" class="form-control" placeholder="과제 설명 작성"></textarea>
-		    		<span id="subjectReportContentHelper" class="helper"></span>
-		    	</div>
-		    	<div>
 		    		<input type="date" id="subjectReportPeriod" name="subjectReportPeriod" class="form-control" placeholder="과제 기한 설정">
 		    		<span id="subjectReportPeriodHelper" class="helper"></span>	
+		    	</div>
+		    	 <div>
+		    		<textarea id="subjectReportContent" name="subjectReportContent" class="form-control" placeholder="과제 설명 작성"></textarea>
+		    		<span id="subjectReportContentHelper" class="helper"></span>
 		    	</div>
 		    	<div>
 		    		<button type="button" id="addFileupload">첨부파일 추가</button>

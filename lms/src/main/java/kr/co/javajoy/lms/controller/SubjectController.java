@@ -3,6 +3,8 @@ package kr.co.javajoy.lms.controller;
 import java.util.ArrayList;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,10 +24,20 @@ public class SubjectController {
 	
 	// 강좌 입력 폼
 	@GetMapping("/addSubject")
-	public String addSubject(Model model) {
+	public String addSubject(HttpSession session, Model model) {
+		// 운영자 session 처리
+		String memberId = (String)session.getAttribute("loginUser");
+		String level = (String)session.getAttribute("level");
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.sessionId : " + memberId);
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.level : " + level);
+		// 운영자 아니면.. memberIndex로 redirect
+		if(level.equals("2") || level.equals("3")) {
+			return "redirect:/login";
+		}
 		// 강사 리스트 출력
 		ArrayList<String> teacherList = subjectService.getTeacherId();
 		model.addAttribute("teacherList", teacherList);
+		log.debug(CF.PBJ + "SubjectController.addSubject.teacherList : " + teacherList);
 		// addSubject.jsp 불러옴
 		return "subject/addSubject";
 	}
@@ -35,30 +47,48 @@ public class SubjectController {
 	public String addSubject(Subject subject) {
 		int row = subjectService.addSubject(subject);
 		// 디버깅
-		log.debug(CF.PBJ + "SubjectController.addSubject.param.subject : ", subject);
-		log.debug(CF.PBJ + "SubjectController.addSubject.row : ", row);
+		log.debug(CF.PBJ + "SubjectController.addSubject.param.subject : " + subject);
+		log.debug(CF.PBJ + "SubjectController.addSubject.row : " + row);
 		// 강좌 입력 성공 시, 강좌 리스트로
 		return "redirect:/getSubjectByPage";
 	}
 	
-	
 	// 강좌 리스트(운영자용) 출력 페이징 처리
 	@GetMapping("/getSubjectByPage")
-	public String getSubjectByPage(Model model, 
-			@RequestParam(name = "currentPage", defaultValue = "1") int currentPage,
-			@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
+	public String getSubjectByPage(HttpSession session
+			,Model model		  
+			,@RequestParam(name = "currentPage", defaultValue = "1") int currentPage
+			,@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
+		// 운영자 session 처리
+		String memberId = (String)session.getAttribute("loginUser");
+		String level = (String)session.getAttribute("level");
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.sessionId : " + memberId);
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.level : " + level);
+		// 운영자 아니면.. memberIndex로 redirect
+		if(level.equals("2") || level.equals("3")) {
+			return "redirect:/login";
+		}
+		// 운영자용 강좌 리스트
 		Map<String, Object> map = subjectService.getSubjectByPage(currentPage, rowPerPage);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", map.get("lastPage"));
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.currentPage : " + currentPage);
 		
 		return "subject/getSubjectByPage";
 	}
-	
+
 	// 강좌 상세보기
 	@GetMapping("/getSubjectOne")
-	public String getSubjectOne(Model model, @RequestParam(name="subjectNo") int subjectNo) {
-		// 디버깅
+	public String getSubjectOne(HttpSession session, Model model, @RequestParam(name="subjectNo") int subjectNo) {
+		// 운영자 session 처리
+		String memberId = (String)session.getAttribute("loginUser");
+		String level = (String)session.getAttribute("level");
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.sessionId : " + memberId);
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.level : " + level);
+		// 학생 + 강사 같은 페이지 사용 .. session 처리 x
+		
+		// 선택된 강좌 번호 디버깅
 		log.debug(CF.PBJ + "SubjectController.getSubjectOne.param.subjectNo : " + subjectNo);
 		
 		Subject subject = subjectService.getSubjectOne(subjectNo);
@@ -68,7 +98,18 @@ public class SubjectController {
 	
 	// 강좌 수정 Form
 	@GetMapping("/modifySubject")
-	public String modifySubject(Model model, @RequestParam(name = "subjectNo") int subjectNo) {
+	public String modifySubject(HttpSession session
+			,Model model
+			,@RequestParam(name = "subjectNo") int subjectNo) {
+		// 운영자 session 처리
+		String memberId = (String)session.getAttribute("loginUser");
+		String level = (String)session.getAttribute("level");
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.sessionId : " + memberId);
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.level : " + level);
+		// 운영자 아니면.. memberIndex로 redirect
+		if(level.equals("2") || level.equals("3")) {
+			return "redirect:/login";
+		}
 		ArrayList<String> teacherList = subjectService.getTeacherId();
 		model.addAttribute("teacherList", teacherList);
 		// 디버깅
@@ -83,7 +124,7 @@ public class SubjectController {
 	@PostMapping("/modifySubject")
 	public String modifySubject(Subject subject) {
 		// 디버깅 
-		log.debug(CF.PBJ + "SubjectController.modifySubject.param.subject : ", subject);
+		log.debug(CF.PBJ + "SubjectController.modifySubject.param.subject : " +  subject);
 		int row = subjectService.modifySubject(subject);
 		// SubjectOne 컨트롤러 리디렉트
 		return "redirect:/getSubjectOne?subjectNo=" + subject.getSubjectNo();

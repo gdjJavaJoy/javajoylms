@@ -588,7 +588,7 @@
         <main class="h-full pb-16 overflow-y-auto">
           <div class="container grid px-6 mx-auto">
           	
-            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Admin Subject Report</h2>
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의 Subject Report One</h2>
             <!-- CTA -->
             <c:forEach var="subjectReport" items="${subjectReport}">
 	            <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
@@ -604,7 +604,7 @@
             </c:forEach>
             <!-- With avatar -->
             <c:forEach var="subjectReport" items="${subjectReport}">
-           		<h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">과제 게시판 상세보기<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage" class="text-sm" style="float: right;">학생 과제 제출 -></a></h4> 
+           		<h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">과제 게시판 상세보기<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage?subjectReportNo=${subjectReportNo}" class="text-sm" style="float: right;">학생 과제 제출 게시판 -></a></h4> 
             </c:forEach>
             <!-- 과제 상세보기 테이블 -->
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
@@ -647,9 +647,11 @@
 		            <span class="col-span-2"></span>
 		            	<!-- Pagination -->
 	                <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+	                <c:if test="${level eq 1 || level eq 2}">
 	              		<a href="${pageContext.request.contextPath}/modifySubjectReport?subjectBoardNo=${subjectReport.subjectReportNo}">과제 수정</a>
 	              		<span>&nbsp | &nbsp</span>
 	                    <a href="${pageContext.request.contextPath}/deleteSubjectReport?subjectBoardNo=${subjectReport.subjectReportNo}">과제 삭제(미구현)</a> 
+	                </c:if>
 	                </span>
               	  </div>
               	 </c:forEach>

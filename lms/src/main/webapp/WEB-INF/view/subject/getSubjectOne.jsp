@@ -584,7 +584,7 @@
         </header>
         <main class="h-full pb-16 overflow-y-auto">
           <div class="container grid px-6 mx-auto">
-            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Admin Subject</h2>
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의 Subject One</h2>
 		     <!-- CTA -->
 	             <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple" href="${pageContext.request.contextPath}/getSubjectByPage">
 	              <div class="flex items-center">
@@ -617,7 +617,8 @@
 						<li>
 							<a style="float:right;" href="${pageContext.request.contextPath}/curriculumList?subjectNo=${subject.subjectNo}">&nbsp&nbsp커리큘럼&nbsp&nbsp</a>
 						</li>
-						<c:if test="${level eq 1}">
+						<!-- 운영자 + 강사 전용 페이지 -->
+						<c:if test="${level eq 1 || level eq 2}">
 							<li>
 								<a style="float:right;" href="${pageContext.request.contextPath}/studentList?subjectNo=${subject.subjectNo}">&nbsp&nbsp수강 학생&nbsp&nbsp</a>
 							</li>
@@ -642,7 +643,7 @@
                     	<th class="px-4 py-3">담당 강사 이름</th>
                     	<td class="px-4 py-3 text-sm">${subject.teacherName}</td>
                     </tr>
-                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                     	<th class="px-4 py-3">개설 운영자</th>
                     	<td class="px-4 py-3 text-sm">${subject.adminId}</td>
                     </tr>
@@ -685,6 +686,7 @@
                 <span class="col-span-2"></span>
                 <!-- Pagination -->
                 <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+                <!-- 운영자만 삭제, 수정 가능 -->
                 <c:if test="${level eq 1}">
               		<a href="${pageContext.request.contextPath}/modifySubject?subjectNo=${subject.subjectNo}">강좌 수정</a>
               			<span>&nbsp | &nbsp</span>

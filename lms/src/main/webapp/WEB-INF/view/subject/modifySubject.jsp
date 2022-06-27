@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>강좌 수정 <a href="${pageContext.request.contextPath}/getSubjectByPage">   [Go All Subject List]</a></h1>
+    <h1>${loginUser}님의 강좌 수정</h1>
 	    <div>
 	   		<a href="${pageContext.request.contextPath}/getSubjectByPage">이전</a>
 	    </div>
@@ -29,7 +29,7 @@
 		    			</c:forEach>
 		    	</select> 
 		    	<div>
-		   			<input type="text" id="adminId" name="adminId" class="form-control" value="${requestScope.subject.adminId}">
+		   			<input type="text" id="adminId" name="adminId" class="form-control" value="${loginUser}">
 		   		 	<span id="adminIdHelper" class="helper"></span>	
 		    	</div>
 		    	<div>  	
@@ -39,10 +39,6 @@
 		    	<div>	
 					<input type="number" id="subjectStudentMax" name="subjectStudentMax" class="form-control" value="${requestScope.subject.subjectStudentMax}">
 					<span id="subjectStudentMaxHelper" class="helper"></span>
-		    	</div>
-		    	<div>
-		    		<textarea id="subjectInfo" name="subjectInfo" class="form-control">${requestScope.subject.subjectInfo}</textarea>
-		    		<span id="subjectInfoHelper" class="helper"></span>
 		    	</div>
 		    	<div>
 		    		<input type="date" id="subjectStartDate" name="subjectStartDate" class="form-control" value="${requestScope.subject.subjectStartDate}">
@@ -59,6 +55,10 @@
 		    	<div>
 		    		 <input type="time" id="subjectEndTime" name="subjectEndTime" class="form-control" value="${requestScope.subject.subjectEndTime}">
 		    		 <span id="subjectEndTimeHelper" class="helper"></span>
+		    	</div>
+		    	<div>
+		    		<textarea id="subjectInfo" name="subjectInfo" class="form-control">${requestScope.subject.subjectInfo}</textarea>
+		    		<span id="subjectInfoHelper" class="helper"></span>
 		    	</div>
 		    	<div class="form-group">
 					 <button type="submit">강좌 수정</button>
