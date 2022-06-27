@@ -37,7 +37,7 @@
 		FROM board
 		WHERE board_no = #{boardNo}
 	</select>
-	<insert id="insertNotice"
+	<insert id="insertNotice"	
 			parameterType="kr.co.javajoy.lms.vo.Board">
 			<selectKey resultType="int" keyProperty="boardNo" order="AFTER">
 				select last_insert_id()
@@ -68,6 +68,7 @@
 		UPDATE board 
 		SET board_title = #{boardTitle}
 			,board_content = #{boardContent}
+			,update_date = NOW()
 		WHERE board_no = #{boardNo}
 	</update>
 </mapper>

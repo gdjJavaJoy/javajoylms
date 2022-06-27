@@ -40,8 +40,8 @@ public class NoticeController {
 		model.addAttribute("list",map.get("list"));
 		model.addAttribute("lastPage",map.get("lastPage"));
 		model.addAttribute("currentPage",currentPage);
-		log.debug(CF.WSH + "NoticeController.getNoticeByPage.notice : ", currentPage);
-		return "board/getNoticeByPagetest";
+		log.debug(CF.WSH + "NoticeController.getNoticeByPage.notice : "+ currentPage);
+		return "board/getNoticeByPage";
 	}
 	@GetMapping("/getNoticeOne")
 	public String getNoticeOne(Model model
@@ -49,7 +49,7 @@ public class NoticeController {
 			,HttpSession session
 			,@RequestParam(name = "boardNo") int boardNo) {
 		log.debug(CF.WSH + "NoticeController.getNoticeOne.boardNo : "+ boardNo);
-		String path = request.getServletContext().getRealPath("file/boardFile/");
+		String path = request.getServletContext().getRealPath("/file/boardFile/");
 		String memberId = (String)session.getAttribute("loginUser");
 		
 		Map<String, Object> map = noticeService.getNoticeOne(boardNo);
@@ -67,7 +67,7 @@ public class NoticeController {
 	}
 	@PostMapping("/addNotice")
 	public String addNotice(HttpServletRequest request, BoardForm boardForm) {
-		String path = request.getServletContext().getRealPath("file/boardFile/");
+		String path = request.getServletContext().getRealPath("/file/boardFile/");
 		log.debug(CF.WSH + "NoticeController.addNotice(Post).path : "+ path);
 		
 		log.debug(CF.WSH + "NoticeController.addNotice(Post).boardFrom : "+ boardForm);
@@ -89,7 +89,7 @@ public class NoticeController {
 			,@RequestParam(name="boardNo") int boardNo) {
 		log.debug(CF.WSH + "NoticeController.removeNoticefile(Get).boardFileNo : "+ boardfileNo);
 		log.debug(CF.WSH + "NoticeController.removeNoticefile(Get).boardNo : "+ boardNo);
-		String path = request.getServletContext().getRealPath("file/boardFile/");
+		String path = request.getServletContext().getRealPath("/file/boardFile/");
 			noticeService.removefileNotice(boardfileNo,path);
 		return "redirect:/modifyNotice?boardNo="+boardNo;
 	}
@@ -97,7 +97,7 @@ public class NoticeController {
 	public String removeNoice(HttpServletRequest request
 			,@RequestParam(name="boardNo") int boardNo) {
 		log.debug(CF.WSH + "NoticeController.removeNotice(Get).boardNo : "+ boardNo);
-		String path = request.getServletContext().getRealPath("file/boardFile/");
+		String path = request.getServletContext().getRealPath("/file/boardFile/");
 		noticeService.removeNotice(boardNo, path);
 	return "redirect:/getNoticeByPage";
 	}
@@ -108,7 +108,7 @@ public class NoticeController {
 			,HttpServletRequest request
 			,@RequestParam(name="boardNo") int boardNo) {
 		log.debug(CF.WSH + "NoticeController.modifyNotice(Get).boardNo : "+ boardNo);
-		String path = request.getServletContext().getRealPath("file/boardFile/"); 
+		String path = request.getServletContext().getRealPath("/file/boardFile/"); 
 		
 		Map<String, Object> map = noticeService.getNoticeOne(boardNo);
 		model.addAttribute("path", path);

@@ -23,36 +23,42 @@
 				</tr>
 				<tr>
 					<td>아이디</td>
-					<td>${n.memberId}</td>
+					<td>${loginUser}</td>
 				</tr>
 				<tr>
 					<td>제목</td>
 					<td>${n.boardTitle}</td>
 				</tr>
 				<tr>
-					<td>내용</td>
-					<td>${n.boardContent}</td>
-				</tr>
 					<td>생성날짜</td>
 					<td>${n.createDate}</td>
 				</tr>
 				<tr>
 					<td>수정날짜</td>
 					<td>${n.updateDate}</td>
-				</tr> 
+				</tr>
+				<tr>
+					<td>첨부파일</td>
+					<td>
+						<C:forEach var="boardfile" items="${boardfile}">
+							<div>
+								<!-- <a href="${pageContext.request.contextPath}/file/boardFile/${boardfile.boardFileOriginalName}" download="${boardfile.boardFileType}">${boardfile.boardFileName}</a>
+								<a href="${pageContext.request.contextPath}/file/boardFile/${boardfile.boardFileOriginalName}${boardfile.boardFileType}" download="${boardfile.boardFileName}${boardfile.boardFileType}">${boardfile.boardFileOriginalName}${boardfile.boardFileType}</a> -->
+								<a href="${pageContext.request.contextPath}/file/boardFile/${boardfile.boardFileOriginalName}" download="${boardfile.boardFileType}">${boardFileType.boardFileOriginalName}${boardfile.boardFileType}</a>
+							</div>
+						</C:forEach>
+					</td>	
+				</tr>
+				<tr>
+					<td>내용</td>
+					<td>${n.boardContent}</td>
+				</tr>
 			</table>
-		</C:forEach>
 		<C:if test="${level eq 1}">
 				<a href="${pageContext.request.contextPath}/removeNotice?boardNo=${n.boardNo}">삭제</a>
 				<a href="${pageContext.request.contextPath}/modifyNotice?boardNo=${n.boardNo}">수정</a>
 		</C:if>
-		<div>첨부파일</div>
-			<C:forEach var="boardfile" items="${boardfile}">
-				<div>
-					<a href="${pageContext.request.contextPath}/file/board_file/${boardfile.boardFileName}${boardfile.boardFileType}" download="${boardfile.boardFileName}${boardfile.boardFileType}">${boardfile.boardFileOriginalName}${boardfile.boardFileType}</a>
-				</div>
-			</C:forEach>
-			
+		</C:forEach>
 </div>
 </body>
 </html>

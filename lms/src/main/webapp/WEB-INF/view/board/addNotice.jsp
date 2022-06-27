@@ -13,9 +13,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script>
 	$(document).ready(function() {
-		$('#addFileupload').click(function(){
 			let flag = true;
-		$('.boardfileList').each(function(){
+		$('#addFileupload').click(function(){
+			$('.boardfileList').each(function(){
 			if($(this).val() == '' ) {
 				flag = false;
 			}
@@ -24,11 +24,12 @@
 			$('#fileSection').append("<div><input class='boardfileList' type='file' name='boardfileList'></div>");
 		} else {
 			alert('파일 첨부되지 않은 boardfileList가 존재합니다');
-		}
+		} 
 	});
-	
 	$('#addNotice').click(function(){
-		if($('#boardTitle').val() == ''){
+		if($('#memberId').val() == ''){
+			alert('memberId 입력하세요');
+		} else if($('#boardTitle').val() == ''){
 			alert('noticeTitle 입력하세요');
 		} else if($('#boardContent').val() == '') {
 			alert('noticeContent 입력하세요');
@@ -42,37 +43,29 @@
 				$('#addForm').submit();
 			} else {
 				alert('파일이 첨부되지않은 boardfileList가 존재합니다');
-			}
+			} 
 		}
-		
 	});
 });
 </script>
 </head>
 <body>
-<div>
 	<a href="${pageContext.request.contextPath}/getNoticeByPage">목록</a>
 	<form method="post" action="${pageContext.request.contextPath}/addNotice" enctype="multipart/form-data" id="addForm">
 		<h1>addNotice</h1>
 		<input type="hidden" name="privateNo" value="1" >
 		<table class="table table-striped">
 			<tr>
-				<td>ID</td>
+				<td>아이디</td>
 				<td>
 					<!-- 임시 값 대입 추후 세션 추가 예정 -->
-					<input name="memberId" value="admin" readonly="readonly" id="memberId">
+					<input name="memberId" value="${loginUser}" readonly="readonly" id="memberId">
 				</td>
 			</tr>
 			<tr>
 				<td>제목</td>
 				<td>
-					<input type="text" name="boardTitle" id="boardTitle">
-				</td>
-			</tr>
-			<tr>
-				<td>내용</td>
-				<td>
-					<textarea name="boardContent" id="boardContent"></textarea>
+					<input type="text" name="boardTitle" id="boardTitle" >
 				</td>
 			</tr>
 			<tr>
@@ -84,9 +77,14 @@
 					</div>
 				</td>
 			</tr>
+			<tr>
+				<td>내용</td>
+				<td>
+					<textarea name="boardContent" id="boardContent"></textarea>
+				</td>
+			</tr>
 		</table>
-		<button type="submit" id="addNotice">작성</button>
+		<button type="button" id="addNotice">작성</button>
 	</form>
-</div>
 </body>
 </html>
