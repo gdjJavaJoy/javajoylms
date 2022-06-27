@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.javajoy.lms.mapper.AllAdminListMapper">
+<!-- 전체 학생리스트 출력 -->
+	<select id="AllAdminList"
+			parameterType="java.util.Map"
+			resultType="map">
+		SELECT
+             member_id memberId
+            ,admin_name adminName
+            ,admin_phone adminPhone
+            ,admin_address adminAddress
+            ,admin_detailaddress adminDetailAddress
+            ,admin_email adminEmail
+            ,update_date updateDate
+        FROM admin
+			LIMIT 10
+	</select>
+<!-- 전체 글 수 -->
+<select id="selectTotalCount" 
+		resultType="int" >
+	SELECT COUNT(*)
+	FROM student
+</select>
+</mapper>

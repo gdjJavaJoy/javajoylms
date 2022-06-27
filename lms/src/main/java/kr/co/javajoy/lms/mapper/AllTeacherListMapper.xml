@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.javajoy.lms.mapper.AllTeacherListMapper">
+<!-- 전체 학생리스트 출력 -->
+	<select id="AllTeacherList"
+			parameterType="java.util.Map"
+			resultType="map">
+		 SELECT
+             member_id memberId
+            ,teacher_name teacherName
+            ,teacher_phone teacherPhone
+            ,teacher_gender teacherGender
+            ,teacher_address teacherAddress
+            ,teacher_detailaddress teacherDetailAddress
+            ,teacher_email teacherEmail
+            ,teacher_join teacherJoin
+        FROM teacher
+			LIMIT 10
+	</select>
+<!-- 전체 글 수 -->
+<select id="selectTotalCount" 
+		resultType="int" >
+	SELECT COUNT(*)
+	FROM student
+</select>
+</mapper>
