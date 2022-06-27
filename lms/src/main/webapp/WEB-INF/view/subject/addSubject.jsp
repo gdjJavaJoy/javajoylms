@@ -22,8 +22,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./public/assets/css/tailwind.output.css" />
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
       defer
@@ -344,54 +343,53 @@
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto">
              	<form id="addSubjectForm" method="post" name="addSujectForm" action="${pageContext.request.contextPath}/addSubject">
-                <table class="w-full whitespace-no-wrap">
-                
-                    <tr class="text-gray-700 dark:text-gray-400">
-                      <td class="px-4 py-3">
-                        <div class="flex items-center text-sm">
-                          <!-- Avatar with inset shadow -->
-                          <div>
-                            <p class="font-semibold">개설 운영자 ID</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="px-4 py-3">
-                        <div class="flex items-center text-sm">
-                          <!-- Avatar with inset shadow -->
-                          <div>
-                            <p class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
-                            	<input type="text" id="adminId" name="adminId" value="${loginUser}">
-                            	<span id="adminIdHelper" class="helper"></span>	
-                            </p>
-                          </div>
-                        </div>
-                       </td>
-                      </tr>
+                	<table class="w-full whitespace-no-wrap">
+	                	<tr class="text-gray-700 dark:text-gray-400">
+	                      <td class="px-4 py-3">
+	                        <div class="flex items-center text-sm">
+	                          <!-- Avatar with inset shadow -->
+	                          <div>
+	                            <p class="font-semibold">담임 강사</p>
+	                          </div>
+	                        </div>
+	                      </td>
+	                       <td class="px-4 py-3">
+	                        <div class="flex items-center text-sm">
+	                          <!-- Avatar with inset shadow -->
+	                          <div>
+			    				<select class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-select" id="teacherId" name="teacherId">
+			    					<option value="" selected disabled>강사 선택</option>
+				    			     	<c:forEach var="c" items="${teacherList}">
+				    				  		<option value="${c}">${c}</option>
+				    			        </c:forEach>
+			    	 			</select>	
+	                          </div>
+	                        </div>
+	                      </td>
+	                     </tr>
+		                 <tr class="text-gray-700 dark:text-gray-400">
+		                      <td class="px-4 py-3">
+		                        <div class="flex items-center text-sm">
+		                          <!-- Avatar with inset shadow -->
+		                          <div>
+		                            <p class="font-semibold">개설 운영자 ID</p>
+		                          </div>
+		                        </div>
+		                      </td>
+		                      <td class="px-4 py-3">
+		                        <div class="flex items-center text-sm">
+		                          <!-- Avatar with inset shadow -->
+		                          <div>
+		                            <p class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
+		                            	<input type="text" id="adminId" name="adminId" value="${loginUser}">
+		                            	<span id="adminIdHelper" class="helper"></span>	
+		                            </p>
+		                          </div>
+		                        </div>
+		                      </td>
+		                 </tr>
                       
-                     <tr class="text-gray-700 dark:text-gray-400">
-                      <td class="px-4 py-3">
-                        <div class="flex items-center text-sm">
-                          <!-- Avatar with inset shadow -->
-                          <div>
-                            <p class="font-semibold">담임 강사</p>
-                          </div>
-                        </div>
-                      </td>
-                       <td class="px-4 py-3">
-                        <div class="flex items-center text-sm">
-                          <!-- Avatar with inset shadow -->
-                          <div>
-                            <select class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" 
-                            		id="teacherId" name="teacherId">
-		    					<option value="" selected disabled>강사 선택 ↓</option>
-		    			     	<c:forEach var="c" items="${teacherList}">
-		    				  	<option value="${c}">${c}</option>
-		    			      </c:forEach>
-		    	 			</select> 
-                          </div>
-                        </div>
-                      </td>
-                     </tr>
+                    
                      
                      <tr class="text-gray-700 dark:text-gray-400">
                       <td class="px-4 py-3">
@@ -557,63 +555,144 @@
                  	<div style="display:inline;">
                  	<div style="float:inherit;" display:inline-block;"></div>
 	                  <button class="px-10 py-4 font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent 
-	                  rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" style="margin: auto; display: block;" >강좌 입력
-	                </button>
-	                </div>
+	                  rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" style="margin: auto; display: block;" 
+	                  type="button" id="signup">강좌 추가
+	                 </button>
 	                </div>
 	                </form>
+	               </div>
                  <br>
                </div>
          	</div>
+         	</main>
           </div>
-        </main>
       </div>
-    </div>
   </body>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script>
-  $('#updateAddrBtn').click(function(){
-		$('#insertForm').empty();
-		$('#insertForm').append('<td class="px-4 py-3">\
-      <div class="flex items-center text-sm">\
-      <div><p class="font-semibold">변경할 주소</p></div></div></td>\
-      <td class="px-4 py-3">\
-      <div class="flex items-center text-sm">\
-      <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"\
-      name="changeMemberAddress" id="searchMemberAddress"></select></div></td>\
-		');
-		$.ajax({
-			type:'get'
-			,url:'/lms/getAddr'
-			,data:{keyword : $('#keyword').val()}
-			,success:function(a) {
-				console.log(a);
-				console.log(typeof (a));
-				var a2 = JSON.parse(a);
-				console.log(typeof (a2));
-				console.log(a2);
-
-				let arr = a2.results.juso; // 주소배열
-				console.log(arr);
-				for (let i = 0; i < arr.length; i++) {
-					var addr = (arr[i].jibunAddr).replace(/\s/gi, "");
-					var obj = $("<option value="+addr+">"+ arr[i].jibunAddr + '('+ arr[i].zipNo + ")</option>");
-					$('#searchMemberAddress').append(obj);
-				};
+  <!-- 강좌 입력 유효성 검사 -->
+	<script type="text/javascript">	
+		// 개별 유효성 검사 코드 
+		
+		$('#teahcerId').blur(function() {
+			if ($('#teacherId').val().length == 0) {
+				$('#teacherIdHelper').text('담임 강사를 입력하세요');
+				$('#teacherId').focus();
+			} else {
+				$('#teacherIdHelper').text('');
 			}
 		});
-	});
-  $('#modifyCareerBtn').click(function(){
-	  $.ajax({
-		  type:'post'
-		 ,url:'/lms/modifyCareer'
-		 ,data:{careerInfo : $('#careerInfo').val()
-			   ,detailCareer : $('#detailCareer').val()
-			   ,careerNo : $('#careerNo').val()}
-	  	,success:function(mc) {
-	  		console.log('mc:',mc);
-	  	}
-	  });
-  });
-  </script>
+		
+		$('#adminId').blur(function() {
+			if ($('#adminIdId').val().length == 0) {
+				$('#adminIdHelper').text('개설 운영자를 입력하세요');
+				$('#adminId').focus();
+			} else {
+				$('#adminIdHelper').text('');
+			}
+		});
+	
+		$('#subjectName').blur(function() {
+			if ($('#subjectName').val().length == 0) {
+				$('#subjectNameHelper').text('강좌 이름을 입력하세요');
+				$('#subjectName').focus();
+			} else {
+				$('#subjectNameHelper').text('');
+			}
+		});
+		
+		$('#subjectStudentMax').blur(function() {
+			if ($('#subjectStudentMax').val().length == 0) {
+				$('#subjectStudentMaxHelper').text('강좌 총원을 입력하세요');
+				$('#subjectStudentMax').focus();
+			} else {
+				$('#subjectStudentMaxHelper').text('');
+			}
+		});
+		
+		$('#subjectInfo').blur(function() {
+			if ($('#subjectInfo').val().length == 0) {
+				$('#subjectInfoHelper').text('강좌 설명을 작성하세요');
+				$('#subjectInfo').focus();
+			} else {
+				$('#subjectInfoHelper').text('');
+			}
+		});
+		
+		$('#subjectStartDate').blur(function() {
+			if ($('#subjectStartDate').val().length == 0) {
+				$('#subjectStartDateHelper').text('강좌 개강일을 입력하세요');
+				$('#subjectStartDate').focus();
+			} else {
+				$('#subjectStartDateHelper').text('');
+			}
+		});
+		
+		$('#subjectFinishDate').blur(function() {
+			if ($('#subjectFinishDate').val().length == 0) {
+				$('#subjectFinishDateHelper').text('강좌 종강일을 입력하세요');
+				$('#subjectFinishDate').focus();
+			} else {
+				$('#subjectFinishDateHelper').text('');
+			}
+		});
+		
+		$('#subjectStartTime').blur(function() {
+			if ($('#subjectStartTime').val().length == 0) {
+				$('#subjectStartTimeHelper').text('강좌 시작 시간을 입력하세요');
+				$('#subjectStartTime').focus();
+			} else {
+				$('#subjectStartTimeHelper').text('');
+			}
+		});
+		
+		$('#subjectEndTime').blur(function() {
+			if ($('#subjectEndTime').val().length == 0) {
+				$('subjectEndTimeHelper').text('강좌 마감 시간을 입력하세요');
+				$('#subjectEndTime').focus();
+			} else {
+				$('#subjectEndTimeHelper').text('');
+			}
+		});
+		
+		// 강좌 추가 버튼을 눌렀을 시, 진행되는 이벤트 유효성 체크
+		$('#signup').click(function() {
+			if ($('#teacherId').val() == '') {
+				$('#teacherIdHelper').text('담임 강사를 입력하세요');
+				$('#teacherId').focus();
+			} else if ($('#adminId').val() == '') {
+				$('#teacherIdHelper').text('');
+				$('#adminIdHelper').text('개설 운영자를 입력하세요');
+				$('#adminId').focus();
+			} else if ($('#subjectName').val() == '') {
+				$('#adminIdHelper').text('');
+				$('#subjectNameHelper').text('강좌 이름을 입력하세요');
+				$('#subjectName').focus();
+			} else if ($('#subjectStudentMax').val() == '') {
+				$('#subjectNameHelper').text('');
+				$('#subjectStudentMaxHelper').text('강좌 총원을 입력하세요');
+				$('#subjectStudentMax').focus();
+			} else if ($('#subjectInfo').val() == '') {
+				$('#subjectStudentMaxHelper').text('');
+				$('#subjectInfoHelper').text('강좌 설명을 작성하세요');
+				$('#subjectInfo').focus();
+			} else if ($('#subjectStartDate').val() == '') {
+				$('#subjectInfoHelper').text('');
+				$('#subjectStartDateHelper').text('강좌 개강일을 입력하세요');
+				$('#subjectStartDate').focus();
+			} else if ($('#subjectFinishDate').val() == '') {
+				$('#subjectStartDateHelper').text('');
+				$('#subjectFinishDateHelper').text('강좌 종강일을 입력하세요');
+				$('#subjectFinishDate').focus();
+			} else if ($('#subjectStartTime').val() == '') {
+				$('#subjectFinishDateeHelper').text('');
+				$('#subjectStartTimeeHelper').text('강좌 시작시간을 입력하세요');
+				$('#subjectStartTime').focus();
+			} else if ($('#subjectEndTime').val() == '') {
+				$('#subjectStartTimeHelper').text('');
+				$('#subjectEndTimeHelper').text('강좌 마감 시간을 입력하세요');
+				$('#subjectEndTime').focus();
+			} else {
+				$('#addSubjectForm').submit();
+			}
+		});
+	</script>
 </html>
