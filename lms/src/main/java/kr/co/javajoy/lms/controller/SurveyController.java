@@ -1,7 +1,9 @@
 package kr.co.javajoy.lms.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -42,15 +44,24 @@ public class SurveyController {
 		return "/subject/getSurvey";
 	}
 	
-	@ResponseBody
 	@PostMapping("/getSurveyResult")
-	public String getSurveyResult(@RequestParam(value="resultList[]") ArrayList<String> resultList
-								,Model model) {
+	@ResponseBody
+	public String getSurveyResult(@RequestParam(value="resultList[]") List<String> resultList
+								,@RequestParam(value="surveyNo") int surveyNo
+								,HttpSession session) {
+		String memberId = (String) session.getAttribute("loginUser");
+		// 디버깅
+		log.debug(CF.YHJ + "SurveyController.getSurvey.loginUser : " + memberId + CF.RESET);
+		log.debug(CF.YHJ + "SurveyController.getSurveyResult.resultList : " + resultList + CF.RESET);
+		log.debug(CF.YHJ + "SurveyController.getSurveyResult.surveyNo : " + surveyNo + CF.RESET);
 		
-		log.debug(CF.YHJ + "SurveyController.getSurveyResult.resultList : " + resultList + CF.RESET); // 디버깅
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("memberId", memberId);
+		map.put("resultList", resultList);
+		map.put("surveyNo", surveyNo);
 		
+		surveyService.insertSurveyResult(map);
 		
-		model.addAttribute("resultList",resultList);
-		return null;
+		return "redirect:/memberIndex";
 	}
 }

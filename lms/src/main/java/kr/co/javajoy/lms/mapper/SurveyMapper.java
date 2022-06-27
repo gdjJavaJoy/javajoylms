@@ -9,5 +9,8 @@ import kr.co.javajoy.lms.vo.Survey;
 
 @Mapper
 public interface SurveyMapper {
+	// 만족도 문제 나오기
 	public List<Survey> getSurvey(int subjectNo);
+	// 
+	public void insertSurveyResult(Map<String,Object> map);
 }

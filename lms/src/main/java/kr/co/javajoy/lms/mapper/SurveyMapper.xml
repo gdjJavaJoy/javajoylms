@@ -13,4 +13,16 @@
 		FROM survey
 		WHERE subject_no = ${subjectNo}	
 	</select>
+	
+	<insert id="insertSurveyResult"
+			parameterType="java.util.Map">
+		INSERT INTO survey_result
+			(survey_no
+			,member_id
+			,result
+			,create_date
+			,update_date
+			)
+		VALUES(${surveyNo},${memberId},${resultList},NOW(),NOW())
+	</insert>
 </mapper>

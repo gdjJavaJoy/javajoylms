@@ -1,6 +1,7 @@
 package kr.co.javajoy.lms.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,11 @@ public class SurveyService {
 		log.debug(CF.YHJ + "SurveyService.getSurvey.list : " + list + CF.RESET); // 디버깅
 		
 		return list;
+	}
+	
+	public void insertSurveyResult(Map<String,Object> map) {
+		log.debug(CF.YHJ + "SurveyService.getSurvey.insertSurveyResult : " + map + CF.RESET); // 디버깅
+		
+		surveyMapper.insertSurveyResult(map);
 	}
 }

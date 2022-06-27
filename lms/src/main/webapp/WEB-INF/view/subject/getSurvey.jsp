@@ -381,7 +381,7 @@ img {
 </body>
 <script>
 	$('#submitBtn').click(function() {
-		let resultList = [];
+		let resultList = new Array();
 		<c:forEach var="s" items="${surveyList}">
 			var result = $('input[name="result${s.surveyNo}"]:checked').val()
 			console.log(result);
@@ -396,7 +396,7 @@ img {
 		  	"resultList" : resultList
 		  },
 		  success: function(data){
-		  	console.log("성공");
+		  	console.log("result"+resultList);
 		  }
 	});
 		$('#surveyForm').submit();
