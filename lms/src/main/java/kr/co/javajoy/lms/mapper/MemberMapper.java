@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import kr.co.javajoy.lms.vo.Admin;
 import kr.co.javajoy.lms.vo.Language;
 import kr.co.javajoy.lms.vo.Member;
+import kr.co.javajoy.lms.vo.MemberPhoto;
 import kr.co.javajoy.lms.vo.Password;
 import kr.co.javajoy.lms.vo.Student;
 import kr.co.javajoy.lms.vo.Teacher;
@@ -44,4 +45,13 @@ public interface MemberMapper {
 	public List<Map<String, Object>> teacherIndex(String memberId);
 	// languageList
 	public List<Language> selectLanguageList();
+	// 해당하는 member의 memberPhoto 사진 cnt 하는 메서드
+	int selectMemberPhotoCnt(String memberId);
+	// deleteMemberPhoto db 행 삭제
+	int deleteMemberPhoto(String memberId);
+	// 사진 추가 쿼리
+	int insertMemberPhoto(MemberPhoto memberPhoto);
+	// 사진이름가져오는 메서드
+	List<String> selectPhotoNameByMemberId(String memberId);
+	
 }

@@ -3,7 +3,9 @@ package kr.co.javajoy.lms.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.service.MemberService;
+import kr.co.javajoy.lms.vo.InsertMemberPhotoForm;
 import kr.co.javajoy.lms.vo.Password;
 import kr.co.javajoy.lms.vo.SignupForm;
 import lombok.extern.slf4j.Slf4j;
@@ -125,5 +128,37 @@ public class MemberController {
 		// 비밀번호 수정 성공시 로그인 페이지로 이동
 		 log.debug(CF.PSG+"parkseongjunController.modifyPw 수정성공"+CF.RESET);
 		return "redirect:/logout";
+	}
+	
+	@PostMapping("/addMemberPhoto")
+	public String addMemberPhoto(HttpServletRequest request
+								,InsertMemberPhotoForm insertMemberPhotoForm
+								,HttpSession session) {
+		String path = request.getServletContext().getRealPath("/file/memberPhoto/"); //경로 지정
+		log.debug(CF.PSG+"MemberRestController.addMemberPhoto Path :"+path+CF.RESET); // 경로 디버깅
+		
+		log.debug(CF.PSG+"memberRestController.addMemberPhoto insertMemberPhotoForm :"+insertMemberPhotoForm+CF.RESET);
+		
+		int row = memberService.addMemberPhoto(insertMemberPhotoForm, path);
+		if (row == 1) {
+			log.debug(CF.PSG+"MemberController.addMemberPhoto 사진추가 성공"+CF.RESET);
+		} else {
+		log.debug(CF.PSG+"MemberController.addMemberPhoto 사진 추가 실패"+CF.RESET);
+		if(session.getAttribute("level").equals("3")) {
+			log.debug(CF.PSG+"MemberController.addMemberPhoto redirect modifyStudentOne으로 이동"+CF.RESET);
+			return "redirect:/modifyStudentOne?memberId="+insertMemberPhotoForm.getMemberId();
+		} else {
+			log.debug(CF.PSG+"MemberController.addMemberPhoto redirect. modifyTeacherOne으로 이동" + CF.RESET);
+			return "redirect:/modifyTeacherOne?memberId="+insertMemberPhotoForm.getMemberId();
+		}
+		}
+		
+		if(session.getAttribute("level").equals("3")) {
+			log.debug(CF.PSG+"MemberController.addMemberPhoto redirect modifyStudentOne으로 이동"+CF.RESET);
+			return "redirect:/modifyStudentOne?memberId="+insertMemberPhotoForm.getMemberId();
+		} else {
+			log.debug(CF.PSG+"MemberController.addMemberPhoto redirect. modifyTeacherOne으로 이동" + CF.RESET);
+		}
+		return "redirect:/modifyTeacherOne?memberId="+insertMemberPhotoForm.getMemberId();
 	}
 }

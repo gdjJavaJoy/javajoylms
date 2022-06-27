@@ -1,17 +1,22 @@
 package kr.co.javajoy.lms.service;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.mapper.MemberMapper;
 import kr.co.javajoy.lms.vo.Admin;
+import kr.co.javajoy.lms.vo.InsertMemberPhotoForm;
 import kr.co.javajoy.lms.vo.Member;
+import kr.co.javajoy.lms.vo.MemberPhoto;
 import kr.co.javajoy.lms.vo.Password;
 import kr.co.javajoy.lms.vo.SignupForm;
 import kr.co.javajoy.lms.vo.Student;
@@ -156,16 +161,58 @@ public class MemberService {
 		
 		return list;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public int addMemberPhoto(InsertMemberPhotoForm insertMemberPhotoForm, String path) {
+		int row = 0;
+		String memberId = insertMemberPhotoForm.getMemberId();
+		log.debug(CF.PSG+"MemberService.addMemberPhoto.memberId : " + memberId + CF.RESET);
+		int cnt = memberMapper.selectMemberPhotoCnt(memberId); // 파일이 존재하는지 확인하는 쿼리문
+		
+		
+		for(MultipartFile mf : insertMemberPhotoForm.getMemberPhotoList()) {
+			MemberPhoto memberPhoto = new MemberPhoto();
+			
+			String originalFileName = mf.getOriginalFilename(); // 파일originalName 변수에저장 
+			String ext = originalFileName.substring(originalFileName.lastIndexOf(".")); // 확장자
+			String fileName = UUID.randomUUID().toString(); //fileName 을 저장할때 사용하는 중복되지않는새로운 이름필요 (UUID API)
+			log.debug(CF.PSG+"MemberService.addMember.originalFileName :"+ originalFileName+CF.RESET);
+			
+			fileName = fileName + ext; // 파일이름 + 확장자 붙이기 
+			log.debug(CF.PSG+"MemberService.addMember.fileName :"+fileName+CF.RESET);
+			
+			memberPhoto.setMemberId(memberId);
+			memberPhoto.setMemberPhotoName(fileName);
+			memberPhoto.setMemberPhotoOriginalName(originalFileName);
+			memberPhoto.setMemberPhotoSize(mf.getSize());
+			memberPhoto.setMemberPhotoType(mf.getContentType());
+			//jpeg, jpg, png이면 
+			if (mf.getContentType().equals("image/jpeg") || mf.getContentType().equals("image/jpg") || mf.getContentType().equals("image/png")) {
+				if (cnt>0) { // 만약 저장되어있는 파일이 있으면
+					log.debug(CF.PSG+"MemberService.addMemberPhoto 기존에있던 파일 삭제"+CF.RESET);
+					List<String> deleteFileNameList = memberMapper.selectPhotoNameByMemberId(memberId); // 파일 이름을 List에저장
+					for (String deleteFileName : deleteFileNameList) {
+						File f = new File(path+deleteFileName); // 파일경로
+						if(f.exists()) { // 파일이 존재한다면 
+							f.delete(); // 파일삭제
+						}
+					}
+					memberMapper.deleteMemberPhoto(memberId); // db에 행 삭제 
+				}
+				
+				// 사진 추가 성공
+				row = memberMapper.insertMemberPhoto(memberPhoto); // db 에 사진저장 
+				try {
+					mf.transferTo(new File(path+fileName));
+				} catch (Exception e) {
+					e.printStackTrace();
+					// 새로운 예외 발생시켜야지만 @Transactional 작동함 
+					throw new RuntimeException(); //RuntimeException은 예외처리 하지않아도 컴파일 됨
+				}
+				
+			}
+		}
+		
+		return row;
+	}
 	
 	
 	

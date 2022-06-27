@@ -205,4 +205,44 @@
 			   ,update_date	updateDate
 		   FROM language
 	</select>
+	<select id="selectMemberPhotoCnt"
+			parameterType="String"
+			resultType="int">
+		SELECT 
+			COUNT(*) cnt
+		FROM member_photo
+		WHERE member_id = #{memberId}	
+	</select>
+	<delete id="deleteMemberPhoto"
+			parameterType="String">
+		DELETE FROM member_photo
+			  WHERE member_id=#{memberId}
+	</delete>
+	<insert id="insertMemberPhoto"
+			parameterType="kr.co.javajoy.lms.vo.MemberPhoto">
+		INSERT INTO member_photo (
+					member_id
+				   ,member_photo_original_name
+				   ,member_photo_name
+				   ,member_photo_size
+				   ,member_photo_type
+				   ,update_date
+			) VALUES (
+					#{memberId}
+				   ,#{memberPhotoOriginalName}
+				   ,#{memberPhotoName}
+				   ,#{memberPhotoSize}
+				   ,#{memberPhotoType}
+				   ,NOW()
+				)
+	</insert>
+	<select id="selectPhotoNameByMemberId"
+			parameterType="String"
+			resultType="String"
+	>
+	SELECT 
+		  member_photo_name memberPhotoName
+	 FROM member_photo
+	WHERE member_id = #{memberId}
+	</select>
 </mapper>

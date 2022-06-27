@@ -138,15 +138,14 @@ public class LoginController {
 		log.debug(CF.YHJ + "LoginController.findMemberId.memberName : " + memberName + CF.RESET);
 		log.debug(CF.YHJ + "LoginController.findMemberId.memberPhone : " + memberPhone + CF.RESET);
 		
-		String memberPw = loginService.findMemberPw(memberId, memberName, memberPhone);
-		log.debug(CF.YHJ + "LoginController.findMemberId.memberId : " + memberPw + CF.RESET);
+		int row = loginService.findMemberPw(memberId, memberName, memberPhone);
+		log.debug(CF.YHJ + "LoginController.findMemberId.row : " + row + CF.RESET);
 		
-		if(memberPw == null) {
+		if(row == 0) {
 			return "redirect:findMemberPw";
 		}
 		
-		model.addAttribute("memberId",memberPw);
-		model.addAttribute("memberName",memberId);
+		model.addAttribute("memberId",memberId);
 		
 		
 		

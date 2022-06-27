@@ -84,7 +84,7 @@ public class LoginService {
 	}
 	
 	// 비밀번호 찾기
-	public String findMemberPw(String memberId, String memberName, String memberPhone) {
+	public int findMemberPw(String memberId, String memberName, String memberPhone) {
 		// 디버깅
 		log.debug(CF.YHJ + "LoginService.findMemberPw.memberId : " + memberId + CF.RESET);
 		log.debug(CF.YHJ + "LoginService.findMemberPw.memberName : " + memberName + CF.RESET);
@@ -98,16 +98,27 @@ public class LoginService {
 		map.put("memberName", memberName);
 		map.put("memberPhone", memberPhone);
 		
-		String memberPw = null;
+		int row =0;
 		if(level.equals("2")) {
-			memberPw = loginMapper.findTeacherPw(map);
+			 row = loginMapper.findTeacherPw(map);
 		} else if(level.equals("3")) {
-			memberPw = loginMapper.findStudentPw(map);
+			 row = loginMapper.findStudentPw(map);
 		}
 		
-		log.debug(CF.YHJ + "LoginService.findMemberPw.memberPw : " + memberPw + CF.RESET); // 디버깅
 		
-		return memberPw;
+		if(row == 1) {
+			log.debug(CF.PSG+"member비밀번호 찾기 성공 UPDATE 쿼리 실행"+CF.RESET);
+			int resultRow = loginMapper.updateFindPwMember(memberId);
+			if (resultRow == 1) {
+				log.debug(CF.PSG+"member비밀번호 수정성공"+CF.RESET);
+			} else {
+				log.debug(CF.PSG+"member비밀번호 수정실패"+CF.RESET);
+			}
+		} else {
+			log.debug(CF.PSG+"member비밀번호 찾기 실패"+CF.RESET);
+		}
+		
+		return row;
 	}
 	
 	

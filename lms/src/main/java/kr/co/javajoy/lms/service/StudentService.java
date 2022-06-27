@@ -1,5 +1,7 @@
 package kr.co.javajoy.lms.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 public class StudentService {
 	@Autowired StudentMapper studentMapper;
 	
-	public Student getStudentOne(String memberId) {
+	public Map<String,Object> getStudentOne(String memberId) {
 		// 사진도 추가해서 map으로 해야함
 		return studentMapper.selectStudentOne(memberId);
 	}

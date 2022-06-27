@@ -34,15 +34,15 @@
 					<div class="w-full">
 						<h1
 							class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">
-							${memberId}님의 아이디는</h1>
+							${memberId}</h1>
 						<h1
 							class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">
 							<c:choose>
 								<c:when test="${memberId != null}">
-									${memberPw}입니다.
+									${memberId}님의 비밀번호가 1111로 변경되었습니다 비밀번호를 수정해주세요
 								</c:when>
 								<c:otherwise>
-								등록된 회원정보가 없습니다. 변경창으로 수정해야함
+								등록된 회원정보가 없습니다.
 								</c:otherwise>
 							</c:choose>
 							</h1>						

@@ -20,8 +20,10 @@ public interface LoginMapper {
 	public String findStudentId(Map<String, Object> map);
 
 	// 강사 비밀번호 찾기
-	public String findTeacherPw(Map<String, Object> map);
+	public int findTeacherPw(Map<String, Object> map);
 
 	// 학생 비밀번호 찾기
-	public String findStudentPw(Map<String, Object> map);
+	public int findStudentPw(Map<String, Object> map);
+	
+	int updateFindPwMember(String memberId);
 }

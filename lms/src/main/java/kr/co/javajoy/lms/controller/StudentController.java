@@ -1,5 +1,7 @@
 package kr.co.javajoy.lms.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,7 @@ public class StudentController {
 		String loginUser = session.getAttribute("loginUser").toString();
 		log.debug(CF.YHJ + "StudentController.getStudentOne.loginUser : " + loginUser); // 디버깅
 		
-		Student student = studentService.getStudentOne(loginUser);
+		Map<String,Object> student = studentService.getStudentOne(loginUser);
 		log.debug(CF.YHJ + "StudentController.getStudentOne.student : " + student); // 디버깅
 		
 		model.addAttribute("student",student);
@@ -39,10 +41,10 @@ public class StudentController {
 									,Model model) {
 		log.debug(CF.YHJ + "StudentController.modifyStudentOne.memberId : " + memberId); // 디버깅
 		
-		Student student = studentService.getStudentOne(memberId);
+		Map<String,Object> student = studentService.getStudentOne(memberId);
 		log.debug(CF.YHJ + "StudentController.modifyStudentOne.student : " + student); // 디버깅
 		
-		model.addAttribute(student);
+		model.addAttribute("student",student);
 		
 		return "/member/student/modifyStudentOne";
 	}

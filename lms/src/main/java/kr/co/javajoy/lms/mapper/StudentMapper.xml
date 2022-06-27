@@ -3,19 +3,22 @@
 <mapper namespace="kr.co.javajoy.lms.mapper.StudentMapper">
 	<select id="selectStudentOne"
 			parameterType="String"
-			resultType="kr.co.javajoy.lms.vo.Student">
+			resultType="java.util.Map">
 		SELECT
-			member_id memberId
-			,student_name studentName
-			,student_gender studentGender
-			,student_phone studentPhone
-			,student_address studentAddress
-			,student_detailaddress studentDetailAddress
-			,student_email studentEmail
-			,student_education studentEducation
-			,student_register_date studentRegisterDate
-		FROM student
-		WHERE member_id = #{memberId}
+			 s.member_id memberId
+			,s.student_name studentName
+			,s.student_gender studentGender
+			,s.student_phone studentPhone
+			,s.student_address studentAddress
+			,s.student_detailaddress studentDetailAddress
+			,s.student_email studentEmail
+			,s.student_education studentEducation
+			,s.student_register_date studentRegisterDate
+			,mp.member_photo_name memberPhotoName
+		FROM student s
+   LEFT JOIN member_photo mp
+   		  ON s.member_id = mp.member_id
+  WHERE s.member_id = #{memberId}
 	</select>
 
 	<update id="updateStudentOne"
