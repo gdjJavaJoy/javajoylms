@@ -80,6 +80,7 @@ public class NoticeController {
 			
 		}
 		noticeService.addNotice(boardForm, path);
+		log.debug(CF.WSH + "NoticeController.addNotice(Post).boardForm : "+boardForm);
 		return "redirect:/getNoticeByPage";
 	}
 	// 리스트 삭제

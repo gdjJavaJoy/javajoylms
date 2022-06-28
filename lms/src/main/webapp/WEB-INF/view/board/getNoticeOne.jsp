@@ -42,9 +42,7 @@
 					<td>
 						<C:forEach var="boardfile" items="${boardfile}">
 							<div>
-								<!-- <a href="${pageContext.request.contextPath}/file/boardFile/${boardfile.boardFileOriginalName}" download="${boardfile.boardFileType}">${boardfile.boardFileName}</a>
-								<a href="${pageContext.request.contextPath}/file/boardFile/${boardfile.boardFileOriginalName}${boardfile.boardFileType}" download="${boardfile.boardFileName}${boardfile.boardFileType}">${boardfile.boardFileOriginalName}${boardfile.boardFileType}</a> -->
-								<a href="${pageContext.request.contextPath}/file/boardFile/${boardfile.boardFileOriginalName}" download="${boardfile.boardFileType}">${boardFileType.boardFileOriginalName}${boardfile.boardFileType}</a>
+								<a href="${pageContext.request.contextPath}/file/boardFile/${boardfile.boardFileName}${nr.boardFileType}" download="${boardfile.boardFileName}${nr.boardFileType}">${boardfile.boardFileName}${nr.boardFileType}</a>
 							</div>
 						</C:forEach>
 					</td>	
@@ -58,7 +56,7 @@
 				<a href="${pageContext.request.contextPath}/removeNotice?boardNo=${n.boardNo}">삭제</a>
 				<a href="${pageContext.request.contextPath}/modifyNotice?boardNo=${n.boardNo}">수정</a>
 		</C:if>
-		</C:forEach>
+		</C:forEach>	
 </div>
 </body>
 </html>
