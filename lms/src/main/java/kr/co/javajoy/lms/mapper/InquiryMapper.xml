@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.javajoy.lms.mapper.InquiryMapper">
+ <select id="selectInquiryByPage"
+ 		 parameterType="java.util.Map"
+ 		 resultType="kr.co.javajoy.lms.vo.Board">
+ SELECT 
+ 	board_no boardNo
+   ,member_id memberId
+   ,board_title boardTitle
+   ,private_no privateNo
+   ,create_date createDate
+   ,update_date updateDate
+FROM board
+WHERE board_category = "3"
+LIMIT #{beginRow} , #{rowPerPage} 		
+ </select>
+ <select id="selectInquiryTotalCount"
+ 		resultType="int">
+ SELECT
+ 	COUNT(*) cnt
+ FROM board
+ WHERE board_category = "3"
+ </select>
+ <select id="selectTeacherListBySubject"
+	 		 parameterType="String"
+	 		 resultType="String">
+SELECT
+	 c.member_id memberId
+      FROM subject_student ss
+INNER JOIN curriculum c
+		ON c.subject_no = ss.subject_no
+	 WHERE ss.member_id = #{memberId}
+</select>
+</mapper>
