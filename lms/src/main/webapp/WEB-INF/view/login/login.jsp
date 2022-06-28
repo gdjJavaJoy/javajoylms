@@ -88,7 +88,6 @@
 									href="${pageContext.request.contextPath}/findMemberPw"> Forgot your password? 
 								</a>
 							</p>
-							<button class="">1234</button>
 						</div>
 					</div>
 				</div>
