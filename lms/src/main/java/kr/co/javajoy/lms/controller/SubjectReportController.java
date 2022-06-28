@@ -148,6 +148,8 @@ public class SubjectReportController {
 									,HttpServletRequest request
 									,Model model
 									,@RequestParam(name="subjectBoardNo") int subjectBoardNo) {
+		// 게시판 번호
+		log.debug(CF.PBJ + "SubjectReportController.modifySubjectReport.subjectBoardNo : " + subjectBoardNo);
 		// session 처리 : 운영자와 강사만 글을 수정 할 수 있다.
 		String memberId = (String)session.getAttribute("loginUser");
 		String level = (String)session.getAttribute("level");
@@ -160,8 +162,6 @@ public class SubjectReportController {
 		// 파일 경로
 		String path = request.getServletContext().getRealPath("/file/subject_file/"); 
 		log.debug(CF.PBJ + "SubjectReportController.modifySubjectReport.parh : " + path);
-		// 게시판 번호
-		log.debug(CF.PBJ + "SubjectReportController.modifySubjectReport.subjectBoardNo : " + subjectBoardNo);
 		// 파일 리스트 데이터
 		Map<String, Object> returnMap = subjectReportService.getSubjectReportOne(subjectBoardNo);
 		model.addAttribute("path", path);
@@ -175,15 +175,15 @@ public class SubjectReportController {
 	@GetMapping("/removeSubjectFile")
 	public String removeSubjectFile(HttpServletRequest request
 								,@RequestParam(name="subjectFileNo") int subjectFileNo
-								,@RequestParam(name="subjectFileBoardNo") int subjectFileBoardNo) {
+								,@RequestParam(name="subjectBoardNo") int subjectBoardNo) {
 		log.debug(CF.PBJ + "SubjectReportController.removeSubjectFile(modify).subjectFileNo : " + subjectFileNo);
-		log.debug(CF.PBJ + "SubjectReportController.removeSubjectFile(modify).subjectFileBoardNo : " + subjectFileBoardNo);
+		log.debug(CF.PBJ + "SubjectReportController.removeSubjectFile(modify).subjectBoardNo : " + subjectBoardNo);
 		String path = request.getServletContext().getRealPath("/file/subject_file/");
 		log.debug(CF.PBJ + "SubjectReportController.removeSubjectFile.path : " + path);
 		
 		subjectReportService.removeSubjectFile(subjectFileNo, path);
 		
-		return "redirect:/modifySubjectReport?subjectBoardNo=" + subjectFileBoardNo;
+		return "redirect:/modifySubjectReport?subjectBoardNo=" + subjectBoardNo;
 	}
 	
 	// 4-2) 과제 게시판 수정 Action
@@ -191,9 +191,8 @@ public class SubjectReportController {
 	public String modifySubjectReport(SubjectReport subjectReport) {
 		int row = subjectReportService.modifySubjectReport(subjectReport);
 		log.debug(CF.PBJ + "SubjectReportController.modifySubjectReport.row : " + row);
-		return "redirect:/getSubjectReportOne?SubjectBoardNo=" + subjectReport.getSubjectBoardNo();
+		return "redirect:/getSubjectReportOne?subjectBoardNo=" + subjectReport.getSubjectBoardNo();
 	}
-	
 }
 	
 

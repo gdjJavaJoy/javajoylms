@@ -136,7 +136,7 @@ public class SubjectReportService {
 		// 선택된 과게 게시판 글 상세보기
 		List<SubjectReport> subjectReport = subjectReportMapper.selectSubjectReportOne(subjectBoardNo);
 		// 선택된 과제 게시판 글의 파일 리스트 
-		List<String> subjectFileList = subjectReportMapper.selectSubjectReportFileList(subjectBoardNo);
+		List<SubjectFile> subjectFileList = subjectReportMapper.selectSubjectReportFileList(subjectBoardNo);
 		// 선택된 과제 게시판 댓글 리스트
 		List<SubjectReportComment> commentList = subjectReportMapper.selectCommentListByPage(paramMap);
 		// 상세보기 + 파일 리스트 저장
@@ -167,7 +167,7 @@ public class SubjectReportService {
 		List<SubjectReport> subjectReport = subjectReportMapper.selectSubjectReportOne(subjectBoardNo);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportOne.subjectReport :" + subjectReport);
 		// 과제 게시판 파일 리스트 불러오기
-		List<String> subjectFile = subjectReportMapper.selectSubjectReportFileList(subjectBoardNo);
+		List<SubjectFile> subjectFile = subjectReportMapper.selectSubjectReportFileList(subjectBoardNo);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportOne.subjectFile :" + subjectFile);
 		// 해시 맵으로 데이터 보냄
 		Map<String, Object> map = new HashMap<>();
@@ -180,6 +180,7 @@ public class SubjectReportService {
 	public int modifySubjectReport(SubjectReport subjectReport) {
 		int row = subjectReportMapper.updateSubjectReport(subjectReport);
 		log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport.subjectReport :" + subjectReport);
+		log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport.row :" + row);
 		return row;
 	}
 	

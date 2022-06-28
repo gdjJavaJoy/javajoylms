@@ -27,7 +27,7 @@ public interface SubjectReportMapper {
 	// 과제 게시판 글 상세보기의 파일 이름 리스트 출력
 	List<String> selectSubjectReportFileNameList(int subjectBoardNo);
 	// 과제 게시판 글 상세보기의 파일 리스트 출력
-	List<String> selectSubjectReportFileList(int subjectBoardNo);
+	List<SubjectFile> selectSubjectReportFileList(int subjectBoardNo);
 	// 각 글의 총 댓글 수
 	int selectCommentTotalCountByNotice(int subjectBoardNo);
 	// 과제 게시판 각 글의 댓글 리스트
