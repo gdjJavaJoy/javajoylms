@@ -65,12 +65,11 @@ public class NoticeService {
 		log.debug(CF.WSH + "NoticeService.addNotice.boardForm : "+ boardForm);
 		log.debug(CF.WSH + "NoticeService.addNotice.path : "+ path);
 		
-		// jsp에서 적은 파일을 Multipartfile(BoardForm)에 저장하고 다시 Board에 나눠서 저장함
+		// jsp에서 적은 파일을 Multipartfile(BoardForm)에 저장했던걸 다시 Board에 저장함
 		Board board = new Board();
 		board.setMemberId(boardForm.getMemberId());
 		board.setBoardTitle(boardForm.getBoardTitle());
 		board.setBoardContent(boardForm.getBoardContent());
-		board.setPrivateNo(boardForm.getPrivateNo());
 		board.getBoardNo();
 		log.debug(CF.WSH + "NoticeService.addNotice.board : "+ board);
 		
