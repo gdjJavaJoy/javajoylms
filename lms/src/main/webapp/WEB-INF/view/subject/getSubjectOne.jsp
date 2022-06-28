@@ -606,7 +606,7 @@
 							<a style="float:right;" href="${pageContext.request.contextPath}/getSubjectReportListByPage?subjectNo=${subject.subjectNo}">&nbsp&nbsp강좌 영상&nbsp&nbsp</a>
 						</li>
 						<li>
-							<a style="float:right;" href="${pageContext.request.contextPath}/getSubjectReportListByPage?subjectNo=${subject.subjectNo}">&nbsp&nbsp과제 게시판&nbsp&nbsp</a>
+							<a style="float:right;" href="${pageContext.request.contextPath}/getSubjectReportListByPage?subjectNo=${subject.subjectNo}&subjectName=${subject.subjectName}">&nbsp&nbsp과제 게시판&nbsp&nbsp</a>
 						</li>
 						<li>
 							<a style="float:right;" href="${pageContext.request.contextPath}/subjectDataList?subjectNo=${subject.subjectNo}">&nbsp&nbsp강좌 자료&nbsp&nbsp</a>

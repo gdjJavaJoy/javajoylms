@@ -1,23 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page import="java.net.URLDecoder"%>
 <!DOCTYPE html>
 <html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Insert Subject Page</title>
-    	<style>
-			img { display: block; margin: 0px auto; }
-			textarea{
-				width:500px; 
-				height:100px; 
-			    resize:none;
-			    /* 크기고정 */ 
-				/*   resize: horizontal; // 가로크기만 조절가능 
-				resize: vertical;  세로크기만 조절가능  */
-   			}
-		</style>
-    <link
+<script src="/js/summernote/summernote-lite.js"></script>
+<script src="/js/summernote/lang/summernote-ko-KR.js"></script>
+
+<link rel="stylesheet" href="/css/summernote/summernote-lite.css">
+<link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
@@ -357,12 +351,14 @@
 	                        <div class="flex items-center text-sm">
 	                          <!-- Avatar with inset shadow -->
 	                          <div>
-			    				<select class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-select" id="teacherId" name="teacherId">
-			    					<option value="" selected disabled>강사 선택</option>
+			    				<select id="teacherId" name="teacherId" 
+			    						class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-select" >
+			    					<option value="">강사 선택</option>
 				    			     	<c:forEach var="c" items="${teacherList}">
 				    				  		<option value="${c}">${c}</option>
 				    			        </c:forEach>
-			    	 			</select>	
+			    	 			</select>
+			    	 			<span id="teacherIdHelper" class="helper"></span>		
 	                          </div>
 	                        </div>
 	                      </td>
@@ -381,7 +377,7 @@
 		                          <!-- Avatar with inset shadow -->
 		                          <div>
 		                            <p class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
-		                            	<input type="text" id="adminId" name="adminId" value="${loginUser}">
+		                            	<input type="text" id="adminId" name="adminId" value="${loginUser}" readonly>
 		                            	<span id="adminIdHelper" class="helper"></span>	
 		                            </p>
 		                          </div>
@@ -529,6 +525,7 @@
                       </td>
                      </tr>
                      
+                      
                      <tr class="text-gray-700 dark:text-gray-400">
                       <td class="px-4 py-3">
                         <div class="flex items-center text-sm">
@@ -568,12 +565,21 @@
           </div>
       </div>
   </body>
+ <script>
+	$('#summernote').summernote({
+	  tabsize: 2,
+	  height: 400
+	});
+	$(".note-editor button[aria-label='Picture']").hide();
+	$(".note-editor button[aria-label='Video']").hide();
+	$(".note-editor .note-view").hide();
+</script>
   <!-- 강좌 입력 유효성 검사 -->
 	<script type="text/javascript">	
 		// 개별 유효성 검사 코드 
 		
 		$('#teahcerId').blur(function() {
-			if ($('#teacherId').val().length == 0) {
+			if ($('#teacherId').val() == '') {
 				$('#teacherIdHelper').text('담임 강사를 입력하세요');
 				$('#teacherId').focus();
 			} else {
@@ -694,5 +700,6 @@
 				$('#addSubjectForm').submit();
 			}
 		});
+		
 	</script>
 </html>

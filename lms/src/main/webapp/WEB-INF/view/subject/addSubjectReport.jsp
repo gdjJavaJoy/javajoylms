@@ -60,6 +60,7 @@
 					$('.subjectReportFileList').each(function(){
 						if($(this).val() == '') {
 							flag = false;
+							return;
 						}
 					});
 					if(flag) {
@@ -403,7 +404,7 @@
 	                          <!-- Avatar with inset shadow -->
 	                          <div>
 			    		 	  	<p class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
-		                            	<input type="text" id="memberId" name="memberId" value="${loginUser}">
+		                            	<input type="text" id="memberId" name="memberId" value="${loginUser}" readonly>
 		                            	<span id="memberIdHelper" class="helper"></span>	
 		                        </p>
 	                          </div>
@@ -446,7 +447,7 @@
                            <div>
 	                            <p class="font-semibold">
 	                             	<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-	                             	type="date" id="subjectReportPeriod" name="subjectReportPeriod" placeholder="과제 기한 설정">
+	                             	type="datetime-local" id="subjectReportPeriod" name="subjectReportPeriod" placeholder="과제 기한 설정">
 			    					<span id="subjectReportPeriodHelper" class="helper"></span>	
 	                            </p>
                           </div>

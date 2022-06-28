@@ -360,7 +360,7 @@
 	                          <!-- Avatar with inset shadow -->
 	                          <div>
 			    				<select class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-select" id="teacherId" name="teacherId">
-			    					<option value="${subject.teacherId}" selected disabled>${subject.teacherId}</option>
+			    					<option value="${subject.teacherId}">${subject.teacherId}</option>
 				    			     	<c:forEach var="c" items="${teacherList}">
 				    				  		<option value="${c}">${c}</option>
 				    			        </c:forEach>
@@ -383,7 +383,7 @@
 		                          <!-- Avatar with inset shadow -->
 		                          <div>
 		                            <p class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
-		                            	<input type="text" id="adminId" name="adminId" value="${loginUser}">
+		                            	<input type="text" id="adminId" name="adminId" value="${loginUser}" readonly>
 		                            	<span id="adminIdHelper" class="helper"></span>	
 		                            </p>
 		                          </div>

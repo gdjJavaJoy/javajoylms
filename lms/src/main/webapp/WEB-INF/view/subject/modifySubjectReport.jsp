@@ -30,7 +30,7 @@
 			    		<span id="subjectReportTitleNameHelper" class="helper"></span>	
 			    	</div>
 			    	<div>
-			    		subjectReportPeriod<input type="date" id="subjectReportPeriod" name="subjectReportPeriod" class="form-control" value="${subjectReport.subjectReportPeriod}">
+			    		subjectReportPeriod<input type="datetime-local" id="subjectReportPeriod" name="subjectReportPeriod" class="form-control" value="${subjectReport.subjectReportPeriod}">
 						<span id="subjectReportPeriod" class="helper"></span>
 			    	</div>
 			    	<div>	

@@ -599,7 +599,7 @@
           
             <!-- With avatar -->
        
-	           	 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">${s.subjectName} 과제 게시판
+	           	 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">과제 게시판
 	         
 	            	<c:if test="${level eq 1 || level eq 2}">
 	            		<a href="${pageContext.request.contextPath}/addSubjectReport?subjectNo=${subjectNo}" class="text-sm" style="float: right;">과제 추가 -></a>
@@ -611,19 +611,26 @@
                 <table class="w-full whitespace-no-wrap">
                   <thead>
                     <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">                 
-                      <th class="px-4 py-3">과제 번호</th>
+                      <th class="px-4 py-3">번호</th>
                       <th class="px-4 py-3">강좌 이름</th>
-                      <th class="px-4 py-3">작성자 ID</th>
+                      <th class="px-4 py-3">작성자</th>
                       <th class="px-4 py-3">제목</th>
                       <th class="px-4 py-3">작성시간</th>
                     </tr>
                   </thead>
                   <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                   <c:forEach var="s" items="${list}">
+                   <c:forEach var="s" items="${list}" varStatus="cnt">
                      <tr onClick="location.href='${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
-						<td class="px-4 py-3 text-sm">${s.subjectReportNo}</td>
+						<td class="px-4 py-3 text-sm">${cnt.index+1}</td>
 						<td class="px-4 py-3 text-sm">${s.subjectName}</td>
-						<td class="px-4 py-3 text-sm">${s.memberId}</td>
+						<c:choose>
+							<c:when test="${s.teacherName != null}">
+							<td class="px-4 py-3 text-sm">${s.teacherName}</td>
+							</c:when>
+							<c:otherwise>
+							<td class="px-4 py-3 text-sm">운영자</td>
+							</c:otherwise>
+						</c:choose>
 						<td class="px-4 py-3 text-sm">${s.subjectReportTitle}</td>
 						<td class="px-4 py-3 text-sm">${s.createDate}</td>
 					</tr>

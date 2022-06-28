@@ -599,12 +599,12 @@
 	                </svg>
 	                <span>Subject Report Management Page</span>
 	              </div>
-	              <span>과제 게시판 &RightArrow;</span>
+	              <span>${subjectReport.subjectName} 과제 게시판 &RightArrow;</span>
 	            </a>
             </c:forEach>
             <!-- With avatar -->
             <c:forEach var="subjectReport" items="${subjectReport}">
-           		<h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">과제 게시판 상세보기<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage?subjectReportNo=${subjectReportNo}" class="text-sm" style="float: right;">학생 과제 제출 게시판 -></a></h4> 
+           		<h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">${subjectReport.subjectName} 과제 상세보기<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage?subjectReportNo=${subjectReportNo}" class="text-sm" style="float: right;">학생 과제 제출 게시판 -></a></h4> 
             </c:forEach>
             <!-- 과제 상세보기 테이블 -->
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
@@ -620,8 +620,15 @@
 	                    	<td class="px-4 py-3 text-sm">${subjectReport.subjectName}</td>
 	                    </tr>
 	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-	                    	<th class="px-4 py-3">작성자 ID</th>
-	                    	<td class="px-4 py-3 text-sm">${subjectReport.memberId}</td>
+	                    	<th class="px-4 py-3">작성자</th>
+	                    	<c:choose>
+	                    		<c:when test="${subjectReport.teacherName != null}">
+	                    			<td class="px-4 py-3 text-sm">${subjectReport.teacherName}</td>
+	                    		</c:when>
+	                    		<c:otherwise>
+	                    			<td class="px-4 py-3 text-sm">운영자</td>
+	                    		</c:otherwise>
+	                    	</c:choose>
 	                    </tr>
 	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
 	                    	<th class="px-4 py-3">과제 제목</th>
@@ -668,7 +675,7 @@
 				    <c:when test="${subjectFileList.size() >= 0}">
 				    	<c:forEach var="subjectFileList" items="${subjectFileList}">
 				    		<div>
-				    			<a href="${pageContext.request.contextPath}/file/subject_file/${subjectFileList.subjectFileOriginalName}" download="${subjectFileList.subjectFileType}">${subjectFileList.subjectFileOriginalName}</a>
+				    			<a href="${pageContext.request.contextPath}/file/subjectFile/${subjectFileList.subjectFileOriginalName}" download="${subjectFileList.subjectFileType}">${subjectFileList.subjectFileOriginalName}</a>
 				    		</div>
 				    	</c:forEach>
 				    </c:when>

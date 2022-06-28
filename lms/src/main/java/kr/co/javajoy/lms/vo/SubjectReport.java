@@ -12,6 +12,7 @@ public class SubjectReport {
 	// subject_report
 	private int subjectReportNo;
 	private String memberId;
+	private String teacherName; // LEFT JOIN teacher
 	private String subjectReportTitle;
 	private String subjectReportContent;
 	private String subjectReportPeriod;

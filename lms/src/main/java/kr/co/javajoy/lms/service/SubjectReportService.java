@@ -30,7 +30,6 @@ public class SubjectReportService {
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.currentPage" + currentPage);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.rowPerPage" + rowPerPage);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.subjectNo" + subjectNo);
-
 		// 페이징
 		int startRow = (currentPage - 1) * rowPerPage;
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -107,7 +106,7 @@ public class SubjectReportService {
 				subjectReportMapper.insertSubjectFile(subjectFile);
 				// try + catch
 				try {
-					mf.transferTo(new File(path + originName));
+					mf.transferTo(new File(path + filename));
 				} catch (Exception e) {
 					e.printStackTrace();
 					throw new RuntimeException();

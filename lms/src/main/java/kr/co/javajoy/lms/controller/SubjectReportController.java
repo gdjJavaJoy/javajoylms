@@ -40,21 +40,24 @@ public class SubjectReportController {
 		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.level : " + level);
 		// 운영자 + 강사 / 학생 별로 보이는 페이지가 다름...
 		
-		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.currentPage" +currentPage);
-		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.rowPerPage" +rowPerPage);
-		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectNo" +subjectNo);
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.currentPage" + currentPage);
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.rowPerPage" + rowPerPage);
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectNo" + subjectNo);
+
 		// 뷰를 호출 시, 모델계층으로 부터 반환된 모델값을 뷰로 보냄
 		Map<String, Object> map = subjectReportService.getSubjectReportListByPage(currentPage, rowPerPage, subjectNo);
 		
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.list" + map.get("list"));
-		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.currentPage" +currentPage);
-		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.lastPage" +map.get("lastPage"));
-		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectNo" +map.get("subjectNo"));
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.currentPage" + currentPage);
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.lastPage" + map.get("lastPage"));
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectNo" + map.get("subjectNo"));
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectNo" + map.get("subjectName"));
 		
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("subjectNo", map.get("subjectNo"));
+		model.addAttribute("subjectName", map.get("subjectName"));
 		
 		return "subject/getSubjectReportListByPage";
 	}
@@ -89,7 +92,7 @@ public class SubjectReportController {
 	@PostMapping("/addSubjectReport")
 	public String addSubjectReport(Model model, HttpServletRequest request, SubjectReportForm subjectReportForm,
 			@RequestParam(name = "subjectNo") int subjectNo) {
-		String path = request.getServletContext().getRealPath("/file/subject_file/");
+		String path = request.getServletContext().getRealPath("/file/subjectFile/");
 		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.path : " + path);
 		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.subjectReportForm : " + subjectReportForm);
 
@@ -124,7 +127,7 @@ public class SubjectReportController {
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.commentCurrentPage : " + commentCurrentPage);
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.rowPerPage : " + rowPerPage);
 		// 파일 업로드 위치 지정
-		String path = request.getServletContext().getRealPath("/file/subject_file");
+		String path = request.getServletContext().getRealPath("/file/subjectFile");
 		// 댓글 데이터 
 		Map<String, Object> map = new HashMap<>();
 		map.put("subjectBoardNo", subjectBoardNo);
@@ -160,7 +163,7 @@ public class SubjectReportController {
 			return "redirect:/login";
 		}
 		// 파일 경로
-		String path = request.getServletContext().getRealPath("/file/subject_file/"); 
+		String path = request.getServletContext().getRealPath("/file/subjectFile/"); 
 		log.debug(CF.PBJ + "SubjectReportController.modifySubjectReport.parh : " + path);
 		// 파일 리스트 데이터
 		Map<String, Object> returnMap = subjectReportService.getSubjectReportOne(subjectBoardNo);
@@ -178,7 +181,7 @@ public class SubjectReportController {
 								,@RequestParam(name="subjectBoardNo") int subjectBoardNo) {
 		log.debug(CF.PBJ + "SubjectReportController.removeSubjectFile(modify).subjectFileNo : " + subjectFileNo);
 		log.debug(CF.PBJ + "SubjectReportController.removeSubjectFile(modify).subjectBoardNo : " + subjectBoardNo);
-		String path = request.getServletContext().getRealPath("/file/subject_file/");
+		String path = request.getServletContext().getRealPath("/file/subjectFile/");
 		log.debug(CF.PBJ + "SubjectReportController.removeSubjectFile.path : " + path);
 		
 		subjectReportService.removeSubjectFile(subjectFileNo, path);
