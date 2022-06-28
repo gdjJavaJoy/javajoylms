@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.service.SubjectReportService;
+import kr.co.javajoy.lms.vo.SubjectReport;
 import kr.co.javajoy.lms.vo.SubjectReportForm;
 import lombok.extern.slf4j.Slf4j;
 
@@ -67,7 +68,46 @@ public class SubjectReportController {
 		return "redirect:/addSubjectReport?subjectNo=" + subjectNo;
 	}
 	
-	// 2) 과제 게시판 글 상세보기 + 파일 이름 리스트 출력 + 댓글 리스트 출력
+	// 2) 과제 게시판 글 입력 + 파일 입력 Form 받기
+	@GetMapping("/addSubjectReport")
+	public String addSubjectReport(HttpSession session, Model model, @RequestParam(name = "subjectNo") int subjectNo) {
+		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.subjectNo : " + subjectNo);
+		// session 처리 : 운영자와 강사만 글을 쓸 수 있다.
+		String memberId = (String) session.getAttribute("loginUser");
+		String level = (String) session.getAttribute("level");
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.sessionId : " + memberId);
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.level : " + level);
+		// 운영자와 강사가 아니면.. memberIndex로 redirect
+		if (level.equals("3")) {
+			return "redirect:/login";
+		}
+		model.addAttribute("subjectNo", subjectNo);
+		return "subject/addSubjectReport";
+	}
+
+	// 2-1) 과제 게시판 글 입력 + 파일 입력 Action
+	@PostMapping("/addSubjectReport")
+	public String addSubjectReport(Model model, HttpServletRequest request, SubjectReportForm subjectReportForm,
+			@RequestParam(name = "subjectNo") int subjectNo) {
+		String path = request.getServletContext().getRealPath("/file/subject_file/");
+		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.path : " + path);
+		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.subjectReportForm : " + subjectReportForm);
+
+		List<MultipartFile> subjectReportFileList = subjectReportForm.getSubjectReportFileList();
+		// 파일이 한개 이상 업로드 되면
+		if (subjectReportFileList != null && subjectReportFileList.get(0).getSize() > 0) {
+			for (MultipartFile mf : subjectReportFileList) {
+				log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.subjectFileOriginalName : "
+						+ mf.getOriginalFilename());
+			}
+		}
+		model.addAttribute("subjectNo", subjectNo);
+		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.subjectNo : " + subjectNo);
+		subjectReportService.addSubjectReport(subjectReportForm, path);
+		return "redirect:/getSubjectReportListByPage?subjectNo=" + subjectNo;
+	}
+
+	// 3) 과제 게시판 글 상세보기 + 파일 이름 리스트 출력 + 댓글 리스트 출력
 	@GetMapping("/getSubjectReportOne")
 	public String getSubjectReportOne(HttpSession session
 									,Model model
@@ -102,49 +142,61 @@ public class SubjectReportController {
 		return "subject/getSubjectReportOne";
 	}
 	
-	// 3) 과제 게시판 글 입력 + 파일 입력 Form 받기
-	@GetMapping("/addSubjectReport")
-	public String addSubjectReport(HttpSession session
-								 ,Model model
-								 ,@RequestParam(name="subjectNo") int subjectNo) {
-		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.subjectNo : " + subjectNo);
-		// session처리 : 운영자와 강사만 글을 쓸 수 있다.
+	// 4) 과제 게시판 수정 Form
+	@GetMapping("/modifySubjectReport")
+	public String modifySubjectReport(HttpSession session
+									,HttpServletRequest request
+									,Model model
+									,@RequestParam(name="subjectBoardNo") int subjectBoardNo) {
+		// session 처리 : 운영자와 강사만 글을 수정 할 수 있다.
 		String memberId = (String)session.getAttribute("loginUser");
 		String level = (String)session.getAttribute("level");
 		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.sessionId : " + memberId);
 		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.level : " + level);
-		// log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.subjectNo : " + subjectNo);
 		// 운영자와 강사가 아니면.. memberIndex로 redirect
 		if(level.equals("3")) {
 			return "redirect:/login";
 		}
-		model.addAttribute("subjectNo", subjectNo);
-		return "subject/addSubjectReport";
+		// 파일 경로
+		String path = request.getServletContext().getRealPath("/file/subject_file/"); 
+		log.debug(CF.PBJ + "SubjectReportController.modifySubjectReport.parh : " + path);
+		// 게시판 번호
+		log.debug(CF.PBJ + "SubjectReportController.modifySubjectReport.subjectBoardNo : " + subjectBoardNo);
+		// 파일 리스트 데이터
+		Map<String, Object> returnMap = subjectReportService.getSubjectReportOne(subjectBoardNo);
+		model.addAttribute("path", path);
+		model.addAttribute("subjectReport", returnMap.get("subjectReport"));
+		model.addAttribute("subjectFile", returnMap.get("subjectFile"));
+		
+		return "subject/modifySubjectReport";
 	}
 	
-	// 3-1) 과제 게시판 글 입력 + 파일 입력 Action
-	@PostMapping("/addSubjectReport")
-	public String addSubjectReport(Model model
-								,HttpServletRequest request, SubjectReportForm subjectReportForm
-								,@RequestParam(name="subjectNo") int subjectNo) {
+	// 4-1) 과제 게시판 수정 Form의 파일 삭제
+	@GetMapping("/removeSubjectFile")
+	public String removeSubjectFile(HttpServletRequest request
+								,@RequestParam(name="subjectFileNo") int subjectFileNo
+								,@RequestParam(name="subjectFileBoardNo") int subjectFileBoardNo) {
+		log.debug(CF.PBJ + "SubjectReportController.removeSubjectFile(modify).subjectFileNo : " + subjectFileNo);
+		log.debug(CF.PBJ + "SubjectReportController.removeSubjectFile(modify).subjectFileBoardNo : " + subjectFileBoardNo);
 		String path = request.getServletContext().getRealPath("/file/subject_file/");
-		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.path : " + path);
-		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.subjectReportForm : " + subjectReportForm);
+		log.debug(CF.PBJ + "SubjectReportController.removeSubjectFile.path : " + path);
 		
-		List<MultipartFile> subjectReportFileList = subjectReportForm.getSubjectReportFileList();
-		// 파일이 한개 이상 업로드 되면
-		if(subjectReportFileList != null && subjectReportFileList.get(0).getSize() > 0) {
-			for(MultipartFile mf : subjectReportFileList) {
-				log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.subjectFileOriginalName : " + mf.getOriginalFilename());
-			}
-		}
-		model.addAttribute("subjectNo", subjectNo);
-		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.subjectNo : " + subjectNo);
-		subjectReportService.addSubjectReport(subjectReportForm, path);
-		return "redirect:/getSubjectReportListByPage?subjectNo=" + subjectNo;
+		subjectReportService.removeSubjectFile(subjectFileNo, path);
+		
+		return "redirect:/modifySubjectReport?subjectBoardNo=" + subjectFileBoardNo;
+	}
+	
+	// 4-2) 과제 게시판 수정 Action
+	@PostMapping("/modifySubjectReport")
+	public String modifySubjectReport(SubjectReport subjectReport) {
+		int row = subjectReportService.modifySubjectReport(subjectReport);
+		log.debug(CF.PBJ + "SubjectReportController.modifySubjectReport.row : " + row);
+		return "redirect:/getSubjectReportOne?SubjectBoardNo=" + subjectReport.getSubjectBoardNo();
 	}
 	
 }
+	
+
 
 
 

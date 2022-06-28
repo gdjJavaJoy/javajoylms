@@ -360,7 +360,7 @@
 	                          <!-- Avatar with inset shadow -->
 	                          <div>
 			    				<select class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-select" id="teacherId" name="teacherId">
-			    					<option value="${requestScope.subject.teacherId}" selected disabled>${requestScope.subject.teacherId}</option>
+			    					<option value="${subject.teacherId}" selected disabled>${subject.teacherId}</option>
 				    			     	<c:forEach var="c" items="${teacherList}">
 				    				  		<option value="${c}">${c}</option>
 				    			        </c:forEach>
@@ -408,7 +408,7 @@
                           <div>
                             <p class="font-semibold">
                              	<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                             	type="text" id="subjectName" name="subjectName" value="${requestScope.subject.subjectName}">
+                             	type="text" id="subjectName" name="subjectName" value="${subject.subjectName}">
 		    					<span id="subjectNameHelper" class="helper"></span>	
                             </p>
                           </div>
@@ -431,7 +431,7 @@
                           <div>
                             <p class="font-semibold">
                              	<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                             	type="number" id="subjectStudentMax" name="subjectStudentMax" value="${requestScope.subject.subjectStudentMax}">
+                             	type="number" id="subjectStudentMax" name="subjectStudentMax" value="${subject.subjectStudentMax}">
 		    					<span id="subjectStudentMaxHelper" class="helper"></span>	
                             </p>
                           </div>
@@ -454,7 +454,7 @@
                           <div>
                             <p class="font-semibold">
                              	<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                             	type="date" id="subjectStartDate" name="subjectStartDate" value="${requestScope.subject.subjectStartDate}">
+                             	type="date" id="subjectStartDate" name="subjectStartDate" value="${subject.subjectStartDate}">
 		    					<span id="subjectStartDateHelper" class="helper"></span>	
                             </p>
                           </div>
@@ -477,7 +477,7 @@
                           <div>
                             <p class="font-semibold">
                              	<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                             	type="date" id="subjectFinishDate" name="subjectFinishDate" value="${requestScope.subject.subjectFinishDate}">
+                             	type="date" id="subjectFinishDate" name="subjectFinishDate" value="${subject.subjectFinishDate}">
 		    					<span id="subjectFinishDateHelper" class="helper"></span>	
                             </p>
                           </div>
@@ -500,7 +500,7 @@
                           <div>
                             <p class="font-semibold">
                              	<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                             	type="time" id="subjectStartTime" name="subjectStartTime" value="${requestScope.subject.subjectStartTime}">
+                             	type="time" id="subjectStartTime" name="subjectStartTime" value="${subject.subjectStartTime}">
 		    					<span id="subjectStartTimeHelper" class="helper"></span>	
                             </p>
                           </div>
@@ -523,7 +523,7 @@
                           <div>
                             <p class="font-semibold">
                              	<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                             	type="time" id="subjectEndTime" name="subjectEndTime" value="${requestScope.subject.subjectEndTime}">
+                             	type="time" id="subjectEndTime" name="subjectEndTime" value="${subject.subjectEndTime}">
 		    					<span id="subjectEndTimeHelper" class="helper"></span>	
                             </p>
                           </div>
@@ -545,7 +545,7 @@
                           <!-- Avatar with inset shadow -->
                           <div>
                             <p class="font-semibold">
-                             	<textarea id="subjectInfo" name="subjectInfo" class="form-control">${requestScope.subject.subjectInfo}</textarea>
+                             	<textarea id="subjectInfo" name="subjectInfo" class="form-control">${subject.subjectInfo}</textarea>
 		    					<span id="subjectInfoHelper" class="helper"></span>	
                             </p>
                           </div>

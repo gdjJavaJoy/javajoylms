@@ -598,14 +598,14 @@
             
           
             <!-- With avatar -->
-            <c:forEach var="s" items="${list}">
+       
 	           	 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">${s.subjectName} 과제 게시판
 	         
 	            	<c:if test="${level eq 1 || level eq 2}">
 	            		<a href="${pageContext.request.contextPath}/addSubjectReport?subjectNo=${subjectNo}" class="text-sm" style="float: right;">과제 추가 -></a>
 	       			</c:if>
 	            </h4>
-            </c:forEach>
+ 
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto">
                 <table class="w-full whitespace-no-wrap">

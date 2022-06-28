@@ -648,9 +648,9 @@
 		            	<!-- Pagination -->
 	                <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
 	                <c:if test="${level eq 1 || level eq 2}">
-	              		<a href="${pageContext.request.contextPath}/modifySubjectReport?subjectBoardNo=${subjectReport.subjectReportNo}">과제 수정</a>
+	              		<a href="${pageContext.request.contextPath}/modifySubjectReport?subjectBoardNo=${subjectReport.subjectBoardNo}">과제 수정</a>
 	              		<span>&nbsp | &nbsp</span>
-	                    <a href="${pageContext.request.contextPath}/deleteSubjectReport?subjectBoardNo=${subjectReport.subjectReportNo}">과제 삭제(미구현)</a> 
+	                    <a href="${pageContext.request.contextPath}/deleteSubjectReport?subjectBoardNo=${subjectReport.subjectBoardNo}">과제 삭제(미구현)</a> 
 	                </c:if>
 	                </span>
               	  </div>

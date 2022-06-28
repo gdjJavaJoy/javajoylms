@@ -60,7 +60,7 @@
 			f.subject_file_name subjectFileName
 		FROM subject_board AS b
 		LEFT JOIN subject_file AS f ON f.subject_file_board_no = b.subject_board_no
-		WHERE b.subject_board_no = #{subjectBoardNo};
+		WHERE f.subject_board_no = #{subjectBoardNo};
 	</select>
 	<!-- 과제 게시판 상세보기 파일 리스트 출력 -->
 	<select id="selectSubjectReportFileList"
@@ -148,6 +148,37 @@
 			,NOW()
 		)
 	</insert>
+	
+	<!-- 4) 과제 게시판 글 수정 + 파일 수정 -->
+	
+	<!-- 과제 게시판 글 수정 -->
+	<update id="updateSubjectReport"
+			parameterType="kr.co.javajoy.lms.vo.SubjectReport">
+		UPDATE subject_report AS r 
+		LEFT JOIN subject_board AS b ON r.subject_report_no = b.subject_board_no
+		SET 
+			r.member_id = #{memberId}
+			,r.subject_report_title = #{subjectReportTitle}
+			,r.subject_report_content = #{subjectReportContent}
+			,r.subject_report_period = #{subjectReportPeriod}
+		WHERE subject_board_no = #{subjectBoardNo}
+	</update>
+	
+	<!-- 과제 게시판 파일 삭제 시, 파일 이름으로 된 리스트 출력 -->
+	<select id="selectSubjectFileNameListBySubjectFileNo"
+			parameterType="int"
+			resultType="String">
+		SELECT subject_file_original_name subjectFileOriginalName
+		FROM subject_file
+		WHERE subject_file_no = #{subjectFileNo}
+	</select>
+	
+	<!-- 과제 게시판 파일 삭제 -->
+	<delete id="deleteSubjectFile"
+			parameterType="int">
+		DELETE FROM subject_file
+		WHERE subject_file_no = #{subjectFileNo}
+	</delete>
 	
 </mapper>
 

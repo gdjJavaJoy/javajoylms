@@ -42,4 +42,13 @@ public interface SubjectReportMapper {
 	int insertSubjectReport(SubjectReport subjectReport);
 	// 과제 게시판 글에 파일 입력
 	int insertSubjectFile(SubjectFile subjectFile);
+	
+	// 4) 과제 게시판 글 수정 + 파일 변경(추가, 삭제)
+	
+	// subject_report 글 수정
+	int updateSubjectReport(SubjectReport subjectReport);
+	// 과제 게시판 파일 삭제 시, 파일 이름으로 된 리스트 출력 
+	List<String> selectSubjectFileNameListBySubjectFileNo(int subjectfileNo);
+	// 과제 게시판의 subject_file 부분 삭제?
+	int deleteSubjectFile(int subjectFileNo);
 }
