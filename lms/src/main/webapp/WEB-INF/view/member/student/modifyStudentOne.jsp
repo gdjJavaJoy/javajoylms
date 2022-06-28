@@ -136,7 +136,7 @@ img {
 								</li>
 								<li
 									class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-									<a class="w-full" href="pages/404.html">비밀번호변경</a>
+									<a class="w-full" href="${pageContext.request.contextPath}/modifyPw?myPageChangePw=1">비밀번호변경</a>
 								</li>
 								<li
 									class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">

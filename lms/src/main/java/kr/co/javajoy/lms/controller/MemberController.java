@@ -90,7 +90,8 @@ public class MemberController {
 	}
 	@GetMapping("/modifyPw")
 	public String modifyPw(HttpSession session
-						  ,Model model) {
+						  ,Model model
+						  ,@RequestParam(value="myPageChangePw", defaultValue="0") int myPageChangePw) {
 		String memberId = (String) session.getAttribute("loginUser"); // 세션에 있는 loginUser 값 변수에 저장 
 		String active = memberService.getMemberActive(memberId); // memberId를 사용해서 active값 받아오기
 		int period = memberService.getMemberPwPeriod(memberId); //  memberId사용해서 현재시간 - 마지막 변경날짜구하기 
@@ -101,7 +102,7 @@ public class MemberController {
 		log.debug(CF.PSG+"ParkseongjunController.modifyPw.Get().period : " + period + CF.RESET);
 		log.debug(CF.PSG+"ParkseongjunController.modifyPw.Get().level : " + level +CF.RESET);
 		
-		if (active.equals("4") || period > 3) { //active가 4이거나 변경날짜가 3개월 이상일때
+		if (active.equals("4") || period > 3 || myPageChangePw == 1) { //active가 4이거나 변경날짜가 3개월 이상일때
 			log.debug(CF.PSG+"ParkseongjunController.mdoifyPw  비밀번호 변경창 이동" +CF.RESET);
 			model.addAttribute("active",active);
 			return "login/modifyPw"; // 비밀번호 변경창으로 이동

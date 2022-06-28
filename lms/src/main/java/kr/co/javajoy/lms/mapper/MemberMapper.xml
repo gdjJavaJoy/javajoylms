@@ -184,7 +184,9 @@
 	<select id="teacherIndex"
 			parameterType="String"
 			resultType="java.util.Map">
-			SELECT s.subject_name subjectName
+			SELECT 	 
+					 s.subject_no subjectNo
+					,s.subject_name subjectName
 					,s.teacher_id teacherId
 					,c.curriculum_title curriculumTitle
 					,c.member_id memberId

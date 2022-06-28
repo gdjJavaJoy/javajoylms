@@ -71,7 +71,7 @@
 					</a></li>
 					<li class="relative px-6 py-3"><a
 						class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-						href="#"> <svg class="w-5 h-5" aria-hidden="true" fill="none"
+						href="${pageContext.request.contextPath}/getInquiryByPage"> <svg class="w-5 h-5" aria-hidden="true" fill="none"
 								stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
 								viewBox="0 0 24 24" stroke="currentColor">
                   <path
@@ -366,19 +366,30 @@
 						<div class="w-full overflow-x-auto">
 								<table class="w-full whitespace-no-wrap">
 									<thead>
+									<c:if test="${level eq 2}">
+										<tr
+											class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+											<th class="px-4 py-3">subjectName</th>
+											<th class="px-4 py-3">teacherId</th>
+											<th class="px-4 py-3">curriculumTitle</th>
+											<th class="px-4 py-3">startDay</th>
+											<th class="px-4 py-3">EndDay</th>
+										</tr>
+									</c:if>
+									<c:if test="${level eq 3}">
 										<tr
 											class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
 											<th class="px-4 py-3">subjectName</th>
 											<th class="px-4 py-3">teacherId(담임강사)</th>
-											<th class="px-4 py-3">curriculumTitle</th>
-											<th class="px-4 py-3">memberId</th>
-											<th class="px-4 py-3">startDay</th>
-											<th class="px-4 py-3">endDay</th>
+											<th class="px-4 py-3">subjectStartDate</th>
+											<th class="px-4 py-3">subjectFinishDate</th>
 										</tr>
+									</c:if>
 									</thead>
 									<c:forEach var="m" items="${memberList}">
 										<tbody
 											class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+											<c:if test="${level eq 2}">
 											<tr onClick="location.href='${pageContext.request.contextPath}/getSubjectOne?subjectNo=${m.subjectNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
 												<td class="px-4 py-3 text-sm">${m.subjectName}</td>
 												<td class="px-4 py-3">
@@ -387,11 +398,24 @@
 														<p class="font-semibold">${m.teacherId}</p>
 													</div>
 												</td>
-												<td class="px-4 py-3 text-sm">${c.boardNo}</td>
-												<td class="px-4 py-3 text-sm">${c.memberId}</td>
-												<td class="px-4 py-3 text-sm">${c.boardTitle}</td>
-												<td class="px-4 py-3 text-sm">${c.createDate}</td>
+												<td class="px-4 py-3 text-sm">${m.curriculumTitle}</td>
+												<td class="px-4 py-3 text-sm">${m.startDay}</td>
+												<td class="px-4 py-3 text-sm">${m.endDay}</td>
 											</tr>
+											</c:if>
+											<c:if test="${level eq 3}">
+												<tr onClick="location.href='${pageContext.request.contextPath}/getSubjectOne?subjectNo=${m.subjectNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
+													<td class="px-4 py-3 text-sm">${m.subjectName}</td>
+													<td class="px-4 py-3">
+														<div class="flex items-center text-sm">
+															<!-- Avatar with inset shadow -->
+															<p class="font-semibold">${m.teacherId}</p>
+														</div>
+													</td>
+													<td class="px-4 py-3 text-sm">${m.subjectStartDate}</td>
+													<td class="px-4 py-3 text-sm">${m.subjectFinishDate}</td>
+												</tr>
+											</c:if>
 										</tbody>
 									</c:forEach>
 								</table>
