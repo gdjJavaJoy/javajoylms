@@ -234,6 +234,7 @@ img {
 					<div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
 						<div class="w-full overflow-x-auto">
 							<form action="${pageContext.request.contextPath}/getSurveyResult" method="post" id="surveyForm">
+									<input type="hidden" class="font-semibold" value="${subjectNo}" name="subjectNo">
 									<table class="w-full whitespace-no-wrap">
 										<thead>
 											<tr class="text-gray-700 dark:text-gray-400">
@@ -302,7 +303,9 @@ img {
 													<div class="flex items-center text-sm">
 														<!-- Avatar with inset shadow -->
 														<div>
-															<input type="hidden" readonly="readonly" class="font-semibold" value="${s.surveyNo}" name="surveyNo">${cnt.index+1}
+															<input type="hidden" readonly="readonly" class="font-semibold">${cnt.index+1}
+															<input type="hidden" class="font-semibold" value="${s.surveyNo}" name="surveyResultList[${cnt.index}].surveyNo">
+															<input type="hidden" class="font-semibold" value="${loginUser}" name="surveyResultList[${cnt.index}].memberId">
 														</div>
 													</div>
 												</td>
@@ -319,8 +322,8 @@ img {
 														<!-- Avatar with inset shadow -->
 														 <input
 								                            type="radio"
-								                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-								                            name="result${s.surveyNo}"
+								                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray resultRadio${cnt.index}"
+								                            name="surveyResultList[${cnt.index}].result"
 								                            value="1">
 													</div>
 												</td>
@@ -329,8 +332,8 @@ img {
 														<!-- Avatar with inset shadow -->
 														 <input
 								                            type="radio"
-								                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-								                            name="result${s.surveyNo}"
+								                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray resultRadio${cnt.index}"
+								                            name="surveyResultList[${cnt.index}].result"
 								                            value="2">
 													</div>
 												</td>
@@ -339,8 +342,8 @@ img {
 														<!-- Avatar with inset shadow -->
 														 <input
 								                            type="radio"
-								                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-								                            name="result${s.surveyNo}"
+								                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray resultRadio${cnt.index}"
+								                            name="surveyResultList[${cnt.index}].result"
 								                            value="3">
 													</div>
 												</td>
@@ -349,8 +352,8 @@ img {
 														<!-- Avatar with inset shadow -->
 														 <input
 								                            type="radio"
-								                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-								                            name="result${s.surveyNo}"
+								                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray resultRadio${cnt.index}"
+								                            name="surveyResultList[${cnt.index}].result"
 								                            value="4">
 													</div>
 												</td>
@@ -359,8 +362,8 @@ img {
 														<!-- Avatar with inset shadow -->
 														 <input
 								                            type="radio"
-								                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-								                            name="result${s.surveyNo}"
+								                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray resultRadio${cnt.index}"
+								                            name="surveyResultList[${cnt.index}].result"
 								                            value="5">
 													</div>
 												</td>
@@ -370,7 +373,7 @@ img {
 									</table>
 								<button type="button"
 									class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-									id="submitBtn">설문조사 완료</button>
+									id="submitBtn">설문조사 제출</button>
 							</form>	
 						</div>
 					</div>
@@ -381,26 +384,16 @@ img {
 </body>
 <script>
 	$('#submitBtn').click(function() {
-		let resultList = new Array();
-		<c:forEach var="s" items="${surveyList}">
-			var result = $('input[name="result${s.surveyNo}"]:checked').val()
-			console.log(result);
-			resultList.push(result);
+		<c:forEach var="s" items="${surveyList}" varStatus="cnt">
+			if($('input[class=resultRadio${cnt.index}]:radio:checked').length < 1) {
+				console.log( $('input[class=resultRadio${cnt.index}]:radio:checked').val() )
+				Swal.fire('만족도 검사를 전부 해주세요');
+				return;
+			}
 		</c:forEach>
-		console.log(resultList);
-	$.ajax({
-		  type : 'post'
-		  ,url :'/lms/getSurveyResult'
-		  ,dataType : 'json'
-		  ,data : {
-		  	"resultList" : resultList
-		  },
-		  success: function(data){
-		  	console.log("result"+resultList);
-		  }
-	});
-		$('#surveyForm').submit();
+		else {
+			$('#surveyForm').submit();
+		}
 	});
 </script>
-
 </html>

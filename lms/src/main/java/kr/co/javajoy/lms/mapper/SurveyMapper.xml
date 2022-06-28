@@ -11,18 +11,23 @@
 			,create_date createDate
 			,update_date updateDate
 		FROM survey
-		WHERE subject_no = ${subjectNo}	
+		WHERE subject_no = #{subjectNo}	
 	</select>
 	
 	<insert id="insertSurveyResult"
-			parameterType="java.util.Map">
-		INSERT INTO survey_result
-			(survey_no
+			parameterType="kr.co.javajoy.lms.vo.SurveyResult">
+		INSERT INTO survey_result(
+			survey_no
 			,member_id
 			,result
 			,create_date
 			,update_date
 			)
-		VALUES(${surveyNo},${memberId},${resultList},NOW(),NOW())
+		VALUES( #{surveyNo}
+				,#{memberId}
+				,#{result}
+				,NOW()
+				,NOW()
+			)
 	</insert>
 </mapper>
