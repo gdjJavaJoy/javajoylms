@@ -53,5 +53,6 @@ public interface MemberMapper {
 	int insertMemberPhoto(MemberPhoto memberPhoto);
 	// 사진이름가져오는 메서드
 	List<String> selectPhotoNameByMemberId(String memberId);
-	
+	// 검색 결과 카운트
+	int selectTotalCount();
 }

@@ -600,14 +600,15 @@
             <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Student List</h2>
             <!-- CTA -->
             <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
-              href="${pageContext.request.contextPath}/addSubject">
+              href="${pageContext.request.contextPath}/addMember">
+              
               <div class="flex items-center">
                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                 </svg>
                 <span>Student Management Page</span>
               </div>
-              <span>학생 관리 &RightArrow;</span>
+              <span>학생 등록 &RightArrow;</span>
             </a>
 
             <!-- With avatar -->
@@ -616,7 +617,7 @@
               <div class="w-full overflow-x-auto">
                 <table class="w-full whitespace-no-wrap">
                   <thead>
-                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                    <tr class="text-xs font-semibold tracking-wide text-align : center text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                       <th class="px-4 py-3">아이디</th>
                   	  <th class="px-4 py-3">학생이름</th>
                       <th class="px-4 py-3">성별</th>
@@ -625,34 +626,38 @@
                       <th class="px-4 py-3">상세주소</th>
                       <th class="px-4 py-3">학생이메일</th>
                       <th class="px-4 py-3">학력</th>
-                      <th class="px-4 py-3">학생등록일</th>
-                      <th class="px-4 py-3">수정일</th>
+                      <th class="px-4 py-3">계정활성화 상태</th>
                     </tr>
                   </thead>
                   <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                  
                   <c:forEach var="s" items="${list}">
-                    <tr onClick="location.href=${pageContext.request.contextPath}/#" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">											
-                   		<td class="px-4 py-3 text-sm">${s.memberId}</td>
+					<script type="text/javascript">
+						function reply_click(clicked_id)
+							{
+								 alert(clicked_id);
+							}
+					</script>
+                    <tr class="text-gray-700 dark:text-gray-400" align="center">
+						<td class="px-4 py-3 text-sm">${s.memberId}</td>
 						<td class="px-4 py-3 text-sm">${s.studentName}</td>
 						<td class="px-4 py-3 text-sm">${s.studentGender}</td>
 						<td class="px-4 py-3 text-sm">${s.studentPhone}</td>
 						<td class="px-4 py-3 text-sm">${s.studentAddress}</td>
-						<td class="px-4 py-3 text-sm">${s.studentDetailaddress}</td>
+						<td class="px-4 py-3 text-sm">${s.studentDetailAddress}</td>
 						<td class="px-4 py-3 text-sm">${s.studentEmail}</td>
 						<td class="px-4 py-3 text-sm">${s.studentEducation}</td>
-						<td class="px-4 py-3 text-sm">${s.studentRegisterDate}</td>
-						<td class="px-4 py-3 text-sm">${s.updateDate}</td>
+						<td class="px-4 py-3 text-sm">${s.memberActive}</td>
+						<td><button type="button" class="grid px-4 py-3 text-sm" onclick="location.href='${pageContext.request.contextPath}/allStudentList';"class="grid px-4 py-3 text-sm">삭제(미구현)</button></td>
 					</tr>
-                  </c:forEach>
+					</c:forEach>
                   </tbody>
                 </table>
               </div>
-              <div
-                class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
-              >
+              <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
                 <span class="flex items-center col-span-3">
                   Search Student : <input class="form-control" type="text"  placeholder=" 학생 검색">
-                  <button>검색</button>
+                  <button class="grid px-4 py-3 text-sm">검색</button>
                 </span>
                 <span class="col-span-2"></span>
                 <!-- Pagination -->
@@ -660,7 +665,7 @@
                 	<c:if test="${currentPage > 1}">
                    		<a class="btn btn-primary" href="${pageContext.request.contextPath}/allStudentList?currentPage=${currentPage-1}">이전</a>
                    	</c:if>
-                   		<span>&nbsp  &nbsp</span>
+                   		<span>&nbsp;  &nbsp;</span>
                    	<c:if test="${currentPage < lastPage}">	
                   		 <a class="btn btn-primary" href="${pageContext.request.contextPath}/allStudentList?currentPage=${currentPage+1}">다음</a> 
                   	</c:if>	 

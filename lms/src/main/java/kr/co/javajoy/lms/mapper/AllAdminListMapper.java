@@ -9,8 +9,12 @@ import kr.co.javajoy.lms.vo.Admin;
 
 @Mapper
 public interface AllAdminListMapper {
-	// 학생 리스트 출력
+	// 관리자 출력
 	List<Admin> AllAdminList(Map<String, Object> map);
-	// 학생 총 수
+	// 관리자 수
 	int selectTotalCount();
+	// 관리자 입력
+	int insertAllAdminList(Admin Admin);
+	// 관리자 업데이트
+	int updateAllAdminList(Admin Admin);
 }

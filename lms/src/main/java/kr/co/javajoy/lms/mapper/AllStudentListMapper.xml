@@ -40,24 +40,25 @@
 			,#{updateDate}
 		)
 	</insert>
-<!-- 전체 학생리스트 출력 -->
+<!-- 전체 학생정보 출력 -->
 	<select id="AllStudentList"
 			parameterType="java.util.Map"
 			resultType="map">
-			SELECT
-				 member_id memberId
-				,student_name studentName
-				,student_gender studentGender
-				,student_phone studentPhone
-				,student_address studentAddress
-				,student_detailaddress studentDetailaddress
-				,student_email studentEmail
-				,student_education studentEducation
-				,student_register_date studentRegisterDate
-				,update_date updateDate
-	FROM student
+		SELECT
+			 a.member_id memberId
+			,b.student_name studentName
+			,b.student_gender studentGender
+			,b.student_phone studentPhone
+			,b.student_address studentAddress
+			,b.student_detailaddress studentDetailAddress
+			,b.student_email studentEmail
+			,b.student_education studentEducation
+			,a.member_active memberActive
+		FROM
+			member_id AS a INNER JOIN student AS b
+						ON a.member_id = b.member_id
 	</select>
-<!-- 전체 글 수 -->
+<!-- 전체 학생 수 -->
 <select id="selectTotalCount" 
 		resultType="int" >
 	SELECT COUNT(*)
