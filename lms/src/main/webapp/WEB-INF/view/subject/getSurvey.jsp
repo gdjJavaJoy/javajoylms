@@ -322,7 +322,7 @@ img {
 														<!-- Avatar with inset shadow -->
 														 <input
 								                            type="radio"
-								                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray resultRadio${cnt.index}"
+								                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
 								                            name="surveyResultList[${cnt.index}].result"
 								                            value="1">
 													</div>
@@ -332,7 +332,7 @@ img {
 														<!-- Avatar with inset shadow -->
 														 <input
 								                            type="radio"
-								                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray resultRadio${cnt.index}"
+								                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
 								                            name="surveyResultList[${cnt.index}].result"
 								                            value="2">
 													</div>
@@ -342,7 +342,7 @@ img {
 														<!-- Avatar with inset shadow -->
 														 <input
 								                            type="radio"
-								                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray resultRadio${cnt.index}"
+								                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
 								                            name="surveyResultList[${cnt.index}].result"
 								                            value="3">
 													</div>
@@ -352,7 +352,7 @@ img {
 														<!-- Avatar with inset shadow -->
 														 <input
 								                            type="radio"
-								                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray resultRadio${cnt.index}"
+								                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
 								                            name="surveyResultList[${cnt.index}].result"
 								                            value="4">
 													</div>
@@ -362,7 +362,7 @@ img {
 														<!-- Avatar with inset shadow -->
 														 <input
 								                            type="radio"
-								                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray resultRadio${cnt.index}"
+								                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
 								                            name="surveyResultList[${cnt.index}].result"
 								                            value="5">
 													</div>
@@ -371,7 +371,7 @@ img {
 											</tbody>
 									</c:forEach>
 									</table>
-								<button type="button"
+								<button type="submit"
 									class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
 									id="submitBtn">설문조사 제출</button>
 							</form>	
@@ -383,11 +383,12 @@ img {
 	</div>
 </body>
 <script>
+	<!-- val()를 못 받아옴 
 	$('#submitBtn').click(function() {
 		<c:forEach var="s" items="${surveyList}" varStatus="cnt">
-			if($('input[class=resultRadio${cnt.index}]:radio:checked').length < 1) {
-				console.log( $('input[class=resultRadio${cnt.index}]:radio:checked').val() )
-				Swal.fire('만족도 검사를 전부 해주세요');
+			console.log( $('input[name=surveyResultList[${cnt.index}].result]:radio:checked').val() );
+			if ($('input[ name=surveyResultList[${cnt.index}].result ]:radio:checked').val() == null) {
+				Swal.fire("만족도 검사를 선택하세요");
 				return;
 			}
 		</c:forEach>
@@ -395,5 +396,6 @@ img {
 			$('#surveyForm').submit();
 		}
 	});
+	-->
 </script>
 </html>
