@@ -25,11 +25,11 @@
 		</thead>
 		<tbody>
 			<c:forEach var="c" items="${list}">
-				<tr>
+				<tr  onClick="location.href='${pageContext.request.contextPath}/getNoticeOne?boardNo=${c.boardNo}'" >
 					<td>${c.boardNo}</td>
-					<td><a href="${pageContext.request.contextPath}/getNoticeOne?boardNo=${c.boardNo}">${c.memberId}</a></td>
-					<td><a href="${pageContext.request.contextPath}/getNoticeOne?boardNo=${c.boardNo}">${c.boardTitle}</a></td>
-					<td><a href="${pageContext.request.contextPath}/getNoticeOne?boardNo=${c.boardNo}">${c.createDate}</a></td>
+					<td>운영자</td>
+					<td>${c.boardTitle}</td>
+					<td>${c.createDate}</td>
 				</tr>
 			</c:forEach>
 		</tbody>

@@ -111,7 +111,6 @@
 							</script>
 					</td>
 				</tr>
-				
 			</table>
 			<button type="button" id="modifyNotice">게시글 수정</button>
 		</C:forEach>

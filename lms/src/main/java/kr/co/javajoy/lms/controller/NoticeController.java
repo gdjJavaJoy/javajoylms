@@ -41,7 +41,7 @@ public class NoticeController {
 		model.addAttribute("lastPage",map.get("lastPage"));
 		model.addAttribute("currentPage",currentPage);
 		log.debug(CF.WSH + "NoticeController.getNoticeByPage.notice : "+ currentPage);
-		return "board/getNoticeByPage";
+		return "board/notice/getNoticeByPage";
 	}
 	@GetMapping("/getNoticeOne")
 	public String getNoticeOne(Model model
@@ -57,13 +57,13 @@ public class NoticeController {
 		model.addAttribute("board", map.get("board"));
 		model.addAttribute("boardfile", map.get("boardfile"));
 		log.debug(CF.WSH + "NoticeController.getNoticeOne.map : "+ map);
-		return "board/getNoticeOne";
+		return "board/notice/getNoticeOne";
 	}
 	
 	// 리스트 추가
 	@GetMapping("/addNotice")
 	public String addNotice() {
-		return "board/addNotice";
+		return "board/notice/addNotice";
 	}
 	@PostMapping("/addNotice")
 	public String addNotice(HttpServletRequest request, BoardForm boardForm) {
@@ -115,7 +115,7 @@ public class NoticeController {
 		model.addAttribute("path", path);
 		model.addAttribute("board",map.get("board"));
 		model.addAttribute("boardfile",map.get("boardfile"));
-		return "board/modifyNotice";
+		return "board/notice/modifyNotice";
 	}
 	@PostMapping("/modifyNotice")
 	public String modifyNotice(Board board) {

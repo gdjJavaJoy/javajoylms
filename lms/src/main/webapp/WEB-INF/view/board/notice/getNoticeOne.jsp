@@ -23,7 +23,7 @@
 				</tr>
 				<tr>
 					<td>아이디</td>
-					<td>${loginUser}</td>
+					<td>운영자</td>
 				</tr>
 				<tr>
 					<td>제목</td>
