@@ -71,6 +71,7 @@
 			parameterType="int"
 			resultType="kr.co.javajoy.lms.vo.SubjectFile">
 		SELECT f.subject_file_original_name subjectFileOriginalName
+			  ,f.subject_file_name subjectFileName
 			  ,f.subject_file_type subjectFileType
 			  ,f.subject_file_size subjectFileSize
 			  ,b.subject_board_no subjectBoardNo
@@ -176,7 +177,7 @@
 	<select id="selectSubjectFileNameListBySubjectFileNo"
 			parameterType="int"
 			resultType="String">
-		SELECT subject_file_original_name subjectFileOriginalName
+		SELECT subject_file_name subjectFileName
 		FROM subject_file
 		WHERE subject_file_no = #{subjectFileNo}
 	</select>

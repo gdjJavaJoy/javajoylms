@@ -50,7 +50,7 @@
 					<td>
 						<C:forEach var="boardfile" items="${boardfile}">
 							<div>
-								<a href="${pageContext.request.contextPath}/file/boardFile/${boardfile.boardFileName}${nr.boardFileType}" download="${boardfile.boardFileName}${nr.boardFileType}">${boardfile.boardFileOriginalName}${nr.boardFileType}</a>
+								<a href="${pageContext.request.contextPath}/file/boardFile/${boardfile.boardFileName}${nr.boardFileType}" download="${boardfile.boardFileName}${nr.boardFileType}">${boardfile.boardFileOriginalName}</a>
 							</div>
 						</C:forEach>
 					</td>	
