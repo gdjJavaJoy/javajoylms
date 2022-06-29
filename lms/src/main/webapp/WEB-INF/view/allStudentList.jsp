@@ -649,16 +649,20 @@
 						<td class="px-4 py-3 text-sm">${s.studentEducation}</td>
 						<td class="px-4 py-3 text-sm">${s.memberActive}</td>
 						<td><button type="button" class="grid px-4 py-3 text-sm" onclick="location.href='${pageContext.request.contextPath}/allStudentList';"class="grid px-4 py-3 text-sm">삭제(미구현)</button></td>
+						<td><button type="button" class="grid px-4 py-3 text-sm" onclick="location.href='${pageContext.request.contextPath}/allStudentList';"class="grid px-4 py-3 text-sm">수정(미구현)</button></td>
 					</tr>
 					</c:forEach>
                   </tbody>
                 </table>
               </div>
-              <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
-                <span class="flex items-center col-span-3">
-                  Search Student : <input class="form-control" type="text"  placeholder=" 학생 검색">
-                  <button class="grid px-4 py-3 text-sm">검색</button>
-                </span>
+              <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-12 dark:text-gray-400 dark:bg-gray-800">
+                <form method="get" action="${pageContext.request.contextPath}/allStudentList" name="search" >
+	                <span class="flex items-center col-span-3">
+	                  Search Student :
+	                  <input name="s_studentName"class="form-control" type="text"  placeholder=" 학생 이름 검색">
+	                  <button type="submit" class="grid px-4 py-3 text-sm">검색</button>
+	                </span>
+                </form>
                 <span class="col-span-2"></span>
                 <!-- Pagination -->
                 <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">

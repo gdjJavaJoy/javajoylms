@@ -20,13 +20,14 @@ public class AllStudentListService {
 	@Autowired AllStudentListMapper allStudentListMapper;
 	
 	// 학생 리스트 출력
-	public Map<String, Object> AllStudentList(int currentPage, int rowPerPage) {
+	public Map<String, Object> AllStudentList(int currentPage, int rowPerPage, String s_studentName) {
 		// 리스트 출력 페이징
 		int startRow = (currentPage - 1) * rowPerPage;
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("rowPerPage", rowPerPage);
 		map.put("startRow", startRow);
+		map.put("s_studentName", s_studentName);
 		// Mapper에서 반환 된 값 가공
 		List<Student> list = allStudentListMapper.AllStudentList(map);
 		int totalCount = allStudentListMapper.selectTotalCount();

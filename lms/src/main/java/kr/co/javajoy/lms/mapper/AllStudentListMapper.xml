@@ -1,67 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.javajoy.lms.mapper.AllStudentListMapper">
-<!-- 학생리스트 추가 -->
-	<insert id="insertAllStudentList"
-			parameterType="kr.co.javajoy.lms.vo.Student">
-		INSERT INTO student (
-			 member_id memberId
-			,student_name studentName
-			,student_gender studentGender
-			,student_phone studentPhone
-			,student_address studentAddress
-			,student_detailaddress studentDetailaddress
-			,student_email studentEmail
-			,student_education studentEducation
-			,student_register_date studentRegisterDate
-			,update_date updateDate
-		) VALUES (
-			 #{memberId}
-			,#{studentName}
-			,#{studentGender}
-			,#{studentPhone}
-			,#{studentAddress}
-			,#{studentDetailaddress}
-			,#{studentEmail}
-			,#{studentEducation}
-			,#{studentRegisterDate}
-			,#{updateDate}
-		)
-	</insert>
-	<insert id="insertSubjectStudent"
-			parameterType="kr.co.javajoy.lms.vo.SubjectStudent">
-		INSERT INTO subject_student (
-			 member_id memberId
-			,subject_no subjectNo
-			,update_date updateDate
-		) VALUES (
-			 #{memberId}
-			,#{subjectNo}
-			,#{updateDate}
-		)
-	</insert>
-<!-- 전체 학생정보 출력 -->
+	<!-- 전체 학생정보 출력 -->
 	<select id="AllStudentList"
 			parameterType="java.util.Map"
 			resultType="map">
 		SELECT
-			 a.member_id memberId
-			,b.student_name studentName
-			,b.student_gender studentGender
-			,b.student_phone studentPhone
-			,b.student_address studentAddress
-			,b.student_detailaddress studentDetailAddress
-			,b.student_email studentEmail
-			,b.student_education studentEducation
-			,a.member_active memberActive
-		FROM
-			member_id AS a INNER JOIN student AS b
-						ON a.member_id = b.member_id
+		a.member_id memberId
+		, b.student_name studentName
+		, b.student_gender studentGender
+		, b.student_phone studentPhone
+		, b.student_address studentAddress
+		, b.student_detailaddress studentDetailAddress
+		, b.student_email studentEmail
+		, b.student_education studentEducation
+		, a.member_active memberActive
+		FROM member_id a
+		INNER JOIN student b ON a.member_id = b.member_id
+		<if test='s_studentName != null and !"".equals( s_studentName ) '>
+			WHERE CONCAT( '%', b.student_name, '%' ) LIKE CONCAT( '%',
+			#{s_studentName} , '%' )
+		</if>
 	</select>
-<!-- 전체 학생 수 -->
-<select id="selectTotalCount" 
-		resultType="int" >
-	SELECT COUNT(*)
-	FROM student
-</select>
+	<!-- 전체 학생 수 -->
+	<select id="selectTotalCount" 
+			resultType="int">
+		SELECT COUNT(*)
+		FROM student
+	</select>
 </mapper>
