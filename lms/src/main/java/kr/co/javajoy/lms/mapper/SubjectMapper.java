@@ -28,4 +28,6 @@ public interface SubjectMapper {
 	// 강좌 영상 리스트
 	List<SubjectVideo> selectSubjectVideo(int subjectNo);
 	
+	// 강좌 영상 입력
+	int insertSubjectVideo(SubjectVideo subjectVideo);
 }

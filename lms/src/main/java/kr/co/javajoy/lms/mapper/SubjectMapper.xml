@@ -119,4 +119,40 @@
 		WHERE subject_no = #{subjectNo}
 	</select>
 	
+	<insert id="insertSubjectVideo"
+			parameterType="kr.co.javajoy.lms.vo.SubjectVideo">
+		INSERT INTO subject_video(
+			subject_no
+			,subject_video_title
+			,subject_video_content
+			,subject_video_url
+			,create_date
+			,update_date
+			) VALUES(
+			#{subjectNo}
+			,#{subjectVideoTitle}
+			,#{subjectVideoContent}
+			,#{subjectVideoUrl}
+			,NOW()
+			,NOW()
+			)
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>

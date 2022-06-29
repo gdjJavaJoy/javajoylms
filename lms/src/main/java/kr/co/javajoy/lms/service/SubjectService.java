@@ -73,6 +73,7 @@ public class SubjectService {
 		return subjectMapper.updateSubject(subject);
 	}
 	
+	// 강의 영상 List
 	public List<SubjectVideo> getSubjectVideoList(int subjectNo){
 		log.debug(CF.YHJ + "SubjectService.getSubjectVideoList.subjectNo : " +  subjectNo + CF.RESET); // 디버깅
 		
@@ -80,6 +81,12 @@ public class SubjectService {
 		log.debug(CF.YHJ + "SubjectService.getSubjectVideoList.list : " +  list + CF.RESET); // 디버깅
 		
 		return list;
+	}
+	
+	public int addSubjectVideo(SubjectVideo subjectVideo) {
+		log.debug(CF.YHJ + "SubjectService.addSubjectVideo.subjectVideo : " + subjectVideo + CF.RESET); // 디버깅
+		
+		return subjectMapper.insertSubjectVideo(subjectVideo);
 	}
 }
 

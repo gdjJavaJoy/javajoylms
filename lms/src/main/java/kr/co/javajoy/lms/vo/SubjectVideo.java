@@ -1,6 +1,5 @@
 package kr.co.javajoy.lms.vo;
 
-import java.util.List;
 
 import lombok.Data;
 

@@ -143,37 +143,41 @@ public class SubjectController {
 		
 		model.addAttribute("subjectVideoList",subjectVideoList);
 		
+		
 		return "/subject/getSubjectVideo";
 	}
+	
+	@GetMapping("addSubjectVideo")
+	public String addSubejctVideo(@RequestParam(value="subjectNo") int subjectNo
+								,Model model) {
+		log.debug(CF.YHJ + "SubjectController.addSubjectVideo.subjectNo : " +  subjectNo + CF.RESET); // 디버깅
+		
+		model.addAttribute("subjectNo",subjectNo);
+		
+		return "/subject/addSubjectVideo";
+	}
+	
+	@PostMapping("addSubjectVideo")
+	public String addSubjectVideo(SubjectVideo subjectVideo) {
+		log.debug(CF.YHJ + "SubjectController.addSubjectVideo.subjectVideo : " + subjectVideo + CF.RESET); // 디버깅
+		
+		int row = subjectService.addSubjectVideo(subjectVideo);
+		
+		return "redirect:/getSubjectVideo?subjectNo="+subjectVideo.getSubjectNo();
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
