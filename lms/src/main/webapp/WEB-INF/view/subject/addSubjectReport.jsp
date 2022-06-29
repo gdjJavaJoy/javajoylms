@@ -39,7 +39,7 @@
 				});
 				
 				if(flag) {
-					$('#fileSection').append("<div><input class='subjectReportFileList' type='file' id='subjectReportFileList' name='subjectReportFileList'></div>");
+					$('#fileSection').append("<div><input type='file' class='subjectReportFileList' onchange='checkFile(this)' id='subjectReportFileList' name='subjectReportFileList'></div>");
 				} else {
 					alert('파일 첨부를 다시 확인하십시오');
 				}
@@ -71,6 +71,23 @@
 				}
 			});
 		});
+		
+		// 파일 확장자 체크 
+		// 강좌 - 과제 게시판은 pdf, hwp, doxc, ppt, txt만 가능
+		function checkFile(f){
+			// files 로 해당 파일 정보 얻기.
+			var file = f.files;
+			// file[0].name 은 파일명 입니다.
+			// 정규식으로 확장자 체크
+			if(!/\.(pdf|hwp|doxc|ppt|txt)$/i.test(file[0].name)) alert('pdf, hwp, doxc, ppt, txt 파일만 선택해 주세요.\n\n현재 파일 : ' + file[0].name);
+			// 체크를 통과했다면 종료.
+			else return;
+			// 체크에 걸리면 선택된  내용 취소 처리를 해야함.
+			// 파일선택 폼의 내용은 스크립트로 컨트롤 할 수 없습니다.
+			// 그래서 그냥 새로 폼을 새로 써주는 방식으로 초기화 합니다.
+			// 이렇게 하면 간단 !?
+			f.outerHTML = f.outerHTML;
+		}
 	</script>
 </head>
   <body>
