@@ -675,7 +675,7 @@
 				    <c:when test="${subjectFileList.size() >= 0}">
 				    	<c:forEach var="subjectFileList" items="${subjectFileList}">
 				    		<div>
-				    			<a href="${pageContext.request.contextPath}/file/subjectFile/${subjectFileList.subjectFileOriginalName}" download="${subjectFileList.subjectFileType}">${subjectFileList.subjectFileOriginalName}</a>
+				    			<a href="${pageContext.request.contextPath}/file/subjectFile/${subjectFileList.subjectFileName}" download="${subjectFileList.subjectFileName}">${subjectFileList.subjectFileOriginalName}</a>
 				    		</div>
 				    	</c:forEach>
 				    </c:when>

@@ -73,7 +73,9 @@ public class SubjectReportController {
 	
 	// 2) 과제 게시판 글 입력 + 파일 입력 Form 받기
 	@GetMapping("/addSubjectReport")
-	public String addSubjectReport(HttpSession session, Model model, @RequestParam(name = "subjectNo") int subjectNo) {
+	public String addSubjectReport(HttpSession session
+								,Model model
+								,@RequestParam(name = "subjectNo") int subjectNo) {
 		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.subjectNo : " + subjectNo);
 		// session 처리 : 운영자와 강사만 글을 쓸 수 있다.
 		String memberId = (String) session.getAttribute("loginUser");
@@ -90,8 +92,10 @@ public class SubjectReportController {
 
 	// 2-1) 과제 게시판 글 입력 + 파일 입력 Action
 	@PostMapping("/addSubjectReport")
-	public String addSubjectReport(Model model, HttpServletRequest request, SubjectReportForm subjectReportForm,
-			@RequestParam(name = "subjectNo") int subjectNo) {
+	public String addSubjectReport(Model model
+								,HttpServletRequest request
+								,SubjectReportForm subjectReportForm
+								,@RequestParam(name = "subjectNo") int subjectNo) {
 		String path = request.getServletContext().getRealPath("/file/subjectFile/");
 		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.path : " + path);
 		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.subjectReportForm : " + subjectReportForm);
@@ -127,7 +131,7 @@ public class SubjectReportController {
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.commentCurrentPage : " + commentCurrentPage);
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.rowPerPage : " + rowPerPage);
 		// 파일 업로드 위치 지정
-		String path = request.getServletContext().getRealPath("/file/subjectFile");
+		String path = request.getServletContext().getRealPath("/file/subjectFile/");
 		// 댓글 데이터 
 		Map<String, Object> map = new HashMap<>();
 		map.put("subjectBoardNo", subjectBoardNo);
