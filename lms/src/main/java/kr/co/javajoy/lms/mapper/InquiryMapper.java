@@ -6,6 +6,8 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.javajoy.lms.vo.Board;
+import kr.co.javajoy.lms.vo.Boardfile;
+import kr.co.javajoy.lms.vo.Recevier;
 
 @Mapper
 public interface InquiryMapper {
@@ -14,6 +16,12 @@ public interface InquiryMapper {
 	// 문의사항의 글의 총개수
 	int selectInquiryTotalCount();
 	// 해당학생을 가르키는 강사 리스트
-	List<String> selectTeacherListBySubject(String memberId);
-		
+	List<Map<String,Object>> selectTeacherListBySubject(String memberId);
+	
+	int insertInquiry(Board board);
+	
+	int insertBoardFile(Boardfile boardFile);
+	
+	int insertRecevier(Recevier recevier);
+	
 }

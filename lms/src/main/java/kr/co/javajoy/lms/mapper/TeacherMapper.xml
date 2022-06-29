@@ -92,7 +92,7 @@
 		  ,teacher_address = #{teacherAddress}
 		  ,teacher_detailaddress = #{teacherDetailAddress}
 		  ,update_date  = NOW()
-	WHERE member_id = #{memberId}
+	 WHERE member_id = #{memberId}
 	</update>
 	<update id="updateTeacherCareer"
 			parameterType="kr.co.javajoy.lms.vo.Career">

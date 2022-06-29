@@ -14,13 +14,6 @@
 	src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
 	defer></script>
 <script src="./public/assets/js/init-alpine.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
-	defer></script>
-<script src="./public/assets/js/charts-lines.js" defer></script>
-<script src="./public/assets/js/charts-pie.js" defer></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
@@ -367,10 +360,10 @@
 										href="#"> <svg class="w-4 h-4 mr-3" aria-hidden="true"
 												fill="none" stroke-linecap="round" stroke-linejoin="round"
 												stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                          <path
+							<path
 													d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                          <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg> <span>Settings</span>
+							<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+							</svg> <span>Settings</span>
 									</a></li>
 									<li class="flex"><a
 										class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
@@ -378,9 +371,9 @@
 												class="w-4 h-4 mr-3" aria-hidden="true" fill="none"
 												stroke-linecap="round" stroke-linejoin="round"
 												stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                          <path
+									<path
 													d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
-                        </svg> <span>Log out</span>
+							</svg> <span>Log out</span>
 									</a></li>
 								</ul>
 							</template>
@@ -394,54 +387,110 @@
 						class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
 						건의함</h2>
 						<div>
-						<button
-			                  class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-			               	   onclick="location.href='${pageContext.request.contextPath}/addInquiry'"
-			               		 >
-			                  건의사항 작성
-			                </button>
-			                <br>
 			            </div>
 					<!-- New Table -->
 					<div class="w-full overflow-hidden rounded-lg shadow-xs">
 						<div class="w-full overflow-x-auto">
+							<form method="post" action="${pageContext.request.contextPath}/addInquiry" id="addInquiry" enctype="multipart/form-data">
 								<table class="w-full whitespace-no-wrap">
-									<thead>
-										<tr
-											class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-											<th class="px-4 py-3">글번호</th>
-											<th class="px-4 py-3">작성자</th>
-											<th class="px-4 py-3">제목</th>
-											<th class="px-4 py-3">작성일</th>
-										</tr>
-									</thead>
-									<!-- 글번호 1부터 매기는 부분  --> 
-									<c:set var="num" value="${totalCount -((currentPage-1)*rowPerPage)}"></c:set>
-									<c:forEach var="l" items="${list}">
-										<tbody
-											class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-												<tr onClick="location.href='${pageContext.request.contextPath}/getInquiryOne?subjectNo=${l.boardNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
-													<td class="px-4 py-3 text-sm">${num}</td>
-													<td class="px-4 py-3">
-														<div class="flex items-center text-sm">
-															<!-- Avatar with inset shadow -->
-															<p class="font-semibold">${l.memberId}</p>
-														</div>
-													</td>
-													<c:choose>
-														<c:when test="${l.privateNo eq 3}">
-														<td class="px-4 py-3 text-sm">비밀글 입니다.</td>
-														</c:when>
-														<c:otherwise>
-														<td class="px-4 py-3 text-sm">${l.boardTitle}</td>
-														</c:otherwise>
-													</c:choose>
-													<td class="px-4 py-3 text-sm">${l.createDate}</td>
-												</tr>
-												<c:set var="num" value="${num-1}"></c:set>
-										</tbody>
-									</c:forEach>
+								<c:if test="${level eq 3}">
+									<tr class="text-gray-700 dark:text-gray-400">
+										<td class="px-4 py-3 text-sm">전송자 선택</td>
+										<td class="px-4 py-3 text-sm">
+											<select
+											class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+											name="recevier"
+											id="recevier">
+											<option value="1">운영자</option>
+											<option value="2">강사</option>
+											</select>
+										</td>
+									</tr>
+									<tr class="text-gray-700 dark:text-gray-400" id="selectTeacher">
+									<td class="px-4 py-3 text-sm">강사 선택</td>
+										<td class="px-4 py-3 text-sm">
+										<c:forEach var="l" items="${teacherList}">
+										<input
+						                type="checkbox"
+						                class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+						                name="teacherId" value="${l.memberId}"
+						              /> ${l.teacherName}
+						              </c:forEach>
+										</td>
+									</tr>
+									</c:if>
+									<tr class="text-gray-700 dark:text-gray-400">
+										<td class="px-4 py-3 text-sm">제목</td>
+										<td class="px-4 py-3">
+											<input
+											class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+											placeholder="제목입력"
+											name="boardTitle"
+											id="boardTitle"
+											/>
+											<input type="text" name="memberId" value="${loginUser}" hidden="hidden">
+										</td>
+									</tr>
+									<tr class="text-gray-700 dark:text-gray-400">
+										<td class="px-4 py-3 text-sm">내용</td>
+										<td class="px-4 py-3">
+											 <textarea
+							                  class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+							                  rows="3"
+							                  placeholder="내용을 입력해주세요"
+							                  name="boardContent"
+							                  id="boardContent"
+							                ></textarea>
+										</td>
+									</tr>
+									<tr class="text-gray-700 dark:text-gray-400">
+										<td class="px-4 py-3 text-sm">비밀글설정여부</td>
+										<td class="px-4 py-3">
+										 <input
+											type="radio"
+											class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+											name="privateNo"
+											value="1"
+											checked="checked"
+											/>
+											비밀글설정X
+											<input
+											type="radio"
+											class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+											name="privateNo"
+											value="3"
+											/>
+											비밀글설정O
+										</td>
+									</tr>
+									<tr>
+										<td class="px-4 py-3 text-sm">
+										 <button
+							                  class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+							                  id="addFileUpload"
+							                  type="button"
+							                >
+							                 파일업로드 추가
+					                </button>
+										</td>
+										<td class="px-4 py-3">
+											<div  id="fileSection">
+											
+											</div>
+										</td>
+									</tr>
 								</table>
+								</form>
+									<br>
+								   <div>
+					                <button
+					                  class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+					                  id="addInquiryBtn"
+					                  type="button"
+					                >
+					               	글작성
+					                </button>
+					              </div>
 						</div>
 					</div>
 				</div>
@@ -449,4 +498,60 @@
 		</div>
 	</div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+
+$('#addFileUpload').click(function(){
+	let flag = true;
+	
+	$('.inquiryFileList').each(function(){ // each함수를 이용한 반복
+		if($(this).val() == '') {
+			flag = false;
+		}
+	});
+	
+	if(flag) {
+		$('#fileSection').append('<div><input class="inquiryFileList" type="file" name="inquiryFileList"></div>');
+	} else {
+		alert('파일이 첨부되지 않은 리스트가 존재합니다');
+		}
+	});
+$('#selectTeacher').hide();
+$('#recevier').change(function(){
+	if($('#recevier').val() == 1) {
+		$('#selectTeacher').hide();
+		} else if ($('#recevier').val() == 2) {
+			$('#selectTeacher').empty();
+			$('#selectTeacher').show();
+		}
+});
+
+	$('#addInquiryBtn').click(function(){
+		if(${level == 3}) {
+			if($('#recevier').val()== 2) {
+				if($("input:checked[Name='teacherId']").is(":checked")<1){
+					alert('문의할 강사님을 선택해주세요');
+					return;
+				}
+			} else if ($('#boardTitle').val() == '') {
+				alert('제목을 작성해주세요');
+				return;
+		} else if ($('#boardContent').val() == '') {
+				alert('내용을 입력해주세요');
+				return;
+		} else {
+			$('#addInquiry').submit();
+			}
+		} else {
+			if ($('#boardTitle').val() == '') {
+				alert('제목을 작성해주세요');
+				return;
+		} else if ($('#boardContent').val() == '') {
+				alert('내용을 입력해주세요');
+		} else {
+			$('#addInquiry').submit();
+			}
+		}
+	});
+</script>
 </html>

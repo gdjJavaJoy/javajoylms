@@ -13,7 +13,8 @@
    ,update_date updateDate
 FROM board
 WHERE board_category = "3"
-LIMIT #{beginRow} , #{rowPerPage} 		
+ORDER BY create_date desc
+LIMIT #{beginRow} , #{rowPerPage}
  </select>
  <select id="selectInquiryTotalCount"
  		resultType="int">
@@ -24,12 +25,72 @@ LIMIT #{beginRow} , #{rowPerPage}
  </select>
  <select id="selectTeacherListBySubject"
 	 		 parameterType="String"
-	 		 resultType="String">
-SELECT
-	 c.member_id memberId
+	 		 resultType="java.util.Map">
+	SELECT
+		   c.member_id memberId
+		  ,t.teacher_name teacherName
       FROM subject_student ss
 INNER JOIN curriculum c
 		ON c.subject_no = ss.subject_no
+INNER JOIN teacher t
+		ON t.member_id =c.member_id
 	 WHERE ss.member_id = #{memberId}
+ GROUP BY  c.member_id
 </select>
+<insert id="insertInquiry"
+		parameterType="kr.co.javajoy.lms.vo.Board">
+	<selectKey resultType="int" keyProperty="boardNo" order="AFTER">
+		select last_insert_id()
+	</selectKey>
+	INSERT INTO board(
+			member_id
+		   ,board_category
+		   ,board_title
+		   ,board_content
+		   ,private_no
+		   ,create_date
+		   ,update_date
+	) VALUES (
+			#{memberId}
+		   ,"3"
+		   ,#{boardTitle}
+		   ,#{boardContent}
+		   ,#{privateNo}
+		   ,NOW()
+		   ,NOW()
+		)
+</insert>
+<insert id="insertBoardFile"
+		parameterType="kr.co.javajoy.lms.vo.Boardfile">
+	INSERT INTO board_file(
+			    board_no
+			   ,board_file_original_name
+			   ,board_file_name
+			   ,board_file_type
+			   ,board_file_size
+			   ,create_date
+			   ,update_date
+		) VALUES (
+				#{boardNo}
+			   ,#{boardFileOriginalName}
+			   ,#{boardFileName}
+			   ,#{boardFileType}
+			   ,#{boardFileSize}
+			   ,NOW()
+			   ,NOW()
+		)
+</insert>
+<insert id="insertRecevier"
+		parameterType="kr.co.javajoy.lms.vo.Recevier">
+	INSERT INTO recevier (
+				board_no
+			   ,recevier
+			   ,update_date
+		) VALUES (
+				#{boardNo}
+			   ,#{recevier}
+			   ,NOW()
+		)
+	
+</insert>
 </mapper>
