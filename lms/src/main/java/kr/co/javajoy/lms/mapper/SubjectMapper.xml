@@ -104,4 +104,19 @@
 		WHERE subject_no = #{subjectNo}
 	</update>
 	
+	<select id="selectSubjectVideo"
+			parameterType="int"
+			resultType="kr.co.javajoy.lms.vo.SubjectVideo" >
+		SELECT
+			subject_video_no subjectVideoNo
+			,subject_no subjectNo
+			,subject_video_title subjectVideoTitle
+			,subject_video_content subjectVideoContent
+			,subject_video_url subjectVideoUrl
+			,create_date createDate
+			,update_date updateDate
+		FROM subject_video
+		WHERE subject_no = #{subjectNo}
+	</select>
+	
 </mapper>

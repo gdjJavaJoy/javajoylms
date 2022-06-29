@@ -1,6 +1,7 @@
 package kr.co.javajoy.lms.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.service.SubjectService;
 import kr.co.javajoy.lms.vo.Subject;
+import kr.co.javajoy.lms.vo.SubjectVideo;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -128,6 +130,20 @@ public class SubjectController {
 		int row = subjectService.modifySubject(subject);
 		// SubjectOne 컨트롤러 리디렉트
 		return "redirect:/getSubjectOne?subjectNo=" + subject.getSubjectNo();
+	}
+	
+	// 강좌 영상으로 가기
+	@GetMapping("getSubjectVideo")
+	public String getSubjectVideo(@RequestParam(value="subjectNo") int subjectNo
+								,Model model) {
+		log.debug(CF.YHJ + "SubjectController.getSubjectVideo.subjectNo : " +  subjectNo + CF.RESET); // 디버깅
+		
+		List<SubjectVideo> subjectVideoList = subjectService.getSubjectVideoList(subjectNo);
+		log.debug(CF.YHJ + "SubjectService.getSubjectVideoList.subjectVideoList : " +  subjectVideoList + CF.RESET); // 디버깅
+		
+		model.addAttribute("subjectVideoList",subjectVideoList);
+		
+		return "/subject/getSubjectVideo";
 	}
 }
 

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.javajoy.lms.vo.Subject;
+import kr.co.javajoy.lms.vo.SubjectVideo;
 
 @Mapper
 public interface SubjectMapper {
@@ -18,10 +19,13 @@ public interface SubjectMapper {
 	List<Subject> selectSubjectByPage(Map<String, Object> map);
 	// 강좌 총 수
 	int selectTotalCount();
-	// 강좌 상세보기
+	// 강좌 상세보기s
 	Subject selectSubjectOne(int subjectNo);
 	// 강좌 수정
 	int updateSubject(Subject subject);
 	// 강좌 삭제(미구현)
+	
+	// 강좌 영상 리스트
+	List<SubjectVideo> selectSubjectVideo(int subjectNo);
 	
 }

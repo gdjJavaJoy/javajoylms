@@ -600,10 +600,10 @@
            	  <div class="container">
 					<ol class="breadcrumb" style="float:rigth;">
 						<li>
-							<a style="float:right;" href="${pageContext.request.contextPath}/getSubjectReportListByPage?subjectNo=${subject.subjectNo}">&nbsp&nbsp설문 조사&nbsp&nbsp</a>
+							<a style="float:right;" href="${pageContext.request.contextPath}/getSurvey?subjectNo=${subject.subjectNo}">&nbsp&nbsp설문 조사&nbsp&nbsp</a>
 						</li>
 						<li>
-							<a style="float:right;" href="${pageContext.request.contextPath}/getSubjectReportListByPage?subjectNo=${subject.subjectNo}">&nbsp&nbsp강좌 영상&nbsp&nbsp</a>
+							<a style="float:right;" href="${pageContext.request.contextPath}/getSubjectVideo?subjectNo=${subject.subjectNo}">&nbsp&nbsp강좌 영상&nbsp&nbsp</a>
 						</li>
 						<li>
 							<a style="float:right;" href="${pageContext.request.contextPath}/getSubjectReportListByPage?subjectNo=${subject.subjectNo}&subjectName=${subject.subjectName}">&nbsp&nbsp과제 게시판&nbsp&nbsp</a>

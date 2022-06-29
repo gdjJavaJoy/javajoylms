@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.mapper.SubjectMapper;
 import kr.co.javajoy.lms.vo.Subject;
+import kr.co.javajoy.lms.vo.SubjectVideo;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -70,6 +71,15 @@ public class SubjectService {
 	// 강좌 수정 Action
 	public int modifySubject(Subject subject) {
 		return subjectMapper.updateSubject(subject);
+	}
+	
+	public List<SubjectVideo> getSubjectVideoList(int subjectNo){
+		log.debug(CF.YHJ + "SubjectService.getSubjectVideoList.subjectNo : " +  subjectNo + CF.RESET); // 디버깅
+		
+		List<SubjectVideo> list = subjectMapper.selectSubjectVideo(subjectNo);
+		log.debug(CF.YHJ + "SubjectService.getSubjectVideoList.list : " +  list + CF.RESET); // 디버깅
+		
+		return list;
 	}
 }
 
