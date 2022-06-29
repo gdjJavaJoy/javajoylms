@@ -24,13 +24,16 @@
 			</tr>
 		</thead>
 		<tbody>
+		<!-- 글 번호 1번부터 -->
+		<c:set var="num" value="${totalCount-((currentPage-1)*rowPerPage)}"></c:set>
 			<c:forEach var="c" items="${list}">
-				<tr  onClick="location.href='${pageContext.request.contextPath}/getNoticeOne?boardNo=${c.boardNo}'" >
-					<td>${c.boardNo}</td>
+				<tr onClick="location.href='${pageContext.request.contextPath}/getNoticeOne?boardNo=${c.boardNo}'" >
+					<td>${num}</td>
 					<td>운영자</td>
 					<td>${c.boardTitle}</td>
 					<td>${c.createDate}</td>
 				</tr>
+				<c:set var="num" value="${num-1}"></c:set>
 			</c:forEach>
 		</tbody>
 	</table>

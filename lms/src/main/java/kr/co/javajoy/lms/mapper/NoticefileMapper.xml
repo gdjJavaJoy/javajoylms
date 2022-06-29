@@ -17,7 +17,7 @@
 			resultType="kr.co.javajoy.lms.vo.Boardfile">
 		SELECT
 			board_file_no boardFileNo
-			,board_file_original_name boarFileOriginalName
+			,board_file_original_name boardFileOriginalName
 			,board_file_name boardFileName
 			,board_file_type boardFileType
 			,board_file_size boardFileSize
@@ -69,4 +69,11 @@
  		DELETE FROM board_file
  		WHERE board_No = #{boardNo}
  	</delete>
+ 	<select id="selectBoardfileCnt"
+			parameterType="int"
+			resultType="int">
+		SELECT count(*)
+		FROM board_file
+		WHERE board_no = #{boardNo}
+	</select>
 </mapper>

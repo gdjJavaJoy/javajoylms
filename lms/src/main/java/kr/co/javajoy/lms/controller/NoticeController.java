@@ -40,6 +40,8 @@ public class NoticeController {
 		model.addAttribute("list",map.get("list"));
 		model.addAttribute("lastPage",map.get("lastPage"));
 		model.addAttribute("currentPage",currentPage);
+		model.addAttribute("totalCount",map.get("totalCount"));
+		model.addAttribute("rowPerPage",rowPerPage);
 		log.debug(CF.WSH + "NoticeController.getNoticeByPage.notice : "+ currentPage);
 		return "board/notice/getNoticeByPage";
 	}
@@ -56,6 +58,7 @@ public class NoticeController {
 		model.addAttribute("path", path);
 		model.addAttribute("board", map.get("board"));
 		model.addAttribute("boardfile", map.get("boardfile"));
+		model.addAttribute("fileTotalCount", map.get("fileTotalCount"));
 		log.debug(CF.WSH + "NoticeController.getNoticeOne.map : "+ map);
 		return "board/notice/getNoticeOne";
 	}

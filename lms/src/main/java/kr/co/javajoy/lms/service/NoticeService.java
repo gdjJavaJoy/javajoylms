@@ -36,10 +36,12 @@ public class NoticeService {
 		
 		int totalCount = noticeMapper.selectTotalCount();
 		int lastPage = (int)(Math.ceil((double)totalCount / (double)rowPerPage));
-		
+
 		Map<String, Object> returnMap = new HashMap<>();
 		returnMap.put("list", list);
 		returnMap.put("lastPage", lastPage);
+		returnMap.put("totalCount", totalCount);
+		
 		return returnMap;
 	}
 	
@@ -49,13 +51,19 @@ public class NoticeService {
 		// 쿼리불러오기 조회값 저장
 		List<Board> board = noticeMapper.selectNoticeOne(boardNo); 
 		log.debug(CF.WSH + "NoticeService.getNoticeOne.board : "+board);
+		
 		// 파일
 		List<Boardfile> boardfile = noticefileMapper.selectNoticefileList(boardNo); 
 		log.debug(CF.WSH + "NoticeService.getNoticeOne.boardfile : "+boardfile);
 		
+		// 파일 갯수 확인
+		int fileTotalCount = noticefileMapper.selectBoardfileCnt(boardNo);
+		log.debug(CF.WSH + "NoticeService.getNoticeOne.fileTotalCount : "+fileTotalCount);
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("board", board);
 		map.put("boardfile", boardfile);
+		map.put("fileTotalCount", fileTotalCount);
 		return map;
 	}
 	

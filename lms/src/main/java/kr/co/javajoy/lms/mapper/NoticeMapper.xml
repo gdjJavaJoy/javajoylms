@@ -14,6 +14,7 @@
 			,create_date createDate
 			,update_date updateDate
 		FROM board
+		WHERE board_category = "1"
 		ORDER BY create_date DESC
 		LIMIT #{startRow}, #{rowPerPage}		
 	</select>
@@ -21,6 +22,7 @@
 			resultType="int">
 		SELECT count(*) 
 		FROM board
+		WHERE board_category = "1"
 	</select>
 	<select id="selectNoticeOne"
 			parameterType="int"

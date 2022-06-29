@@ -20,4 +20,6 @@ public interface NoticefileMapper {
 	List<String> selectNoticefileNameList(int boardNo);
 	// 파일 삭제
 	int deleteNoticefileList(int boardNo);
+	// boardfile 갯수 유무확인
+	int selectBoardfileCnt(int boardNo);
 }
