@@ -6,13 +6,14 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.javajoy.lms.vo.Board;
+import kr.co.javajoy.lms.vo.BoardComment;
 import kr.co.javajoy.lms.vo.Boardfile;
-import kr.co.javajoy.lms.vo.Recevier;
+import kr.co.javajoy.lms.vo.Receiver;
 
 @Mapper
 public interface InquiryMapper {
 	// 문의사항 개시판 
-	List<Board> selectInquiryByPage(Map<String,Object> map);
+	List<Map<String,Object>> selectInquiryByPage(Map<String,Object> map);
 	// 문의사항의 글의 총개수
 	int selectInquiryTotalCount();
 	// 해당학생을 가르키는 강사 리스트
@@ -22,6 +23,13 @@ public interface InquiryMapper {
 	
 	int insertBoardFile(Boardfile boardFile);
 	
-	int insertRecevier(Recevier recevier);
+	int insertReceiver(Receiver recevier);
 	
+	Map<String,Object> selectInquiryBoardOne(int boardNo);
+	
+	List<Boardfile> selectInquiryBoardfileOne(int boardNo);
+	
+	int selectBoardCountByBoardNo(int boardNo);
+	
+	List<BoardComment> selectInquiryComment(int boardNo);
 }

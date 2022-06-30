@@ -10,7 +10,7 @@ import lombok.Data;
 public class AddInquiryForm {
 	private String memberId;
 	private int recevier;
-	private List<String> teacherId;
+	private	List<String> teacherId;
 	private String boardTitle;
 	private String boardContent;
 	private String privateNo;

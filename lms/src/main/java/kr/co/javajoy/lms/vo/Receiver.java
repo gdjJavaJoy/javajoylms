@@ -3,8 +3,8 @@ package kr.co.javajoy.lms.vo;
 import lombok.Data;
 
 @Data
-public class Recevier {
+public class Receiver {
 	private int boardNo;
-	private String recevier;
+	private String receiver;
 	private String updateDate;
 }

@@ -55,7 +55,6 @@ public class InquiryController {
 		String path = request.getServletContext().getRealPath("/file/inquiryFile/"); //경로 지정
 		log.debug(CF.PSG+"InquiryController.addInquiry.post() path :"+ path + CF.RESET);
 		log.debug(CF.PSG+"InquiryController.addInquiry.post() addInquiryForm:"+ addInquiryForm + CF.RESET);
-		
 		int row = inquiryService.addInquiry(addInquiryForm, path);
 		
 		if (row == 0) {
@@ -64,5 +63,17 @@ public class InquiryController {
 		}
 		log.debug(CF.PSG+"InquiryController.addInquiry.post() 문의사항 등록성공"+ CF.RESET);
 		return "redirect:/getInquiryByPage";
+	}
+	@GetMapping("/getInquiryOne")
+	public String inquiryOne(@RequestParam(value="boardNo") int boardNo
+							,Model model){
+		
+		Map<String,Object> map = inquiryService.getInquiryOne(boardNo);
+		
+		model.addAttribute("fileCount",map.get("fileCount"));
+		model.addAttribute("board",map.get("board"));
+		model.addAttribute("boardFile",map.get("boardFile"));
+		model.addAttribute("boardComment",map.get("boardComment"));
+		return "board/inquiry/inquiryOne";
 	}
 }

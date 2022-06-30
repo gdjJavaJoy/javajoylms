@@ -3,15 +3,21 @@
 <mapper namespace="kr.co.javajoy.lms.mapper.InquiryMapper">
  <select id="selectInquiryByPage"
  		 parameterType="java.util.Map"
- 		 resultType="kr.co.javajoy.lms.vo.Board">
+ 		 resultType="java.util.Map">
  SELECT 
- 	board_no boardNo
-   ,member_id memberId
-   ,board_title boardTitle
-   ,private_no privateNo
-   ,create_date createDate
-   ,update_date updateDate
-FROM board
+ 	b.board_no boardNo
+   ,b.member_id memberId
+   ,t.teacher_name teacherName
+   ,s.student_name studentName
+   ,b.board_title boardTitle
+   ,b.private_no privateNo
+   ,b.create_date createDate
+   ,b.update_date updateDate
+FROM board b
+LEFT JOIN teacher t
+	   ON t.member_id = b.member_id
+LEFT JOIN student s
+	   ON s.member_id = b.member_id
 WHERE board_category = "3"
 ORDER BY create_date desc
 LIMIT #{beginRow} , #{rowPerPage}
@@ -80,17 +86,72 @@ INNER JOIN teacher t
 			   ,NOW()
 		)
 </insert>
-<insert id="insertRecevier"
-		parameterType="kr.co.javajoy.lms.vo.Recevier">
-	INSERT INTO recevier (
+<insert id="insertReceiver"
+		parameterType="kr.co.javajoy.lms.vo.Receiver">
+	INSERT INTO receiver (
 				board_no
-			   ,recevier
+			   ,receiver
 			   ,update_date
 		) VALUES (
 				#{boardNo}
-			   ,#{recevier}
+			   ,#{receiver}
 			   ,NOW()
 		)
-	
 </insert>
+<select id="selectInquiryBoardOne"
+		parameterType="int"
+		resultType="java.util.Map">
+SELECT
+	b.board_no boardNo
+   ,b.member_id memberId
+   ,t.teacher_name teacherName
+   ,s.student_name studentName
+   ,b.board_title boardTitle
+   ,b.board_content boardContent
+   ,b.private_no privateNo
+   ,b.create_date createDate
+   ,b.update_date updateDate
+	 FROM board b
+LEFT JOIN teacher t
+       ON t.member_id = b.member_id
+LEFT JOIN student s
+       ON s.member_id = b.member_id
+    WHERE board_no = #{boardNo} 
+</select>
+<select id="selectInquiryBoardfileOne"
+		parameterType="int"
+		resultType="kr.co.javajoy.lms.vo.Boardfile">
+SELECT
+	board_file_no boardFileNo
+   ,board_no boardNo
+   ,board_file_original_name boardFileOriginalName
+   ,board_file_name boardFileName
+   ,board_file_type boardFileType
+   ,board_file_size boardFileSize
+   ,create_date createDate
+   ,update_date updateDate
+FROM board_file
+WHERE board_no = #{boardNo}			
+</select>
+<select id="selectInquiryComment"
+		parameterType="int"
+		resultType="kr.co.javajoy.lms.vo.BoardComment">
+SELECT
+	board_comment_no boardCommentNo
+   ,member_id memberId
+   ,board_no boardNo
+   ,board_comment_content boardCommentContent
+   ,create_date createDate
+   ,update_date updateDate
+FROM board_comment
+WHERE board_no = #{boardNo}
+</select>
+<select id="selectBoardCountByBoardNo"
+		parameterType="int"
+		resultType="int">
+SELECT
+	COUNT(*)
+FROM board_file
+WHERE board_no = #{boardNo}
+</select>
 </mapper>

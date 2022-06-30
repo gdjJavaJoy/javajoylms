@@ -14,13 +14,6 @@
 	src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
 	defer></script>
 <script src="./public/assets/js/init-alpine.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
-	defer></script>
-<script src="./public/assets/js/charts-lines.js" defer></script>
-<script src="./public/assets/js/charts-pie.js" defer></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
@@ -394,12 +387,14 @@
 						class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
 						건의함</h2>
 						<div>
+						<c:if test="${level != 1}">
 						<button
 			                  class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
 			               	   onclick="location.href='${pageContext.request.contextPath}/addInquiry'"
 			               		 >
 			                  건의사항 작성
 			                </button>
+			             </c:if>
 			                <br>
 			            </div>
 					<!-- New Table -->
@@ -410,23 +405,33 @@
 										<tr
 											class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
 											<th class="px-4 py-3">글번호</th>
+											<th class="px-4 py-3">작성자ID</th>
 											<th class="px-4 py-3">작성자</th>
 											<th class="px-4 py-3">제목</th>
 											<th class="px-4 py-3">작성일</th>
 										</tr>
 									</thead>
 									<!-- 글번호 1부터 매기는 부분  --> 
-									<c:set var="num" value="${totalCount -((currentPage-1)*rowPerPage)}"></c:set>
-									<c:forEach var="l" items="${list}">
+									<c:forEach var="l" items="${list}" varStatus="cnt">
 										<tbody
 											class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-												<tr onClick="location.href='${pageContext.request.contextPath}/getInquiryOne?subjectNo=${l.boardNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
-													<td class="px-4 py-3 text-sm">${num}</td>
+												<tr onClick="location.href='${pageContext.request.contextPath}/getInquiryOne?boardNo=${l.boardNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
+													<td class="px-4 py-3 text-sm">${cnt.index+1}</td>
 													<td class="px-4 py-3">
 														<div class="flex items-center text-sm">
 															<!-- Avatar with inset shadow -->
 															<p class="font-semibold">${l.memberId}</p>
 														</div>
+													</td>
+													<td class="px-4 py-3">
+														<c:choose>
+															<c:when test="${l.teacherName != null}">
+															${l.teacherName}
+															</c:when>
+															<c:otherwise>
+															${l.studentName}
+															</c:otherwise>
+														</c:choose>
 													</td>
 													<c:choose>
 														<c:when test="${l.privateNo eq 3}">
@@ -438,12 +443,17 @@
 													</c:choose>
 													<td class="px-4 py-3 text-sm">${l.createDate}</td>
 												</tr>
-												<c:set var="num" value="${num-1}"></c:set>
 										</tbody>
 									</c:forEach>
 								</table>
 						</div>
 					</div>
+					<c:if test="${currentPage > 1}">
+               <a href="${pageContext.request.contextPath}/getInquiryByPage?currentPage=${currentPage-1}">이전</a>
+        </c:if>
+        <c:if test="${currentPage  < lastPage}">
+               <a  href="${pageContext.request.contextPath}/getInquiryByPage?currentPage=${currentPage+1}">다음</a>
+        </c:if>
 				</div>
 			</main>
 		</div>
