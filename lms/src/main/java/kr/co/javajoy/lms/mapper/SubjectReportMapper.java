@@ -29,7 +29,7 @@ public interface SubjectReportMapper {
 	// 과제 게시판 글 상세보기의 파일 리스트 출력
 	List<SubjectFile> selectSubjectReportFileList(int subjectBoardNo);
 	// 각 글의 총 댓글 수
-	int selectCommentTotalCountByNotice(int subjectBoardNo);
+	int selectCommentTotalCountBySubjectReport(int subjectBoardNo);
 	// 과제 게시판 각 글의 댓글 리스트
 	List<SubjectReportComment> selectCommentListByPage(Map<String, Object> map);
 	
@@ -51,4 +51,14 @@ public interface SubjectReportMapper {
 	List<String> selectSubjectFileNameListBySubjectFileNo(int subjectfileNo);
 	// 과제 게시판의 subject_file 부분 삭제?
 	int deleteSubjectFile(int subjectFileNo);
+	
+	
+	
+	// 5) 과제 게시판 댓글  
+	
+	// 과제 게시판 댓글 입력 -
+	int insertSubjectReportComment(SubjectReportComment subjectReportComment);
+	// 과제 게시판 댓글 삭제
+	
+	// 과제 게시판 글 삭제 시, 댓글 모두 삭제
 }

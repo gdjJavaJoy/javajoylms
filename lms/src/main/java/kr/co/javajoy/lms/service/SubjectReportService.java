@@ -115,18 +115,18 @@ public class SubjectReportService {
 	public Map<String, Object> getSubjectReportAndFileNameListAndCommentList (Map<String, Object> map) {
 		// 댓글 페이징 데이터
 		int commentCurrentPage = (int)map.get("commentCurrentPage");
-		int rowPerPage = (int)map.get("rowPerPage");
-		int startRow = (commentCurrentPage - 1) * rowPerPage;
+		int commentRowPerPage = (int)map.get("commentRowPerPage");
+		int startRow = (commentCurrentPage - 1) * commentRowPerPage;
 		int subjectBoardNo = (int)map.get("subjectBoardNo");
 		
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("startRow", startRow);
-		paramMap.put("rowPerPage", rowPerPage);
+		paramMap.put("commentRowPerPage", commentRowPerPage);
 		paramMap.put("subjectBoardNo", subjectBoardNo);
 	
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameList.subjectBoardNo :" + subjectBoardNo);
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameList.startRow :" + startRow);
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameList.rowPerPage :" + rowPerPage);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.subjectBoardNo :" + subjectBoardNo);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.startRow :" + startRow);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.commentRowPerPage:" + commentRowPerPage);
 		
 		// 선택된 과게 게시판 글 상세보기
 		List<SubjectReport> subjectReport = subjectReportMapper.selectSubjectReportOne(subjectBoardNo);
@@ -137,21 +137,27 @@ public class SubjectReportService {
 		// 상세보기 + 파일 리스트 저장
 		Map<String, Object> returnMap = new HashMap<>();
 		// 댓글 페이징 코드
-		int commentTotalCount = subjectReportMapper.selectCommentTotalCountByNotice(subjectBoardNo);
-		int commentLastPage = commentTotalCount / (int)(map.get("rowPerPage"));
-		if(commentTotalCount % (int)(map.get("rowPerPage")) != 0) {
+		int commentTotalCount = subjectReportMapper.selectCommentTotalCountBySubjectReport(subjectBoardNo);
+		int commentLastPage = commentTotalCount / (int)(map.get("commentRowPerPage"));
+		if(commentTotalCount % (int)(map.get("commentRowPerPage")) != 0) {
 			commentLastPage +=1;
 		}
 		// 상세보기 값 + 파일 리스트 + 댓글 리스트 데이터 저장
 		returnMap.put("subjectReport", subjectReport);
 		returnMap.put("subjectFileList", subjectFileList);
 		returnMap.put("commentList", commentList);
+		returnMap.put("commentRowPerPage", commentRowPerPage);
+		returnMap.put("commentCurrentPage", commentCurrentPage);
 		returnMap.put("commentLastPage", commentLastPage);
+		returnMap.put("commentTotalCount", commentTotalCount);
 		
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameList.subjectReport :" + subjectReport);
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameList.subjectFileList :" + subjectFileList);
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameList.commentList :" + commentList);
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameList.commentLastPage :" + commentLastPage);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.subjectReport :" + subjectReport);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.subjectFileList :" + subjectFileList);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.commentList :" + commentList);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.commentRowPerPage :" + commentRowPerPage);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.commentCurrentPage :" + commentCurrentPage);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.commentLastPage :" + commentLastPage);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.commentTotalCount :" + commentTotalCount);
 		
 		return returnMap;
 	}
@@ -231,6 +237,12 @@ public class SubjectReportService {
 				f.delete();
 		}
 		subjectReportMapper.deleteSubjectFile(subjectFileNo);
+	}
+	
+	// 5) 과제 게시판 댓글 입력
+	public int addSubjectReportComment(SubjectReportComment subjectReportComment) {
+		log.debug(CF.PBJ + "SubjectReportService.addSubjectReportComment.subjectReportComment: " + subjectReportComment);
+		return subjectReportMapper.insertSubjectReportComment(subjectReportComment);
 	}
 }
 

@@ -17,12 +17,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.service.SubjectReportService;
-import kr.co.javajoy.lms.vo.SubjectReport;
+import kr.co.javajoy.lms.vo.SubjectReportComment;
 import kr.co.javajoy.lms.vo.SubjectReportForm;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Controller
+@Controller 
 public class SubjectReportController {
 	@Autowired SubjectReportService subjectReportService;
 	
@@ -120,22 +120,24 @@ public class SubjectReportController {
 									,HttpServletRequest request
 									,@RequestParam(name="subjectBoardNo") int subjectBoardNo
 									,@RequestParam(name="commentCurrentPage", defaultValue="1") int commentCurrentPage
-									,@RequestParam(name="rowPerPage", defaultValue="10") int rowPerPage) {
+									,@RequestParam(name="commentRowPerPage", defaultValue="10") int commentRowPerPage) {
+		// 운영자 + 강사 or  학생 별로 보이는 페이지가 다름...
 		String memberId = (String)session.getAttribute("loginUser");
 		String level = (String)session.getAttribute("level");
 		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.sessionId : " + memberId);
 		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.level : " + level);
-		// 운영자 + 강사 or  학생 별로 보이는 페이지가 다름...
-		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.subjectBoardNo : " + subjectBoardNo);
-		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.commentCurrentPage : " + commentCurrentPage);
-		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.rowPerPage : " + rowPerPage);
 		// 파일 업로드 위치 지정
 		String path = request.getServletContext().getRealPath("/file/subjectFile/");
+	
 		// 댓글 데이터 
 		Map<String, Object> map = new HashMap<>();
 		map.put("subjectBoardNo", subjectBoardNo);
 		map.put("commentCurrentPage", commentCurrentPage);
-		map.put("rowPerPage", rowPerPage);
+		map.put("commentRowPerPage", commentRowPerPage);
+		
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.subjectBoardNo : " + subjectBoardNo);
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.commentCurrentPage : " + commentCurrentPage);
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.commentRowPerPage : " + commentRowPerPage);
 		
 		// 댓글 데이터 + 파일 리스트 데이터
 		Map<String, Object> returnMap = subjectReportService.getSubjectReportAndFileNameListAndCommentList(map);
@@ -143,7 +145,21 @@ public class SubjectReportController {
 		model.addAttribute("subjectReport", returnMap.get("subjectReport"));
 		model.addAttribute("subjectFileList", returnMap.get("subjectFileList"));
 		model.addAttribute("commentList", returnMap.get("commentList"));
+		model.addAttribute("commentCurrentPage", commentCurrentPage);
+		model.addAttribute("commentRowPerPage", commentRowPerPage);
 		model.addAttribute("commentLastPage", returnMap.get("commentLastPage"));
+		model.addAttribute("commentTotalCount", returnMap.get("commentTotalCount"));
+		
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.path : " + path);
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.subjectReport : " + returnMap.get("subjectReport"));
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.subjectFileList : " + returnMap.get("subjectFileList"));
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.commentList : " + returnMap.get("commentList"));
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.commentRowPerPage: " + commentRowPerPage);
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.commentCurrentPage: " + commentCurrentPage);
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.commentLastPage : " + returnMap.get("commentLastPage"));
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.commentTotalCount : " + returnMap.get("commentTotalCount"));
+		
+		
 		
 		return "subject/getSubjectReportOne";
 	}
@@ -213,6 +229,23 @@ public class SubjectReportController {
 		log.debug(CF.PBJ + "SubjectReportController.modifySubjectReport.subjectBoardNo : " + subjectBoardNo);
 		subjectReportService.modifySubjectReport(subjectReportForm, path);
 		
+		return "redirect:/getSubjectReportOne?subjectBoardNo=" + subjectBoardNo;
+	}
+	
+	// 과제 게시판 댓글 입력 Form
+	@GetMapping("/addSubjectReportComment")
+	public String addSubjectReportComment() {
+		return "subject/getSubjectReportOne";
+	}
+	// 과제 게시판 댓글 입력 Action
+	@PostMapping("/addSubjectReportComment")
+	public String addSubjectReportComment(Model model
+										,SubjectReportComment subjectReportComment
+										,@RequestParam(name = "subjectBoardNo") int subjectBoardNo) {
+		int row = subjectReportService.addSubjectReportComment(subjectReportComment);
+		log.debug(CF.PBJ + "SubjectReportController.addSubjectReportComment.row : " + row);
+		model.addAttribute("subjectBoardNo", subjectBoardNo);
+		log.debug(CF.PBJ + "SubjectReportController.addSubjectReportComment.subjectBoardNo : " + subjectBoardNo);
 		return "redirect:/getSubjectReportOne?subjectBoardNo=" + subjectBoardNo;
 	}
 }

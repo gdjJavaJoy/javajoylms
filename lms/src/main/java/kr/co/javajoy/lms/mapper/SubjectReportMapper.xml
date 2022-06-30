@@ -81,7 +81,7 @@
 		WHERE b.subject_board_no = #{subjectBoardNo};
 	</select>
 	<!-- 글 하나당 댓글 총 개수 -->
-	<select id="selectCommentTotalCountByNotice"
+	<select id="selectCommentTotalCountBySubjectReport"
 			parameterType="int"
 			resultType="int">
 		SELECT COUNT(*) 
@@ -95,10 +95,13 @@
 			resultType="kr.co.javajoy.lms.vo.SubjectReportComment">
 		SELECT c.member_id memberId
       		   ,c.subject_report_comment_content subjectReportCommentContent
+      		   ,c.create_date createDate
                ,c.update_date updateDate
 		FROM subject_report_comment AS c
 		LEFT JOIN subject_board AS b ON c.subject_report_no = b.subject_board_no
-		WHERE subject_board_no = #{subjectBoardNo};
+		WHERE subject_board_no = #{subjectBoardNo}
+		ORDER BY b.create_date DESC
+		LIMIT #{startRow}, #{commentRowPerPage};
 	</select>
 	
 	<!-- 3) 과제 게시판 글 입력 + 파일 입력 -->
@@ -189,6 +192,28 @@
 		WHERE subject_file_no = #{subjectFileNo}
 	</delete>
 	
+	<!-- 5) 과제 게시판 댓글  -->
+	
+	<!-- 과제 게시판 댓글 입력 -->
+	<insert id="insertSubjectReportComment"
+			parameterType="kr.co.javajoy.lms.vo.SubjectReportComment">
+		INSERT INTO subject_report_comment (
+			subject_report_no
+			,member_id
+			,subject_report_comment_content
+			,create_date
+			,update_date 
+		) VALUES (
+			#{subjectReportNo}
+			,#{memberId}
+			,#{subjectReportCommentContent}
+			,NOW()
+			,NOW()
+		)
+	</insert>
+	<!-- 과제 게시판 댓글 삭제 -->
+	
+	<!--  과제 게시판 글 삭제 시, 댓글 모두 삭제 -->
 </mapper>
 
 
