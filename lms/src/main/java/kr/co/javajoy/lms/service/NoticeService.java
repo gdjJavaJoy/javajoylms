@@ -92,10 +92,8 @@ public class NoticeService {
 				String originName = mf.getOriginalFilename();
 				String ext = originName.substring(originName.lastIndexOf("."));
 				String filename = UUID.randomUUID().toString();
-				
 				filename = filename.replace("-", ""); // -를 공백으로
 				filename = filename + ext;
-				
 				boardfile.setBoardNo(board.getBoardNo());
 				boardfile.setBoardFileOriginalName(originName);
 				boardfile.setBoardFileName(filename);
@@ -103,7 +101,6 @@ public class NoticeService {
 				boardfile.setBoardFileSize(mf.getSize()); // long타입 // 파일의 배열 사이즈
 				log.debug(CF.WSH + "NoticeService.addNotice.boardfile : "+ boardfile);
 				noticefileMapper.insertNoticefile(boardfile);
-				
 				try {
 					mf.transferTo(new File(path+filename));
 				} catch (Exception e) {
@@ -138,10 +135,45 @@ public class NoticeService {
 	noticeMapper.deleteNotice(boardNo);
 	}
 	// 수정 (Post)
-	public int modifyNotice(Board board) {
+	public void modifyNotice(Board board, BoardForm boardForm, String path) {
+		
+		// jsp에서 적은 파일을 Multipartfile(BoardForm)에 저장했던걸 다시 Board에 저장함
+		board.setMemberId(boardForm.getMemberId());
+		board.setBoardTitle(boardForm.getBoardTitle());
+		board.setBoardContent(boardForm.getBoardContent());
+		board.getBoardNo();
+		log.debug(CF.WSH + "NoticeService.addNotice.board : "+ board);
+		
+		// DB에 값을 넣는 쿼리호출
 		int row = noticeMapper.updateNotice(board);
 		log.debug(CF.WSH + "NoticeService.modifyNotice.row : "+ board);
-		return row;
+		
+		if(boardForm.getBoardfileList() != null && boardForm.getBoardfileList().get(0).getSize() > 0  && row == 1) {
+			log.debug(CF.WSH + "NoticeService.addNotice.파일확인 : "+"첨부된 파일이 있습니다.");
+			for(MultipartFile mf : boardForm.getBoardfileList()) {
+				Boardfile boardfile = new Boardfile();
+				String originName = mf.getOriginalFilename();
+				String ext = originName.substring(originName.lastIndexOf("."));
+				String filename = UUID.randomUUID().toString();
+				filename = filename.replace("-", ""); // -를 공백으로
+				filename = filename + ext;
+				boardfile.setBoardNo(board.getBoardNo());   
+				boardfile.setBoardFileOriginalName(originName);
+				boardfile.setBoardFileName(filename);
+				boardfile.setBoardFileType(mf.getContentType());
+				boardfile.setBoardFileSize(mf.getSize()); // long타입 // 파일의 배열 사이즈
+				log.debug(CF.WSH + "NoticeService.addNotice.boardfile : "+ boardfile);
+				noticefileMapper.insertNoticefile(boardfile);
+				try {
+					mf.transferTo(new File(path+filename));
+				} catch (Exception e) {
+					e.printStackTrace();
+					
+					throw new RuntimeException();
+				}
+			}
+		}
+		
 	}
 }
 

@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.connector.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,6 +54,7 @@ public class NoticeController {
 		log.debug(CF.WSH + "NoticeController.getNoticeOne.boardNo : "+ boardNo);
 		String path = request.getServletContext().getRealPath("/file/boardFile/");
 		String memberId = (String)session.getAttribute("loginUser");
+		String level = (String)session.getAttribute("level");
 		
 		Map<String, Object> map = noticeService.getNoticeOne(boardNo);
 		model.addAttribute("path", path);
@@ -65,14 +67,21 @@ public class NoticeController {
 	
 	// 리스트 추가
 	@GetMapping("/addNotice")
-	public String addNotice() {
+	public String addNotice(HttpSession session) {
+		String memberId = (String) session.getAttribute("loginUser");
+		String level = (String) session.getAttribute("level");
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.sessionId : " + memberId);
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.level : " + level);
+		if(level.equals("2, 3")) {
+			return "redirect:/login";
+		}
+		
 		return "board/notice/addNotice";
 	}
 	@PostMapping("/addNotice")
 	public String addNotice(HttpServletRequest request, BoardForm boardForm) {
 		String path = request.getServletContext().getRealPath("/file/boardFile/");
 		log.debug(CF.WSH + "NoticeController.addNotice(Post).path : "+ path);
-		
 		log.debug(CF.WSH + "NoticeController.addNotice(Post).boardFrom : "+ boardForm);
 		List<MultipartFile> boardfileList = boardForm.getBoardfileList();
 		if(boardfileList != null && boardfileList.get(0).getSize() > 0) { // 하나 이상의 파일이 업로드 되면
@@ -108,26 +117,47 @@ public class NoticeController {
 	
 	// 리스트 수정
 	@GetMapping("/modifyNotice")
-	public String modifyNotice(Model model
+	public String modifyNotice(HttpSession session
 			,HttpServletRequest request
+			,Model model
 			,@RequestParam(name="boardNo") int boardNo) {
 		log.debug(CF.WSH + "NoticeController.modifyNotice(Get).boardNo : "+ boardNo);
 		String path = request.getServletContext().getRealPath("/file/boardFile/"); 
-		
+		String memberId = (String) session.getAttribute("loginUser");
+		String level = (String) session.getAttribute("level");
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.sessionId : " + memberId);
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.level : " + level);
+		if(level.equals("2, 3")) {
+			return "redirect:/login";
+		}
 		Map<String, Object> map = noticeService.getNoticeOne(boardNo);
 		model.addAttribute("path", path);
 		model.addAttribute("board",map.get("board"));
 		model.addAttribute("boardfile",map.get("boardfile"));
+		model.addAttribute("fileTotalCount", map.get("fileTotalCount"));
 		return "board/notice/modifyNotice";
 	}
 	@PostMapping("/modifyNotice")
-	public String modifyNotice(Board board) {
-		int row = noticeService.modifyNotice(board);
-		log.debug(CF.WSH + "NoticeController.modifyNotice(Post).row : "+ row);
+	public String modifyNotice(HttpServletRequest request
+			,BoardForm boardForm
+			,Board board
+			,@RequestParam(name="boardNo") int boardNo) {
+		String path = request.getServletContext().getRealPath("/file/boardFile/");
+		log.debug(CF.WSH + "NoticeController.modifyNotice(Post).path : "+ path);
+		log.debug(CF.WSH + "NoticeController.modifyNotice(Post).boardForm : "+ boardForm);
+		
+		List<MultipartFile> boardfileList = boardForm.getBoardfileList();
+		if(boardfileList != null && boardfileList.get(0).getSize() > 0) { // 하나 이상의 파일이 업로드 되면
+			for(MultipartFile mf : boardfileList) {
+				log.debug(CF.WSH + "NoticeController.addNotice(Post).boardfileList : "+boardfileList);
+				log.debug(CF.WSH + "NoticeController.addNotice(Post).filename : "+mf.getOriginalFilename());
+			}
+		}
+		noticeService.modifyNotice(board, boardForm, path);
+		log.debug(CF.WSH + "NoticeController.addNotice(Post).boardForm : "+boardForm);	
 		return "redirect:/getNoticeOne?boardNo="+board.getBoardNo();
 	}
-	
-	
-	
-
 }
+
+
+

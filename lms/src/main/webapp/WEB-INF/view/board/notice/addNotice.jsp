@@ -25,7 +25,7 @@
 			}
 		});
 		if(flag) {
-			$('#fileSection').append("<div><input class='boardfileList' type='file' name='boardfileList'></div>");
+			$('#fileSection').append("<div><input class='boardfileList' type='file' name='boardfileList' accept='image/*, .pdf, .xls, .xlsx'></div>");
 		} else {
 			alert('파일 첨부되지 않은 boardfileList가 존재합니다');
 		} 
@@ -76,7 +76,7 @@
 				<td>파일 업로드</td>
 				<td>
 				<!-- 파일 : <input type="file" name="boardfileList" multiple="multiple" id="addfFileupload">-->
-					<button type="button" id="addFileupload">파일 업로드 추가</button>
+					<button type="button" id="addFileupload" >파일 업로드 추가</button>
 					<div id="fileSection"> 
 					</div>
 				</td>
@@ -97,7 +97,7 @@
 				</td>
 			</tr>
 		</table>
-		<button type="button" id="addNotice">작성</button>
+		<button type="button" id="addNotice" >작성</button>
 	</form>
 </body>
 </html>
