@@ -61,7 +61,6 @@ public class SubjectReportService {
 	public void addSubjectReport(SubjectReportForm subjectReportForm, String path) {
 		log.debug(CF.PBJ + "NoticeService.addNotice.path : " + path);
 		log.debug(CF.PBJ + "NoticeService.addNotice.subjectReportForm : " + subjectReportForm);
-
 		// SubjectReportMapper
 		SubjectReport subjectReport = new SubjectReport();
 		subjectReport.setSubjectNo(subjectReportForm.getSubjectNo());
@@ -75,14 +74,11 @@ public class SubjectReportService {
 		log.debug(CF.PBJ + "SubjectReportService.addSubjectReport.row : " + row);
 		log.debug(CF.PBJ + "SubjectReportService.addSubjectReport.row2 : " + row2);
 		// insert 성공시, 기본키 값이 출력됨
-		log.debug(
-				CF.PBJ + "SubjectReportService.addSubjectReport.subjectBoardNo : " + subjectReport.getSubjectBoardNo());
-		log.debug(CF.PBJ + "SubjectReportService.addSubjectReport.subjectReportNo : "
-				+ subjectReport.getSubjectReportNo());
+		log.debug(CF.PBJ + "SubjectReportService.addSubjectReport.subjectBoardNo : " + subjectReport.getSubjectBoardNo());
+		log.debug(CF.PBJ + "SubjectReportService.addSubjectReport.subjectReportNo : " + subjectReport.getSubjectReportNo());
 
 		// SubjectReportMapper -> file insert
-		if (subjectReportForm.getSubjectReportFileList() != null
-				&& subjectReportForm.getSubjectReportFileList().get(0).getSize() > 0 && row == 1 && row2 == 1) {
+		if (subjectReportForm.getSubjectReportFileList() != null && subjectReportForm.getSubjectReportFileList().get(0).getSize() > 0 && row == 1 && row2 == 1) {
 			log.debug(CF.PBJ + "SubjectReportService.addSubjectReport : 첨부된 파일이 있습니다.");
 			for (MultipartFile mf : subjectReportForm.getSubjectReportFileList()) {
 				SubjectFile subjectFile = new SubjectFile();
@@ -176,20 +172,62 @@ public class SubjectReportService {
 	}
 	
 	// 4-1) 과제 게시판 수정 Action
-	public int modifySubjectReport(SubjectReport subjectReport) {
+	public void modifySubjectReport(SubjectReportForm subjectReportForm, String path) {
+		log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport.subjectReportForm: " + subjectReportForm);
+		log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport.path: " + path);
+		
+		SubjectReport subjectReport = new SubjectReport();
+		subjectReport.setSubjectBoardNo(subjectReportForm.getSubjectBoardNo());
+		subjectReport.setSubjectNo(subjectReportForm.getSubjectNo());
+		subjectReport.setMemberId(subjectReportForm.getMemberId());
+		subjectReport.setSubjectReportTitle(subjectReportForm.getSubjectReportTitle());
+		subjectReport.setSubjectReportContent(subjectReportForm.getSubjectReportContent());
+		subjectReport.setSubjectReportPeriod(subjectReportForm.getSubjectReportPeriod());		
+		
 		int row = subjectReportMapper.updateSubjectReport(subjectReport);
+		log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport.row : " + row);
 		log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport.subjectReport :" + subjectReport);
-		log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport.row :" + row);
-		return row;
+		
+		if (subjectReportForm.getSubjectReportFileList() != null && subjectReportForm.getSubjectReportFileList().get(0).getSize() > 0) {
+			log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport : 첨부된 파일이 있습니다.");
+			for (MultipartFile mf : subjectReportForm.getSubjectReportFileList()) {
+				SubjectFile subjectFile = new SubjectFile();
+
+				String originName = mf.getOriginalFilename();
+				// originName에서 마지막 .문자열 위치
+				String ext = originName.substring(originName.lastIndexOf("."));
+				// 파일을 저장할 때 사용할 증븍되지않는 새로운 이름 (UUID API사용)
+				String filename = UUID.randomUUID().toString();
+				filename = filename + ext;
+				log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport.originName : " + originName);
+				log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport.filename : " + filename);
+				// subject_file 데이터 가공
+				subjectFile.setSubjectFileBoardNo(subjectReport.getSubjectBoardNo());
+				subjectFile.setSubjectFileName(filename);
+				subjectFile.setSubjectFileOriginalName(mf.getOriginalFilename());
+				subjectFile.setSubjectFileType(mf.getContentType());
+				subjectFile.setSubjectFileSize(mf.getSize());
+				log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport.SubjectFile : " + subjectFile);
+				// 데이터베이스에 인서트
+				subjectReportMapper.insertSubjectFile(subjectFile);
+				// try + catch
+				try {
+					mf.transferTo(new File(path + filename));
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new RuntimeException();
+				}
+			}
+		}
 	}
 	
 	// 4-2) 과제 게시판 속 파일 삭제 처리
 	public void removeSubjectFile(int subjectFileNo, String path) {
 		List<String> subjectFileList = subjectReportMapper.selectSubjectFileNameListBySubjectFileNo(subjectFileNo);
 		log.debug(CF.PBJ + "SubjectReportService.removeSubjectFile.subjectFileList : " + subjectFileList);
-		for(String sfl : subjectFileList) {
+		for (String sfl : subjectFileList) {
 			File f = new File(path + sfl);
-			if(f.exists())
+			if (f.exists())
 				f.delete();
 		}
 		subjectReportMapper.deleteSubjectFile(subjectFileNo);

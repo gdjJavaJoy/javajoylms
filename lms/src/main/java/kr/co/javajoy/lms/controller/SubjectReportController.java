@@ -104,8 +104,7 @@ public class SubjectReportController {
 		// 파일이 한개 이상 업로드 되면
 		if (subjectReportFileList != null && subjectReportFileList.get(0).getSize() > 0) {
 			for (MultipartFile mf : subjectReportFileList) {
-				log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.subjectFileOriginalName : "
-						+ mf.getOriginalFilename());
+				log.debug(CF.PBJ + "SubjectReportController.addSubjectReport.subjectFileOriginalName : " + mf.getOriginalFilename());
 			}
 		}
 		model.addAttribute("subjectNo", subjectNo);
@@ -195,10 +194,26 @@ public class SubjectReportController {
 	
 	// 4-2) 과제 게시판 수정 Action
 	@PostMapping("/modifySubjectReport")
-	public String modifySubjectReport(SubjectReport subjectReport) {
-		int row = subjectReportService.modifySubjectReport(subjectReport);
-		log.debug(CF.PBJ + "SubjectReportController.modifySubjectReport.row : " + row);
-		return "redirect:/getSubjectReportOne?subjectBoardNo=" + subjectReport.getSubjectBoardNo();
+	public String modifySubjectReport(Model model
+									,HttpServletRequest request
+									,SubjectReportForm subjectReportForm
+									,@RequestParam(name = "subjectBoardNo") int subjectBoardNo) {
+		String path = request.getServletContext().getRealPath("/file/subjectFile/");
+		log.debug(CF.PBJ + "SubjectReportController.modifySubjectReport.path : " + path);
+		
+		List<MultipartFile> subjectReportFileList = subjectReportForm.getSubjectReportFileList();
+		log.debug(CF.PBJ + "SubjectReportController.modifySubjectReport.subjectReportFileList : " + subjectReportFileList);
+		// 파일이 한개 이상 업로드 되면
+		if (subjectReportFileList != null && subjectReportFileList.get(0).getSize() > 0) {
+			for (MultipartFile mf : subjectReportFileList) {
+				log.debug(CF.PBJ + "SubjectReportController.modifySubjectReport.subjectFileOriginalName : " + mf.getOriginalFilename());
+			}
+		}
+		model.addAttribute("subjectBoardNo", subjectBoardNo);
+		log.debug(CF.PBJ + "SubjectReportController.modifySubjectReport.subjectBoardNo : " + subjectBoardNo);
+		subjectReportService.modifySubjectReport(subjectReportForm, path);
+		
+		return "redirect:/getSubjectReportOne?subjectBoardNo=" + subjectBoardNo;
 	}
 }
 	

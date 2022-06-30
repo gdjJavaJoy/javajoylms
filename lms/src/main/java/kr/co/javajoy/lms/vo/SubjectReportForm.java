@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class SubjectReportForm {
 	// subject_board
+	private int subjectBoardNo;
 	private int subjectNo;
 	// subject_report
 	private String memberId;
