@@ -212,16 +212,6 @@ img {
 									</a></li>
 									<li class="flex"><a
 										class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-										href="#"> <svg class="w-4 h-4 mr-3" aria-hidden="true"
-												fill="none" stroke-linecap="round" stroke-linejoin="round"
-												stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                          <path
-													d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                          <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg> <span>Settings</span>
-									</a></li>
-									<li class="flex"><a
-										class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
 										href="${pageContext.request.contextPath}/logout"> <svg
 												class="w-4 h-4 mr-3" aria-hidden="true" fill="none"
 												stroke-linecap="round" stroke-linejoin="round"
@@ -243,12 +233,10 @@ img {
 						영상 자료</h2>
 					<c:if test="${level eq 1}">
 						<a href="${pageContext.request.contextPath}/addSubjectVideo?subjectNo=${subjectVideoList[0].subjectNo}">등록</a> 
-						<a href="#">수정</a>
 					</c:if>
 					<a
 						class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
 						href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${subjectVideoList[0].subjectNo}">
-						<!-- 회원정보 수정창으로 -->
 						<div class="flex items-center">
 							<span></span>
 						</div> <span>subjectOne으로 &RightArrow;</span>
@@ -263,6 +251,10 @@ img {
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 								allowfullscreen> </iframe>
 							<div>${v.subjectVideoContent}</div>
+							<c:if test="${level eq 1}">
+								<a href="${pageContext.request.contextPath}/modifySubjectVideo?subjectVideoNo=${v.subjectVideoNo}">수정</a>
+								<a href="${pageContext.request.contextPath}/removeSubjectVideo?subjectVideoNo=${v.subjectVideoNo}&subjectNo=${subjectVideoList[0].subjectNo}">삭제</a>
+							</c:if>
 						</div>
 						<br>
 						<br>

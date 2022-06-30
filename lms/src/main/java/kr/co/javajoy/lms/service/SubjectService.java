@@ -77,16 +77,39 @@ public class SubjectService {
 	public List<SubjectVideo> getSubjectVideoList(int subjectNo){
 		log.debug(CF.YHJ + "SubjectService.getSubjectVideoList.subjectNo : " +  subjectNo + CF.RESET); // 디버깅
 		
-		List<SubjectVideo> list = subjectMapper.selectSubjectVideo(subjectNo);
+		List<SubjectVideo> list = subjectMapper.selectSubjectVideoList(subjectNo);
 		log.debug(CF.YHJ + "SubjectService.getSubjectVideoList.list : " +  list + CF.RESET); // 디버깅
 		
 		return list;
 	}
 	
+	// 강의 영상 추가
 	public int addSubjectVideo(SubjectVideo subjectVideo) {
 		log.debug(CF.YHJ + "SubjectService.addSubjectVideo.subjectVideo : " + subjectVideo + CF.RESET); // 디버깅
 		
 		return subjectMapper.insertSubjectVideo(subjectVideo);
+	}
+	
+	// 1개의 강의영상 정보 뽑기
+	public SubjectVideo getSubjectVideoOne(int subjectVideoNo) {
+		log.debug(CF.YHJ + "SubjectService.getSubjectVideoOne.subjectVideoNo : " + subjectVideoNo + CF.RESET); // 디버깅
+		
+		SubjectVideo subjectVideo = subjectMapper.selectSubjectVideoOne(subjectVideoNo);
+		
+		return subjectVideo;
+	}
+	
+	// 강의 영상 1개 수정
+	public void modifySubjectVideo(SubjectVideo subjectVideo) {
+		log.debug(CF.YHJ + "SubjectService.modifySubjectVideo.subejctVideo : " + subjectVideo + CF.RESET); // 디버깅
+		subjectMapper.updateSubjectVideo(subjectVideo);
+	}
+	
+	// 강의 영상 1개 삭제
+	public void removeSubjectVideo(int subjectVideoNo) {
+		log.debug(CF.YHJ + "SubjectService.removeSubjectVideo.subjectVideoNo : " + subjectVideoNo + CF.RESET); // 디버깅
+		
+		subjectMapper.deleteSubjectVideoOne(subjectVideoNo);
 	}
 }
 

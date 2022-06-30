@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>addSubjetVideo</title>
+<title>modifySubjetVideo</title>
 <script src="/js/summernote/summernote-lite.js"></script>
 <script src="/js/summernote/lang/summernote-ko-KR.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -227,7 +227,7 @@
 				<div class="container grid px-6 mx-auto">
 					<h2
 						class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의
-						add video</h2>
+						modify video</h2>
 					<!-- CTA -->
 					<a
 						class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
@@ -244,11 +244,11 @@
 					<!-- With avatar -->
 					<h4
 						class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
-						강의 영상 추가</h4>
+						강의 영상 수정</h4>
 					<div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
 						<div class="w-full overflow-x-auto">
-							<form id="addSubjectVideoForm" method="post"
-								action="${pageContext.request.contextPath}/addSubjectVideo">
+							<form id="modifySubjectVideoForm" method="post"
+								action="${pageContext.request.contextPath}/modifySubjectVideo">
 								<table class="w-full whitespace-no-wrap">
 									<tr class="text-gray-700 dark:text-gray-400">
 										<td class="px-4 py-3">
@@ -264,11 +264,12 @@
 												<!-- Avatar with inset shadow -->
 												<div>
 													<p class="font-semibold">
-														<input type="hidden" name="subjectNo" value="${subjectNo}">
+														<input type="hidden" name="subjectNo" value="${subjectVideo.subjectNo}">
+														<input type="hidden" name="subjectVideoNo" value="${subjectVideo.subjectVideoNo}">
 														<input
 															class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-															type="text" id="subjectVideoTitle"
-															name="subjectVideoTitle" placeholder="제목을 입력하세요">
+															type="text" id="subjectVideoTitle" value="${subjectVideo.subjectVideoTitle}"
+															name="subjectVideoTitle">
 													</p>
 												</div>
 											</div>
@@ -290,8 +291,8 @@
 													<p class="font-semibold">
 														<input
 															class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-															type="text" id="subjectVideoContent"
-															name="subjectVideoContent" placeholder="내용을 입력하세요">
+															type="text" id="subjectVideoContent" value="${subjectVideo.subjectVideoContent}"
+															name="subjectVideoContent">
 													</p>
 												</div>
 											</div>
@@ -313,8 +314,8 @@
 													<p class="font-semibold">
 														<input
 															class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-															type="text" id="subjectVideoUrl"
-															name="subjectVideoUrl" placeholder="영상 URL을 입력하세요">
+															type="text" id="subjectVideoUrl" value="${subjectVideo.subjectVideoUrl}" 
+															name="subjectVideoUrl">
 													</p>
 												</div>
 											</div>
@@ -327,7 +328,7 @@
 									<button
 										class="px-10 py-4 font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
 										style="margin: auto; display: block;" type="button"
-										id="addVideo">영상 추가</button>
+										id="modifyVideo">영상 수정</button>
 								</div>
 							</form>
 						</div>
@@ -339,7 +340,7 @@
 	</div>
 </body>
 <script>
-	$('#addVideo').click(function() {
+	$('#modifyVideo').click(function() {
 		if ($('#subjectVideoTitle').val() == '') {
 			Swal.fire('제목을 입력해주세요');
 			return;
@@ -350,7 +351,7 @@
 			Swal.fire('URL을 입력해주세요');
 			return;
 		} else {
-			$('#addSubjectVideoForm').submit();
+			$('#modifySubjectVideoForm').submit();
 		}
 	});
 </script>

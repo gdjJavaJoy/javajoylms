@@ -25,9 +25,18 @@ public interface SubjectMapper {
 	int updateSubject(Subject subject);
 	// 강좌 삭제(미구현)
 	
-	// 강좌 영상 리스트
-	List<SubjectVideo> selectSubjectVideo(int subjectNo);
+	// 강의 영상 하나만 뽑기
+	SubjectVideo selectSubjectVideoOne(int subjectVideoNo);
 	
-	// 강좌 영상 입력
+	// 강의 영상 리스트
+	List<SubjectVideo> selectSubjectVideoList(int subjectNo);
+	
+	// 강의 영상 입력
 	int insertSubjectVideo(SubjectVideo subjectVideo);
+	
+	// 강의 영상 수정
+	void updateSubjectVideo(SubjectVideo subjectVideo);
+	
+	// 강의 영상
+	void deleteSubjectVideoOne(int subjectVideoNo);
 }

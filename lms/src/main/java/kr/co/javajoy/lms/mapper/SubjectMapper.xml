@@ -104,7 +104,7 @@
 		WHERE subject_no = #{subjectNo}
 	</update>
 	
-	<select id="selectSubjectVideo"
+	<select id="selectSubjectVideoList"
 			parameterType="int"
 			resultType="kr.co.javajoy.lms.vo.SubjectVideo" >
 		SELECT
@@ -117,6 +117,21 @@
 			,update_date updateDate
 		FROM subject_video
 		WHERE subject_no = #{subjectNo}
+	</select>
+	
+	<select id="selectSubjectVideoOne"
+			parameterType="int"
+			resultType="kr.co.javajoy.lms.vo.SubjectVideo">			
+		SELECT 
+			subject_video_no subjectVideoNo
+			,subject_no subjectNo
+			,subject_video_title subjectVideoTitle
+			,subject_video_content subjectVideoContent
+			,subject_video_url subjectVideoUrl
+			,create_date createDate
+			,update_date updateDate
+		FROM subject_video
+		WHERE subject_video_no = #{subjectVideoNo}
 	</select>
 	
 	<insert id="insertSubjectVideo"
@@ -138,9 +153,22 @@
 			)
 	</insert>
 	
+	<update id="updateSubjectVideo"
+			parameterType="kr.co.javajoy.lms.vo.SubjectVideo">
+		UPDATE subject_video
+		SET
+			subject_video_title = #{subjectVideoTitle}
+			,subject_video_content = #{subjectVideoContent}
+			,subject_video_url = #{subjectVideoUrl}
+			,update_date = NOW()
+		WHERE subject_video_no = #{subjectVideoNo}
+	</update>
 	
-	
-	
+	<delete id="deleteSubjectVideoOne"
+			parameterType="int">
+		DELETE FROM subject_video
+		WHERE subject_video_no = #{subjectVideoNo}
+	</delete>
 	
 	
 	

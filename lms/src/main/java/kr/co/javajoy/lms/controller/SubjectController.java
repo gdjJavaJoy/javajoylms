@@ -133,7 +133,7 @@ public class SubjectController {
 	}
 	
 	// 강좌 영상으로 가기
-	@GetMapping("getSubjectVideo")
+	@GetMapping("/getSubjectVideo")
 	public String getSubjectVideo(@RequestParam(value="subjectNo") int subjectNo
 								,Model model) {
 		log.debug(CF.YHJ + "SubjectController.getSubjectVideo.subjectNo : " +  subjectNo + CF.RESET); // 디버깅
@@ -147,7 +147,8 @@ public class SubjectController {
 		return "/subject/getSubjectVideo";
 	}
 	
-	@GetMapping("addSubjectVideo")
+	// 강의영상 추가
+	@GetMapping("/addSubjectVideo")
 	public String addSubejctVideo(@RequestParam(value="subjectNo") int subjectNo
 								,Model model) {
 		log.debug(CF.YHJ + "SubjectController.addSubjectVideo.subjectNo : " +  subjectNo + CF.RESET); // 디버깅
@@ -157,19 +158,53 @@ public class SubjectController {
 		return "/subject/addSubjectVideo";
 	}
 	
-	@PostMapping("addSubjectVideo")
+	// 강의영상 추가
+	@PostMapping("/addSubjectVideo")
 	public String addSubjectVideo(SubjectVideo subjectVideo) {
 		log.debug(CF.YHJ + "SubjectController.addSubjectVideo.subjectVideo : " + subjectVideo + CF.RESET); // 디버깅
 		
 		int row = subjectService.addSubjectVideo(subjectVideo);
+		log.debug(CF.YHJ + "SubjectController.addSubjectVideo.row : " + row + CF.RESET); // 디버깅
 		
 		return "redirect:/getSubjectVideo?subjectNo="+subjectVideo.getSubjectNo();
 	}
 
+	// 강의 영상 수정
+	@GetMapping("/modifySubjectVideo")
+	public String modifySubjectVideo(@RequestParam(value="subjectVideoNo") int subjectVideoNo
+									,Model model) {
+		log.debug(CF.YHJ + "SubjectController.modifySubjectVideo.subjectVideoNo : " + subjectVideoNo + CF.RESET); // 디버깅
+		
+		SubjectVideo subjectVideo = subjectService.getSubjectVideoOne(subjectVideoNo);
+		log.debug(CF.YHJ + "SubjectController.modifySubjectVideo.subejctVideoOne : " + subjectVideo + CF.RESET); // 디버깅
+		
+		model.addAttribute("subjectVideo",subjectVideo);
+		
+		return "/subject/modifySubjectVideo";
+	}
 	
+	// 강의 영상 수정
+	@PostMapping("modifySubjectVideo")
+	public String modifySubjectVideo(SubjectVideo subjectVideo) {
+		log.debug(CF.YHJ + "SubjectController.modifySubjectVideo.subejctVideo : " + subjectVideo + CF.RESET); // 디버깅
+		
+		subjectService.modifySubjectVideo(subjectVideo);
+				
+		return "redirect:/getSubjectVideo?subjectNo="+subjectVideo.getSubjectNo();
+	}
 	
-	
-	
+	// 강의 영상 삭제
+	@GetMapping("/removeSubjectVideo")
+	public String removeSubjectVideo(@RequestParam(value="subjectVideoNo") int subjectVideoNo
+									,@RequestParam(value="subjectNo") int subjectNo) {
+		// 디버깅
+		log.debug(CF.YHJ + "SubjectController.removeSubjectVideo.subjectVideoNo : " + subjectVideoNo + CF.RESET);
+		log.debug(CF.YHJ + "SubjectController.removeSubjectVideo.subjectNo : " + subjectNo + CF.RESET);
+		
+		subjectService.removeSubjectVideo(subjectVideoNo);
+		
+		return "redirect:/getSubjectVideo?subjectNo="+subjectNo;
+	}
 	
 	
 	
