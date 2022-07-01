@@ -15,7 +15,7 @@ public interface SubjectMapper {
 	// 강좌 입력
 	int insertSubject(Subject subject);
 	// 강사 리스트
-	ArrayList<String> selectTeacherId();
+	List<String> selectTeacherId();
 	// 강좌 리스트(운영자 용) 출력
 	List<Subject> selectSubjectByPage(Map<String, Object> map);
 	// 강좌 총 수

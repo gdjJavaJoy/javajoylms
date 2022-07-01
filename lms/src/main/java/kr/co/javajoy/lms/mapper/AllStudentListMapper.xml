@@ -6,17 +6,17 @@
 			parameterType="java.util.Map"
 			resultType="map">
 		SELECT
-		a.member_id memberId
-		, b.student_name studentName
-		, b.student_gender studentGender
-		, b.student_phone studentPhone
-		, b.student_address studentAddress
-		, b.student_detailaddress studentDetailAddress
-		, b.student_email studentEmail
-		, b.student_education studentEducation
-		, a.member_active memberActive
+			 a.member_id memberId
+			,b.student_name studentName
+			,b.student_gender studentGender
+			,b.student_phone studentPhone
+			,b.student_address studentAddress
+			,b.student_detailaddress studentDetailAddress
+			,b.student_email studentEmail
+			,b.student_education studentEducation
+			,a.member_active memberActive
 		FROM member_id a
-		INNER JOIN student b ON a.member_id = b.member_id
+			INNER JOIN student b ON a.member_id = b.member_id
 		<if test='s_studentName != null and !"".equals( s_studentName ) '>
 			WHERE CONCAT( '%', b.student_name, '%' ) LIKE CONCAT( '%',
 			#{s_studentName} , '%' )

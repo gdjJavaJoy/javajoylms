@@ -63,7 +63,9 @@
 	<!-- 강사 리스트 -->
 	<select id="selectTeacherId"
 			resultType="String">
-		SELECT member_id FROM teacher
+		SELECT 
+			member_id memberId
+		FROM teacher
 	</select>
 	
 	<!-- 강좌 상세 보기 -->		
@@ -170,13 +172,7 @@
 		WHERE subject_video_no = #{subjectVideoNo}
 	</delete>
 	
-	<select id="checkSurveyCnt"
-			parameterType="String"
-			resultType="int">
-		SELECT COUNT(*) cnt
-		FROM survey_result
-		WHERE member_id= #{memberId}
-	</select>
+	
 	
 	<select id="selectSubjectStudentList"
 		parameterType="java.util.Map"

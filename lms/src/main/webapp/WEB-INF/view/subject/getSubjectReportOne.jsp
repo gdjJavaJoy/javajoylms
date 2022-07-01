@@ -28,22 +28,24 @@
     ></script>
     <script src="./public/assets/js/init-alpine.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
  	<script>
 		$(document).ready(function(){
 			let flag = true;
 			$('#addSubjectReportComment').click(function(){
-				alert('댓글 작성 성공!');
 				if($('#subjectBoardNo').val() == '') {
-					alert('test');
+					Swal.fire('test');
 			    } else if($('#memberId').val() == '') {
-					alert('test');
+			    	Swal.fire('test');
 				} else if($('#subjectReportCommentContent').val() == '') {
-					alert('댓글 내용을 입력해주세요');
+					Swal.fire('댓글 내용을 입력해주세요');
 				} else {
 					if(flag) {
 						$('#addSubjectReportCommentForm').submit();
+						Swal.fire('댓글 작성 성공!');
 					}
 				}
+				
 			});
 		});
 	</script>
@@ -706,7 +708,7 @@
 					    <c:when test="${subjectFileList.size() >= 0}">
 					    	<c:forEach var="subjectFileList" items="${subjectFileList}">
 					    		<div>
-					    			<a href="${pageContext.request.contextPath}/file/subjectFile/${subjectFileList.subjectFileName}" download="${subjectFileList.subjectFileName}">${subjectFileList.subjectFileOriginalName}</a>
+					    			<a href="${pageContext.request.contextPath}/file/subjectFile/${subjectFileList.subjectFileName}" download="${subjectFileList.subjectFileOriginalName}">${subjectFileList.subjectFileOriginalName}</a>
 					    		</div>
 					    	</c:forEach>
 					    </c:when>

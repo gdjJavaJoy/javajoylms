@@ -28,6 +28,7 @@ public class AllStudentListService {
 		map.put("rowPerPage", rowPerPage);
 		map.put("startRow", startRow);
 		map.put("s_studentName", s_studentName);
+		
 		// Mapper에서 반환 된 값 가공
 		List<Student> list = allStudentListMapper.AllStudentList(map);
 		int totalCount = allStudentListMapper.selectTotalCount();

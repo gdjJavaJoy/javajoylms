@@ -1,6 +1,5 @@
 package kr.co.javajoy.lms.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +27,7 @@ public class SubjectService {
 	}
 	
 	// 강사 리스트
-	public ArrayList<String> getTeacherId() {
+	public List<String> getTeacherId() {
 		return subjectMapper.selectTeacherId();
 	}
 	

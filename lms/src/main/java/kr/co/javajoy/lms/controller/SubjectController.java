@@ -1,6 +1,5 @@
 package kr.co.javajoy.lms.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +38,7 @@ public class SubjectController {
 			return "redirect:/login";
 		}
 		// 강사 리스트 출력
-		ArrayList<String> teacherList = subjectService.getTeacherId();
+		List<String> teacherList = subjectService.getTeacherId();
 		model.addAttribute("teacherList", teacherList);
 		log.debug(CF.PBJ + "SubjectController.addSubject.teacherList : " + teacherList);
 		// addSubject.jsp 불러옴
@@ -96,9 +95,6 @@ public class SubjectController {
 		log.debug(CF.PBJ + "SubjectController.getSubjectOne.param.subjectNo : " + subjectNo);
 		
 		Subject subject = subjectService.getSubjectOne(subjectNo);
-		int surveyChk = subjectService.checkSurveyCnt(memberId);
-		
-		model.addAttribute("surveyChk",surveyChk);
 		model.addAttribute("subject", subject);
 		return "subject/getSubjectOne";
 	}
@@ -117,7 +113,7 @@ public class SubjectController {
 		if(level.equals("2") || level.equals("3")) {
 			return "redirect:/login";
 		}
-		ArrayList<String> teacherList = subjectService.getTeacherId();
+		List<String> teacherList = subjectService.getTeacherId();
 		model.addAttribute("teacherList", teacherList);
 		// 디버깅
 		log.debug(CF.PBJ + "SubjectController.modifySubject.param.subjectNo : " + subjectNo);
@@ -147,7 +143,7 @@ public class SubjectController {
 		log.debug(CF.YHJ + "SubjectService.getSubjectVideoList.subjectVideoList : " +  subjectVideoList + CF.RESET); // 디버깅
 		
 		model.addAttribute("subjectVideoList",subjectVideoList);
-		model.addAttribute("subjectNo",subjectNo);
+		
 		
 		return "/subject/getSubjectVideo";
 	}

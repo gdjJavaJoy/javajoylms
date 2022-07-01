@@ -23,11 +23,9 @@
     />
     <link rel="stylesheet" href="./public/assets/css/tailwind.output.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script
-      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
-      defer
-    ></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <script src="./public/assets/js/init-alpine.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
 	<script>
 		$(document).ready(function(){
 			let flag = true;
@@ -41,21 +39,21 @@
 				if(flag) {
 					$('#fileSection').append("<div><input type='file' class='subjectReportFileList' onchange='checkFile(this)' id='subjectReportFileList' name='subjectReportFileList'></div>");
 				} else {
-					alert('파일 첨부를 다시 확인하십시오');
+					Swal.fire('파일 첨부를 다시 확인하십시오');
 				}
 			});
 			
 			$('#addSubjectReport').click(function(){
 				if($('#subjectNo').val() == '') {
-					alert('test');
+					Swal.fire('test');
 			    } else if($('#memberId').val() == '') {
-					alert('test');
+			    	Swal.fire('test');
 				} else if($('#subjectReportTitle').val() == '') {
-					alert('과제 게시판 제목을 설정하세오!');
-				} else if($('#subjectReportContent').val() == '') {
-					alert('과제 게시판 내용을 입력하세요!');
-				} else if($('#subjectReportPeriod').val() == '') {
-					alert('과제 기한을 설정하세요!');
+					Swal.fire('과제 게시판 제목을 설정하세오!');	
+				}  else if($('#subjectReportPeriod').val() == '') {
+					Swal.fire('과제 기한을 설정하세요!');
+				}  else if($('#subjectReportContent').val() == '') {
+					Swal.fire('과제 게시판 내용을 입력하세요!');
 				} else {
 					$('.subjectReportFileList').each(function(){
 						if($(this).val() == '') {
@@ -66,7 +64,7 @@
 					if(flag) {
 						$('#addSubjectReportForm').submit();
 					} else {
-						alert('파일 첨부를 다시 확인하십시오');
+						Swal.fire('파일 첨부를 다시 확인하십시오');
 					}
 				}
 			});
@@ -79,7 +77,7 @@
 			var file = f.files;
 			// file[0].name 은 파일명 입니다.
 			// 정규식으로 확장자 체크
-			if(!/\.(pdf|hwp|docx|ppt|txt)$/i.test(file[0].name)) alert('pdf, hwp, docx, ppt, txt 파일만 선택해 주세요.\n\n현재 파일 : ' + file[0].name);
+			if(!/\.(pdf|hwp|docx|ppt|txt)$/i.test(file[0].name)) Swal.fire('pdf, hwp, docx, ppt, txt 파일만 선택해 주세요.\n\n현재 파일 : ' + file[0].name);
 			// 체크를 통과했다면 종료.
 			else return;
 			// 체크에 걸리면 선택된  내용 취소 처리를 해야함.

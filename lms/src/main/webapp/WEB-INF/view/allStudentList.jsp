@@ -630,33 +630,26 @@
                     </tr>
                   </thead>
                   <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                  
-                  <c:forEach var="s" items="${list}">
-					<script type="text/javascript">
-						function reply_click(clicked_id)
-							{
-								 alert(clicked_id);
-							}
-					</script>
-                    <tr class="text-gray-700 dark:text-gray-400" align="center">
-						<td class="px-4 py-3 text-sm">${s.memberId}</td>
-						<td class="px-4 py-3 text-sm">${s.studentName}</td>
-						<td class="px-4 py-3 text-sm">${s.studentGender}</td>
-						<td class="px-4 py-3 text-sm">${s.studentPhone}</td>
-						<td class="px-4 py-3 text-sm">${s.studentAddress}</td>
-						<td class="px-4 py-3 text-sm">${s.studentDetailAddress}</td>
-						<td class="px-4 py-3 text-sm">${s.studentEmail}</td>
-						<td class="px-4 py-3 text-sm">${s.studentEducation}</td>
-						<td class="px-4 py-3 text-sm">${s.memberActive}</td>
-						<td><button type="button" class="grid px-4 py-3 text-sm" onclick="location.href='${pageContext.request.contextPath}/allStudentList';"class="grid px-4 py-3 text-sm">삭제(미구현)</button></td>
-						<td><button type="button" class="grid px-4 py-3 text-sm" onclick="location.href='${pageContext.request.contextPath}/allStudentList';"class="grid px-4 py-3 text-sm">수정(미구현)</button></td>
-					</tr>
+					<c:forEach var="s" items="${list}">
+	                    <tr class="text-gray-700 dark:text-gray-400" align="center">
+							<td class="px-4 py-3 text-sm">${s.memberId}</td>
+							<td class="px-4 py-3 text-sm">${s.studentName}</td>
+							<td class="px-4 py-3 text-sm">${s.studentGender}</td>
+							<td class="px-4 py-3 text-sm">${s.studentPhone}</td>
+							<td class="px-4 py-3 text-sm">${s.studentAddress}</td>
+							<td class="px-4 py-3 text-sm">${s.studentDetailAddress}</td>
+							<td class="px-4 py-3 text-sm">${s.studentEmail}</td>
+							<td class="px-4 py-3 text-sm">${s.studentEducation}</td>
+							<td class="px-4 py-3 text-sm">${s.memberActive}</td>
+							<td><button type="button" class="grid px-4 py-3 text-sm" onclick="location.href='${pageContext.request.contextPath}/allStudentList';"class="grid px-4 py-3 text-sm">삭제(미구현)</button></td>
+							<td><button type="button" class="grid px-4 py-3 text-sm" onclick="location.href='${pageContext.request.contextPath}/allStudentList';"class="grid px-4 py-3 text-sm">수정(미구현)</button></td>
+						</tr>
 					</c:forEach>
                   </tbody>
                 </table>
               </div>
               <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-12 dark:text-gray-400 dark:bg-gray-800">
-                <form method="get" action="${pageContext.request.contextPath}/allStudentList" name="search" >
+                <form method="get" action="${pageContext.request.contextPath}/allStudentList" name="search">
 	                <span class="flex items-center col-span-3">
 	                  Search Student :
 	                  <input name="s_studentName"class="form-control" type="text"  placeholder=" 학생 이름 검색">
