@@ -60,10 +60,14 @@ public class NoticeService {
 		int fileTotalCount = noticefileMapper.selectBoardfileCnt(boardNo);
 		log.debug(CF.WSH + "NoticeService.getNoticeOne.fileTotalCount : "+fileTotalCount);
 		
+		// 게시글 번호받기 
+		int totalCount = noticeMapper.selectTotalCount();
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("board", board);
 		map.put("boardfile", boardfile);
 		map.put("fileTotalCount", fileTotalCount);
+		map.put("totalCount", totalCount);
 		return map;
 	}
 	

@@ -70,7 +70,8 @@
 	<update id="updateNotice"
 			parameterType="kr.co.javajoy.lms.vo.Board">
 		UPDATE board 
-		SET board_title = #{boardTitle}
+		SET 
+			board_title = #{boardTitle}
 			,board_content = #{boardContent}
 			,update_date = NOW()
 		WHERE board_no = #{boardNo}

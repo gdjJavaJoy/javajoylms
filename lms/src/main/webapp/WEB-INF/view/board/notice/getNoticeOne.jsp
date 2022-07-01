@@ -26,7 +26,7 @@
 			<table class="table table=striped">
 				<tr>
 					<td>번호</td>
-					<td>${n.boardNo}</td>
+					<td>${totalCount-((currentPage-1)*rowPerPage)}</td>
 				</tr>
 				<tr>
 					<td>아이디</td>
@@ -50,7 +50,7 @@
 					<td>
 						<C:forEach var="boardfile" items="${boardfile}">
 							<div>
-								<a href="${pageContext.request.contextPath}/file/boardFile/${boardfile.boardFileName}${nr.boardFileType}" download="${boardfile.boardFileName}${nr.boardFileType}">${boardfile.boardFileOriginalName}</a>
+								<a href="${pageContext.request.contextPath}/file/boardFile/${boardfile.boardFileName}" download="${boardfile.boardFileOriginalName}">${boardfile.boardFileOriginalName}</a>
 							</div>
 						</C:forEach>
 					</td>	

@@ -61,6 +61,7 @@ public class NoticeController {
 		model.addAttribute("board", map.get("board"));
 		model.addAttribute("boardfile", map.get("boardfile"));
 		model.addAttribute("fileTotalCount", map.get("fileTotalCount"));
+		model.addAttribute("totalCount",map.get("totalCount"));
 		log.debug(CF.WSH + "NoticeController.getNoticeOne.map : "+ map);
 		return "board/notice/getNoticeOne";
 	}
@@ -135,6 +136,7 @@ public class NoticeController {
 		model.addAttribute("board",map.get("board"));
 		model.addAttribute("boardfile",map.get("boardfile"));
 		model.addAttribute("fileTotalCount", map.get("fileTotalCount"));
+		model.addAttribute("totalCount",map.get("totalCount"));
 		return "board/notice/modifyNotice";
 	}
 	@PostMapping("/modifyNotice")
@@ -155,7 +157,8 @@ public class NoticeController {
 		}
 		noticeService.modifyNotice(board, boardForm, path);
 		log.debug(CF.WSH + "NoticeController.addNotice(Post).boardForm : "+boardForm);	
-		return "redirect:/getNoticeOne?boardNo="+board.getBoardNo();
+		log.debug(CF.WSH + "NoticeController.addNotice(Post).board : "+board);
+		return "redirect:/getNoticeOne?boardNo="+boardNo;
 	}
 }
 
