@@ -110,7 +110,17 @@
             </c:forEach>
             <!-- With avatar -->
             <c:forEach var="subjectReport" items="${subjectReport}">
-           		<h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">${subjectReport.subjectName} 과제 상세보기<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage?subjectReportNo=${subjectReportNo}" class="text-sm" style="float: right;">학생 과제 제출 게시판(미구현) -></a></h4> 
+           		<h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">${subjectReport.subjectName} 과제 상세보기
+	           		<c:if test="${level eq 3}">
+	           			<a href="${pageContext.request.contextPath}/addSubjectReportStudent?subjectReportNo=${subjectReportNo}" class="text-sm" style="float: right;">과제 제출하기(미구현) -></a>
+	           		</c:if>
+	           		<c:if test="${level eq 2}">
+	           			<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage?subjectReportNo=${subjectReportNo}" class="text-sm" style="float: right;">과제 제출 현황(미구현) -></a>
+	           		</c:if>
+	           		<c:if test="${level eq 1}">
+	           			<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage?subjectReportNo=${subjectReportNo}" class="text-sm" style="float: right;">과제 제출 현황(미구현) -></a>
+	           		</c:if>
+           		</h4> 
             </c:forEach>
             <!-- 과제 상세보기 테이블 -->
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">

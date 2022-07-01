@@ -102,9 +102,6 @@
 		<c:if test="${level eq 2}">
 			<div id="teacherSideNav"></div>
 		</c:if>
-		<c:if test="${level eq 3}">
-			<div id="studentSideNav"></div>
-		</c:if>
 	</aside>
       <!-- Backdrop -->
       <div
@@ -124,9 +121,6 @@
 			</c:if>
 			<c:if test="${level eq 2}">
 				<div id="teacherHeaderNav"></div>
-			</c:if>
-			<c:if test="${level eq 3}">
-				<div id="studentHeaderNav"></div>
 			</c:if>
         <main class="h-full pb-16 overflow-y-auto">
             <div class="container grid px-6 mx-auto">

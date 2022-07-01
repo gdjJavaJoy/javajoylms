@@ -17,6 +17,14 @@
     ></script>
     <script src="./public/assets/js/init-alpine.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+		$(document).ready(function(){
+			let flag = true;
+			$('#signup').click(function(){
+				$('#search').submit();
+			});
+		});
+	</script>
   </head>
   <body>
     <div
@@ -633,11 +641,14 @@
                 </table>
               </div>
               <div
-                class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
-              >
-                <span class="flex items-center col-span-3">
-                  Search Subject List : <input class="form-control" type="text"  placeholder=" 강좌 검색">
-                </span>
+                class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500  border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-12 dark:text-gray-400 dark:bg-gray-800"
+              >	<form method="get" action="${pageContext.request.contextPath}/getSubjectByPage" name="search">
+	                <span class="flex items-center col-span-3">검색 :
+	                  <input name="s_subjectName" class="form-control" type="text"  placeholder="강좌 검색">
+	                 	  <button type="submit" class="grid px-4 py-3 text-sm">Search</button>
+	                </span>
+	            </form> 
+	           
                 <span class="col-span-2"></span>
                 <!-- Pagination -->
                 <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">

@@ -68,15 +68,7 @@
     >
 	<!-- Desktop sidebar -->
 	<aside class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
-	    <c:if test="${level eq 1}">
 			<div id="adminSideNav"></div>
-		</c:if>
-		<c:if test="${level eq 2}">
-			<div id="teacherSideNav"></div>
-		</c:if>
-		<c:if test="${level eq 3}">
-			<div id="studentSideNav"></div>
-		</c:if>
 	</aside>
       <!-- Backdrop -->
       <div
@@ -91,15 +83,7 @@
       </div>
       <!-- Desktop HeaderNav -->
       <div class="flex flex-col flex-1 w-full">
-      	    <c:if test="${level eq 1}">
-				<div id="adminHeaderNav"></div>
-			</c:if>
-			<c:if test="${level eq 2}">
-				<div id="teacherHeaderNav"></div>
-			</c:if>
-			<c:if test="${level eq 3}">
-				<div id="studentHeaderNav"></div>
-			</c:if>
+			<div id="adminHeaderNav"></div>
         <main class="h-full pb-16 overflow-y-auto">
             <div class="container grid px-6 mx-auto">
             <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의 Subject Insert</h2>

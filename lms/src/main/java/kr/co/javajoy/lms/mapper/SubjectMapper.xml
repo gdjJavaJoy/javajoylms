@@ -50,6 +50,10 @@
 			,s.update_date updateDate
 		FROM subject AS s
 		LEFT JOIN teacher AS t ON s.teacher_id = t.member_id
+		<if test='s_subjectName != null and !"".equals(s_subjectName)'>
+			WHERE CONCAT('%', s.subject_name, '%') 
+			LIKE CONCAT('%', #{s_subjectName}, '%')
+		</if>
 		ORDER BY create_date DESC
 		LIMIT #{startRow}, #{rowPerPage}
 	</select>	

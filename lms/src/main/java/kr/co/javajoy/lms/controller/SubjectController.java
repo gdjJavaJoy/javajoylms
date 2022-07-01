@@ -59,7 +59,8 @@ public class SubjectController {
 	// 강좌 리스트(운영자용) 출력 페이징 처리
 	@GetMapping("/getSubjectByPage")
 	public String getSubjectByPage(HttpSession session
-			,Model model		  
+			,Model model
+			,@RequestParam @Nullable String s_subjectName
 			,@RequestParam(name = "currentPage", defaultValue = "1") int currentPage
 			,@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
 		// 운영자 session 처리
@@ -72,10 +73,11 @@ public class SubjectController {
 			return "redirect:/login";
 		}
 		// 운영자용 강좌 리스트
-		Map<String, Object> map = subjectService.getSubjectByPage(currentPage, rowPerPage);
+		Map<String, Object> map = subjectService.getSubjectByPage(currentPage, rowPerPage, s_subjectName);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("s_subjectName", s_subjectName);
 		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.currentPage : " + currentPage);
 		
 		return "subject/getSubjectByPage";

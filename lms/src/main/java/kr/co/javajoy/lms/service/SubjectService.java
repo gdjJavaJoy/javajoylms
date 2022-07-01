@@ -32,13 +32,14 @@ public class SubjectService {
 	}
 	
 	// 강좌 리스트(운영자용) 출력
-	public Map<String, Object> getSubjectByPage(int currentPage, int rowPerPage) {
+	public Map<String, Object> getSubjectByPage(int currentPage, int rowPerPage, String s_subjectName) {
 		// 리스트 출력 페이징
 		int startRow = (currentPage - 1) * rowPerPage;
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("rowPerPage", rowPerPage);
 		map.put("startRow", startRow);
+		map.put("s_subjectName", s_subjectName);
 		
 		// Mapper에서 반환 된 값 가공
 		List<Subject> list = subjectMapper.selectSubjectByPage(map);

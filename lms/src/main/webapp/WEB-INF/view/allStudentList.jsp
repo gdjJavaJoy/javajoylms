@@ -648,12 +648,12 @@
                   </tbody>
                 </table>
               </div>
-              <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-12 dark:text-gray-400 dark:bg-gray-800">
+              <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-12 dark:text-gray-400 dark:bg-gray-800">
                 <form method="get" action="${pageContext.request.contextPath}/allStudentList" name="search">
 	                <span class="flex items-center col-span-3">
-	                  Search Student :
-	                  <input name="s_studentName"class="form-control" type="text"  placeholder=" 학생 이름 검색">
-	                  <button type="submit" class="grid px-4 py-3 text-sm">검색</button>
+	                  	Search Student :
+	                  	<input name="s_studentName"class="form-control" type="text"  placeholder=" 학생 이름 검색">
+	                  	<button type="submit" class="grid px-4 py-3 text-sm">검색</button>                 
 	                </span>
                 </form>
                 <span class="col-span-2"></span>
