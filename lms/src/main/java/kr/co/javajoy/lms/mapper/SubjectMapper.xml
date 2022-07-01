@@ -178,7 +178,27 @@
 		WHERE member_id= #{memberId}
 	</select>
 	
-	
+	<select id="selectSubjectStudentList"
+		parameterType="java.util.Map"
+		resultType="kr.co.javajoy.lms.vo.Student">
+	SELECT 
+		ss.subject_no subjectNo
+		,s.member_id memberId
+		,s.student_name studentName
+		,s.student_gender studentGender
+		,s.student_phone studentPhone
+		,s.student_education studentEducation
+		,s.student_register_date studentRegisterDate
+	FROM 
+		student AS s
+		INNER JOIN subject_student AS ss
+	    ON s.member_id = ss.member_id
+	    WHERE ss.subject_no = #{subjectNo}
+	<if test='searchStudentName != null and !"".equals( searchStudentName ) '>
+		AND CONCAT( '%', s.student_name, '%' ) LIKE CONCAT( '%',
+		#{searchStudentName} , '%' )
+	</if>
+</select>
 	
 	
 	

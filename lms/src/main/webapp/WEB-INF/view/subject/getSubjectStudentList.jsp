@@ -2,132 +2,144 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Subject One</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./public/assets/css/tailwind.output.css" />
-    
-    <script
-      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
-      defer
-    ></script>
-    <script src="./public/assets/js/init-alpine.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  </head>
-  <body>
-    <div
-      class="flex h-screen bg-gray-50 dark:bg-gray-900"
-      :class="{ 'overflow-hidden': isSideMenuOpen}"
-    >
-      <!-- Desktop sidebar -->
-      <aside
-        class="z-20 flex-shrink-0 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block"
-      >
-        <div class="py-4 text-gray-500 dark:text-gray-400">
-          <a
-            class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
-            href="${pageContext.request.contextPath}/getSubjectByPage"
-          >
-            JavaJoy LMS
-          </a>
-          <ul class="mt-6">
-            <li class="relative px-6 py-3">
-              <a
-                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                href="#"
-              >
-                <svg
-                  class="w-5 h-5"
-                  aria-hidden="true"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                  ></path>
-                </svg>
-                <span class="ml-4">회원 관리</span>
-              </a>
-            </li>
-          </ul>
-          <ul>
-            <li class="relative px-6 py-3">
-              <a
-                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                href="${pageContext.request.contextPath}/getSubjectByPage"
-              >
-                <svg
-                  class="w-5 h-5"
-                  aria-hidden="true"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
-                  ></path>
-                </svg>
-                <span class="ml-4">강좌 관리</span>
-              </a>
-            </li>
-            <li class="relative px-6 py-3">
-              <a
-                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                href="cards.html"
-              >
-                <svg
-                  class="w-5 h-5"
-                  aria-hidden="true"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                  ></path>
-                </svg>
-                <span class="ml-4">게시판 관리</span>
-              </a>
-            </li>
-            <li class="relative px-6 py-3">
-              <a
-                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                href="#"
-              >
-                <svg
-                  class="w-5 h-5"
-                  aria-hidden="true"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"
-                  ></path>
-                  <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
-                </svg>
-                <span class="ml-4">통계</span>
-              </a>
-            </li>
-            <li class="relative px-6 py-3">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>getSubjectStudentList</title>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+	<link rel="stylesheet" href="./public/assets/css/tailwind.output.css" />
+	<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+	<script src="./public/assets/js/init-alpine.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+	<div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen}">
+	<!-- Desktop sidebar -->
+	<aside class="z-20 flex-shrink-0 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block">
+		<div class="py-4 text-gray-500 dark:text-gray-400">
+			<a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="${pageContext.request.contextPath}/getSubjectByPage">JavaJoy LMS</a>
+				<ul class="mt-6">
+					<li class="relative px-6 py-3">
+						<button
+							class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+							@click="togglePagesMenu" aria-haspopup="true">
+							<span class="inline-flex items-center">
+								<svg class="w-5 h-5" aria-hidden="true" fill="none"
+									stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+									viewBox="0 0 24 24" stroke="currentColor">
+									<path d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z">
+									</path>
+								</svg>
+								<span class="ml-4">회원관리</span>
+							</span>
+							<svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+							<path fill-rule="evenodd"
+									d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+									clip-rule="evenodd"></path>
+							</svg>
+						</button>
+						<template x-if="isPagesMenuOpen">
+							<ul x-transition:enter="transition-all ease-in-out duration-300"
+								x-transition:enter-start="opacity-25 max-h-0"
+								x-transition:enter-end="opacity-100 max-h-xl"
+								x-transition:leave="transition-all ease-in-out duration-300"
+								x-transition:leave-start="opacity-100 max-h-xl"
+								x-transition:leave-end="opacity-0 max-h-0"
+								class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
+								aria-label="submenu">
+								<li
+									class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+									<a class="w-full" href="${pageContext.request.contextPath}/allAdminList">관리자 관리</a>
+								</li>
+								<li
+									class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+									<a class="w-full" href="${pageContext.request.contextPath}/allTeacherList">강사관리</a>
+								</li>
+								<li
+									class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+									<a class="w-full" href="${pageContext.request.contextPath}/allStudentList">학생관리</a>
+								</li>
+							</ul>
+						</template>
+					</li>
+				</ul>
+				<ul>
+					<li class="relative px-6 py-3">
+						<button
+							class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+							@click="togglePagesMenu" aria-haspopup="true">
+							<span class="inline-flex items-center"> <svg
+									class="w-5 h-5" aria-hidden="true" fill="none"
+									stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+									viewBox="0 0 24 24" stroke="currentColor">
+								<path d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path>
+				</svg> <span class="ml-4">게시판관리</span>
+							</span>
+							<svg class="w-4 h-4" aria-hidden="true" fill="currentColor"
+								viewBox="0 0 20 20">
+					<path fill-rule="evenodd"
+									d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+									clip-rule="evenodd"></path>
+				</svg>
+						</button>
+						<template x-if="isPagesMenuOpen">
+							<ul x-transition:enter="transition-all ease-in-out duration-300"
+								x-transition:enter-start="opacity-25 max-h-0"
+								x-transition:enter-end="opacity-100 max-h-xl"
+								x-transition:leave="transition-all ease-in-out duration-300"
+								x-transition:leave-start="opacity-100 max-h-xl"
+								x-transition:leave-end="opacity-0 max-h-0"
+								class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
+								aria-label="submenu">
+								<li
+									class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+									<a class="w-full" href="#">자유게시판 관리</a>
+								</li>
+								<li
+									class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+									<a class="w-full" href="#">강의게시판 관리</a>
+								</li>
+								<li
+									class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+									<a class="w-full" href="#">건의함 관리</a>
+								</li>
+							</ul>
+						</template>
+					</li>
+			<li class="relative px-6 py-3">
+				<a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" href="#">
+				<svg
+					class="w-5 h-5"
+					aria-hidden="true"
+					fill="none"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					viewBox="0 0 24 24"
+					stroke="currentColor">
+					<path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+				</svg>
+				<span class="ml-4">강좌 관리</span>
+				</a>
+			</li>
+			<li class="relative px-6 py-3">
+				<a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" href="#">
+				<svg
+					class="w-5 h-5"
+					aria-hidden="true"
+					fill="none"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					viewBox="0 0 24 24"
+					stroke="currentColor">
+					<path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+					<path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+				</svg>
+				<span class="ml-4">통계</span>
+				</a>
+			</li>
+			<li class="relative px-6 py-3">
               <a
                 class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                 href="#"
@@ -149,10 +161,9 @@
                 <span class="ml-4">설문조사</span>
               </a>
             </li>
-          </ul>
-        </div>
-      </aside>
-      <!-- Mobile sidebar -->
+			</ul>
+		</div>
+		</aside>
       <!-- Backdrop -->
       <div
         x-show="isSideMenuOpen"
@@ -457,7 +468,8 @@
                 ></path>
               </svg>
             </button>
-           <!-- Search input(였던것) -->
+            
+            <!-- Search input(였던것) -->
             <div class="flex justify-center flex-1 lg:mr-32">
               <div class="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
                 <!-- search -->
@@ -502,7 +514,7 @@
               </li>
              
               <!-- 알림(였던것) -->
-              
+             
               <!-- Profile menu -->
               <li class="relative">
                 <button
@@ -551,9 +563,9 @@
                         <span>Profile</span>
                       </a>
                     </li>
-                   
-                   <!-- setting -->
-                   
+                	
+                	<!-- setting -->
+                	
                     <li class="flex">
                       <a
                         class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
@@ -582,132 +594,76 @@
             </ul>
           </div>
         </header>
+        
         <main class="h-full pb-16 overflow-y-auto">
           <div class="container grid px-6 mx-auto">
-            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의 Subject One</h2>
-		     <!-- CTA -->
-	             <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple" href="${pageContext.request.contextPath}/getSubjectByPage">
-	              <div class="flex items-center">
-	                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-	                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-	                </svg>
-	                <span>Subject Management Page</span>
-	              </div>
-	              <span>강좌 목록 &RightArrow;</span>
-	            </a>
-           	<!-- 카테고리 -->
-           	<nav class="navbar navbar-default navbar-static-top">
-           	  <div class="container">
-					<ol class="breadcrumb" style="float:rigth;">
-						<c:if test="${surveyChk < 1}"> <!--  설문조사를 하지 않은사람만 보이게 -->
-							<li>
-								<a style="float:right;" href="${pageContext.request.contextPath}/getSurvey?subjectNo=${subject.subjectNo}">&nbsp&nbsp설문 조사&nbsp&nbsp</a>
-							</li>
-						</c:if>
-						<li>
-							<a style="float:right;" href="${pageContext.request.contextPath}/getSubjectVideo?subjectNo=${subject.subjectNo}">&nbsp&nbsp강좌 영상&nbsp&nbsp</a>
-						</li>
-						<li>
-							<a style="float:right;" href="${pageContext.request.contextPath}/getSubjectReportListByPage?subjectNo=${subject.subjectNo}&subjectName=${subject.subjectName}">&nbsp&nbsp과제 게시판&nbsp&nbsp</a>
-						</li>
-						<li>
-							<a style="float:right;" href="${pageContext.request.contextPath}/subjectDataList?subjectNo=${subject.subjectNo}">&nbsp&nbsp강좌 자료&nbsp&nbsp</a>
-						</li>
-						<li >
-							<a style="float:right;" href="${pageContext.request.contextPath}/subjectNoticeList?subjectNo=${subject.subjectNo}">&nbsp&nbsp강좌 공지사항&nbsp&nbsp</a>
-						</li>
-						<li>
-							<a style="float:right;" href="${pageContext.request.contextPath}/curriculumList?subjectNo=${subject.subjectNo}">&nbsp&nbsp커리큘럼&nbsp&nbsp</a>
-						</li>
-						<!-- 운영자 + 강사 전용 페이지 -->
-						<c:if test="${level eq 1 || level eq 2}">
-							<li>
-								<a style="float:right;" href="${pageContext.request.contextPath}/getSubjectStudentList?subjectNo=${subject.subjectNo}">&nbsp&nbsp수강 학생&nbsp&nbsp</a>
-							</li>
-						</c:if>
-					</ol>
-				</div>
-			</nav>
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Student List</h2>
+            <!-- CTA -->
+            <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
+              href="${pageContext.request.contextPath}/addMember">
+              
+              <div class="flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                </svg>
+                <span>Student Management Page</span>
+              </div>
+              <span>학생 등록 &RightArrow;</span>
+            </a>
+
             <!-- With avatar -->
-            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">${subject.subjectName} 강좌 상세보기</h4>
+            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">${subjectNo} 학생 목록</h4>
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto">
                 <table class="w-full whitespace-no-wrap">
-                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">강좌 번호</th>
-                    	<td class="px-4 py-3 text-sm">${subject.subjectNo}</td>
+                  <thead>
+                    <tr class="text-xs font-semibold tracking-wide text-align : center text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                      <th class="px-4 py-3">아이디</th>
+                  	  <th class="px-4 py-3">학생이름</th>
+                      <th class="px-4 py-3">성별</th>
+                      <th class="px-4 py-3">전화번호</th>
+                      <th class="px-4 py-3">학력</th>
+                      <th class="px-4 py-3">등록 날짜</th>
                     </tr>
-                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">담당 강사 ID</th>
-                    	<td class="px-4 py-3 text-sm">${subject.teacherId}</td>
-                    </tr>
-                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">담당 강사 이름</th>
-                    	<td class="px-4 py-3 text-sm">${subject.teacherName}</td>
-                    </tr>
-                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">개설 운영자</th>
-                    	<td class="px-4 py-3 text-sm">${subject.adminId}</td>
-                    </tr>
-                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">강좌 이름</th>
-                    	<td class="px-4 py-3 text-sm">${subject.subjectName}</td>
-                    </tr>
-                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">총원</th>
-                    	<td class="px-4 py-3 text-sm">${subject.subjectStudentMax}</td>
-                    </tr>
-                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">강좌 시작시간</th>
-                    	<td class="px-4 py-3 text-sm">${subject.subjectStartTime}</td>
-                    </tr>
-                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">강좌 마감시간</th>
-                    	<td class="px-4 py-3 text-sm">${subject.subjectEndTime}</td>
-                    </tr>
-                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">강좌 시작일</th>
-                    	<td class="px-4 py-3 text-sm">${subject.subjectStartDate}</td>
-                    </tr>
-                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">강좌 수료일</th>
-                    	<td class="px-4 py-3 text-sm">${subject.subjectFinishDate}</td>
-                    </tr>
-                     <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    	<th class="px-4 py-3">강좌 설명</th>
-                    	<td class="px-4 py-3 text-sm">${subject.subjectInfo}</td>
-                    </tr>
-                 </table>  
+                  </thead>
+                  <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                  
+                  <c:forEach var="s" items="${studentList}">
+					<script type="text/javascript">
+						function reply_click(clicked_id)
+							{
+								 alert(clicked_id);
+							}
+					</script>
+                    <tr class="text-gray-700 dark:text-gray-400" align="center">
+						<td class="px-4 py-3 text-sm">${s.memberId}</td>
+						<td class="px-4 py-3 text-sm">${s.studentName}</td>
+						<td class="px-4 py-3 text-sm">${s.studentGender}</td>
+						<td class="px-4 py-3 text-sm">${s.studentPhone}</td>
+						<td class="px-4 py-3 text-sm">${s.studentEducation}</td>
+						<td class="px-4 py-3 text-sm">${s.studentRegisterDate}</td>
+						<td><button type="button" class="grid px-4 py-3 text-sm" onclick="location.href='${pageContext.request.contextPath}/allStudentList';"class="grid px-4 py-3 text-sm">삭제(미구현)</button></td>
+						<td><button type="button" class="grid px-4 py-3 text-sm" onclick="location.href='${pageContext.request.contextPath}/allStudentList';"class="grid px-4 py-3 text-sm">수정(미구현)</button></td>
+					</tr>
+					</c:forEach>
+                  </tbody>
+                </table>
               </div>
-              <div
-                class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
-              >
-                <span class="flex items-center col-span-3">
-                  <!-- 공백 -->
-                </span>
+              <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-12 dark:text-gray-400 dark:bg-gray-800">
+                <form method="get" action="${pageContext.request.contextPath}/getSubjectStudentList" name="search" >
+	                <span class="flex items-center col-span-3">
+	                  Search Student :
+	                  <input name="searchStudentName"class="form-control" type="text"  placeholder=" 학생 이름 검색">
+	                  <input name="subjectNo"class="form-control" type="hidden" value="${subjectNo}">
+	                  <button type="submit" class="grid px-4 py-3 text-sm">검색</button>
+	                </span>
+                </form>
                 <span class="col-span-2"></span>
-                <!-- Pagination -->
-                <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-                <!-- 운영자만 삭제, 수정 가능 -->
-                <c:if test="${level eq 1}">
-              		<a href="${pageContext.request.contextPath}/modifySubject?subjectNo=${subject.subjectNo}">강좌 수정</a>
-              			<span>&nbsp | &nbsp</span>
-                    <a href="${pageContext.request.contextPath}/deleteSubject?subjectNo=${subject.subjectNo}">강좌 삭제(미구현)</a> 
-                </c:if>
-                </span>
               </div>
             </div>
           </div>
         </main>
       </div>
     </div>
-    <script>
-    // 유효성 검사 추가 예정...
-	function plus() {
-		if (confirm('강좌 개설를 정말 삭제하겠습니까?')) {
-			document.getElementById('delete').click();
-		}
-	}
-	</script>
   </body>
 </html>

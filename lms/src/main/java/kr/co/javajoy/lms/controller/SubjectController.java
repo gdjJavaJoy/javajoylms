@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.service.SubjectService;
+import kr.co.javajoy.lms.vo.Student;
 import kr.co.javajoy.lms.vo.Subject;
 import kr.co.javajoy.lms.vo.SubjectVideo;
 import lombok.extern.slf4j.Slf4j;
@@ -209,7 +211,23 @@ public class SubjectController {
 		return "redirect:/getSubjectVideo?subjectNo="+subjectNo;
 	}
 	
-	
+	@GetMapping("getSubjectStudentList")
+	public String getSubjectStudentList(HttpSession session
+										,Model model
+										,@RequestParam @Nullable String searchStudentName
+										,@RequestParam(value = "subjectNo") int subjectNo) { // @NULLABLE = 널값허용 + 검색 파라메터 값 받아오기
+		// 디버깅
+		log.debug(CF.YHJ + "SubjectController.getSubjectStudentList.subjectNo : " + subjectNo + CF.RESET);
+		log.debug(CF.YHJ + "SubjectController.getSubjectStudentList.searchStudentName : " + searchStudentName + CF.RESET);
+				
+		List<Student> studentList = subjectService.getSubjectStudentList(subjectNo,searchStudentName);
+		log.debug(CF.YHJ + "SubjectController.getSubjectStudentList.studentList : " + studentList + CF.RESET);
+		
+		model.addAttribute("studentList",studentList);
+		model.addAttribute("subjectNo",subjectNo);
+		
+		return "/subject/getSubjectStudentList";
+	}
 	
 	
 	

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.mapper.SubjectMapper;
+import kr.co.javajoy.lms.vo.Student;
 import kr.co.javajoy.lms.vo.Subject;
 import kr.co.javajoy.lms.vo.SubjectVideo;
 import lombok.extern.slf4j.Slf4j;
@@ -112,8 +113,26 @@ public class SubjectService {
 		subjectMapper.deleteSubjectVideoOne(subjectVideoNo);
 	}
 	
+	// 만족도 조사 확인
 	public int checkSurveyCnt(String memberId) {
+		log.debug(CF.YHJ + "SubjectService.checkSurveyCnt.memberId : " + memberId + CF.RESET); // 디버깅
 		return subjectMapper.checkSurveyCnt(memberId);
+	}
+	
+	// 특정 강좌의 학생 리스트
+	public List<Student> getSubjectStudentList(int subjectNo, String searchStudentName) {
+		// 디버깅
+		log.debug(CF.YHJ + "SubjectService.getSubjectStudentList.subjectNo : " + subjectNo + CF.RESET);
+		log.debug(CF.YHJ + "SubjectService.getSubjectStudentList.searchStudentName : " + searchStudentName + CF.RESET);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("subjectNo", subjectNo);
+		map.put("searchStudentName", searchStudentName);
+		
+		List<Student> studentList = subjectMapper.selectSubjectStudentList(map);
+		log.debug(CF.YHJ + "SubjectService.getSubjectStudentList.studentList : " + studentList + CF.RESET);
+		
+		return studentList;
 	}
 }
 

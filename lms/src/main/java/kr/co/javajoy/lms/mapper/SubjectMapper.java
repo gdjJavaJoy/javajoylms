@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.javajoy.lms.vo.Student;
 import kr.co.javajoy.lms.vo.Subject;
 import kr.co.javajoy.lms.vo.SubjectVideo;
 
@@ -42,4 +43,7 @@ public interface SubjectMapper {
 	
 	// 만족도 검사
 	int checkSurveyCnt(String memberId);
+	
+	// 특정 강좌의 학생 리스트
+	List<Student> selectSubjectStudentList(Map<String,Object> map);
 }
