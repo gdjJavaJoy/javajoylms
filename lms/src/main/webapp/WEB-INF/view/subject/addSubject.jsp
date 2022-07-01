@@ -7,6 +7,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Insert Subject Page</title>
+    	<style>
+			img { display: block; margin: 0px auto; }
+			textarea{
+				width:500px; 
+				height:100px; 
+			    resize:none;
+			    /* 크기고정 */ 
+				/*   resize: horizontal; // 가로크기만 조절가능 
+				resize: vertical;  세로크기만 조절가능  */
+   			}
+		</style>
 <script src="/js/summernote/summernote-lite.js"></script>
 <script src="/js/summernote/lang/summernote-ko-KR.js"></script>
 
@@ -17,11 +28,38 @@
     />
     <link rel="stylesheet" href="./public/assets/css/tailwind.output.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script
-      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
-      defer
-    ></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"  defer></script>
     <script src="./public/assets/js/init-alpine.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+    <!-- 강좌 입력 유효성 검사 -->
+    <script>
+		$(document).ready(function(){
+			let flag = true;
+			$('#signup').click(function(){
+				if($('#teacherId').val() == '') {
+					Swal.fire('담임 강사를 입력하세요');
+			    } else if($('#adminId').val() == '') {
+			    	Swal.fire('개설 운영자를 입력하세요');
+			    } else if($('#subjectName').val() == '') {
+			    	Swal.fire('강좌 이름을 입력하세요');
+				} else if($('#subjectStudentMax').val() == '') {
+					Swal.fire('강좌 총원을 입력하세요!');
+				} else if($('#subjectStartDate').val() == '') {
+					Swal.fire('강좌 개강일을 입력하세요!');
+				} else if($('#subjectFinishDate').val() == '') {
+					Swal.fire('강좌 종강일을 입력하세요!');
+				} else if($('#subjectStartTime').val() == '') {
+					Swal.fire('강좌 시작 시간을 입력하세요!');
+				} else if($('#subjectEndTime').val() == '') {
+					Swal.fire('강좌 마감 시간을 입력하세요!');
+				} else if($('#subjectInfo').val() == '') {
+					Swal.fire('강좌 설명을 작성하세요!');
+				} else {
+					$('#addSubjectForm').submit();
+				}
+			});
+		});
+	</script>
   </head>
   <body>
     <div
@@ -565,141 +603,4 @@
           </div>
       </div>
   </body>
- <script>
-	$('#summernote').summernote({
-	  tabsize: 2,
-	  height: 400
-	});
-	$(".note-editor button[aria-label='Picture']").hide();
-	$(".note-editor button[aria-label='Video']").hide();
-	$(".note-editor .note-view").hide();
-</script>
-  <!-- 강좌 입력 유효성 검사 -->
-	<script type="text/javascript">	
-		// 개별 유효성 검사 코드 
-		
-		$('#teahcerId').blur(function() {
-			if ($('#teacherId').val() == '') {
-				$('#teacherIdHelper').text('담임 강사를 입력하세요');
-				$('#teacherId').focus();
-			} else {
-				$('#teacherIdHelper').text('');
-			}
-		});
-		
-		$('#adminId').blur(function() {
-			if ($('#adminIdId').val().length == 0) {
-				$('#adminIdHelper').text('개설 운영자를 입력하세요');
-				$('#adminId').focus();
-			} else {
-				$('#adminIdHelper').text('');
-			}
-		});
-	
-		$('#subjectName').blur(function() {
-			if ($('#subjectName').val().length == 0) {
-				$('#subjectNameHelper').text('강좌 이름을 입력하세요');
-				$('#subjectName').focus();
-			} else {
-				$('#subjectNameHelper').text('');
-			}
-		});
-		
-		$('#subjectStudentMax').blur(function() {
-			if ($('#subjectStudentMax').val().length == 0) {
-				$('#subjectStudentMaxHelper').text('강좌 총원을 입력하세요');
-				$('#subjectStudentMax').focus();
-			} else {
-				$('#subjectStudentMaxHelper').text('');
-			}
-		});
-		
-		$('#subjectInfo').blur(function() {
-			if ($('#subjectInfo').val().length == 0) {
-				$('#subjectInfoHelper').text('강좌 설명을 작성하세요');
-				$('#subjectInfo').focus();
-			} else {
-				$('#subjectInfoHelper').text('');
-			}
-		});
-		
-		$('#subjectStartDate').blur(function() {
-			if ($('#subjectStartDate').val().length == 0) {
-				$('#subjectStartDateHelper').text('강좌 개강일을 입력하세요');
-				$('#subjectStartDate').focus();
-			} else {
-				$('#subjectStartDateHelper').text('');
-			}
-		});
-		
-		$('#subjectFinishDate').blur(function() {
-			if ($('#subjectFinishDate').val().length == 0) {
-				$('#subjectFinishDateHelper').text('강좌 종강일을 입력하세요');
-				$('#subjectFinishDate').focus();
-			} else {
-				$('#subjectFinishDateHelper').text('');
-			}
-		});
-		
-		$('#subjectStartTime').blur(function() {
-			if ($('#subjectStartTime').val().length == 0) {
-				$('#subjectStartTimeHelper').text('강좌 시작 시간을 입력하세요');
-				$('#subjectStartTime').focus();
-			} else {
-				$('#subjectStartTimeHelper').text('');
-			}
-		});
-		
-		$('#subjectEndTime').blur(function() {
-			if ($('#subjectEndTime').val().length == 0) {
-				$('subjectEndTimeHelper').text('강좌 마감 시간을 입력하세요');
-				$('#subjectEndTime').focus();
-			} else {
-				$('#subjectEndTimeHelper').text('');
-			}
-		});
-		
-		// 강좌 추가 버튼을 눌렀을 시, 진행되는 이벤트 유효성 체크
-		$('#signup').click(function() {
-			if ($('#teacherId').val() == '') {
-				$('#teacherIdHelper').text('담임 강사를 입력하세요');
-				$('#teacherId').focus();
-			} else if ($('#adminId').val() == '') {
-				$('#teacherIdHelper').text('');
-				$('#adminIdHelper').text('개설 운영자를 입력하세요');
-				$('#adminId').focus();
-			} else if ($('#subjectName').val() == '') {
-				$('#adminIdHelper').text('');
-				$('#subjectNameHelper').text('강좌 이름을 입력하세요');
-				$('#subjectName').focus();
-			} else if ($('#subjectStudentMax').val() == '') {
-				$('#subjectNameHelper').text('');
-				$('#subjectStudentMaxHelper').text('강좌 총원을 입력하세요');
-				$('#subjectStudentMax').focus();
-			} else if ($('#subjectInfo').val() == '') {
-				$('#subjectStudentMaxHelper').text('');
-				$('#subjectInfoHelper').text('강좌 설명을 작성하세요');
-				$('#subjectInfo').focus();
-			} else if ($('#subjectStartDate').val() == '') {
-				$('#subjectInfoHelper').text('');
-				$('#subjectStartDateHelper').text('강좌 개강일을 입력하세요');
-				$('#subjectStartDate').focus();
-			} else if ($('#subjectFinishDate').val() == '') {
-				$('#subjectStartDateHelper').text('');
-				$('#subjectFinishDateHelper').text('강좌 종강일을 입력하세요');
-				$('#subjectFinishDate').focus();
-			} else if ($('#subjectStartTime').val() == '') {
-				$('#subjectFinishDateeHelper').text('');
-				$('#subjectStartTimeeHelper').text('강좌 시작시간을 입력하세요');
-				$('#subjectStartTime').focus();
-			} else if ($('#subjectEndTime').val() == '') {
-				$('#subjectStartTimeHelper').text('');
-				$('#subjectEndTimeHelper').text('강좌 마감 시간을 입력하세요');
-				$('#subjectEndTime').focus();
-			} else {
-				$('#addSubjectForm').submit();
-			}
-		});
-		
-	</script>
 </html>

@@ -14,7 +14,7 @@ public interface SubjectMapper {
 	// 강좌 입력
 	int insertSubject(Subject subject);
 	// 강사 리스트
-	ArrayList<String> selectTeacherId();
+	List<String> selectTeacherId();
 	// 강좌 리스트(운영자 용) 출력
 	List<Subject> selectSubjectByPage(Map<String, Object> map);
 	// 강좌 총 수
@@ -39,7 +39,4 @@ public interface SubjectMapper {
 	
 	// 강의 영상
 	void deleteSubjectVideoOne(int subjectVideoNo);
-	
-	// 만족도 검사
-	int checkSurveyCnt(String memberId);
 }

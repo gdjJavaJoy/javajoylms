@@ -27,7 +27,7 @@ public class SubjectService {
 	}
 	
 	// 강사 리스트
-	public ArrayList<String> getTeacherId() {
+	public List<String> getTeacherId() {
 		return subjectMapper.selectTeacherId();
 	}
 	
@@ -110,10 +110,6 @@ public class SubjectService {
 		log.debug(CF.YHJ + "SubjectService.removeSubjectVideo.subjectVideoNo : " + subjectVideoNo + CF.RESET); // 디버깅
 		
 		subjectMapper.deleteSubjectVideoOne(subjectVideoNo);
-	}
-	
-	public int checkSurveyCnt(String memberId) {
-		return subjectMapper.checkSurveyCnt(memberId);
 	}
 }
 
