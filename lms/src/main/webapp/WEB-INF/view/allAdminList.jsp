@@ -627,34 +627,37 @@
                     </tr>
                   </thead>
                   <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                  <c:forEach var="s" items="${list}">
-                    <tr onClick="location.href=${pageContext.request.contextPath}/#" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">											
-                   		<td class="px-4 py-3 text-sm">${s.memberId}</td>
-						<td class="px-4 py-3 text-sm">${s.adminName}</td>
-						<td class="px-4 py-3 text-sm">${s.adminPhone}</td>
-						<td class="px-4 py-3 text-sm">${s.adminAddress}</td>
-						<td class="px-4 py-3 text-sm">${s.adminDetailAddress}</td>
-						<td class="px-4 py-3 text-sm">${s.adminEmail}</td>
-						<td class="px-4 py-3 text-sm">${s.updateDate}</td>
-					</tr>
-                  </c:forEach>
+					<c:forEach var="s" items="${list}">
+	                    <tr class="text-gray-700 dark:text-gray-400" align="center">											
+	                   		<td class="px-4 py-3 text-sm">${s.memberId}</td>
+							<td class="px-4 py-3 text-sm">${s.adminName}</td>
+							<td class="px-4 py-3 text-sm">${s.adminPhone}</td>
+							<td class="px-4 py-3 text-sm">${s.adminAddress}</td>
+							<td class="px-4 py-3 text-sm">${s.adminDetailAddress}</td>
+							<td class="px-4 py-3 text-sm">${s.adminEmail}</td>
+							<td class="px-4 py-3 text-sm">${s.updateDate}</td>
+							<td><button type="button" class="grid px-4 py-3 text-sm" onclick="location.href='${pageContext.request.contextPath}/allStudentList';"class="grid px-4 py-3 text-sm">삭제(미구현)</button></td>
+							<td><button type="button" class="grid px-4 py-3 text-sm" onclick="location.href='${pageContext.request.contextPath}/allStudentList';"class="grid px-4 py-3 text-sm">수정(미구현)</button></td>
+						</tr>
+					</c:forEach>
                   </tbody>
                 </table>
               </div>
-              <div
-                class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
-              >
-                <span class="flex items-center col-span-3">
-                  Search Admin :<input class="form-control" type="text"  placeholder=" 관리자 검색">
-                  <button>검색</button>
-                </span>
+              <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-12 dark:text-gray-400 dark:bg-gray-800">
+                <form method="get" action="${pageContext.request.contextPath}/allAdminList" name="search" >
+	                <span class="flex items-center col-span-3">
+	                  Search Admin :
+	                  <input name="s_adminName" class="form-control" type="text"  placeholder=" 관리자 검색">
+	                  <button type="submit" class="grid px-4 py-3 text-sm">검색</button>
+	                </span>
+                </form>
                 <span class="col-span-2"></span>
                 <!-- Pagination -->
                 <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
                 	<c:if test="${currentPage > 1}">
                    		<a class="btn btn-primary" href="${pageContext.request.contextPath}/allAdminList?currentPage=${currentPage-1}">이전</a>
                    	</c:if>
-                   		<span>&nbsp  &nbsp</span>
+                   		<span>&nbsp;  &nbsp;</span>
                    	<c:if test="${currentPage < lastPage}">	
                   		 <a class="btn btn-primary" href="${pageContext.request.contextPath}/allAdminList?currentPage=${currentPage+1}">다음</a> 
                   	</c:if>	 

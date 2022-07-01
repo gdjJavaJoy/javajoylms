@@ -13,8 +13,4 @@ public interface AllAdminListMapper {
 	List<Admin> AllAdminList(Map<String, Object> map);
 	// 관리자 수
 	int selectTotalCount();
-	// 관리자 입력
-	int insertAllAdminList(Admin Admin);
-	// 관리자 업데이트
-	int updateAllAdminList(Admin Admin);
 }
