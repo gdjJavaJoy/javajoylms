@@ -76,6 +76,7 @@
 	 	    parameterType="kr.co.javajoy.lms.vo.Admin">
 	    INSERT INTO admin (
 	    		    member_id
+	    		   ,admin_pw
 	    		   ,admin_name
 	    		   ,admin_phone
 	    		   ,admin_address
@@ -86,6 +87,7 @@
 	              #{memberId}
 	             ,#{adminPw}
 	             ,#{adminName}
+	             ,#{adminPhone}
 	             ,#{adminAddress}
 	             ,#{adminDetailAddress}
 	             ,#{adminEmail}
@@ -99,6 +101,7 @@
 	              ,teacher_name
 	              ,teacher_phone
 	              ,teacher_address
+	              ,teacher_gender
 	              ,teacher_detailaddress
 	              ,teacher_email
 	              ,teacher_join
@@ -108,8 +111,9 @@
 	   			,#{teacherName}
 	   			,#{teacherPhone}
 	   			,#{teacherAddress}
+	   			,#{teacherGender}
 	   			,#{teacherDetailAddress}
-	   			,#{teacherJoin}
+	   			,#{teacherEmail}
 	   			,#{teacherJoin}
 	   			,NOW()
 	   )
