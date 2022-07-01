@@ -336,12 +336,8 @@
           </div>
       </div>
   </body>
-  <script>
+	<script>
  		$('#adminSideNav').load('${pageContext.request.contextPath}/include/adminSideNav.jsp');
 		$('#adminHeaderNav').load('${pageContext.request.contextPath}/include/adminHeaderNav.jsp');
-		$('#studentSideNav').load('${pageContext.request.contextPath}/include/studentSideNav.jsp');
-		$('#studentHeaderNav').load('${pageContext.request.contextPath}/include/studentHeaderNav.jsp');
-		$('#teacherSideNav').load('${pageContext.request.contextPath}/include/teacherSideNav.jsp');
-		$('#teacherHeaderNav').load('${pageContext.request.contextPath}/include/teacherHeaderNav.jsp');
 	</script>
 </html>
