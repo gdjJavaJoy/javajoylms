@@ -613,6 +613,7 @@
 
             <!-- With avatar -->
             <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">${subjectNo} 학생 목록</h4>
+            <a href="${pageContext.request.contextPath}/getSubjectStudentList?subjectNo=${subjectNo}">초기화</a>
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto">
                 <table class="w-full whitespace-no-wrap">
