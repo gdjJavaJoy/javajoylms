@@ -232,11 +232,11 @@ img {
 						class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
 						영상 자료</h2>
 					<c:if test="${level eq 1}">
-						<a href="${pageContext.request.contextPath}/addSubjectVideo?subjectNo=${subjectVideoList[0].subjectNo}">등록</a> 
+						<a href="${pageContext.request.contextPath}/addSubjectVideo?subjectNo=${subjectNo}">등록</a> 
 					</c:if>
 					<a
 						class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
-						href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${subjectVideoList[0].subjectNo}">
+						href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${subjectNo}">
 						<div class="flex items-center">
 							<span></span>
 						</div> <span>subjectOne으로 &RightArrow;</span>

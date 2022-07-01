@@ -170,7 +170,13 @@
 		WHERE subject_video_no = #{subjectVideoNo}
 	</delete>
 	
-	
+	<select id="checkSurveyCnt"
+			parameterType="String"
+			resultType="int">
+		SELECT COUNT(*) cnt
+		FROM survey_result
+		WHERE member_id= #{memberId}
+	</select>
 	
 	
 	

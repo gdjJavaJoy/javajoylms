@@ -111,6 +111,10 @@ public class SubjectService {
 		
 		subjectMapper.deleteSubjectVideoOne(subjectVideoNo);
 	}
+	
+	public int checkSurveyCnt(String memberId) {
+		return subjectMapper.checkSurveyCnt(memberId);
+	}
 }
 
 

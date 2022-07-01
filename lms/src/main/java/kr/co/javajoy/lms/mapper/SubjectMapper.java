@@ -39,4 +39,7 @@ public interface SubjectMapper {
 	
 	// 강의 영상
 	void deleteSubjectVideoOne(int subjectVideoNo);
+	
+	// 만족도 검사
+	int checkSurveyCnt(String memberId);
 }

@@ -599,9 +599,11 @@
            	<nav class="navbar navbar-default navbar-static-top">
            	  <div class="container">
 					<ol class="breadcrumb" style="float:rigth;">
-						<li>
-							<a style="float:right;" href="${pageContext.request.contextPath}/getSurvey?subjectNo=${subject.subjectNo}">&nbsp&nbsp설문 조사&nbsp&nbsp</a>
-						</li>
+						<c:if test="${surveyChk < 1}"> <!--  설문조사를 하지 않은사람만 보이게 -->
+							<li>
+								<a style="float:right;" href="${pageContext.request.contextPath}/getSurvey?subjectNo=${subject.subjectNo}">&nbsp&nbsp설문 조사&nbsp&nbsp</a>
+							</li>
+						</c:if>
 						<li>
 							<a style="float:right;" href="${pageContext.request.contextPath}/getSubjectVideo?subjectNo=${subject.subjectNo}">&nbsp&nbsp강좌 영상&nbsp&nbsp</a>
 						</li>
