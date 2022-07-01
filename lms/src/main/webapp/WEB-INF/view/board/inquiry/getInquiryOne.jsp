@@ -1,11 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>건의함</title>
+ <style>
+			img { display: block; margin: 0px auto; }
+			textarea{
+				width:500px; 
+				height:100px; 
+			    resize:none;
+			    /* 크기고정 */ 
+				/*   resize: horizontal; // 가로크기만 조절가능 
+				resize: vertical;  세로크기만 조절가능  */
+   			}
+		</style>
 <link
 	href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
 	rel="stylesheet" />
@@ -16,57 +28,6 @@
 <script src="./public/assets/js/init-alpine.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
-  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-  <script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
-<script>
-$(document).ready(function(){
-$('#addFileUpload').click(function(){
-	var flag = true;
-	
-	$('.inquiryFileList').each(function(){ // each함수를 이용한 반복
-		if($(this).val() == '') {
-			flag = false;
-		}
-	});
-	
-	if(flag) {
-		$('#fileSection').append('<div><input class="inquiryFileList" type="file" name="inquiryFileList"></div>');
-	} else {
-		alert('파일이 첨부되지 않은 리스트가 존재합니다');
-		}
-	});
-
-	$('#addInquiryBtn').click(function(){
-		
-			if($('#recevier').val()== 2) {
-				if($("input:checked[Name='teacherId']").is(":checked")<1){
-					alert('문의할 강사님을 선택해주세요');
-					return;
-				} else if ($('#boardTitle').val() == '') {
-					alert('제목을 작성해주세요');
-					return;
-			} else if ($('#boardContent').val() == '') {
-					alert('내용을 입력해주세요');
-					return;
-			}  else  {
-				$('#form').submit();
-				}
-			} else if ($('#boardTitle').val() == '') {
-				alert('제목을 작성해주세요');
-				return;
-		} else if ($('#boardContent').val() == '') {
-				alert('내용을 입력해주세요');
-				return;
-		}  else  {
-			$('#form').submit();
-			}
-		
-	});
-});
-</script>
 </head>
 <body>
 	<div class="flex h-screen bg-gray-50 dark:bg-gray-900"
@@ -411,10 +372,10 @@ $('#addFileUpload').click(function(){
 										href="#"> <svg class="w-4 h-4 mr-3" aria-hidden="true"
 												fill="none" stroke-linecap="round" stroke-linejoin="round"
 												stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-							<path
+                          <path
 													d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-							<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-							</svg> <span>Settings</span>
+                          <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg> <span>Settings</span>
 									</a></li>
 									<li class="flex"><a
 										class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
@@ -422,9 +383,9 @@ $('#addFileUpload').click(function(){
 												class="w-4 h-4 mr-3" aria-hidden="true" fill="none"
 												stroke-linecap="round" stroke-linejoin="round"
 												stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-									<path
+                          <path
 													d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
-							</svg> <span>Log out</span>
+                        </svg> <span>Log out</span>
 									</a></li>
 								</ul>
 							</template>
@@ -437,114 +398,179 @@ $('#addFileUpload').click(function(){
 					<h2
 						class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
 						건의함</h2>
-						<div>
-			            </div>
 					<!-- New Table -->
 					<div class="w-full overflow-hidden rounded-lg shadow-xs">
 						<div class="w-full overflow-x-auto">
-							<form method="post" action="${pageContext.request.contextPath}/addInquiry" id="form" enctype="multipart/form-data">
 								<table class="w-full whitespace-no-wrap">
-								<c:if test="${level eq 3}">
 									<tr class="text-gray-700 dark:text-gray-400">
-										<td class="px-4 py-3 text-sm">전송자 선택</td>
-										<td class="px-4 py-3 text-sm">
-											<select
-											class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-											name="recevier"
-											id="recevier">
-											<option value="1">운영자</option>
-											<option value="2">강사</option>
-											</select>
+										<td class="px-4 py-3 text-sm">작성자ID</td>
+										<td class="px-4 py-3">
+										${board.memberId}
 										</td>
 									</tr>
-									<tr class="text-gray-700 dark:text-gray-400" id="selectTeacher">
-									<td class="px-4 py-3 text-sm">강사 선택</td>
-										<td class="px-4 py-3 text-sm">
-										<c:forEach var="l" items="${teacherList}">
-										<input
-						                type="checkbox"
-						                class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-						                name="teacherId" value="${l.memberId}"
-						              /> ${l.teacherName}
-						              </c:forEach>
+									<tr class="text-gray-700 dark:text-gray-400">
+										<td class="px-4 py-3 text-sm">작성자</td>
+										<td class="px-4 py-3">
+										<c:choose>
+											<c:when test="${board.teacherName != null}">
+												${board.teacherName}
+											</c:when>
+											<c:otherwise>
+											${board.studentName}
+											</c:otherwise>
+										</c:choose>
 										</td>
 									</tr>
-									</c:if>
 									<tr class="text-gray-700 dark:text-gray-400">
 										<td class="px-4 py-3 text-sm">제목</td>
 										<td class="px-4 py-3">
-											<input
-											class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-											placeholder="제목입력"
-											name="boardTitle"
-											id="boardTitle"
-											/>
-											<input type="text" name="memberId" value="${loginUser}" hidden="hidden">
+										${board.boardTitle}
 										</td>
 									</tr>
 									<tr class="text-gray-700 dark:text-gray-400">
 										<td class="px-4 py-3 text-sm">내용</td>
 										<td class="px-4 py-3">
-											<textarea name="boardContent" id="boardContent" class="form-control" placeholder="문의사항"></textarea>
-						                         <script type="text/javascript">
-						                     $(document).ready(function(){
-						                        $('#boardContent').summernote({
-						                           placeholder : '내용을 작성하세요',
-						                           height : 200,
-						                           maxHeight : 200
-						                        });
-						                     });
-						                  </script>
+										${board.boardContent}
+										<c:if test="${fileCount > 0}">
+											<c:forEach var="img" items="${boardFile}">
+												<!-- 첨부파일 안에 이미지파일이 하나라도 있으면 실행 -->
+												<c:if test="${img.boardFileType eq 'image/jpeg' || img.boardFileType eq 'image/jpg' || img.boardFileType eq 'image/png'}"> 
+												<img src="${pageContext.request.contextPath}/file/inquiryFile/${img.boardFileName}">
+												</c:if>
+											</c:forEach>
+										</c:if>
 										</td>
 									</tr>
 									<tr class="text-gray-700 dark:text-gray-400">
-										<td class="px-4 py-3 text-sm">비밀글설정여부</td>
+										<td class="px-4 py-3 text-sm">작성일</td>
 										<td class="px-4 py-3">
-										 <input
-											type="radio"
-											class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-											name="privateNo"
-											value="1"
-											checked="checked"
-											/>
-											비밀글설정X
-											<input
-											type="radio"
-											class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-											name="privateNo"
-											value="3"
-											/>
-											비밀글설정O
-										</td>
-									</tr>
-									<tr>
-										<td class="px-4 py-3 text-sm">
-										 <button
-							                  class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-							                  id="addFileUpload"
-							                  type="button"
-							                >
-							                 파일업로드 추가
-					                </button>
-										</td>
-										<td class="px-4 py-3">
-											<div  id="fileSection">
-											
-											</div>
+										${board.createDate}
 										</td>
 									</tr>
 								</table>
-								</form>
-									<br>
-								   <div>
-					                <button
-					                  class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-					                  id="addInquiryBtn"
-					                  type="button"
-					                >
-					               	글작성
-					                </button>
-					              </div>
+								<div>
+								<!-- 수정삭제 버튼  -->
+									<div class="flex items-center space-x-4 text-sm">
+						<c:if test="${loginUser eq board.memberId}"> <!-- sessionID 와 board에 저장되어있는 Id가 같을 때 나타냄 -->
+                           <a href="${pageContext.request.contextPath}/modifyInquiry?boardNo=${board.boardNo}">수정</a>
+                         
+                          </c:if>
+                          <c:if test="${loginUser eq  board.memberId || level eq 1}">
+                           <a href="${pageContext.request.contextPath}/removeInquiry?boardNo=${board.boardNo}">삭제</a>
+                          </c:if>
+						</div>
+						  <c:if test="${fileCount > 0}"> <!-- boardNo 에 저장되어있는 파일 이한개라도 있으면 실행  -->
+								<div style="display: inline-block; margin: 0 5px;  float: right;">
+	              					<div class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">첨부 파일</div>
+									<div>
+										<c:forEach var="bf" items="${boardFile}">
+											<a href="${pageContext.request.contextPath}/file/inquiryFile/${bf.boardFileName}" download="${bf.boardFileOriginalName}">${bf.boardFileOriginalName}</a>
+										</c:forEach>
+									</div>
+								</div>
+								</c:if>
+							<br>
+						<c:if test="${level eq 1}">
+						<h2
+						class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+						답변</h2>
+						<form id="addCommentForm" method="post" action="${pageContext.request.contextPath}/addComment">
+							<table class="w-full whitespace-no-wrap">
+								<tr class="text-gray-700 dark:text-gray-400">
+									<td class="px-4 py-3">
+										<div class="flex items-center text-sm">
+											<div>
+			                            		<p class="font-semibold">작성자</p>
+			                          		</div>
+		                           		</div>
+									</td>
+									<td class="px-4 py-3">
+		                        		<div class="flex items-center text-sm">
+		                         			<div>
+					    		 	  			<p class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
+					                            	${loginUser}
+					                            <input type="text" name="memberId" value="${loginUser}" hidden="hidden">
+					                            <input type="number" name="boardNo" value="${board.boardNo}" hidden="hidden">
+				                       			</p>
+		                          			</div>
+		                        		</div>
+		                      		</td>
+								</tr>
+								<tr class="text-gray-700 dark:text-gray-400">
+				                    <td class="px-4 py-3">
+					                    <div class="flex items-center text-sm">
+							            	<div>
+								        		<p class="font-semibold">답변 내용</p>
+								        	</div>
+								        </div>
+								    </td>
+								    <td class="px-4 py-3">
+								    <div class="flex items-center text-sm">
+										<div>
+										    <p class="font-semibold">
+											    <textarea id="commentContent" name="boardCommentContent" class="form-control" placeholder="답변을 입력해주세요"></textarea>
+												<span id="subjectReportCommentContentHelper" class="helper"></span>
+										    </p>
+								        </div>
+						            </div>
+				                    </td>
+			                    </tr>
+							</table>
+							<br>
+			                 	<div style="display:inline;">
+				                 	<div style="float:inherit;" display:inline-block;"></div>
+						                  <button class="px-5 py-2 font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent 
+						                  rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" ;" 
+						                  type="button" id="addInquiryComment">답변 입력
+						                 </button>
+					            </div>
+						</form>
+						</c:if>
+						<br>
+						<div class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
+	           			전체 답변  [${fn:length(boardComment)}]
+	           		</div>
+	           		<table class="w-full whitespace-no-wrap">
+		            		<thead>
+		            			<tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+		            				<th class="px-4 py-3">작성자ID</th>
+		            				<th class="px-4 py-3">작성자이름</th>
+					                <th class="px-4 py-3">내용</th>			             
+					                <th class="px-4 py-3">작성일</th>
+					                <c:if test="${loginUser eq ic.memberId}">
+					                <th class="px-4 py-3">수정 </th> 
+					                </c:if>
+					                <c:if test="${level eq 1 || loginUser eq ic.memberId}">
+					                <th class="px-4 py-3">삭제</th>
+					                </c:if>
+		            			</tr>
+		            		</thead>
+		            		<tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+		            			<c:forEach var="ic" items="${boardComment}">
+		            				<tr class="text-gray-700 dark:text-gray-400">
+		            					<td class="px-4 py-3 text-sm">${ic.memberId}</td>
+		            					<td class="px-4 py-3 text-sm">
+			            					<c:choose>
+			            						<c:when test="${teacherName != null}">
+			            						${ic.teacherName}
+			            						</c:when>
+			            						<c:otherwise>
+			            						${ic.adminName}
+			            						</c:otherwise>
+			            					</c:choose>
+		            					</td>
+		            					<td class="px-4 py-3 text-sm">${ic.boardCommentContent}</td>
+		            					<td class="px-4 py-3 text-sm">${ic.createDate}</td>
+		            					<c:if test="${loginUser eq ic.memberId}">
+		            					<td class="px-4 py-3 text-sm"><button type="button" id="modifyComment">수정</button></td>
+		            					</c:if>
+		            					<c:if test="${level eq 1 || loginUser eq ic.memberId}">
+		            					<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/removeInquiryComment?boardCommentNo=${ic.boardCommentNo}&boardNo=${board.boardNo}">삭제</a></td>
+		            					</c:if>	
+		            				</tr>
+		            			</c:forEach>
+		            		</tbody>
+		            	</table>
 						</div>
 					</div>
 				</div>
@@ -552,4 +578,14 @@ $('#addFileUpload').click(function(){
 		</div>
 	</div>
 </body>
+<script>
+	$('#addInquiryComment').click(function(){
+		if($('#commentContent').val() == '') {
+			alert('답변내용을 입력해주세요');
+			return;
+		} else {
+			$('#addCommentForm').submit();
+		}
+	});
+</script>
 </html>

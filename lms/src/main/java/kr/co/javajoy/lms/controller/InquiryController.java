@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.service.InquiryService;
 import kr.co.javajoy.lms.vo.AddInquiryForm;
+import kr.co.javajoy.lms.vo.BoardComment;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -35,6 +36,7 @@ public class InquiryController {
 		model.addAttribute("rowPerPage",map.get("rowPerPage"));
 		model.addAttribute("totalCount",map.get("totalCount"));
 		model.addAttribute("currentPage",currentPage);
+		
 		return "board/inquiry/getInquiryByPage";
 	}
 	@GetMapping("/addInquiry")
@@ -70,10 +72,69 @@ public class InquiryController {
 		
 		Map<String,Object> map = inquiryService.getInquiryOne(boardNo);
 		
+		model.addAttribute("receiver",map.get("receiver"));
 		model.addAttribute("fileCount",map.get("fileCount"));
 		model.addAttribute("board",map.get("board"));
 		model.addAttribute("boardFile",map.get("boardFile"));
 		model.addAttribute("boardComment",map.get("boardComment"));
-		return "board/inquiry/inquiryOne";
+		return "board/inquiry/getInquiryOne";
+	}
+	
+	@GetMapping("/removeInquiry")
+	public String removeInquiry(@RequestParam(value="boardNo") int boardNo
+								,HttpServletRequest request) {
+		
+		String path = request.getServletContext().getRealPath("/file/inquiryFile/");
+		log.debug(CF.PSG+"InquiryController.removeInquiry path:" + path + CF.RESET);
+		
+		
+		int row = inquiryService.removeInquiry(boardNo, path);
+		
+		if (row == 0) {
+			log.debug(CF.PSG+"InquiryController.removeInquiry 삭제 실패"+CF.RESET);
+			return "redirect:/getInquiryOne?boardNo="+boardNo;
+			
+		}
+		log.debug(CF.PSG+"InquiryController.removeInquiry 삭제 성공"+CF.RESET);
+		
+		return "redirect:/getInquiryByPage";
+	}
+	
+	@PostMapping("/addComment")
+	public String addComment(BoardComment boardComment) {
+		
+		int row = inquiryService.addInquiryComment(boardComment);
+		
+		if (row == 1) {
+			log.debug(CF.PSG+"InquiryController.addComment 답변 추가 성공 " + CF.RESET);
+		} else {
+			log.debug(CF.PSG+"InquiryController.addComment 답변 추가 실패 " + CF.RESET);
+		}
+		
+		return "redirect:/getInquiryOne?boardNo="+boardComment.getBoardNo();
+	}
+	@GetMapping("/removeInquiryComment")
+	public String removeComment(@RequestParam(value="boardCommentNo") int boardCommentNo
+								,@RequestParam(value="boardNo") int boardNo) {
+		
+		int row = inquiryService.removeInquiryCommentByBoardCommentNo(boardCommentNo);
+		if(row == 1) {
+			log.debug(CF.PSG+"removeInquiryComment 답변삭제 성공 " + CF.RESET);
+		} else {
+			log.debug(CF.PSG+"removeInquiryComment 답변삭제 실패 " + CF.RESET);
+		}
+		
+		return "redirect:/getInquiryOne?boardNo="+boardNo;
+	}
+	@GetMapping("/modifyInquiry")
+	public String modifyInquiry(@RequestParam(value="boardNo") int boardNo
+							,Model model) {
+		Map<String,Object> map =inquiryService.getInquiryOne(boardNo); 
+		
+		model.addAttribute("board",map.get("board"));
+		model.addAttribute("boardFile",map.get("boardFile"));
+		model.addAttribute("fileCount",map.get("fileCount"));
+		
+		return "board/inquiry/modifyInquiry";
 	}
 }

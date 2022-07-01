@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
 <head>
@@ -412,11 +413,11 @@
 										</tr>
 									</thead>
 									<!-- 글번호 1부터 매기는 부분  --> 
-									<c:forEach var="l" items="${list}" varStatus="cnt">
+									<c:forEach var="l" items="${list}" varStatus="i">
 										<tbody
 											class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
 												<tr onClick="location.href='${pageContext.request.contextPath}/getInquiryOne?boardNo=${l.boardNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
-													<td class="px-4 py-3 text-sm">${cnt.index+1}</td>
+													<td class="px-4 py-3 text-sm">${(totalCount - (currentPage-1)*rowPerPage) - i.index}</td>
 													<td class="px-4 py-3">
 														<div class="flex items-center text-sm">
 															<!-- Avatar with inset shadow -->
@@ -424,6 +425,11 @@
 														</div>
 													</td>
 													<td class="px-4 py-3">
+													<c:choose>
+														<c:when test="${l.privateNo eq 3}">
+														비밀글 입니다.
+														</c:when>
+														<c:otherwise>
 														<c:choose>
 															<c:when test="${l.teacherName != null}">
 															${l.teacherName}
@@ -432,6 +438,8 @@
 															${l.studentName}
 															</c:otherwise>
 														</c:choose>
+														</c:otherwise>
+													</c:choose>
 													</td>
 													<c:choose>
 														<c:when test="${l.privateNo eq 3}">

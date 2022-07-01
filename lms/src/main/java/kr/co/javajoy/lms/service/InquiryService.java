@@ -90,12 +90,12 @@ public class InquiryService {
 				String fileName = UUID.randomUUID().toString(); // 파일 저장할때 중복되지않는 이름 사용 UUID API
 				
 				fileName = fileName+ext;
-				
 				boardfile.setBoardNo(board.getBoardNo());
 				boardfile.setBoardFileName(fileName);
 				boardfile.setBoardFileOriginalName(originalName);
 				boardfile.setBoardFileSize(mf.getSize());
 				boardfile.setBoardFileType(mf.getContentType());
+				if (mf.getContentType().equals("image/jpeg") || mf.getContentType().equals("image/jpg") || mf.getContentType().equals("image/png")) {
 				inquiryMapper.insertBoardFile(boardfile);
 				try {
 					mf.transferTo(new File(path+fileName));
@@ -103,6 +103,7 @@ public class InquiryService {
 					e.printStackTrace();
 					// 새로운 예외 발생시켜야지만 @Transactional 작동함 
 					throw new RuntimeException(); //RuntimeException은 예외처리 하지않아도 컴파일 됨
+						}
 					}
 				}
 			}
@@ -113,18 +114,59 @@ public class InquiryService {
 		Map<String,Object> map = new HashMap<>();
 		Map<String,Object> board = inquiryMapper.selectInquiryBoardOne(boardNo);
 		List<Boardfile> boardFile = inquiryMapper.selectInquiryBoardfileOne(boardNo);
-		List<BoardComment> boardComment = inquiryMapper.selectInquiryComment(boardNo);
+		List<Map<String,Object>> boardComment = inquiryMapper.selectInquiryComment(boardNo);
+		List<String> receiver = inquiryMapper.selectReceiverListByBoardNo(boardNo);
 		int fileCount = inquiryMapper.selectBoardCountByBoardNo(boardNo);
 		
 			log.debug(CF.PSG+"InquiryService.getInquiryOne Inquiry boardfile :" + boardFile +CF.RESET);
 			log.debug(CF.PSG+"InquiryService.getInquiryOne Inquiry board :" + board +CF.RESET);
 			log.debug(CF.PSG+"InquiryService.getInquiryOne Inquiry boardComment :" + boardComment +CF.RESET);
 		
+		map.put("receiver", receiver);
 		map.put("fileCount", fileCount);
 		map.put("board", board);
 		map.put("boardFile", boardFile);
 		map.put("boardComment", boardComment);
 		
 		return map;
+	}
+	public int removeInquiry(int boardNo,String path) {
+		int row = 0;
+		
+		List<String> fileNameList = inquiryMapper.selectFiletNameList(boardNo);
+		
+		for (String boardFileName : fileNameList) {
+			File file = new File(path+boardFileName);
+			if(file.exists()) {
+				file.delete();
+			}
+		}
+				inquiryMapper.deleteAllInquiryFile(boardNo);
+				inquiryMapper.deleteAllInquiryComment(boardNo);
+		  row = inquiryMapper.deleteInquiry(boardNo);
+		
+		return row;
+	}
+	public int addInquiryComment(BoardComment boardComment) {
+		int row = inquiryMapper.insertboardComment(boardComment);
+		
+		if (row == 1) {
+			log.debug(CF.PSG+"InquiryService.addInquiryComment 답변 추가 성공 " + CF.RESET);
+		} else {
+			log.debug(CF.PSG+"InquiryService.addInquiryComment 답변 추가 실패 " + CF.RESET);
+		}
+		return row;
+	}
+	
+	public int removeInquiryCommentByBoardCommentNo(int boardCommentNo) {
+		
+		int row = inquiryMapper.deleteInquiryCommentByBoardCommentNo(boardCommentNo);
+		
+	if(row == 1) {
+		log.debug(CF.PSG+"InquiryService.removeInquiryCommentByBoardCommentNo 삭제 성공 "+CF.RESET);
+		} else {
+		log.debug(CF.PSG+"InquiryService.removeInquiryCommentByBoardCommentNo 삭제 실패 "+CF.RESET);
+		}
+		return row;
 	}
 }

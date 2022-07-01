@@ -135,15 +135,21 @@ WHERE board_no = #{boardNo}
 </select>
 <select id="selectInquiryComment"
 		parameterType="int"
-		resultType="kr.co.javajoy.lms.vo.BoardComment">
+		resultType="java.util.Map">
 SELECT
-	board_comment_no boardCommentNo
-   ,member_id memberId
-   ,board_no boardNo
-   ,board_comment_content boardCommentContent
-   ,create_date createDate
-   ,update_date updateDate
-FROM board_comment
+	 bc.board_comment_no boardCommentNo
+    ,bc.member_id memberId
+    ,a.admin_name adminName
+    ,t.teacher_name teacherName
+    ,bc.board_no boardNo
+    ,bc.board_comment_content boardCommentContent
+    ,bc.create_date createDate
+    ,bc.update_date updateDate
+     FROM board_comment bc
+LEFT JOIN teacher t 
+	ON bc.member_id = t.member_id
+LEFT JOIN admin a
+	 ON a.member_id = bc.member_id
 WHERE board_no = #{boardNo}
 </select>
 <select id="selectBoardCountByBoardNo"
@@ -154,4 +160,62 @@ SELECT
 FROM board_file
 WHERE board_no = #{boardNo}
 </select>
+<delete id="deleteInquiry"
+		parameterType="int">
+DELETE
+ FROM board
+WHERE board_no = #{boardNo}
+</delete>
+<delete id="deleteAllInquiryFile"
+		parameterType="int">
+DELETE 
+ FROM board_file
+WHERE board_no = #{boardNo}		
+</delete>
+<delete id="deleteAllInquiryComment"
+		parameterType="int">
+DELETE
+FROM board_comment
+where board_no = #{boardNo}		
+</delete>
+<select id="selectFiletNameList"
+		parameterType="int"
+		resultType="String">
+SELECT
+	 board_file_name boardFileName
+FROM board_file
+WHERE board_no = #{boardNo}
+</select>
+<select id="selectReceiverListByBoardNo"
+		parameterType="int"
+		resultType="String">
+SELECT
+	receiver
+FROM receiver
+WHERE board_no = #{boardNo}
+</select>
+<insert id="insertboardComment"
+		parameterType="kr.co.javajoy.lms.vo.BoardComment">
+INSERT INTO board_comment (
+			member_id
+		   ,board_no
+		   ,board_comment_content
+		   ,comment_anony
+		   ,create_date
+		   ,update_date
+		) VALUES (
+			#{memberId}
+		   ,#{boardNo}
+		   ,#{boardCommentContent}
+		   ,"1"
+		   ,NOW()
+		   ,NOW()
+		)
+</insert>
+<delete id="deleteInquiryCommentByBoardCommentNo"
+		parameterType="int">
+DELETE 
+FROM board_comment
+WHERE board_comment_no = #{boardCommentNo}
+</delete>
 </mapper>

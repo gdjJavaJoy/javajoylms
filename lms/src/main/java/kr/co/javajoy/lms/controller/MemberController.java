@@ -71,12 +71,7 @@ public class MemberController {
 	
 	@PostMapping("/addMember")
 	public String addMember(SignupForm signUpForm) {
-		log.debug(CF.PSG+"ParkseongjunController.PostMapping.addMember.signUpForm.gender :" + signUpForm.getGender()+CF.RESET);
-		log.debug(CF.PSG+"ParkseongjunController.PostMapping.addMember.signUpForm.Education :" + signUpForm.getEducation()+CF.RESET);
-		log.debug(CF.PSG+"ParkseongjunController.PostMapping.addMember.signUpForm.MemberJoin :" + signUpForm.getMemberJoin()+CF.RESET);
-		log.debug(CF.PSG+"ParkseongjunController.PostMapping.addMember.signUpForm.getMemberAddr :" + signUpForm.getMemberAddress()+CF.RESET);
-		log.debug(CF.PSG+"ParkseongjunController.PostMapping.addMember.signUpForm.memberPw :" + signUpForm.getMemberPw()+CF.RESET);
-		log.debug(CF.PSG+"ParkseongjunController.PostMapping.addMember.signUpForm.Active :" + signUpForm.getMemberActive()+CF.RESET);
+		log.debug(CF.PSG+"MemberController.PostMapping.addMember.signUpForm :" + signUpForm+CF.RESET);
 		int row = memberService.addMember(signUpForm);
 		
 		if (row==1) {

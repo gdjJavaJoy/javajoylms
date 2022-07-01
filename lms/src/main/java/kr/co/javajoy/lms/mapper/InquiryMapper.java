@@ -31,5 +31,21 @@ public interface InquiryMapper {
 	
 	int selectBoardCountByBoardNo(int boardNo);
 	
-	List<BoardComment> selectInquiryComment(int boardNo);
+	List<Map<String,Object>> selectInquiryComment(int boardNo);
+	
+	int deleteInquiry(int boardNo);
+	
+	int deleteAllInquiryFile(int boardNo);
+	
+	int deleteAllInquiryComment(int boardNo);
+	
+	List<String> selectFiletNameList(int boardNo);
+	// 
+	List<String> selectReceiverListByBoardNo(int boardNo);
+	// 답변 달기 
+	int insertboardComment(BoardComment boardComment);
+	// 선택한 답변  삭제
+	int deleteInquiryCommentByBoardCommentNo(int boardCommentNo);
+	
+	
 }
