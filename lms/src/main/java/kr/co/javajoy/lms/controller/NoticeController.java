@@ -139,7 +139,7 @@ public class NoticeController {
 		model.addAttribute("totalCount",map.get("totalCount"));
 		return "board/notice/modifyNotice";
 	}
-	@PostMapping("/modifyNotice")
+	@PostMapping("/modifyNotice") 
 	public String modifyNotice(HttpServletRequest request
 			,BoardForm boardForm
 			,Board board
