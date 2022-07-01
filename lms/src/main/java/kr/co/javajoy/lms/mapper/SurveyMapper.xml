@@ -30,4 +30,18 @@
 				,NOW()
 			)
 	</insert>
+	
+	<insert id="insertSurveyQuestion"
+			parameterType="kr.co.javajoy.lms.vo.Survey">
+		INSERT INTO survey(
+			subject_no
+			,survey_question
+			,create_date
+			,update_date)
+		VALUES(
+			#{subjectNo}
+			,#{surveyQuestion}
+			,NOW()
+			,NOW())
+	</insert>
 </mapper>

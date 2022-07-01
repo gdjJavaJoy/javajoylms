@@ -14,4 +14,6 @@ public interface SurveyMapper {
 	public List<Survey> getSurvey(int subjectNo);
 	// 만족도 조사 결과 넣기
 	public void insertSurveyResult(SurveyResult surveyResult);
+	// 만족도 질문 추가
+	public void insertSurveyQuestion(Survey survey);
 }

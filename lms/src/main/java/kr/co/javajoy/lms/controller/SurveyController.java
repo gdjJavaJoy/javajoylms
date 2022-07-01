@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SurveyController {
 	@Autowired SurveyService surveyService;
 	
+	// 만족도 보여주기
 	@GetMapping("getSurvey")
 	public String getSurvey(HttpSession session
 							,@RequestParam(value="subjectNo") int subjectNo
@@ -42,13 +43,39 @@ public class SurveyController {
 		return "/subject/getSurvey";
 	}
 	
+	// 만족도 결과 입력
 	@PostMapping("/getSurveyResult")
 	public String getSurveyResult(SurveyResult surveyResult
 								,@RequestParam (value="subjectNo") int subjectNo){
 		log.debug(CF.YHJ + "SurveyController.getSurveyResult.surveyResult : " + surveyResult + CF.RESET); // 디버깅
 		
-		surveyService.insertSurveyResult(surveyResult);
+		surveyService.addSurveyResult(surveyResult);
 		
 		return "redirect:/getSubjectOne?subjectNo=" + subjectNo;
+	}
+	
+	// 만족도 질문 추가
+	@GetMapping("addSurveyQuestion")
+	public String addSurveyQuestion(HttpSession session
+									,@RequestParam(value="subjectNo") int subjectNo
+									,Model model) {
+		String memberId = (String) session.getAttribute("loginUser");
+		
+		// 디버깅
+		log.debug(CF.YHJ + "SurveyController.addSurveyQuestion.loginUser : " + memberId + CF.RESET);
+		log.debug(CF.YHJ + "SurveyController.addSurveyQuestion.subjectNo : " + subjectNo + CF.RESET);	
+		
+		model.addAttribute("subjectNo",subjectNo);
+		
+		return "/subject/addSurveyQuestion";
+	}
+	
+	@PostMapping("addSurveyQuestion")
+	public String addSurveyQuestion(Survey survey) {
+		log.debug(CF.YHJ + "SurveyController.addSurveyQuestion.survey : " + survey + CF.RESET);// 디버깅
+		
+		surveyService.addSurveyQuestion(survey);
+		
+		return "redirect:/getSubjectOne?subjectNo=" + survey.getSubjectNo();
 	}
 }

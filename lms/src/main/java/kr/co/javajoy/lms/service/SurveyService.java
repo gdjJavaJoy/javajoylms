@@ -30,12 +30,12 @@ public class SurveyService {
 		return list;
 	}
 	
-	public void insertSurveyResult(SurveyResult surveyResult) {
+	public void addSurveyResult(SurveyResult surveyResult) {
 		// 디버깅
-		log.debug(CF.YHJ + "SurveyService.insertSurveyResult.surveyResult : " + surveyResult + CF.RESET); 
+		log.debug(CF.YHJ + "SurveyService.addSurveyResult.surveyResult : " + surveyResult + CF.RESET); 
 		
 		for(int i = 0 ; i<surveyResult.getSurveyResultList().size(); i++ ) {
-			log.debug(CF.YHJ + "SurveyService.insertSurveyResult.surveyResult[" + i +"] : "+ surveyResult.getSurveyResultList().get(i) + CF.RESET); 
+			log.debug(CF.YHJ + "SurveyService.addSurveyResult.surveyResult[" + i +"] : "+ surveyResult.getSurveyResultList().get(i) + CF.RESET); 
 		}
 		
 		for(int i = 0 ; i<surveyResult.getSurveyResultList().size(); i++ ) {
@@ -44,10 +44,10 @@ public class SurveyService {
 			surveyResult.setResult(surveyResult.getSurveyResultList().get(i).getResult());
 			surveyMapper.insertSurveyResult(surveyResult);
 		}
-		
-//		for(int i = 0 ; i<surveyResult.getSurveyResultList().size(); i++ ) {
-//			surveyMapper.insertSurveyResult(surveyResult.getSurveyResultList().get(i));
-//		}
-		
+	}
+	
+	public void addSurveyQuestion(Survey survey) {
+		log.debug(CF.YHJ + "SurveyService.addSurveyQuestion.survey : " + survey + CF.RESET); // 디버깅
+		surveyMapper.insertSurveyQuestion(survey);
 	}
 }

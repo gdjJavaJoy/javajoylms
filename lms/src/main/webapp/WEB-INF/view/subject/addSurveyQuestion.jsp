@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>addSubjetVideo</title>
+<title>addSurveyQuestion</title>
 <script src="/js/summernote/summernote-lite.js"></script>
 <script src="/js/summernote/lang/summernote-ko-KR.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -226,7 +226,7 @@
 				<div class="container grid px-6 mx-auto">
 					<h2
 						class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의
-						add video</h2>
+						add Survey Question</h2>
 					<!-- CTA -->
 					<a
 						class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
@@ -246,15 +246,15 @@
 						강의 영상 추가</h4>
 					<div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
 						<div class="w-full overflow-x-auto">
-							<form id="addSubjectVideoForm" method="post"
-								action="${pageContext.request.contextPath}/addSubjectVideo">
+							<form id="addSurveyQuestionForm" method="post"
+								action="${pageContext.request.contextPath}/addSurveyQuestion">
 								<table class="w-full whitespace-no-wrap">
 									<tr class="text-gray-700 dark:text-gray-400">
 										<td class="px-4 py-3">
 											<div class="flex items-center text-sm">
 												<!-- Avatar with inset shadow -->
 												<div>
-													<p class="font-semibold">강의 영상 제목</p>
+													<p class="font-semibold">만족도 질문</p>
 												</div>
 											</div>
 										</td>
@@ -266,54 +266,8 @@
 														<input type="hidden" name="subjectNo" value="${subjectNo}">
 														<input
 															class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-															type="text" id="subjectVideoTitle"
-															name="subjectVideoTitle" placeholder="제목을 입력하세요">
-													</p>
-												</div>
-											</div>
-										</td>
-									</tr>
-									<tr class="text-gray-700 dark:text-gray-400">
-										<td class="px-4 py-3">
-											<div class="flex items-center text-sm">
-												<!-- Avatar with inset shadow -->
-												<div>
-													<p class="font-semibold">영상 내용</p>
-												</div>
-											</div>
-										</td>
-										<td class="px-4 py-3">
-											<div class="flex items-center text-sm">
-												<!-- Avatar with inset shadow -->
-												<div>
-													<p class="font-semibold">
-														<input
-															class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-															type="text" id="subjectVideoContent"
-															name="subjectVideoContent" placeholder="내용을 입력하세요">
-													</p>
-												</div>
-											</div>
-										</td>
-									</tr>
-									<tr class="text-gray-700 dark:text-gray-400">
-										<td class="px-4 py-3">
-											<div class="flex items-center text-sm">
-												<!-- Avatar with inset shadow -->
-												<div>
-													<p class="font-semibold">강좌 URL</p>
-												</div>
-											</div>
-										</td>
-										<td class="px-4 py-3">
-											<div class="flex items-center text-sm">
-												<!-- Avatar with inset shadow -->
-												<div>
-													<p class="font-semibold">
-														<input
-															class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-															type="text" id="subjectVideoUrl"
-															name="subjectVideoUrl" placeholder="영상 URL을 입력하세요">
+															type="text" id="surveyQuestion"
+															name="surveyQuestion" placeholder="질문을 입력하세요">
 													</p>
 												</div>
 											</div>
@@ -326,7 +280,7 @@
 									<button
 										class="px-10 py-4 font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
 										style="margin: auto; display: block;" type="button"
-										id="addVideo">영상 추가</button>
+										id="addBtn">질문 추가</button>
 								</div>
 							</form>
 						</div>
@@ -338,18 +292,12 @@
 	</div>
 </body>
 <script>
-	$('#addVideo').click(function() {
-		if ($('#subjectVideoTitle').val() == '') {
-			Swal.fire('제목을 입력해주세요');
-			return;
-		} else if ($('#subjectVideoContent').val() == '') {
-			Swal.fire('내용을 입력해주세요');
-			return;
-		} else if ($('#subjectVideoUrl').val() == '') {
-			Swal.fire('URL을 입력해주세요');
+	$('#addBtn').click(function() {
+		if ($('#surveyQuestion').val() == '') {
+			Swal.fire('질문을 입력해주세요');
 			return;
 		} else {
-			$('#addSubjectVideoForm').submit();
+			$('#addSurveyQuestionForm').submit();
 		}
 	});
 </script>
