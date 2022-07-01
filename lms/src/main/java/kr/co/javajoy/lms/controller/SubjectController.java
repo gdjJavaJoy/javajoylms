@@ -95,7 +95,11 @@ public class SubjectController {
 		log.debug(CF.PBJ + "SubjectController.getSubjectOne.param.subjectNo : " + subjectNo);
 		
 		Subject subject = subjectService.getSubjectOne(subjectNo);
+		int surveyChk = subjectService.checkSurveyCnt(memberId);
+		
 		model.addAttribute("subject", subject);
+		model.addAttribute("surveyChk", surveyChk);
+		
 		return "subject/getSubjectOne";
 	}
 	

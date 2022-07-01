@@ -34,5 +34,5 @@
 			,update_date = NOW()
 		WHERE member_id = #{memberId}
 	</update>
-
+	
 </mapper>

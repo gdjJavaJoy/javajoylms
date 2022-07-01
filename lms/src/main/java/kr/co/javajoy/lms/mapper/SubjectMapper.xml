@@ -171,9 +171,15 @@
 		DELETE FROM subject_video
 		WHERE subject_video_no = #{subjectVideoNo}
 	</delete>
-	
-	
-	
+
+	<select id="checkSurveyCnt"
+			parameterType="String"
+			resultType="int">
+		SELECT COUNT(*) cnt
+		FROM survey_result
+		WHERE member_id= #{memberId}
+	</select>	
+
 	<select id="selectSubjectStudentList"
 		parameterType="java.util.Map"
 		resultType="kr.co.javajoy.lms.vo.Student">
