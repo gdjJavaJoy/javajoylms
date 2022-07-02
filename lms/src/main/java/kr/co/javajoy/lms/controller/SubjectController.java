@@ -25,14 +25,53 @@ import lombok.extern.slf4j.Slf4j;
 public class SubjectController {
 	@Autowired SubjectService subjectService;
 	
-	// 강좌 입력 폼
+	// ---------------------- 1) 강좌 리스트 출력(운영자용) <SELECT> ----------------------
+	
+	// 1-1) 강좌 리스트(운영자용) 출력 페이징 처리
+	@GetMapping("/getSubjectByPage")
+	public String getSubjectByPage(HttpSession session
+									,Model model
+									,@RequestParam @Nullable String sSubjectName
+									,@RequestParam(name = "currentPage", defaultValue = "1") int currentPage
+									,@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
+		// 운영자 session 처리
+		String memberId = (String)session.getAttribute("loginUser");
+		String level = (String)session.getAttribute("level");
+			
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.sessionId : " + memberId);
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.level : " + level);
+		
+		// 운영자 아니면.. memberIndex로 redirect
+		if(level.equals("2") || level.equals("3")) {
+			return "redirect:/login";
+		}
+		// 운영자용 강좌 리스트
+		Map<String, Object> map = subjectService.getSubjectByPage(currentPage, rowPerPage, sSubjectName);
+		model.addAttribute("sSubjectName", sSubjectName);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("list", map.get("list"));
+
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.sSubjectName : " + sSubjectName);
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.currentPage : " + currentPage);
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.lastPage : " + map.get("lastPage"));
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.list : " + map.get("list"));
+
+		return "subject/getSubjectByPage";
+	}
+	
+	// ---------------------- 2) 강좌 입력(운영자용) <INSERT> ----------------------
+	
+	// 2-1) 강좌 입력 폼
 	@GetMapping("/addSubject")
 	public String addSubject(HttpSession session, Model model) {
 		// 운영자 session 처리
 		String memberId = (String)session.getAttribute("loginUser");
 		String level = (String)session.getAttribute("level");
-		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.sessionId : " + memberId);
-		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.level : " + level);
+		
+		log.debug(CF.PBJ + "SubjectController.addSubject(Form).sessionId : " + memberId);
+		log.debug(CF.PBJ + "SubjectController.addSubject(Form).level : " + level);
+		
 		// 운영자 아니면.. memberIndex로 redirect
 		if(level.equals("2") || level.equals("3")) {
 			return "redirect:/login";
@@ -40,104 +79,107 @@ public class SubjectController {
 		// 강사 리스트 출력
 		List<String> teacherList = subjectService.getTeacherId();
 		model.addAttribute("teacherList", teacherList);
-		log.debug(CF.PBJ + "SubjectController.addSubject.teacherList : " + teacherList);
+		
+		log.debug(CF.PBJ + "SubjectController.addSubject(Form).teacherList : " + teacherList);
+		
 		// addSubject.jsp 불러옴
 		return "subject/addSubject";
 	}
 	
-	// 강좌 입력 액션
+	// 2-2) 강좌 입력 액션
 	@PostMapping("/addSubject")
 	public String addSubject(Subject subject) {
 		int row = subjectService.addSubject(subject);
 		// 디버깅
-		log.debug(CF.PBJ + "SubjectController.addSubject.param.subject : " + subject);
-		log.debug(CF.PBJ + "SubjectController.addSubject.row : " + row);
+		log.debug(CF.PBJ + "SubjectController.addSubject(Action).param.subject : " + subject);
+		log.debug(CF.PBJ + "SubjectController.addSubject(Action).row : " + row);
 		// 강좌 입력 성공 시, 강좌 리스트로
 		return "redirect:/getSubjectByPage";
 	}
 	
-	// 강좌 리스트(운영자용) 출력 페이징 처리
-	@GetMapping("/getSubjectByPage")
-	public String getSubjectByPage(HttpSession session
-			,Model model
-			,@RequestParam @Nullable String s_subjectName
-			,@RequestParam(name = "currentPage", defaultValue = "1") int currentPage
-			,@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
-		// 운영자 session 처리
-		String memberId = (String)session.getAttribute("loginUser");
-		String level = (String)session.getAttribute("level");
-		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.sessionId : " + memberId);
-		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.level : " + level);
-		// 운영자 아니면.. memberIndex로 redirect
-		if(level.equals("2") || level.equals("3")) {
-			return "redirect:/login";
-		}
-		// 운영자용 강좌 리스트
-		Map<String, Object> map = subjectService.getSubjectByPage(currentPage, rowPerPage, s_subjectName);
-		model.addAttribute("list", map.get("list"));
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("lastPage", map.get("lastPage"));
-		model.addAttribute("s_subjectName", s_subjectName);
-		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.currentPage : " + currentPage);
-		
-		return "subject/getSubjectByPage";
-	}
+	// ---------------------- 3) 강좌 상세보기 <SELECT ONE> ----------------------
 
 	// 강좌 상세보기
 	@GetMapping("/getSubjectOne")
-	public String getSubjectOne(HttpSession session, Model model, @RequestParam(name="subjectNo") int subjectNo) {
+	public String getSubjectOne(HttpSession session
+								,Model model
+								,@RequestParam(name="subjectNo") int subjectNo) {
 		// 운영자 session 처리
 		String memberId = (String)session.getAttribute("loginUser");
 		String level = (String)session.getAttribute("level");
+		// 학생 + 강사 같은 페이지 사용 .. session 처리 x
 		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.sessionId : " + memberId);
 		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.level : " + level);
-		// 학생 + 강사 같은 페이지 사용 .. session 처리 x
-		
 		// 선택된 강좌 번호 디버깅
 		log.debug(CF.PBJ + "SubjectController.getSubjectOne.param.subjectNo : " + subjectNo);
 		
 		Subject subject = subjectService.getSubjectOne(subjectNo);
 		int surveyChk = subjectService.checkSurveyCnt(memberId);
 		
+		log.debug(CF.PBJ + "SubjectController.getSubjectOne.param.subjectNo : " + subjectNo);
+		
 		model.addAttribute("subject", subject);
 		model.addAttribute("surveyChk", surveyChk);
+		
+		log.debug(CF.PBJ + "SubjectController.getSubjectOne.param.subject : " + subject);
+		log.debug(CF.PBJ + "SubjectController.getSubjectOne.param.surveyChk : " + surveyChk);
 		
 		return "subject/getSubjectOne";
 	}
 	
+	// ---------------------- 4) 강좌 수정(운영자용) <UPDATE> ----------------------
+	
 	// 강좌 수정 Form
 	@GetMapping("/modifySubject")
 	public String modifySubject(HttpSession session
-			,Model model
-			,@RequestParam(name = "subjectNo") int subjectNo) {
+								,Model model
+								,@RequestParam(name = "subjectNo") int subjectNo) {
 		// 운영자 session 처리
 		String memberId = (String)session.getAttribute("loginUser");
 		String level = (String)session.getAttribute("level");
-		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.sessionId : " + memberId);
-		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.level : " + level);
+	
+		log.debug(CF.PBJ + "SubjectController.modifySubject(Form).sessionId : " + memberId);
+		log.debug(CF.PBJ + "SubjectController.modifySubject(Form).level : " + level);
 		// 운영자 아니면.. memberIndex로 redirect
 		if(level.equals("2") || level.equals("3")) {
 			return "redirect:/login";
 		}
+		
 		List<String> teacherList = subjectService.getTeacherId();
 		model.addAttribute("teacherList", teacherList);
-		// 디버깅
-		log.debug(CF.PBJ + "SubjectController.modifySubject.param.subjectNo : " + subjectNo);
+		
+		log.debug(CF.PBJ + "SubjectController.modifySubject(Form).param.subjectNo : " + subjectNo);
 
 		Subject subject = subjectService.getSubjectOne(subjectNo);
 		model.addAttribute("subject", subject);
+		
+		log.debug(CF.PBJ + "SubjectController.modifySubject(Form).param.subject : " + subject);
+		
 		return "subject/modifySubject";
 	}
 	
 	// 강좌 수정 Action
 	@PostMapping("/modifySubject")
 	public String modifySubject(Subject subject) {
-		// 디버깅 
-		log.debug(CF.PBJ + "SubjectController.modifySubject.param.subject : " +  subject);
+		log.debug(CF.PBJ + "SubjectController.modifySubject(Action).param.subject : " +  subject);
 		int row = subjectService.modifySubject(subject);
+		log.debug(CF.PBJ + "SubjectController.modifySubject(Action).row : " +  row);
 		// SubjectOne 컨트롤러 리디렉트
 		return "redirect:/getSubjectOne?subjectNo=" + subject.getSubjectNo();
 	}
+	
+	// ---------------------- 5) 강좌 삭제(운영자용) <DELETE> ----------------------
+	
+	// 강좌 삭제
+	@GetMapping("/removeSubject")
+	public String removeSubject(int subjectNo) {
+		log.debug("SubjectController.removeSubject.param.subjectNo");
+		subjectService.removeSubject(subjectNo);
+	
+		return "redirect:/getSubjectByPage";
+	}
+	
+	// ----------------------- 강의 영상 -----------------------
 	
 	// 강좌 영상으로 가기
 	@GetMapping("/getSubjectVideo")
@@ -213,6 +255,9 @@ public class SubjectController {
 		return "redirect:/getSubjectVideo?subjectNo="+subjectNo;
 	}
 	
+	// ----------------------- 강좌 학생 -----------------------
+	
+	// 강좌 학생 리스트 출력
 	@GetMapping("getSubjectStudentList")
 	public String getSubjectStudentList(HttpSession session
 										,Model model
@@ -230,12 +275,4 @@ public class SubjectController {
 		
 		return "/subject/getSubjectStudentList";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 }

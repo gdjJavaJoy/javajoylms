@@ -90,8 +90,8 @@
                     <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">                 
                       <th class="px-4 py-3">번호</th>
                       <th class="px-4 py-3">강좌 이름</th>
-                      <th class="px-4 py-3">작성자</th>
                       <th class="px-4 py-3">제목</th>
+                      <th class="px-4 py-3">작성자</th>
                       <th class="px-4 py-3">작성시간</th>
                     </tr>
                   </thead>
@@ -100,6 +100,7 @@
                      <tr onClick="location.href='${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
 						<td class="px-4 py-3 text-sm">${cnt.index+1}</td>
 						<td class="px-4 py-3 text-sm">${s.subjectName}</td>
+						<td class="px-4 py-3 text-sm">${s.subjectReportTitle}</td>
 						<c:choose>
 							<c:when test="${s.teacherName != null}">
 							<td class="px-4 py-3 text-sm">${s.teacherName}</td>
@@ -108,7 +109,6 @@
 							<td class="px-4 py-3 text-sm">운영자</td>
 							</c:otherwise>
 						</c:choose>
-						<td class="px-4 py-3 text-sm">${s.subjectReportTitle}</td>
 						<td class="px-4 py-3 text-sm">${s.createDate}</td>
 					</tr>
                   </c:forEach>
@@ -116,11 +116,15 @@
                 </table>
               </div>
               <div
-                class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
+                class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-12 dark:text-gray-400 dark:bg-gray-800"
               >
-                <span class="flex items-center col-span-3">
-                  Search : <input class="form-control" type="text"  placeholder=" 검색할 내용 입력(미구현)">
-                </span>
+               	<form method="get" action="${pageContext.request.contextPath}/getSubjectReportListByPage" name="search">
+	                <span class="flex items-center col-span-3">
+	                  <input name="rSubjectReportTitle" class="form-control" type="text"  placeholder="제목 검색">
+	                 	  <button type="submit" class="grid px-4 py-3 text-sm">검색</button>
+	                 	  <a href="${pageContext.request.contextPath}/getSubjectReportListByPage?subjectNo=${subjectNo}">초기화</a>
+	                </span>
+	            </form> 
                 <span class="col-span-2"></span>
                 <!-- Pagination -->
                 <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">

@@ -45,7 +45,9 @@
 			});
 			
 			$('#addSubjectReport').click(function(){
-				if($('#subjectNo').val() == '') {
+				if($('#subjectBoardNo').val() == '') {
+					Swal.fire('test');
+			    } else if($('#subjectNo').val() == '') {
 					Swal.fire('test');
 			    } else if($('#memberId').val() == '') {
 			    	Swal.fire('test');
@@ -249,7 +251,8 @@
                         <div class="flex items-center text-sm">
                           <!-- Avatar with inset shadow -->
                           <div>
-                            <button class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" 
+                            <button 
+                            	class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" 
                             	type="button" id="addFileupload">첨부파일 추가</button>
 					    		<div id="fileSection">
 					    			<!-- subject file input 태그가 추가댐 -->

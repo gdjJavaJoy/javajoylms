@@ -25,17 +25,24 @@ import lombok.extern.slf4j.Slf4j;
 public class SubjectReportService {
 	@Autowired SubjectReportMapper subjectReportMapper;
 	
-	// 1) 과제 게시판 글 리스트 출력
-	public Map<String, Object> getSubjectReportListByPage(int currentPage, int rowPerPage, int subjectNo) {
+	// ------------------------ 1) 과제 게시판 글 리스트 출력 <SELECT> ------------------------ 
+	
+	// 1-1) 과제 게시판 글 리스트 출력
+	public Map<String, Object> getSubjectReportListByPage(int currentPage, int rowPerPage, int subjectNo, String rSubjectReportTitle) {
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.currentPage" + currentPage);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.rowPerPage" + rowPerPage);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.subjectNo" + subjectNo);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.rSubjectReportTitle" + rSubjectReportTitle);
 		// 페이징
 		int startRow = (currentPage - 1) * rowPerPage;
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("startRow", startRow);
 		map.put("rowPerPage", rowPerPage);
 		map.put("subjectNo", subjectNo);
+		map.put("rSubjectReportTitle", rSubjectReportTitle);
+		
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.startRow" + startRow);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.rowPerPage" + rowPerPage);
 
 		// 1) 컨트롤러에서 넘오온 변수값 가공 후 맵퍼 호출
 		List<SubjectReport> list = subjectReportMapper.selectSubjectReportListByPage(map);
@@ -44,7 +51,6 @@ public class SubjectReportService {
 		int lastPage = (int) (Math.ceil((double) totalCount / (double) rowPerPage));
 
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.list------------" + list);
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.startRow" + startRow);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.totalCount" + totalCount);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.lastPage" + lastPage);
 
@@ -53,11 +59,19 @@ public class SubjectReportService {
 		returnMap.put("list", list);
 		returnMap.put("lastPage", lastPage);
 		returnMap.put("subjectNo", subjectNo);
+		returnMap.put("rSubjectReportTitle)", rSubjectReportTitle);
+		
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.returnMap.list.size()" + list.size());
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.returnMap.lastPage" + lastPage);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.returnMap.subjectNo" + subjectNo);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.returnMap.rSubjectReportTitle" + rSubjectReportTitle);
 
 		return returnMap;
 	}
 	
-	// 2) 과제 게시판 글 입력 + 파일 입력
+	// ------------------------ 2) 과제 게시판 글 입력 <INSERT> ------------------------ 
+	
+	// 2-1) 과제 게시판 글 입력 + 파일 입력
 	public void addSubjectReport(SubjectReportForm subjectReportForm, String path) {
 		log.debug(CF.PBJ + "NoticeService.addNotice.path : " + path);
 		log.debug(CF.PBJ + "NoticeService.addNotice.subjectReportForm : " + subjectReportForm);
@@ -111,7 +125,9 @@ public class SubjectReportService {
 		}
 	}
 
-	// 3) 과제 게시판 글 상세보기 + 파일 이름 리스트 출력 + 댓글 리스트 출력
+	// ------------------------ 3) 과제 게시판 글 상세보기 <SELECT ONE>------------------------ 
+	
+	// 3-1) 과제 게시판 글 상세보기 + 파일 이름 리스트 출력 + 댓글 리스트 출력
 	public Map<String, Object> getSubjectReportAndFileNameListAndCommentList (Map<String, Object> map) {
 		// 댓글 페이징 데이터
 		int commentCurrentPage = (int)map.get("commentCurrentPage");
@@ -136,6 +152,7 @@ public class SubjectReportService {
 		List<SubjectReportComment> commentList = subjectReportMapper.selectCommentListByPage(paramMap);
 		// 상세보기 + 파일 리스트 저장
 		Map<String, Object> returnMap = new HashMap<>();
+		
 		// 댓글 페이징 코드
 		int commentTotalCount = subjectReportMapper.selectCommentTotalCountBySubjectReport(subjectBoardNo);
 		int commentLastPage = commentTotalCount / (int)(map.get("commentRowPerPage"));
@@ -151,36 +168,41 @@ public class SubjectReportService {
 		returnMap.put("commentLastPage", commentLastPage);
 		returnMap.put("commentTotalCount", commentTotalCount);
 		
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.subjectReport :" + subjectReport);
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.subjectFileList :" + subjectFileList);
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.commentList :" + commentList);
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.commentRowPerPage :" + commentRowPerPage);
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.commentCurrentPage :" + commentCurrentPage);
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.commentLastPage :" + commentLastPage);
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.commentTotalCount :" + commentTotalCount);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.returnMap.subjectReport :" + subjectReport);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.returnMap.subjectFileList :" + subjectFileList);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.returnMap.commentList :" + commentList);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.returnMap.commentRowPerPage :" + commentRowPerPage);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.returnMap.commentCurrentPage :" + commentCurrentPage);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.returnMap.commentLastPage :" + commentLastPage);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.returnMap.commentTotalCount :" + commentTotalCount);
 		
 		return returnMap;
 	}
 	
-	// 4) 과제 게시판 수정 Form 
+	// ------------------------ 4) 과제 게시판 수정 <UPDATE>------------------------ 
+	
+	// 4-1) 과제 게시판 수정 Form 
 	public Map<String, Object> getSubjectReportOne(int subjectBoardNo) {
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportOne(Form).subjectBoardNo :" + subjectBoardNo);
 		// 과제 게시판 글 불러오기
 		List<SubjectReport> subjectReport = subjectReportMapper.selectSubjectReportOne(subjectBoardNo);
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportOne.subjectReport :" + subjectReport);
 		// 과제 게시판 파일 리스트 불러오기
 		List<SubjectFile> subjectFile = subjectReportMapper.selectSubjectReportFileList(subjectBoardNo);
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportOne.subjectFile :" + subjectFile);
 		// 해시 맵으로 데이터 보냄
 		Map<String, Object> map = new HashMap<>();
 		map.put("subjectReport", subjectReport);
 		map.put("subjectFile", subjectFile);
+		
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportOne(Form).subjectReport.map.put :" + subjectReport);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportOne(Form).subjectFile.map.put :" + subjectFile);
+		
 		return map;
 	}
 	
-	// 4-1) 과제 게시판 수정 Action
+	// 4-2) 과제 게시판 수정 Action
 	public void modifySubjectReport(SubjectReportForm subjectReportForm, String path) {
-		log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport.subjectReportForm: " + subjectReportForm);
-		log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport.path: " + path);
+		log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport(Action).subjectReportForm: " + subjectReportForm);
+		log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport(Action).path: " + path);
 		
 		SubjectReport subjectReport = new SubjectReport();
 		subjectReport.setSubjectBoardNo(subjectReportForm.getSubjectBoardNo());
@@ -191,11 +213,11 @@ public class SubjectReportService {
 		subjectReport.setSubjectReportPeriod(subjectReportForm.getSubjectReportPeriod());		
 		
 		int row = subjectReportMapper.updateSubjectReport(subjectReport);
-		log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport.row : " + row);
-		log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport.subjectReport :" + subjectReport);
+		log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport(Action).row : " + row);
+		log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport(Action).subjectReport :" + subjectReport);
 		
 		if (subjectReportForm.getSubjectReportFileList() != null && subjectReportForm.getSubjectReportFileList().get(0).getSize() > 0) {
-			log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport : 첨부된 파일이 있습니다.");
+			log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport(Action) : 첨부된 파일이 있습니다.");
 			for (MultipartFile mf : subjectReportForm.getSubjectReportFileList()) {
 				SubjectFile subjectFile = new SubjectFile();
 
@@ -205,15 +227,15 @@ public class SubjectReportService {
 				// 파일을 저장할 때 사용할 증븍되지않는 새로운 이름 (UUID API사용)
 				String filename = UUID.randomUUID().toString();
 				filename = filename + ext;
-				log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport.originName : " + originName);
-				log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport.filename : " + filename);
+				log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport(Action).originName : " + originName);
+				log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport(Action).filename : " + filename);
 				// subject_file 데이터 가공
 				subjectFile.setSubjectFileBoardNo(subjectReport.getSubjectBoardNo());
 				subjectFile.setSubjectFileName(filename);
 				subjectFile.setSubjectFileOriginalName(mf.getOriginalFilename());
 				subjectFile.setSubjectFileType(mf.getContentType());
 				subjectFile.setSubjectFileSize(mf.getSize());
-				log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport.SubjectFile : " + subjectFile);
+				log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport(Action).SubjectFile : " + subjectFile);
 				// 데이터베이스에 인서트
 				subjectReportMapper.insertSubjectFile(subjectFile);
 				// try + catch
@@ -227,7 +249,7 @@ public class SubjectReportService {
 		}
 	}
 	
-	// 4-2) 과제 게시판 속 파일 삭제 처리
+	// 4-3) 과제 게시판 수정 할 때, 선택 파일 삭제 처리
 	public void removeSubjectFile(int subjectFileNo, String path) {
 		List<String> subjectFileList = subjectReportMapper.selectSubjectFileNameListBySubjectFileNo(subjectFileNo);
 		log.debug(CF.PBJ + "SubjectReportService.removeSubjectFile.subjectFileList : " + subjectFileList);
@@ -239,10 +261,36 @@ public class SubjectReportService {
 		subjectReportMapper.deleteSubjectFile(subjectFileNo);
 	}
 	
-	// 5) 과제 게시판 댓글 입력
+	// ------------------------ 5) 과제 게시판 댓글 ------------------------ 
+	
+	// 5-1) 과제 게시판 댓글 입력
 	public int addSubjectReportComment(SubjectReportComment subjectReportComment) {
 		log.debug(CF.PBJ + "SubjectReportService.addSubjectReportComment.subjectReportComment: " + subjectReportComment);
 		return subjectReportMapper.insertSubjectReportComment(subjectReportComment);
+	}
+	
+	// 5-2) 댓글 삭제
+	public void deleteCommentByCommentNo(int subjectReportCommentNo) {
+		log.debug(CF.PBJ + "SubjectReportService.deleteCommentByCommentNo.subjectReportCommentNo: " + subjectReportCommentNo);
+		subjectReportMapper.deleteCommentByCommentNo(subjectReportCommentNo);
+	}
+	
+	// ------------------------ 6) 과제 게시판 글 삭제 <DELETE>------------------------ 
+	
+	// 6-1) 과제 게시판 삭제
+	public void removeSubjectReport(int subjectBoardNo, String path) {
+		log.debug(CF.PBJ + "SubjectReportService.removeSubjectReport.subjectBoardNo : " + subjectBoardNo);
+		log.debug(CF.PBJ + "SubjectReportService.removeSubjectReport.path : " + path);
+		
+		List<String> subjectReportFileList = subjectReportMapper.selectSubjectReportFileNameList(subjectBoardNo);
+		log.debug(CF.PBJ + "SubjectReportService.removeSubjectReport.subjectReportFileList : " + subjectReportFileList);
+		for (String filename : subjectReportFileList) {
+			File f = new File(path + filename);
+			if(f.exists()) {
+				f.delete();
+			}
+		}
+		subjectReportMapper.deleteSubjectReport(subjectBoardNo);
 	}
 }
 

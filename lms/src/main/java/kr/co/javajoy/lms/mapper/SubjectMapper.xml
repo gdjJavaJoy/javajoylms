@@ -50,9 +50,9 @@
 			,s.update_date updateDate
 		FROM subject AS s
 		LEFT JOIN teacher AS t ON s.teacher_id = t.member_id
-		<if test='s_subjectName != null and !"".equals(s_subjectName)'>
+		<if test='sSubjectName != null and !"".equals(sSubjectName)'>
 			WHERE CONCAT('%', s.subject_name, '%') 
-			LIKE CONCAT('%', #{s_subjectName}, '%')
+			LIKE CONCAT('%', #{sSubjectName}, '%')
 		</if>
 		ORDER BY create_date DESC
 		LIMIT #{startRow}, #{rowPerPage}
@@ -110,6 +110,7 @@
 		WHERE subject_no = #{subjectNo}
 	</update>
 	
+	<!-- 강좌 비디오 -->
 	<select id="selectSubjectVideoList"
 			parameterType="int"
 			resultType="kr.co.javajoy.lms.vo.SubjectVideo" >
@@ -206,8 +207,12 @@
 	</if>
 </select>
 	
-	
-	
+	<!-- 강좌 삭제 -->
+	<delete id="deleteSubject"
+			parameterType="int">
+		DELETE FROM subject
+		WHERE subject_no = #{subjectNo}
+	</delete>
 	
 	
 	

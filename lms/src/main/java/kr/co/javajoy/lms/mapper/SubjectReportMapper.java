@@ -59,6 +59,10 @@ public interface SubjectReportMapper {
 	// 과제 게시판 댓글 입력 -
 	int insertSubjectReportComment(SubjectReportComment subjectReportComment);
 	// 과제 게시판 댓글 삭제
+	int deleteCommentByCommentNo(int subjectReportCommentNo);
 	
-	// 과제 게시판 글 삭제 시, 댓글 모두 삭제
+	// 6) 과제 게시판 삭제
+	
+	// 과제 게시판 삭제 + 댓글
+	int deleteSubjectReport(int subjectBoardNo);
 }

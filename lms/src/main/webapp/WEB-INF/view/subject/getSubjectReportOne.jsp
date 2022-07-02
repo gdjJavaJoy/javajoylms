@@ -173,7 +173,7 @@
 	                <c:if test="${level eq 1 || level eq 2}">
 	              		<a href="${pageContext.request.contextPath}/modifySubjectReport?subjectBoardNo=${subjectReport.subjectBoardNo}">과제 수정</a>
 	              		<span>&nbsp | &nbsp</span>
-	                    <a href="${pageContext.request.contextPath}/deleteSubjectReport?subjectBoardNo=${subjectReport.subjectBoardNo}">과제 삭제(미구현)</a> 
+	                    <a href="${pageContext.request.contextPath}/removeSubjectReport?subjectBoardNo=${subjectReport.subjectBoardNo}&subjectNo=${subjectReport.subjectNo}">과제 삭제</a> 
 	                </c:if>
 	                </span>
               	  </div>
@@ -272,7 +272,7 @@
 		            				<th class="px-4 py-3">작성자</th>
 					                <th class="px-4 py-3">내용</th>			             
 					                <th class="px-4 py-3">작성일</th>
-					                <th class="px-4 py-3"></th>
+					                <th class="px-4 py-3"> </th>
 		            			</tr>
 		            		</thead>
 		            		<tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -281,14 +281,24 @@
 		            					<td class="px-4 py-3 text-sm">${commentList.memberId}</td>
 		            					<td class="px-4 py-3 text-sm">${commentList.subjectReportCommentContent}</td>
 		            					<td class="px-4 py-3 text-sm">${commentList.updateDate}</td>	
-		            					<td class="px-4 py-3 text-sm"><a href="">삭제(미구현)</a></td>		
+		            					<c:choose>
+			            					<c:when test="${loginUser eq commentList.memberId}">
+				            					<td class="px-4 py-3 text-sm">
+				            						<a type="button" id="deleteComment" href="${pageContext.request.contextPath}/removeComment?subjectReportCommentNo=${commentList.subjectReportCommentNo}&subjectBoardNo=${commentList.subjectBoardNo}&memberId=${loginUser}">삭제</a>
+				            					</td>	
+			            					</c:when>	
+			            					<c:otherwise>
+				            					<td class="px-4 py-3 text-sm"></td>
+			            					</c:otherwise>
+		            					</c:choose>
 		            				</tr>
 		            			</c:forEach>
 		            		</tbody>
 		            	</table>
-		            		<div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+		            		<div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-12 dark:text-gray-400 dark:bg-gray-800">
 			            		<span class="flex items-center col-span-3">
-					            	Search : <input class="form-control" type="text"  placeholder=" 댓글 검색(미구현)">
+					            	<input class="form-control" type="text"  placeholder=" 댓글 검색(미구현)">
+					            	<button type="submit" class="grid px-4 py-3 text-sm">검색</button>
 					        	</span>
 								<span class="col-span-2"></span>
 								<span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">

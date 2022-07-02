@@ -168,7 +168,7 @@
                 <c:if test="${level eq 1}">
               		<a href="${pageContext.request.contextPath}/modifySubject?subjectNo=${subject.subjectNo}">강좌 수정</a>
               			<span>&nbsp | &nbsp</span>
-                    <a href="${pageContext.request.contextPath}/deleteSubject?subjectNo=${subject.subjectNo}">강좌 삭제(미구현)</a> 
+                    <a href="${pageContext.request.contextPath}/removeSubject?subjectNo=${subject.subjectNo}">강좌 삭제</a> 
                 </c:if>
                 </span>
               </div>

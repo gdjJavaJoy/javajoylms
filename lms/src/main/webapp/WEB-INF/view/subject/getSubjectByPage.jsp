@@ -93,9 +93,9 @@
               <div
                 class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500  border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-12 dark:text-gray-400 dark:bg-gray-800"
               >	<form method="get" action="${pageContext.request.contextPath}/getSubjectByPage" name="search">
-	                <span class="flex items-center col-span-3">검색 :&nbsp
-	                  <input name="s_subjectName" class="form-control" type="text"  placeholder="강좌 검색">
-	                 	  <button type="submit" class="grid px-4 py-3 text-sm">Search</button>
+	                <span class="flex items-center col-span-3">
+	                  <input name="sSubjectName" class="form-control" type="text"  placeholder="강좌 검색">
+	                 	  <button type="submit" class="grid px-4 py-3 text-sm">검색</button>
 	                 	  <a href="${pageContext.request.contextPath}/getSubjectByPage">초기화</a>
 	                </span>
 	            </form> 
