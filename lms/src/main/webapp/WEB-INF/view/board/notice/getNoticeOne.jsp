@@ -640,18 +640,18 @@
 	                    	<td class="px-4 py-3 text-sm">${n.updateDate}</td>
 	                    </tr>
 	                    <!-- 첨부파일이 있을 때만 컬럼 보여주기 -->
-	                    <c:if test="${fileTotalCount ne 0}"> 
-						<tr>
-							<td>첨부파일</td>
-							<td>
-								<c:forEach var="boardfile" items="${boardfile}">
+	                    <c:if test="${fileTotalCount ne 0}">
+	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+	                    	<th class="px-4 py-3">첨부 파일</th>
+	                    	<td class="px-4 py-3 text-sm">
+	                    		<c:forEach var="boardfile" items="${boardfile}">
 									<div>
 										<a href="${pageContext.request.contextPath}/file/boardFile/${boardfile.boardFileName}" download="${boardfile.boardFileOriginalName}">${boardfile.boardFileOriginalName}</a>
 									</div>
 								</c:forEach>
-							</td>	
-						</tr>
-						</c:if>
+	                    	</td>
+	                    </tr>
+	                    </c:if>
 	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
 	                    	<th class="px-4 py-3">공지사항 내용</th>
 	                    	<td class="px-4 py-3 text-sm">${n.boardContent}</td>
