@@ -27,11 +27,17 @@ public class NoticeService {
 	@Autowired NoticefileMapper noticefileMapper;
 	
 	// 공지사항 리스트
-	public Map<String, Object> getNoticeByPage(int currentPage, int rowPerPage) {
+	public Map<String, Object> getNoticeByPage(int currentPage, int rowPerPage, String searchNoticeTitle) {
 		int startRow = (currentPage - 1)*rowPerPage;
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("rowPerPage", rowPerPage);
 		map.put("startRow", startRow);
+		map.put("searchNoticeTitle", searchNoticeTitle);
+		
+		log.debug(CF.WSH + "NoticeService.getNoticeByPage.rowPerPage : "+rowPerPage);
+		log.debug(CF.WSH + "NoticeService.getNoticeByPage.startRow : "+startRow);
+		log.debug(CF.WSH + "NoticeService.getNoticeByPage.searchNoticeTitle : "+searchNoticeTitle);
+		
 		List<Board> list = noticeMapper.selectNoticeByPage(map);
 		
 		int totalCount = noticeMapper.selectTotalCount();

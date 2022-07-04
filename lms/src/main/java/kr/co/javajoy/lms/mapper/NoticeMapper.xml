@@ -15,6 +15,10 @@
 			,update_date updateDate
 		FROM board
 		WHERE board_category = "1"
+		<if test='searchNoticeTitle != null and !"".equals(searchNoticeTitle) '>
+			AND CONCAT('%', board_title, '%') 
+			LIKE CONCAT('%', #{searchNoticeTitle}, '%')
+		</if>
 		ORDER BY create_date DESC
 		LIMIT #{startRow}, #{rowPerPage}		
 	</select>

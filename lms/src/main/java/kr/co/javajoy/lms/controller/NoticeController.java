@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.catalina.connector.Request;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,21 +30,26 @@ public class NoticeController {
 	// 리스트 보여주기
 	@GetMapping("/getNoticeByPage")
 	public String getNoticeByPage(Model model, HttpSession session
+			,@RequestParam @Nullable String searchNoticeTitle
 			,@RequestParam(name = "currentPage", defaultValue = "1") int currentPage
 			,@RequestParam(name = "rowPerPager", defaultValue = "10") int rowPerPage) { // 10개 부터 페이징처리 기능
 
+		// 세션 값 받아오기
 		String memberId = (String) session.getAttribute("loginUser");
 		String level = (String) session.getAttribute("level");
 		log.debug(CF.WSH + "StudentController.memberIndex.loginUser : " + session.getAttribute("loginUser") + CF.WSH);
 		log.debug(CF.WSH + "StudentController.memberIndex.level : " + session.getAttribute("level") + CF.WSH);
 		
-		Map<String, Object> map = noticeService.getNoticeByPage(currentPage, rowPerPage);
+		Map<String, Object> map = noticeService.getNoticeByPage(currentPage, rowPerPage, searchNoticeTitle);
 		model.addAttribute("list",map.get("list"));
 		model.addAttribute("lastPage",map.get("lastPage"));
 		model.addAttribute("currentPage",currentPage);
 		model.addAttribute("totalCount",map.get("totalCount"));
 		model.addAttribute("rowPerPage",rowPerPage);
+		model.addAttribute("searchNoticeTitle", searchNoticeTitle);
 		log.debug(CF.WSH + "NoticeController.getNoticeByPage.notice : "+ currentPage);
+		log.debug(CF.WSH + "NoticeController.getNoticeByPage.searchNoticeTitle : "+ searchNoticeTitle);
+		
 		return "board/notice/getNoticeByPage";
 	}
 	@GetMapping("/getNoticeOne")
