@@ -647,7 +647,7 @@
                 <form method="get" action="${pageContext.request.contextPath}/allTeacherList" name="search">
 	                <span class="flex items-center col-span-3">
 	                  Search Teacher : 
-	                  <input name="s_teacherName" class="form-control" type="text"  placeholder=" 강사 이름 검색">
+	                  <input name="SearchTeacherName" class="form-control" type="text"  placeholder=" 강사 이름 검색">
 	                  <button type="submit" class="grid px-4 py-3 text-sm">검색</button>
 	                </span>
                 </form>

@@ -25,10 +25,10 @@ public class AllStudentListController {
 	@GetMapping("/allStudentList")
 	public String allStudentList(HttpSession session
 								, Model model
-								,@RequestParam @Nullable String s_studentName // @NULLABLE = 널값허용 + 검색 파라메터 값 받아오기
+								,@RequestParam @Nullable String searchStudentName // @NULLABLE = 널값허용 + 검색 파라메터 값 받아오기
 								,@RequestParam(value = "currentPage", defaultValue = "1") int currentPage
 								,@RequestParam(value = "rowPerPage", defaultValue = "10") int rowPerPage) {
-	Map<String, Object> map = allStudentListService.AllStudentList(currentPage, rowPerPage, s_studentName);
+	Map<String, Object> map = allStudentListService.AllStudentList(currentPage, rowPerPage, searchStudentName);
 	String memberId = (String)session.getAttribute("loginUser");
 	String level = (String)session.getAttribute("level");
 	log.debug(CF.LGN + "AllStudentListController.allStudentList.sessionId : " + memberId);
@@ -36,17 +36,19 @@ public class AllStudentListController {
 	model.addAttribute("list", map.get("list"));
 	model.addAttribute("currentPage", currentPage);
 	model.addAttribute("lastPage", map.get("lastPage"));
-	model.addAttribute("s_studentName", s_studentName);
+	model.addAttribute("searchStudentName", searchStudentName);
 	log.debug(CF.LGN + "AllStudentListController.allStudentList.currentPage : " + currentPage);
-	log.debug(CF.LGN + "AllStudentListController.allStudentList.lastPage : " + rowPerPage);
-	log.debug(CF.LGN + "AllStudentListController.allStudentList.currentPage : " + s_studentName);
+	log.debug(CF.LGN + "AllStudentListController.allStudentList.rowPerPage : " + rowPerPage);
+	log.debug(CF.LGN + "AllStudentListController.allStudentList.lastPage : " + map.get("lastPage"));
+	log.debug(CF.LGN + "AllStudentListController.allStudentList.list : " + map.get("list"));
+	log.debug(CF.LGN + "AllStudentListController.allStudentList.currentPage : " + searchStudentName);
 	
 	// 세션체크 관리자가 아닌경우 memberIndex로 redirect
 	if(level.equals("2") || level.equals("3")) {
 		return "redirect:/memberIndex";
 	} 
-	// studentList.jsp로 이동.
-	return "allStudentList";
+		// studentList.jsp로 이동.
+		return "allStudentList";
 	}
 	
 }

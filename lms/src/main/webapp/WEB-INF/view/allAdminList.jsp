@@ -647,7 +647,7 @@
                 <form method="get" action="${pageContext.request.contextPath}/allAdminList" name="search" >
 	                <span class="flex items-center col-span-3">
 	                  Search Admin :
-	                  <input name="s_adminName" class="form-control" type="text"  placeholder=" 관리자 검색">
+	                  <input name="searchAdminName" class="form-control" type="text"  placeholder=" 관리자 검색">
 	                  <button type="submit" class="grid px-4 py-3 text-sm">검색</button>
 	                </span>
                 </form>

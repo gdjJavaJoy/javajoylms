@@ -25,21 +25,24 @@ public class AllTeacherListController {
 	@GetMapping("/allTeacherList")
 	public String allTeacherList(HttpSession session
 								, Model model
-								,@RequestParam @Nullable String s_teacherName // @NULLABLE = 널값허용 + 검색 파라메터 값 받아오기
+								,@RequestParam @Nullable String SearchTeacherName // @NULLABLE = 널값허용 + 검색 파라메터 값 받아오기
 								,@RequestParam(value = "currentPage", defaultValue = "1") int currentPage
 								,@RequestParam(value = "rowPerPage", defaultValue = "10") int rowPerPage) {
-	Map<String, Object> map = allTeacherListService.AllTeacherList(currentPage, rowPerPage, s_teacherName);
+	Map<String, Object> map = allTeacherListService.AllTeacherList(currentPage, rowPerPage, SearchTeacherName);
 	String memberId = (String)session.getAttribute("loginUser");
 	String level = (String)session.getAttribute("level");
 	log.debug(CF.LGN + "AllTeacherListController.allTeacherList.sessionId : " + memberId);
 	log.debug(CF.LGN + "AllTeacherListController.allTeacherList.level : " + level);
 	model.addAttribute("list", map.get("list"));
 	model.addAttribute("currentPage", currentPage);
+	model.addAttribute("rowPerPage", rowPerPage);
 	model.addAttribute("lastPage", map.get("lastPage"));
-	model.addAttribute("s_teacherName", s_teacherName);
+	model.addAttribute("SearchTeacherName", SearchTeacherName);
 	log.debug(CF.LGN + "AllTeacherListController.allTeacherList.currentPage : " + currentPage);
-	log.debug(CF.LGN + "AllTeacherListController.allTeacherList.lastPage : " + rowPerPage);
-	log.debug(CF.LGN + "AllTeacherListController.allTeacherList.currentPage : " + s_teacherName);
+	log.debug(CF.LGN + "AllTeacherListController.allTeacherList.rowPerPage : " + rowPerPage);
+	log.debug(CF.LGN + "AllTeacherListController.allTeacherList.list : " + map.get("list"));
+	log.debug(CF.LGN + "AllTeacherListController.allTeacherList.lastPage : " + map.get("lastPage"));
+	log.debug(CF.LGN + "AllTeacherListController.allTeacherList.SearchTeacherName : " + SearchTeacherName);
 	
 	// 세션체크 관리자가 아닌경우 memberIndex로 redirect
 	if(level.equals("2") || level.equals("3")) {

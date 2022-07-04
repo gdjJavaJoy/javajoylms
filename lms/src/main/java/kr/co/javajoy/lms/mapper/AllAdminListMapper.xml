@@ -29,9 +29,9 @@
 			,admin_email adminEmail
 			,update_date updateDate
 		FROM admin
-		<if test='s_admintName != null and !"".equals( s_adminName ) '>
+		<if test='searchAdminName != null and !"".equals( searchAdminName ) '>
 			WHERE CONCAT( '%', admin_name, '%' ) LIKE CONCAT( '%',
-			#{s_adminName} , '%' )
+			#{searchAdminName} , '%' )
 		</if>
 	</select>
 <!-- 전체 관리자 수 -->

@@ -20,14 +20,14 @@ public class AllAdminListService{
 	@Autowired AllAdminListMapper allAdminListMapper;
 
 	// 관리자 리스트 출력
-	public Map<String, Object> AllAdminList(int currentPage, int rowPerPage, String s_adminName) {
+	public Map<String, Object> AllAdminList(int currentPage, int rowPerPage, String searchAdminName) {
 		// 리스트 출력 페이징 
 		int startRow = (currentPage - 1) * rowPerPage;
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("rowPerPage", rowPerPage);
 		map.put("startRow", startRow);
-		map.put("s_adminName", s_adminName);
+		map.put("searchAdminName", searchAdminName);
 		
 		// Mapper에서 반환 된 값 가공 
 		List<Admin> list = allAdminListMapper.AllAdminList(map); int
@@ -41,6 +41,7 @@ public class AllAdminListService{
 		// 디버깅 
 		log.debug(CF.LGN + "AllAdminListController.selecAllAdminList rowPerPage : "+ rowPerPage);
 		log.debug(CF.LGN + "AllAdminListController.selecAllAdminList startRow : "+ startRow);
+		log.debug(CF.LGN + "AllAdminListController.selecAllAdminList searchAdminName : "+ searchAdminName);
 		log.debug(CF.LGN + "AllAdminListController.selecAllAdminList lastPage : " + lastPage );
 		log.debug(CF.LGN + "AllAdminListController.selecAllAdminList list.size() : " + list);
 		return returnMap;
