@@ -18,6 +18,7 @@ import kr.co.javajoy.lms.vo.Board;
 import kr.co.javajoy.lms.vo.BoardComment;
 import kr.co.javajoy.lms.vo.Boardfile;
 import kr.co.javajoy.lms.vo.Receiver;
+import kr.co.javajoy.lms.vo.Teacher;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -25,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class InquiryService {
 	@Autowired InquiryMapper inquiryMapper;
-	public Map<String,Object> getInquiryByPage(int currentPage, int rowPerPage) {
+	public Map<String,Object> getInquiryByPage(int currentPage, int rowPerPage,String searchInquiryTitle) {
 		//page 출력 or List 
 		int beginRow = (currentPage-1)*rowPerPage;
 		// 디버깅 
@@ -34,11 +35,14 @@ public class InquiryService {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("beginRow",beginRow);
 		map.put("rowPerPage", rowPerPage);
+		map.put("searchInquiryTitle", searchInquiryTitle);
 		List<Map<String,Object>> list = inquiryMapper.selectInquiryByPage(map);
 		// 전체 총 게시물의 갯수 구하기
-		int totalCount = inquiryMapper.selectInquiryTotalCount();
-		int lastPage =  (int)(Math.ceil((double)totalCount / (double)rowPerPage)); 
+		int totalCount = inquiryMapper.selectInquiryTotalCount(searchInquiryTitle);
+		int lastPage =  (int)(Math.ceil((double)totalCount / (double)rowPerPage));
+		List<Receiver> receiverList = inquiryMapper.receiverList();
 		Map<String ,Object> returnMap = new HashMap<>();
+		returnMap.put("receiverList", receiverList);
 		returnMap.put("list", list);
 		returnMap.put("lastPage", lastPage);
 		returnMap.put("totalCount", totalCount);
@@ -127,7 +131,6 @@ public class InquiryService {
 		map.put("board", board);
 		map.put("boardFile", boardFile);
 		map.put("boardComment", boardComment);
-		
 		return map;
 	}
 	public int removeInquiry(int boardNo,String path) {
@@ -169,4 +172,102 @@ public class InquiryService {
 		}
 		return row;
 	}
+	
+	public Map<String,Object> getModifyInquiryOne(int boardNo, String memberId) {
+		Map<String,Object> map = new HashMap<>();
+		Map<String,Object> board = inquiryMapper.selectInquiryBoardOne(boardNo);
+		List<Boardfile> boardFile = inquiryMapper.selectInquiryBoardfileOne(boardNo);
+		List<Map<String,Object>> boardComment = inquiryMapper.selectInquiryComment(boardNo);
+		List<Teacher> teacherNameList = inquiryMapper.selectCheckedReceiverTeacherName(boardNo);
+		List<Map<String, Object>> teacherList = inquiryMapper.selectTeacherListBySubject(memberId);
+		int fileCount = inquiryMapper.selectBoardCountByBoardNo(boardNo);
+		
+			log.debug(CF.PSG+"InquiryService.getInquiryOne Inquiry boardfile :" + boardFile +CF.RESET);
+			log.debug(CF.PSG+"InquiryService.getInquiryOne Inquiry board :" + board +CF.RESET);
+			log.debug(CF.PSG+"InquiryService.getInquiryOne Inquiry boardComment :" + boardComment +CF.RESET);
+			log.debug(CF.PSG+"InquiryService.getInquiryOne Inquiry receiver :" + teacherNameList +CF.RESET);
+			log.debug(CF.PSG+"InquiryService.getInquiryOne Inquiry teacherList:" + teacherList +CF.RESET);
+		
+		map.put("teacherNameList", teacherNameList);
+		map.put("fileCount", fileCount);
+		map.put("board", board);
+		map.put("boardFile", boardFile);
+		map.put("boardComment", boardComment);
+		map.put("teacherList", teacherList);
+		return map;
+	}
+	
+	public int modifyInquiry(AddInquiryForm addInquiryForm, String path) {
+		log.debug(CF.PSG+"InquiryService.modifyInquiry.addInquiryForm :" + addInquiryForm + CF.RESET);
+		Board board = new Board();
+		int boardNo = addInquiryForm.getBoardNo();
+		log.debug(CF.PSG+"InquiryService.modifyInquiry.boardNo : " + boardNo+CF.RESET);
+		board.setBoardNo(boardNo);
+		board.setBoardTitle(addInquiryForm.getBoardTitle());
+		board.setBoardContent(addInquiryForm.getBoardContent());
+		board.setPrivateNo(addInquiryForm.getPrivateNo());
+		int row = inquiryMapper.updateInquiryBoard(board);
+		
+		// 강사를 선택했을때 동작하는 부분 
+		if (addInquiryForm.getRecevier() == 2 && row == 1) {
+			inquiryMapper.deleteReceiver(boardNo); // 삭제후 다시 재등록 
+			Receiver receiver = new Receiver();
+			List<String>  list= addInquiryForm.getTeacherId();
+			log.debug(CF.PSG + "InquiryService.modifyInquiry 체크한 강사 수 :" +list.size() +CF.RESET);
+		for(int i=0; i<list.size(); i++) {// 체크된 강사 만큼 
+			log.debug(CF.PSG+"InquiryService.modifyInquiry 체크한InquiryService 강사 :" + list.get(i)+CF.RESET );
+			receiver.setBoardNo(boardNo);
+			receiver.setReceiver(list.get(i));
+			inquiryMapper.insertReceiver(receiver);
+			}
+		}
+		
+		log.debug(CF.PSG+"InquiryService.modifyInquiry 파일 :" +addInquiryForm.getInquiryFileList() + CF.RESET);
+		if (addInquiryForm.getInquiryFileList() != null  && row == 1 && addInquiryForm.getInquiryFileList().get(0).getSize() > 0) { // 파일을 첨부했을 때 
+				log.debug(CF.PSG +"InquiryService.addInquiry 파일 첨부됨 " + CF.RESET);
+			for(MultipartFile mf : addInquiryForm.getInquiryFileList()) {
+				Boardfile boardfile = new Boardfile();
+				
+				String originalName = mf.getOriginalFilename(); // 파일 오리지널이름 
+				String ext = originalName.substring(originalName.lastIndexOf("."));
+				
+				String fileName = UUID.randomUUID().toString(); // 파일 저장할때 중복되지않는 이름 사용 UUID API
+				
+				fileName = fileName+ext;
+				boardfile.setBoardNo(boardNo);
+				boardfile.setBoardFileName(fileName);
+				boardfile.setBoardFileOriginalName(originalName);
+				boardfile.setBoardFileSize(mf.getSize());
+				boardfile.setBoardFileType(mf.getContentType());
+				if (mf.getContentType().equals("image/jpeg") || mf.getContentType().equals("image/jpg") || mf.getContentType().equals("image/png")) {
+				inquiryMapper.insertBoardFile(boardfile);
+				try {
+					mf.transferTo(new File(path+fileName));
+				} catch (Exception e) {
+					e.printStackTrace();
+					// 새로운 예외 발생시켜야지만 @Transactional 작동함 
+					throw new RuntimeException(); //RuntimeException은 예외처리 하지않아도 컴파일 됨
+						}
+					}
+				}
+			}
+		
+		return row;
+	}
+	public int removeBoardfileByBoardFileNo(int boardFileNo,String path) {
+		int row = 0;
+		log.debug(CF.PSG+"removeBoardfileByBoardFileNo.path :"+path+CF.RESET);
+		String fileName = inquiryMapper.selectBoardFileNameByBoardFileNo(boardFileNo);
+		// 저장되어있는 파일 삭제
+		File file = new File(path+fileName);
+		if(file.exists()) {
+			file.delete();
+		}
+		
+		row = inquiryMapper.deleteBoardfile(boardFileNo);
+		
+		return row; 
+	}
+	
+
 }

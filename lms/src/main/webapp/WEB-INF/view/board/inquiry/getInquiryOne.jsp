@@ -464,13 +464,16 @@
 	              					<div class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">첨부 파일</div>
 									<div>
 										<c:forEach var="bf" items="${boardFile}">
+										<div>
 											<a href="${pageContext.request.contextPath}/file/inquiryFile/${bf.boardFileName}" download="${bf.boardFileOriginalName}">${bf.boardFileOriginalName}</a>
+										</div>
 										</c:forEach>
 									</div>
 								</div>
 								</c:if>
 							<br>
-						<c:if test="${level eq 1}">
+						<c:forEach var="re" items="${receiver}">
+						<c:if test="${level eq 1 || re eq loginUser}">
 						<h2
 						class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
 						답변</h2>
@@ -526,6 +529,7 @@
 					            </div>
 						</form>
 						</c:if>
+						</c:forEach>
 						<br>
 						<div class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
 	           			전체 답변  [${fn:length(boardComment)}]

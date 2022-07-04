@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
 <head>
@@ -16,11 +17,6 @@
 <script src="./public/assets/js/init-alpine.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
-  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-  <script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
 <script>
 $(document).ready(function(){
 $('#addFileUpload').click(function(){
@@ -39,7 +35,7 @@ $('#addFileUpload').click(function(){
 		}
 	});
 
-	$('#addInquiryBtn').click(function(){
+	$('#modifyInquiryBtn').click(function(){
 		
 			if($('#recevier').val()== 2) {
 				if($("input:checked[Name='teacherId']").is(":checked")<1){
@@ -442,7 +438,7 @@ $('#addFileUpload').click(function(){
 					<!-- New Table -->
 					<div class="w-full overflow-hidden rounded-lg shadow-xs">
 						<div class="w-full overflow-x-auto">
-							<form method="post" action="${pageContext.request.contextPath}/addInquiry" id="form" enctype="multipart/form-data">
+							<form method="post" action="${pageContext.request.contextPath}/modifyInquiry" id="form" enctype="multipart/form-data">
 								<table class="w-full whitespace-no-wrap">
 								<c:if test="${level eq 3}">
 									<tr class="text-gray-700 dark:text-gray-400">
@@ -453,7 +449,7 @@ $('#addFileUpload').click(function(){
 											name="recevier"
 											id="recevier">
 											<option value="1">운영자</option>
-											<option value="2">강사</option>
+											<option value="2"<c:if test="${fn:length(teacherNameList) > 0}">selected</c:if>>강사</option>
 											</select>
 										</td>
 									</tr>
@@ -461,12 +457,13 @@ $('#addFileUpload').click(function(){
 									<td class="px-4 py-3 text-sm">강사 선택</td>
 										<td class="px-4 py-3 text-sm">
 										<c:forEach var="l" items="${teacherList}">
-										<input
-						                type="checkbox"
-						                class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-						                name="teacherId" value="${l.memberId}"
-						              /> ${l.teacherName}
-						              </c:forEach>
+									 <input
+			                    type="checkbox"
+			                    class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+			                    value="${l.memberId}" name="teacherId"<c:forEach var="t" items="${teacherNameList}"><c:if test="${l.teacherName eq t.teacherName}">checked</c:if></c:forEach>
+			                  />
+                            ${l.teacherName}
+                            </c:forEach>
 										</td>
 									</tr>
 									</c:if>
@@ -528,20 +525,25 @@ $('#addFileUpload').click(function(){
 										</td>
 										<td class="px-4 py-3">
 											<div  id="fileSection">
-											
 											</div>
 										</td>
 									</tr>
 								</table>
+								<c:if test="${fileCount > 0}">
+								<c:forEach var="bf" items="${boardFile}">
+											<a href="${pageContext.request.contextPath}/file/inquiryFile/${bf.boardFileName}" download="${bf.boardFileOriginalName}">${bf.boardFileOriginalName}</a>
+											<a href="${pageContext.request.contextPath}/removeFileByBoardFileNo?boardFileNo=${bf.boardFileNo}&boardNo=${board.boardNo}">삭제</a>
+								</c:forEach>
+								</c:if>
 								</form>
 									<br>
 								   <div>
 					                <button
 					                  class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-					                  id="addInquiryBtn"
+					                  id="modifyInquiryBtn"
 					                  type="button"
 					                >
-					               	글작성
+					               	수정
 					                </button>
 					              </div>
 						</div>

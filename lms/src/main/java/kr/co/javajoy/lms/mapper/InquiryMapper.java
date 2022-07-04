@@ -9,13 +9,14 @@ import kr.co.javajoy.lms.vo.Board;
 import kr.co.javajoy.lms.vo.BoardComment;
 import kr.co.javajoy.lms.vo.Boardfile;
 import kr.co.javajoy.lms.vo.Receiver;
+import kr.co.javajoy.lms.vo.Teacher;
 
 @Mapper
 public interface InquiryMapper {
 	// 문의사항 개시판 
 	List<Map<String,Object>> selectInquiryByPage(Map<String,Object> map);
 	// 문의사항의 글의 총개수
-	int selectInquiryTotalCount();
+	int selectInquiryTotalCount(String searchInquiryTitle);
 	// 해당학생을 가르키는 강사 리스트
 	List<Map<String,Object>> selectTeacherListBySubject(String memberId);
 	
@@ -47,5 +48,16 @@ public interface InquiryMapper {
 	// 선택한 답변  삭제
 	int deleteInquiryCommentByBoardCommentNo(int boardCommentNo);
 	
+	List<Teacher> selectCheckedReceiverTeacherName(int boardNo);
+	
+	int updateInquiryBoard(Board board);
+	
+	int deleteReceiver(int boardNo);
+	
+	int deleteBoardfile(int boardFileNo);
+	
+	String selectBoardFileNameByBoardFileNo(int boardFileNo);
+	
+	List<Receiver> receiverList();
 	
 }

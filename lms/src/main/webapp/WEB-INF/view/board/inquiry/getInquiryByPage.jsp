@@ -416,7 +416,18 @@
 									<c:forEach var="l" items="${list}" varStatus="i">
 										<tbody
 											class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-												<tr onClick="location.href='${pageContext.request.contextPath}/getInquiryOne?boardNo=${l.boardNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
+											<c:choose>
+												<c:when test="${l.privateNo eq 3}">
+												<c:forEach var="rec" items="${receiverList}">
+												<c:if test="${level eq 1 || (rec.receiver eq loginUser && rec.boardNo == l.boardNo)}">
+													<tr onClick="location.href='${pageContext.request.contextPath}/getInquiryOne?boardNo=${l.boardNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
+												</c:if>
+													</c:forEach>
+												</c:when>
+												<c:otherwise>
+													<tr onClick="location.href='${pageContext.request.contextPath}/getInquiryOne?boardNo=${l.boardNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
+												</c:otherwise>
+											</c:choose>
 													<td class="px-4 py-3 text-sm">${(totalCount - (currentPage-1)*rowPerPage) - i.index}</td>
 													<td class="px-4 py-3">
 														<div class="flex items-center text-sm">
@@ -456,12 +467,41 @@
 								</table>
 						</div>
 					</div>
-					<c:if test="${currentPage > 1}">
+					     <div
+                class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-12 dark:text-gray-400 dark:bg-gray-800">
+              <form method="get" action="${pageContext.request.contextPath}/getInquiryByPage" name="searchInquiryTitle">
+                <span class="flex items-center col-span-3">
+                  <input name="searchInquiryTitle" class="form-control" type="text"  placeholder="제목 검색">
+                	<button type="submit" class="grid px-4 py-3 text-sm">검색</button>
+                	<a href="${pageContext.request.contextPath}/getInquiryByPage">초기화</a>
+                </span>
+                </form>
+                <span class="col-span-2"></span>
+                <!-- Pagination -->
+                <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+               	<c:if test="${currentPage > 1}">
+               	<c:choose>
+               	<c:when test="${searchInquiryTitle eq null}">
                <a href="${pageContext.request.contextPath}/getInquiryByPage?currentPage=${currentPage-1}">이전</a>
-        </c:if>
-        <c:if test="${currentPage  < lastPage}">
+               </c:when>
+               <c:otherwise>
+               <a href="${pageContext.request.contextPath}/getInquiryByPage?currentPage=${currentPage-1}&searchInquiryTitle=${searchInquiryTitle}">이전</a>
+               </c:otherwise>
+               </c:choose>
+       			</c:if>
+                <span>&nbsp  &nbsp</span>
+                <c:if test="${currentPage  < lastPage}">
+                <c:choose>
+                <c:when test="${searchInquiryTitle eq null}">
                <a  href="${pageContext.request.contextPath}/getInquiryByPage?currentPage=${currentPage+1}">다음</a>
-        </c:if>
+               </c:when>
+               <c:otherwise>
+                  <a href="${pageContext.request.contextPath}/getInquiryByPage?currentPage=${currentPage+1}&searchInquiryTitle=${searchInquiryTitle}">다음</a>
+               </c:otherwise>
+               </c:choose>
+      		  </c:if>
+                </span>
+              </div>
 				</div>
 			</main>
 		</div>
