@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.javajoy.lms.mapper.AllAdminListMapper">
 
-<!-- 관리자 정보 업데이트
+<!-- 관리자 정보 수정
 <update id="updateAllAdminList"
 		parameterType="String">
 		UPDATE admin SET
@@ -30,10 +30,34 @@
 			,update_date updateDate
 		FROM admin
 		<if test='searchAdminName != null and !"".equals( searchAdminName ) '>
-			WHERE CONCAT( '%', admin_name, '%' ) LIKE CONCAT( '%',
-			#{searchAdminName} , '%' )
+			WHERE CONCAT( '%', admin_name, '%' ) 
+			LIKE CONCAT( '%', #{searchAdminName} , '%' )
 		</if>
 	</select>
+	
+	 <!--  관리자 삭제 (업데이트) 
+	<update id="deleteMemberId"
+			parameterType="java.util.Map">
+		UPDATE 
+			 admin SET
+			 admin_name = '11111111'
+			,admin_phone = 11111111111
+			,admin_address = '111111'
+			,admin_detailaddress = '111111'
+			,admin_email = '111111'
+			,update_date = NOW()
+		WHERE member_id = '#{member_Id}'
+	</update>
+	<update id='deleteAdmin'
+				parameterType="java.util.Map">
+		UPDATE member_id SET
+			 member_pw = '111111'
+			,member_active = '3'
+			,last_login_date = NOW()
+			,delete_date = now()
+		WHERE member_id = '';
+	</update>-->
+	
 <!-- 전체 관리자 수 -->
 	<select id="selectTotalCount" 
 			resultType="int" >

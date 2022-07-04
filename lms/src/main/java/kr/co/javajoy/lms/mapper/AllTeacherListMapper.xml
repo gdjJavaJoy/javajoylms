@@ -16,8 +16,8 @@
 			,teacher_join teacherJoin
 		FROM teacher
 		<if test='SearchTeacherName != null and !"".equals( SearchTeacherName ) '>
-		WHERE CONCAT( '%', teacher_name, '%' ) LIKE CONCAT( '%',
-		#{SearchTeacherName} , '%' )
+		WHERE CONCAT( '%', teacher_name, '%' ) 
+		LIKE CONCAT( '%', #{SearchTeacherName} , '%' )
 		</if>
 	</select>
 	<!-- 전체 강사 수 -->

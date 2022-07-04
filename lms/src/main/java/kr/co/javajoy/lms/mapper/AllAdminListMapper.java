@@ -11,6 +11,9 @@ import kr.co.javajoy.lms.vo.Admin;
 public interface AllAdminListMapper {
 	// 관리자 출력
 	List<Admin> AllAdminList(Map<String, Object> map);
+	// 관리자 삭제
+	// int deleteAdminId(DeleteMemberId deleteMemberId);
+	int deleteAdmin(Admin Admin);
 	// 관리자 수
 	int selectTotalCount();
 }
