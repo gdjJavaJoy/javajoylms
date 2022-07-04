@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.javajoy.lms.vo.Student;
 import kr.co.javajoy.lms.vo.Survey;
 import kr.co.javajoy.lms.vo.SurveyResult;
 
@@ -18,4 +19,6 @@ public interface SurveyMapper {
 	public void insertSurveyQuestion(Survey survey);
 	// 특정 학생의 만족도 질문 결과
 	public List<Map<String,Object>> selectStudentSurveyResult(String memberId);
+	
+	public List<Student> checkStudentSurveyList();
 }

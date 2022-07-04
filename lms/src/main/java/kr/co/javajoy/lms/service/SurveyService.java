@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.mapper.SurveyMapper;
+import kr.co.javajoy.lms.vo.Student;
 import kr.co.javajoy.lms.vo.Survey;
 import kr.co.javajoy.lms.vo.SurveyResult;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,6 @@ public class SurveyService {
 		log.debug(CF.YHJ + "SurveyService.getSurvey.subjectNo : " + subjectNo + CF.RESET); // 디버깅
 		
 		List<Survey> list = surveyMapper.selectSurvey(subjectNo);
-		
 		
 		log.debug(CF.YHJ + "SurveyService.getSurvey.list : " + list + CF.RESET); // 디버깅
 		
@@ -59,4 +59,9 @@ public class SurveyService {
 		
 		return list;
 	}
+	
+	public List<Student> checkStudentSurveyList(){
+		return surveyMapper.checkStudentSurveyList();
+	}
+	
 }

@@ -118,10 +118,9 @@ public class SurveyController {
 										,@RequestParam(value = "subjectNo") int subjectNo) {
 		log.debug(CF.YHJ + "SurveyController.getSurveyStudentList.subjectNo : " + subjectNo + CF.RESET); // 디버깅
 		
-		List<Student> studentList = subjectService.getSubjectStudentList(subjectNo,searchStudentName);
-		// int surveyChk = subjectService.checkSurveyCnt(memberId);
-		log.debug(CF.YHJ + "SurveyController.getSurveyStudentList.studentList : " + studentList + CF.RESET);
+		List<Map<String,Object>> studentList = subjectService.getSubjectStudentList(subjectNo,searchStudentName);
 		
+		log.debug(CF.YHJ + "SurveyController.getSurveyStudentList.studentList : " + studentList + CF.RESET);
 		
 		model.addAttribute("studentList",studentList);
 		model.addAttribute("subjectNo",subjectNo);
@@ -143,25 +142,6 @@ public class SurveyController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 }

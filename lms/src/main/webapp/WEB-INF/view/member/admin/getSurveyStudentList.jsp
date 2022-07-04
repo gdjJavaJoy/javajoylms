@@ -52,7 +52,7 @@
 					<h4
 						class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">학생
 						목록</h4>
-					<a href="${pageContext.request.contextPath}/getSubjectStudentList?subjectNo=${subjectNo}">초기화</a>
+					<a href="${pageContext.request.contextPath}/getSurveyStudentList?subjectNo=${subjectNo}">초기화</a>
 					<div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
 						<div class="w-full overflow-x-auto">
 							<table class="w-full whitespace-no-wrap">
@@ -65,6 +65,7 @@
 										<th class="px-4 py-3">전화번호</th>
 										<th class="px-4 py-3">학력</th>
 										<th class="px-4 py-3">등록 날짜</th>
+										<th class="px-4 py-3">제출 현황</th>
 									</tr>
 								</thead>
 								<tbody
@@ -73,7 +74,7 @@
 									<c:forEach var="s" items="${studentList}">
 										<script type="text/javascript">
 											function reply_click(clicked_id) {
-												alert(clicked_id);
+												alert(clicked_id);+
 											}
 										</script>
 										<tr
@@ -86,11 +87,11 @@
 											<td class="px-4 py-3 text-sm">${s.studentPhone}</td>
 											<td class="px-4 py-3 text-sm">${s.studentEducation}</td>
 											<td class="px-4 py-3 text-sm">${s.studentRegisterDate}</td>
-											<c:if test="${surveyChk < 1}"> 
-												<td class="px-4 py-3 text-sm">미제출</td>
-											</c:if>
-											<c:if test="${surveyChk > 1}"> 
+											<c:if test="${s.cnt > 1}">
 												<td class="px-4 py-3 text-sm">제출</td>
+											</c:if>
+											<c:if test="${s.cnt < 1}">
+												<td class="px-4 py-3 text-sm">미제출</td>
 											</c:if>
 											<td><button type="button" class="grid px-4 py-3 text-sm"
 													onclick="location.href='${pageContext.request.contextPath}/allStudentList';"
@@ -103,7 +104,7 @@
 						<div
 							class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-12 dark:text-gray-400 dark:bg-gray-800">
 							<form method="get"
-								action="${pageContext.request.contextPath}/getSubjectStudentList"
+								action="${pageContext.request.contextPath}/getSurveyStudentList"
 								name="search">
 								<span class="flex items-center col-span-3"> Search
 									Student : <input name="searchStudentName" class="form-control"

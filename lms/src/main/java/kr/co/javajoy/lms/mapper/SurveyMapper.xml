@@ -59,4 +59,11 @@
 		WHERE sr.member_id = #{memberId}
 	</select>
 	
+	<select id="checkStudentSurveyList"
+			resultType="kr.co.javajoy.lms.vo.Student">
+		SELECT member_id memberId
+		FROM survey_result
+		GROUP BY member_id
+	</select>
+	
 </mapper>

@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import kr.co.javajoy.lms.vo.Student;
 import kr.co.javajoy.lms.vo.Subject;
 import kr.co.javajoy.lms.vo.SubjectVideo;
 
@@ -45,5 +44,5 @@ public interface SubjectMapper {
 	int checkSurveyCnt(String memberId);
 	
 	// 특정 강좌의 학생 리스트
-	List<Student> selectSubjectStudentList(Map<String,Object> map);
+	List<Map<String,Object>> selectSubjectStudentList(Map<String,Object> map);
 }

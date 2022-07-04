@@ -187,20 +187,23 @@
 
 	<select id="selectSubjectStudentList"
 		parameterType="java.util.Map"
-		resultType="kr.co.javajoy.lms.vo.Student">
-	SELECT 
-		ss.subject_no subjectNo
-		,s.member_id memberId
-		,s.student_name studentName
-		,s.student_gender studentGender
-		,s.student_phone studentPhone
-		,s.student_education studentEducation
-		,s.student_register_date studentRegisterDate
-	FROM 
-		student AS s
-		INNER JOIN subject_student AS ss
-	    ON s.member_id = ss.member_id
-	    WHERE ss.subject_no = #{subjectNo}
+		resultType="java.util.Map">
+			SELECT 
+				ss.subject_no subjectNo
+				,s.member_id memberId
+				,s.student_name studentName
+				,s.student_gender studentGender
+				,s.student_phone studentPhone
+				,s.student_education studentEducation
+				,s.student_register_date studentRegisterDate
+				,COUNT(sr.member_id) cnt
+			FROM student AS s
+			INNER JOIN subject_student AS ss
+			   ON s.member_id = ss.member_id
+			   left JOIN survey_result as sr
+			   ON s.member_id = sr.member_id
+			WHERE ss.subject_no = 12
+			GROUP BY s.member_id
 	<if test='searchStudentName != null and !"".equals( searchStudentName ) '>
 		AND CONCAT( '%', s.student_name, '%' ) LIKE CONCAT( '%',
 		#{searchStudentName} , '%' )

@@ -148,7 +148,7 @@ public class SubjectService {
 	// ----------------------- 학생 리스트 -----------------------
 	
 	// 특정 강좌의 학생 리스트
-	public List<Student> getSubjectStudentList(int subjectNo, String searchStudentName) {
+	public List<Map<String,Object>> getSubjectStudentList(int subjectNo, String searchStudentName) {
 		// 디버깅
 		log.debug(CF.YHJ + "SubjectService.getSubjectStudentList.subjectNo : " + subjectNo + CF.RESET);
 		log.debug(CF.YHJ + "SubjectService.getSubjectStudentList.searchStudentName : " + searchStudentName + CF.RESET);
@@ -157,7 +157,7 @@ public class SubjectService {
 		map.put("subjectNo", subjectNo);
 		map.put("searchStudentName", searchStudentName);
 		
-		List<Student> studentList = subjectMapper.selectSubjectStudentList(map);
+		List<Map<String,Object>> studentList = subjectMapper.selectSubjectStudentList(map);
 		log.debug(CF.YHJ + "SubjectService.getSubjectStudentList.studentList : " + studentList + CF.RESET);
 		
 		return studentList;

@@ -267,7 +267,7 @@ public class SubjectController {
 		log.debug(CF.YHJ + "SubjectController.getSubjectStudentList.subjectNo : " + subjectNo + CF.RESET);
 		log.debug(CF.YHJ + "SubjectController.getSubjectStudentList.searchStudentName : " + searchStudentName + CF.RESET);
 				
-		List<Student> studentList = subjectService.getSubjectStudentList(subjectNo,searchStudentName);
+		List<Map<String,Object>> studentList = subjectService.getSubjectStudentList(subjectNo,searchStudentName);
 		log.debug(CF.YHJ + "SubjectController.getSubjectStudentList.studentList : " + studentList + CF.RESET);
 		
 		model.addAttribute("studentList",studentList);
