@@ -1,74 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.javajoy.lms.mapper.SubjectReportMapper">
+<mapper namespace="kr.co.javajoy.lms.mapper.SubjectReportStudentMapper">
 	
-	<!-- 1) 과제 게시판 글 리스트 출력 -->
+	<!-- 1) 학생 - 과제 게시판 글 리스트 출력 -->
 	
-	<!-- 과제 게시판 글 총 개수 -->
+	<!-- 학생 - 과제 게시판 글 총 개수 -->
 	<select id="selectTotalCount"
 			resultType="int">
-		SELECT COUNT(*) FROM subject_report
+		SELECT COUNT(*) FROM subject_report_student
 	</select>
-	<!-- 과제 게시판 글 리스트 출력 -->
-	<select id="selectSubjectReportListByPage"
+	<!-- 학생 - 과제 게시판 글 리스트 출력 -->
+	<select id="selectSubjectReportStudentListByPage"
 			parameterType="java.util.Map"
-			resultType="kr.co.javajoy.lms.vo.SubjectReport">
+			resultType="kr.co.javajoy.lms.vo.SubjectReportStudent">
 		SELECT 
-			b.subject_board_no subjectBoardNo
-			,s.subject_no subjectNo
+			s.subject_report_student_no subjectReportStudentNo
 			,r.subject_report_no subjectReportNo
-			,s.subject_name subjectName
-			,r.member_id memberId
-			,t.teacher_Name teacherName 	
-			,r.subject_report_title subjectReportTitle
-			,r.subject_report_content subjectReportContent
-			,r.subject_report_period subjectReportPeriod 
-			,r.create_date createDate
-		FROM subject_board AS b 
+			,s.member_id memberId
+			,u.studentName studentName
+			,s.subject_report_student_title subjectReportStudentTitle
+			,s.subject_report_student_content subjectReportStudentContent	
+			,s.score score
+			,s.status status
+			,s.create_date createDate
+			,s.update_date updateDate
+		FROM subject_report_student AS s 
 		LEFT JOIN subject_report AS r ON r.subject_report_no = b.subject_board_no
-		LEFT JOIN subject AS s ON s.subject_no = b.subject_no
-		LEFT JOIN teacher AS t ON t.member_id = r.member_id
-		WHERE b.subject_no = #{subjectNo}
-		<if test='rSubjectReportTitle != null and !"".equals(rSubjectReportTitle)'>
-			AND CONCAT('%', r.subject_report_title, '%') 
-			LIKE CONCAT('%', #{rSubjectReportTitle}, '%')
+		LEFT JOIN student AS u ON u.member_id = s.member_id
+		WHERE r.subject_report_no = #{subjectReportNo}
+		<if test='sSubjectReportStudentTitle != null and !"".equals(sSubjectReportStudentTitle)'>
+			AND CONCAT('%', s.subject_report_student_title, '%') 
+			LIKE CONCAT('%', #{sSubjectReportStudentTitle}, '%')
 		</if>
 		ORDER BY b.create_date DESC
 		LIMIT #{startRow}, #{rowPerPage}
 	</select>
 	
-	<!-- 2) 과제 게시판 글 상세보기 + 파일 이름 리스트 출력 + 댓글 리스트 출력 -->
+	<!-- 2) 학생 - 과제 게시판 글 상세보기 + 파일 이름 리스트 출력 + 댓글 리스트 출력 -->
 	
-	<!-- 과제 게시판 상세보기 -->
-	<select id="selectSubjectReportOne"
+	<!-- 학생 - 과제 게시판 상세보기 -->
+	<select id="selectSubjectReportStudentOne"
 			parameterType="int"
-			resultType="kr.co.javajoy.lms.vo.SubjectReport">
+			resultType="kr.co.javajoy.lms.vo.SubjectReportStudent">
 		SELECT 
-			b.subject_board_no subjectBoardNo
+			s.subject_report_student_no subjectReportStudentNo
 			,r.subject_report_no subjectReportNo
-			,b.subject_no subjectNo
-			,s.subject_name subjectName
-			,r.member_id memberId 
-			,t.teacher_Name teacherName 	
-			,r.subject_report_title subjectReportTitle
-			,r.subject_report_content subjectReportContent
-			,r.subject_report_period subjectReportPeriod
-			,r.create_date createDate
-		FROM subject_board AS b
+			,s.member_id memberId
+			,u.studentName studentName
+			,s.subject_report_student_title subjectReportStudentTitle
+			,s.subject_report_student_content subjectReportStudentContent	
+			,s.score score
+			,s.status status
+			,s.create_date createDate
+			,s.update_date updateDate
+		FROM subject_report_student AS s 
 		LEFT JOIN subject_report AS r ON r.subject_report_no = b.subject_board_no
-		LEFT JOIN subject AS s ON s.subject_no = b.subject_no
-		LEFT JOIN teacher AS t ON t.member_id = r.member_id
-		WHERE b.subject_board_no = #{subjectBoardNo};
+		LEFT JOIN student AS u ON u.member_id = s.member_id
+		WHERE r.subject_report_no = #{subjectReportNo}
 	</select>
-	<!-- 과제 게시판 상세보기에 파일 이름으로된 리스트 출력 -->
-	<select id="selectSubjectReportFileNameList"
+	<!-- 학생 - 과제 게시판 상세보기에 파일 이름으로된 리스트 출력 -->
+	<select id="selectSubjectReportStudentFileNameList"
 			parameterType="int"
 			resultType="String">
 		SELECT
-			f.subject_file_name subjectFileName
-		FROM subject_board AS b
-		LEFT JOIN subject_file AS f ON f.subject_file_board_no = b.subject_board_no
-		WHERE b.subject_board_no = #{subjectBoardNo};
+			f.student_file_name studenttFileName
+		FROM subject_report_student AS s
+		LEFT JOIN student_file AS f ON f.student_file_board_no = s.subject_report_no
+		WHERE s.subject_report_no = #{subjectReportNo};
 	</select>
 	<!-- 과제 게시판 상세보기 파일 리스트 출력 -->
 	<select id="selectSubjectReportFileList"

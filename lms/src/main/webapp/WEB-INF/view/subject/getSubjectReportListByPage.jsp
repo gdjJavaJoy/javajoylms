@@ -120,7 +120,8 @@
               >
                	<form method="get" action="${pageContext.request.contextPath}/getSubjectReportListByPage" name="search">
 	                <span class="flex items-center col-span-3">
-	                  <input name="rSubjectReportTitle" class="form-control" type="text"  placeholder="제목 검색">
+               		<input name="subjectNo" class="form-control" type="hidden" value="${subjectNo}">
+	                <input name="rSubjectReportTitle" class="form-control" type="text"  placeholder="제목 검색">
 	                 	  <button type="submit" class="grid px-4 py-3 text-sm">검색</button>
 	                 	  <a href="${pageContext.request.contextPath}/getSubjectReportListByPage?subjectNo=${subjectNo}">초기화</a>
 	                </span>

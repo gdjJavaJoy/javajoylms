@@ -63,6 +63,12 @@ public interface SubjectReportMapper {
 	
 	// 6) 과제 게시판 삭제
 	
-	// 과제 게시판 삭제 + 댓글
-	int deleteSubjectReport(int subjectBoardNo);
+	// 과제 게시판 댓글 삭제
+	int deleteAllSubjectReportCommentBySubjectBoardNo(int subjectBoardNo);     
+	// 과제 게시판 파일 삭제
+	int deleteAllSubjectFileBySubjectBoardNo(int subjectBoardNo);
+	// 과제 게시판 삭제(subject_report)
+	int deleteSubjectReportBySubjectBoardNo(int subjectBoardNo);  
+	// 과제 게시판 삭제(subject_board)
+	int deleteSubjectBoardBySubjectBoardNo(int subjectBoardNo);   
 }
