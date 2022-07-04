@@ -52,6 +52,7 @@ public class NoticeController {
 		
 		return "board/notice/getNoticeByPage";
 	}
+	// 공지사항 상세보기
 	@GetMapping("/getNoticeOne")
 	public String getNoticeOne(Model model
 			,HttpServletRequest request
@@ -72,7 +73,7 @@ public class NoticeController {
 		return "board/notice/getNoticeOne";
 	}
 	
-	// 리스트 추가
+	// 공지사항 추가 Form
 	@GetMapping("/addNotice")
 	public String addNotice(HttpSession session) {
 		String memberId = (String) session.getAttribute("loginUser");
@@ -85,6 +86,7 @@ public class NoticeController {
 		
 		return "board/notice/addNotice";
 	}
+	// 공지사항 추가 Action
 	@PostMapping("/addNotice")
 	public String addNotice(HttpServletRequest request, BoardForm boardForm) {
 		String path = request.getServletContext().getRealPath("/file/boardFile/");
@@ -102,7 +104,7 @@ public class NoticeController {
 		log.debug(CF.WSH + "NoticeController.addNotice(Post).boardForm : "+boardForm);
 		return "redirect:/getNoticeByPage";
 	}
-	// 리스트 삭제
+	// 공지사항 파일 삭제 Form
 	@GetMapping("/removeNoticefile") // 파일 먼저 삭제
 	public String removeNoticefile(HttpServletRequest request
 			,@RequestParam(name="boardFileNo") int boardfileNo
@@ -113,6 +115,7 @@ public class NoticeController {
 			noticeService.removefileNotice(boardfileNo,path);
 		return "redirect:/modifyNotice?boardNo="+boardNo;
 	}
+	// 공지사항 삭제 Form
 	@GetMapping("/removeNotice")
 	public String removeNoice(HttpServletRequest request
 			,@RequestParam(name="boardNo") int boardNo) {
@@ -122,7 +125,7 @@ public class NoticeController {
 	return "redirect:/getNoticeByPage";
 	}
 	
-	// 리스트 수정
+	// 공지사항 수정 Form
 	@GetMapping("/modifyNotice")
 	public String modifyNotice(HttpSession session
 			,HttpServletRequest request
@@ -145,6 +148,7 @@ public class NoticeController {
 		model.addAttribute("totalCount",map.get("totalCount"));
 		return "board/notice/modifyNotice";
 	}
+	// 공지사항 수정 Action
 	@PostMapping("/modifyNotice") 
 	public String modifyNotice(HttpServletRequest request
 			,BoardForm boardForm
