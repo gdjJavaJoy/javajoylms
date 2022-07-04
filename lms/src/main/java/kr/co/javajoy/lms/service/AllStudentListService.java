@@ -44,6 +44,7 @@ public class AllStudentListService {
 		log.debug(CF.LGN + "AllStudentListController.selecAllStudentList searchStudentName : "+ searchStudentName);
 		log.debug(CF.LGN + "AllStudentListController.selecAllStudentList lastPage : " + lastPage );
 		log.debug(CF.LGN + "AllStudentListController.selecAllStudentList list.size() : " + list);
+		
 		return returnMap;
 	}
 }

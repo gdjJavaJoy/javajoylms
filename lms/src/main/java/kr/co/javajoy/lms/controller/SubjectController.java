@@ -191,7 +191,7 @@ public class SubjectController {
 		log.debug(CF.YHJ + "SubjectService.getSubjectVideoList.subjectVideoList : " +  subjectVideoList + CF.RESET); // 디버깅
 		
 		model.addAttribute("subjectVideoList",subjectVideoList);
-		
+		model.addAttribute("subjectNo",subjectNo);
 		
 		return "/subject/getSubjectVideo";
 	}
