@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.javajoy.lms.mapper.SubjectReportStudentMapper">
+	
+	<!-- 1) 학생 - 과제 게시판 글 리스트 출력 -->
+	
+	<!-- 학생 - 과제 게시판 글 총 개수 -->
+	<select id="selectTotalCount"
+			resultType="int">
+		SELECT COUNT(*) FROM subject_report_student
+	</select>
+	<!-- 학생 - 과제 게시판 글 리스트 출력 -->
+	<select id="selectSubjectReportStudentListByPage"
+			parameterType="java.util.Map"
+			resultType="kr.co.javajoy.lms.vo.SubjectReportStudent">
+		SELECT 
+			s.subject_report_student_no subjectReportStudentNo
+			,r.subject_report_no subjectReportNo
+			,s.member_id memberId
+			,u.student_name studentName
+			,s.subject_report_student_title subjectReportStudentTitle
+			,s.subject_report_student_content subjectReportStudentContent	
+			,s.score score
+			,s.status status
+			,s.create_date createDate
+			,s.update_date updateDate
+		FROM subject_report_student AS s 
+		LEFT JOIN subject_report AS r ON r.subject_report_no = s.subject_report_student_no
+		LEFT JOIN student AS u ON u.member_id = s.member_id
+		WHERE r.subject_report_no = #{subjectReportNo}
+		<if test='sSubjectReportStudentTitle != null and !"".equals(sSubjectReportStudentTitle)'>
+			AND CONCAT('%', s.subject_report_student_title, '%') 
+			LIKE CONCAT('%', #{sSubjectReportStudentTitle}, '%')
+		</if>
+		ORDER BY s.create_date DESC
+		LIMIT #{startRow}, #{rowPerPage}
+	</select>
+	
+	<!-- 2) 학생 - 과제 게시판 글 상세보기 + 파일 이름 리스트 출력 + 댓글 리스트 출력 -->
+	
+	<!-- 학생 - 과제 게시판 상세보기 -->
+	<select id="selectSubjectReportStudentOne"
+			parameterType="int"
+			resultType="kr.co.javajoy.lms.vo.SubjectReportStudent">
+		SELECT 
+			s.subject_report_student_no subjectReportStudentNo
+			,r.subject_report_no subjectReportNo
+			,s.member_id memberId
+			,u.student_name studentName
+			,s.subject_report_student_title subjectReportStudentTitle
+			,s.subject_report_student_content subjectReportStudentContent	
+			,s.score score
+			,s.status status
+			,s.create_date createDate
+			,s.update_date updateDate
+		FROM subject_report_student AS s 
+		LEFT JOIN subject_report AS r ON r.subject_report_no = b.subject_board_no
+		LEFT JOIN student AS u ON u.member_id = s.member_id
+		WHERE r.subject_report_no = #{subjectReportNo}
+	</select>
+	<!-- 학생 - 과제 게시판 상세보기에 파일 이름으로된 리스트 출력 -->
+	<select id="selectSubjectReportStudentFileNameList"
+			parameterType="int"
+			resultType="String">
+		SELECT
+			f.student_file_name studenttFileName
+		FROM subject_report_student AS s
+		LEFT JOIN student_file AS f ON f.student_file_board_no = s.subject_report_student_no
+		WHERE s.subject_report_student_no = #{subjectReportStudentNo};
+	</select>
+	<!-- 학생 - 과제 게시판 상세보기 파일 리스트 출력 -->
+	<select id="selectSubjectReportStudentFileList"
+			parameterType="int"
+			resultType="kr.co.javajoy.lms.vo.StudentFile">
+		SELECT f.student_file_original_name studentFileOriginalName
+			  ,f.student_file_name studentFileName
+			  ,f.student_file_type studentFileType
+			  ,f.student_file_size studentFileSize
+			  ,s.subject_report_student_no subjectReportStudentNo
+			  ,f.student_file_no studentFileNo
+		FROM subject_file AS f
+		LEFT JOIN subject_report_student AS s ON f.student_file_board_no = s.subject_report_student_no
+		WHERE s.subject_report_student_no = #{subjectReportStudentNo};
+	</select>
+	
+	<!-- 3) 학생 - 과제 게시판 글 입력 + 파일 입력 -->
+	
+	<!-- 학생 - 과제 게시판 글 입력 -->
+	<insert id="insertSubjectReportStudent" 
+			parameterType="kr.co.javajoy.lms.vo.SubjectReportStudent">
+		INSERT INTO subject_report_student (
+			subject_report_no
+			,member_id
+			,subject_report_student_title
+			,subject_report_student_content
+			,subject_report_student_period
+			,score
+			,status
+			,create_date
+			,update_date
+		) VALUES (
+			#{subjectReportNo}
+			,#{memberId}
+			,#{subjectReportTitle}
+			,#{subjectReportContent}
+			,#{subjectReportPeriod}
+			,#{score}
+			,#{status}
+			,NOW()
+			,NOW()
+		)
+	</insert>
+	<!-- 학생 - 과제 게시판 파일 입력 -->
+	<insert id="insertStudentFile"
+			parameterType="kr.co.javajoy.lms.vo.StudentFile">
+		INSERT INTO subject_file (
+			subject_report_student_no
+			,student_file_name
+			,student_file_original_name
+			,student_file_type
+			,student_file_size
+			,create_date
+			,update_date
+		) VALUES (
+			#{subjectReportStudentNo}
+			,#{studentFileName}
+			,#{studentFileOriginalName}
+			,#{studentFileType}
+			,#{studentFileSize}
+			,NOW()
+			,NOW()
+		)
+	</insert>
+	
+	<!-- 4) 학생 - 과제 게시판 글 수정 + 파일 수정 -->
+	
+	<!-- 학생 - 과제 게시판 글 수정 -->
+	<update id="updateSubjectReportStudent"
+			parameterType="kr.co.javajoy.lms.vo.SubjectReportStudent">
+		UPDATE subject_report_student AS s
+		SET 
+			s.subject_report_student_no = #{subjectReportStudentNo}
+			,s.subject_report_no = #{subjectReportNo}
+			,s.member_id = #{memberId}
+			,s.subject_report_student_title = #{subjectReportStudentTitle}
+			,s.subject_report_student_content = #{subjectReportStudentContent}
+			,score = #{memberId}
+			,status = #{memberId}
+			update_date = NOW()
+		WHERE subject_report_student_no = #{subjectReportStudentNo}
+	</update>
+	
+	<!-- 학생 - 과제 게시판 파일 삭제 시, 파일 이름으로 된 리스트 출력 -->
+	<select id="selectStudentFileNameListByStudentFileNo"
+			parameterType="int"
+			resultType="String">
+		SELECT student_file_name studentFileName
+		FROM student_file
+		WHERE student_file_no = #{studentFileNo}
+	</select>
+	
+	<!-- 학생 - 과제 게시판 파일 삭제 -->
+	<delete id="deleteStudentFile"
+			parameterType="int">
+		DELETE FROM student_file
+		WHERE student_file_no = #{studentFileNo}
+	</delete>
+	
+	<!-- 5) 학생 - 과제 게시판 삭제  -->
+
+	<!-- 학생 - 과제 게시판 파일 삭제-->
+	<delete id="deleteAllStudentFileBySubjectReportStudentNo"
+			parameterType="int">
+		DELETE FROM student_file
+		WHERE subject_report_student_no = #{subjectReportStudentNo}
+	</delete>
+	
+	<!-- 학생 - 과제 게시판 삭제-->
+	<delete id="deleteStudentReportStudentBySubjectReportStudentNo"
+			parameterType="int">
+		DELETE FROM subject_report_student
+		WHERE subject_report_student_no = #{subjectReportStudentNo}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

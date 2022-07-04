@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class StudentFile {
 	private int studentFileNo;
-	private int studentFileBoardNo; 
-	private int studentFileName;
+	private int subjectReportStudentNo; 
+	private String studentFileName;
 	private String studentFileOriginalName;
 	private String studentFileType;
 	private long studentFileSize;

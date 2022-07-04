@@ -3,14 +3,12 @@ package kr.co.javajoy.lms.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import kr.co.javajoy.lms.vo.StudentFile;
-import kr.co.javajoy.lms.vo.SubjectFile;
-import kr.co.javajoy.lms.vo.SubjectReport;
-import kr.co.javajoy.lms.vo.SubjectReportComment;
 import kr.co.javajoy.lms.vo.SubjectReportStudent;
 
-
-
+@Mapper
 public interface SubjectReportStudentMapper {
 	// 1) 학생 - 과제 게시판 글 리스트 출력
 	
@@ -22,11 +20,11 @@ public interface SubjectReportStudentMapper {
 	// 2) 학생 - 과제 게시판 글 상세보기 + 파일 이름 리스트 출력 + 댓글 리스트 출력
 	
 	// 학생 - 과제 게시판 글 상세보기
-	List<SubjectReport> selectSubjectReportStudentOne(int subjectReportStudentNo);
+	List<SubjectReportStudent> selectSubjectReportStudentOne(int subjectReportStudentNo);
 	// 학생 - 과제 게시판 글 상세보기의 파일 이름 리스트 출력
 	List<String> selectSubjectReportStudentFileNameList(int subjectReportStudentNo);
 	// 학생 - 과제 게시판 글 상세보기의 파일 리스트 출력
-	List<SubjectFile> selectSubjectReportStudentFileList(int subjectReportStudentNo);
+	List<StudentFile> selectSubjectReportStudentFileList(int subjectReportStudentNo);
 
 	// 3) 학생 - 과제 게시판 글 입력 + 파일 입력
 
