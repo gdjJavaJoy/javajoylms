@@ -108,20 +108,23 @@
                 </table>
               </div>
               <div
-                class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
-              >
+                class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-12 dark:text-gray-400 dark:bg-gray-800">
+              <form method="get" action="${pageContext.request.contextPath}/getNoticeByPage" name="search">
                 <span class="flex items-center col-span-3">
-                  Search : <input class="form-control" type="text"  placeholder=" 검색할 내용 입력(미구현)">
+                  <input name="searchNoticeTitle" class="form-control" type="text"  placeholder="제목 검색">
+                	<button type="submit" class="grid px-4 py-3 text-sm">검색</button>
+                	<a href="${pageContext.request.contextPath}/getNoticeByPage">초기화</a>
                 </span>
+                </form>
                 <span class="col-span-2"></span>
                 <!-- Pagination -->
                 <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
                	 <c:if test="${currentPage > 1}">
-                   <a href="${pageContext.request.contextPath}/getNoticeByPage?currentPage=${currentPage-1}">이전</a></li>
+                   <a href="${pageContext.request.contextPath}/getNoticeByPage?currentPage=${currentPage-1}">이전</a>
                  </c:if>
                 <span>&nbsp  &nbsp</span>
                  <c:if test="${currentPage < lastPage}">
-                   <a href="${pageContext.request.contextPath}/getNoticeByPage?currentPage=${currentPage+1}">다음</a></li> 
+                   <a href="${pageContext.request.contextPath}/getNoticeByPage?currentPage=${currentPage+1}">다음</a>
                  </c:if>
                 </span>
               </div>
