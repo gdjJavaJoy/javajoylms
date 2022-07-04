@@ -278,7 +278,8 @@ public class SubjectReportService {
 	// ------------------------ 6) 과제 게시판 글 삭제 <DELETE>------------------------ 
 	
 	// 6-1) 과제 게시판 삭제
-	public void removeSubjectReport(int subjectBoardNo, String path) {
+	public int removeSubjectReport(int subjectBoardNo, String path) {
+		int row = 0;
 		log.debug(CF.PBJ + "SubjectReportService.removeSubjectReport.subjectBoardNo : " + subjectBoardNo);
 		log.debug(CF.PBJ + "SubjectReportService.removeSubjectReport.path : " + path);
 		
@@ -290,7 +291,14 @@ public class SubjectReportService {
 				f.delete();
 			}
 		}
-		subjectReportMapper.deleteSubjectReport(subjectBoardNo);
+		
+		subjectReportMapper.deleteAllSubjectReportCommentBySubjectBoardNo(subjectBoardNo);
+		subjectReportMapper.deleteAllSubjectFileBySubjectBoardNo(subjectBoardNo);
+		subjectReportMapper.deleteSubjectReportBySubjectBoardNo(subjectBoardNo);
+		row = subjectReportMapper.deleteSubjectBoardBySubjectBoardNo(subjectBoardNo);
+		log.debug(CF.PBJ + "SubjectReportService.removeSubjectReport.row : " + row);
+		
+		return row;
 	}
 }
 

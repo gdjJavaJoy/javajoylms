@@ -12,6 +12,7 @@
 		WHERE board_no = #{boardNo}
 	</select>
 -->
+	<!-- 파일 리스트 조회 -->
 	<select id="selectNoticefileList"
 			parameterType="int"
 			resultType="kr.co.javajoy.lms.vo.Boardfile">
@@ -25,6 +26,7 @@
 		FROM board_file
 		WHERE board_no = #{boardNo}	
 	</select>
+	<!-- 파일 생성, 추가 -->
  	<insert id="insertNoticefile"
  			parameterType="kr.co.javajoy.lms.vo.Boardfile">
  		INSERT INTO board_file (
@@ -45,6 +47,7 @@
  			,NOW()
  		)
  	</insert>
+ 	<!-- 파일이름 조회(삭제 전) boardfileNo를 이용해 boardfileName을 조회 -->
  	<select id="selectNoticefileNameListByBoardfileNo"
  			parameterType="int"
  			resultType="String">
@@ -52,11 +55,13 @@
  		FROM board_file
  		WHERE board_file_no = #{boardFileNo}
  	</select>
+ 	<!-- 파일 삭제 -->
  	<delete id="deleteNoticefileOne"
  			parameterType="int">
  		DELETE FROM board_file
  		WHERE board_file_no = #{boardFileNo}
  	</delete>
+ 	<!-- 파일이름 조회(삭제 전) boardNo를 이용해 boardfileName을 조회 -->
  	<select id="selectNoticefileNameList"
  			parameterType="int"
  			resultType="String">
@@ -64,11 +69,13 @@
  		FROM board_file
  		WHERE board_no = #{boardNo}
  	</select>
+ 	<!-- 파일 삭제 -->
  	<delete id="deleteNoticefileList"
  			parameterType="int">
  		DELETE FROM board_file
  		WHERE board_No = #{boardNo}
  	</delete>
+ 	<!-- boardfile 갯수 유무확인 -->
  	<select id="selectBoardfileCnt"
 			parameterType="int"
 			resultType="int">

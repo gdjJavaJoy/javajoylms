@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- Notice 리스트 출력 -->
 <mapper namespace="kr.co.javajoy.lms.mapper.NoticeMapper">
 	<select id="selectNoticeByPage"
 			parameterType="java.util.Map"
@@ -22,12 +23,14 @@
 		ORDER BY create_date DESC
 		LIMIT #{startRow}, #{rowPerPage}		
 	</select>
+	<!-- 전체 row(공지사항 수) -->
 	<select id="selectTotalCount"
 			resultType="int">
 		SELECT count(*) 
 		FROM board
 		WHERE board_category = "1"
 	</select>
+	<!-- 공지사항 상세보기 -->
 	<select id="selectNoticeOne"
 			parameterType="int"
 			resultType="kr.co.javajoy.lms.vo.Board">
@@ -43,6 +46,7 @@
 		FROM board
 		WHERE board_no = #{boardNo}
 	</select>
+	<!-- 공지사항 입력 -->
 	<insert id="insertNotice"	
 			parameterType="kr.co.javajoy.lms.vo.Board">
 			<selectKey resultType="int" keyProperty="boardNo" order="AFTER">
@@ -66,11 +70,13 @@
 			,NOW()
 		)
 	</insert>
+	<!-- 공지사항 삭제 -->
 	<delete id="deleteNotice"
 			parameterType="int">
 		DELETE FROM board
 		WHERE board_no = #{boardNo}
 	</delete>
+	<!-- 공지사항 수정 -->
 	<update id="updateNotice"
 			parameterType="kr.co.javajoy.lms.vo.Board">
 		UPDATE board 

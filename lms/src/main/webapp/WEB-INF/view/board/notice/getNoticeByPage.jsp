@@ -61,7 +61,7 @@
      
         <main class="h-full pb-16 overflow-y-auto">
           <div class="container grid px-6 mx-auto">
-            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의 Subject Report List Page</h2>
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Notice List Page</h2>
             <!-- CTA -->
             <c:if test="${level eq 1}">
             <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
@@ -134,6 +134,7 @@
       </div>
     </div>
   </body>
+  <!-- 인클루드 -->
 	  <script>
 	 		$('#adminSideNav').load('${pageContext.request.contextPath}/include/adminSideNav.jsp');
 			$('#adminHeaderNav').load('${pageContext.request.contextPath}/include/adminHeaderNav.jsp');

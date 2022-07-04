@@ -608,7 +608,7 @@
                 </svg>
                 <span>Student Management Page</span>
               </div>
-              <span>학생 등록 &RightArrow;</span>
+              <span>회원 등록 &RightArrow;</span>
             </a>
 
             <!-- With avatar -->
@@ -641,8 +641,12 @@
 							<td class="px-4 py-3 text-sm">${s.studentEmail}</td>
 							<td class="px-4 py-3 text-sm">${s.studentEducation}</td>
 							<td class="px-4 py-3 text-sm">${s.memberActive}</td>
-							<td><button type="button" class="grid px-4 py-3 text-sm" onclick="location.href='${pageContext.request.contextPath}/allStudentList';"class="grid px-4 py-3 text-sm">삭제(미구현)</button></td>
-							<td><button type="button" class="grid px-4 py-3 text-sm" onclick="location.href='${pageContext.request.contextPath}/allStudentList';"class="grid px-4 py-3 text-sm">수정(미구현)</button></td>
+							<td><form method="get" name="form">
+								<input type="hidden" value="${s.memberId}" name="memberId">
+								<input type="submit" value="수정" onclick="javascript: form.action='${pageContext.request.contextPath}/modifyStudentOne'"/>
+								<input type="submit" value="삭제" onclick="javascript: form.action='${pageContext.request.contextPath}/allAdminList'"/>
+								</form>
+							</td>
 						</tr>
 					</c:forEach>
                   </tbody>

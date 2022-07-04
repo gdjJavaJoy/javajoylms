@@ -18,8 +18,8 @@
 		FROM member_id a
 			INNER JOIN student b ON a.member_id = b.member_id
 		<if test='searchStudentName != null and !"".equals( searchStudentName ) '>
-			WHERE CONCAT( '%', b.student_name, '%' ) LIKE CONCAT( '%',
-			#{searchStudentName} , '%' )
+			WHERE CONCAT( '%', b.student_name, '%' ) 
+			LIKE CONCAT( '%', #{searchStudentName} , '%' )
 		</if>
 	</select>
 	<!-- 전체 학생 수 -->

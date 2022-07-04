@@ -33,6 +33,7 @@
  	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
   	<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
 	<script>
+	// 유효성 검사
 	$(document).ready(function() {
 			let flag = true;
 		$('#addFileupload').click(function(){
@@ -133,7 +134,7 @@
 			</c:if>
         <main class="h-full pb-16 overflow-y-auto">
             <div class="container grid px-6 mx-auto">
-            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의 Subject Report Insert</h2>
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Insert Notice</h2>
             <!-- CTA -->
             <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
               href="${pageContext.request.contextPath}/getNoticeByPage">
@@ -233,6 +234,7 @@
                         <div class="flex items-center text-sm">
                           <!-- Avatar with inset shadow -->
                           <div>
+                          <!-- summernote를 이용해 이미지 업로드 -->
                             <p class="font-semibold">
                              	<textarea name="boardContent" id="boardContent" class="form-control" placeholder="공지사항 작성"></textarea>
 		    						<script type="text/javascript">
@@ -249,8 +251,6 @@
                         </div>
                       </td>
                      </tr>
-                     
-                    
                 </table>
                  <br>
                  	<div style="display:inline;">
@@ -269,6 +269,7 @@
           </div>
       </div>
   </body>
+  <!-- 인클루드 -->
   <script>
  		$('#adminSideNav').load('${pageContext.request.contextPath}/include/adminSideNav.jsp');
 		$('#adminHeaderNav').load('${pageContext.request.contextPath}/include/adminHeaderNav.jsp');

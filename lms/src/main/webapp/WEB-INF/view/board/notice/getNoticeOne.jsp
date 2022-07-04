@@ -136,6 +136,7 @@
 		            </span>
 		            <span class="col-span-2"></span>
 		            	<!-- Pagination -->
+		            	<!-- 운영자일때만 수정 삭제 가능 -->
 	                <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
 	                <c:if test="${level eq 1}">
 	              		<a href="${pageContext.request.contextPath}/removeNotice?boardNo=${n.boardNo}">삭제</a>
@@ -155,6 +156,7 @@
     // 스크립트
 </script>
   </body>
+  <!-- 인클루드 -->
   	<script>
  		$('#adminSideNav').load('${pageContext.request.contextPath}/include/adminSideNav.jsp');
 		$('#adminHeaderNav').load('${pageContext.request.contextPath}/include/adminHeaderNav.jsp');

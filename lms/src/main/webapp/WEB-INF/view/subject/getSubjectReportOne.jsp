@@ -111,15 +111,16 @@
             <!-- With avatar -->
             <c:forEach var="subjectReport" items="${subjectReport}">
            		<h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">${subjectReport.subjectName} 과제 상세보기
-	           		<c:if test="${level eq 3}">
-	           			<a href="${pageContext.request.contextPath}/addSubjectReportStudent?subjectReportNo=${subjectReportNo}" class="text-sm" style="float: right;">과제 제출하기(미구현) -></a>
-	           		</c:if>
-	           		<c:if test="${level eq 2}">
-	           			<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage?subjectReportNo=${subjectReportNo}" class="text-sm" style="float: right;">과제 제출 현황(미구현) -></a>
-	           		</c:if>
-	           		<c:if test="${level eq 1}">
-	           			<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage?subjectReportNo=${subjectReportNo}" class="text-sm" style="float: right;">과제 제출 현황(미구현) -></a>
-	           		</c:if>
+						<c:if test="${level eq 3}">
+							<a href="${pageContext.request.contextPath}/addSubjectReportStudent?subjectReportNo=${subjectReportNo}" class="text-sm" style="float: right;">[과제 제출]</a>
+							<a href="${pageContext.request.contextPath}/getSubjectReportStudentOne?subjectReportNo=${subjectReportNo}" class="text-sm" style="float: right;">[점수 확인]</a>
+						</c:if>
+		           		<c:if test="${level eq 2}">
+		           			<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage?subjectReportNo=${subjectReportNo}" class="text-sm" style="float: right;">과제 제출 현황(미구현) -></a>
+		           		</c:if>
+		           		<c:if test="${level eq 1}">
+		           			<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage?subjectReportNo=${subjectReportNo}" class="text-sm" style="float: right;">과제 제출 현황(미구현) -></a>
+		           		</c:if>
            		</h4> 
             </c:forEach>
             <!-- 과제 상세보기 테이블 -->
@@ -296,10 +297,6 @@
 		            		</tbody>
 		            	</table>
 		            		<div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-12 dark:text-gray-400 dark:bg-gray-800">
-			            		<span class="flex items-center col-span-3">
-					            	<input class="form-control" type="text"  placeholder=" 댓글 검색(미구현)">
-					            	<button type="submit" class="grid px-4 py-3 text-sm">검색</button>
-					        	</span>
 								<span class="col-span-2"></span>
 								<span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
 									<c:forEach var="subjectReport" items="${subjectReport}">

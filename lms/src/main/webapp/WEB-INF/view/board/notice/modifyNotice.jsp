@@ -33,6 +33,7 @@
  	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
   	<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>	
     <script>
+    // 유효성검사
 	$(document).ready(function() {
 			let flag = true;
 		$('#addFileupload').click(function(){
@@ -227,12 +228,13 @@
                             	class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" 
                             	type="button" id="addFileupload">파일 추가</button>
 					    		<div id="fileSection">
-					    			<!-- subject file input 태그가 추가댐 -->
+					    			<!-- subject file input 태그가 추가된다 -->
 					    		</div>	
                           </div>
                         </div>
                       </td>
                      </tr>
+                     <!--  첨부파일 있을경우에만 컬럼이 보인다 -->
                      <c:if test="${fileTotalCount ne 0}">
 			         <tr class="text-gray-700 dark:text-gray-400">
                       <td class="px-4 py-3">
@@ -271,6 +273,7 @@
 	                       <td class="px-4 py-3">
 	                        <div class="flex items-center text-sm">
 	                          <!-- Avatar with inset shadow -->
+	                          <!-- summernote를 이용한 content 이미지 업로드 -->
 	                          <div>
 	                            <p class="font-semibold">
 	                             	<textarea id="boardContent" name="boardContent" class="form-control">${n.boardContent}</textarea>
@@ -307,6 +310,7 @@
           </div>
       </div>
   </body>
+  <!-- 인클루드 -->
    	<script>
  		$('#adminSideNav').load('${pageContext.request.contextPath}/include/adminSideNav.jsp');
 		$('#adminHeaderNav').load('${pageContext.request.contextPath}/include/adminHeaderNav.jsp');
