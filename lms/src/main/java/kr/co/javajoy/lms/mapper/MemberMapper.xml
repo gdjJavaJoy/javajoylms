@@ -76,7 +76,6 @@
 	 	    parameterType="kr.co.javajoy.lms.vo.Admin">
 	    INSERT INTO admin (
 	    		    member_id
-	    		   ,admin_pw
 	    		   ,admin_name
 	    		   ,admin_phone
 	    		   ,admin_address
@@ -85,7 +84,6 @@
 	    		   ,update_date
 	    ) VALUES (
 	              #{memberId}
-	             ,#{adminPw}
 	             ,#{adminName}
 	             ,#{adminPhone}
 	             ,#{adminAddress}

@@ -53,7 +53,6 @@ public class MemberService {
 			log.debug(CF.PSG+"MemberService.Adminlevel"+CF.RESET);
 			Admin admin = new Admin();
 			admin.setMemberId(signupForm.getMemberId());
-			admin.setAdminPw(signupForm.getMemberPw());;
 			admin.setAdminName(signupForm.getMemberName());
 			admin.setAdminPhone(signupForm.getMemberPhone());
 			admin.setAdminAddress(signupForm.getMemberAddress());
