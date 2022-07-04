@@ -309,11 +309,9 @@ img {
 	});
 		
 	$('#submitBtn').click(function() {
-		// /\s\g/.test($('#memberName').val())
 		console.log($('#memberName').val())
 		if($('#memberName').val() == '') {
 			Swal.fire('이름을 입력해주세요');
-			alert('이름을 입력해주세요');
 			return;
 		} else if ($('#memberGender').val() == '') {
 			Swal.fire('성별을 선택해주세요');

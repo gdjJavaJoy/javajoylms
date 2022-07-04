@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.service.MemberService;
+import kr.co.javajoy.lms.vo.Admin;
+import kr.co.javajoy.lms.vo.Career;
 import kr.co.javajoy.lms.vo.InsertMemberPhotoForm;
+import kr.co.javajoy.lms.vo.MemberUpdateForm;
 import kr.co.javajoy.lms.vo.Password;
 import kr.co.javajoy.lms.vo.SignupForm;
 import lombok.extern.slf4j.Slf4j;
@@ -157,4 +159,53 @@ public class MemberController {
 		}
 		return "redirect:/modifyTeacherOne?memberId="+insertMemberPhotoForm.getMemberId();
 	}
+	
+	// admin 상세보기
+	@GetMapping("adminOne")
+	public String adminOne(HttpSession session
+							,Model model) {
+		String memberId = (String)session.getAttribute("loginUser");
+		
+		// 디버깅 
+		log.debug(CF.PSG+"MemberController.adminOne.memberId :" + memberId + CF.RESET);
+		
+		Admin admin = memberService.getAdminOne(memberId);
+		log.debug(CF.YHJ+"MemberController.adminOne.admin :" + admin + CF.RESET); // 디버깅
+		
+		model.addAttribute("admin",admin);
+		
+		return "member/admin/adminOne";
+	}
+	
+	// admin정보 수정
+	@GetMapping("modifyAdminOne")
+	public String modifyAdminOne(String memberId
+								,Model model) {
+		log.debug(CF.YHJ+"MemberController.modifyAdminOne.memberId : " + memberId + CF.RESET); // 디버깅
+		
+		Admin admin = memberService.getAdminOne(memberId);
+		log.debug(CF.YHJ+"MemberController.adminOne.admin :" + admin + CF.RESET); // 디버깅
+		
+		model.addAttribute("admin",admin);
+		
+		return "member/admin/modifyAdminOne";
+	}
+	
+	// admin정보 수정
+	@PostMapping("modifyAdminOne")
+	public String modifyAdminOne(MemberUpdateForm memberUpdateForm) {
+		// 디버깅
+		log.debug(CF.YHJ + "MemberController.modifyAdminOne.getMemberId : " + memberUpdateForm.getMemberId());
+		log.debug(CF.YHJ + "MemberController.modifyAdminOne.getMemberName : " + memberUpdateForm.getMemberName());
+		log.debug(CF.YHJ + "MemberController.modifyAdminOne.getMemberPhone : " + memberUpdateForm.getMemberPhone());
+		log.debug(CF.YHJ + "MemberController.modifyAdminOne.getMemberEmail : " + memberUpdateForm.getMemberEmail());
+		log.debug(CF.YHJ + "MemberController.modifyAdminOne.getCurrentMemberAddress : " + memberUpdateForm.getCurrentMemberAddress());
+		log.debug(CF.YHJ + "MemberController.modifyAdminOne.getChangeMemberAddress : " + memberUpdateForm.getChangeMemberAddress());
+		log.debug(CF.YHJ + "MemberController.modifyAdminOne.getMemberDetailAddress : " + memberUpdateForm.getMemberDetailAddress());
+		
+		memberService.modifyAdmin(memberUpdateForm);
+		
+		return "redirect:adminOne";
+	}
+	
 }

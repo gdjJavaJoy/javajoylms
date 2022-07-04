@@ -249,4 +249,31 @@
 	 FROM member_photo
 	WHERE member_id = #{memberId}
 	</select>
+	
+	<select id="selectAdminOne"
+			parameterType="String"
+			resultType="kr.co.javajoy.lms.vo.Admin">
+		SELECT 
+			member_id memberId
+			,admin_name adminName
+			,admin_phone adminPhone
+			,admin_address adminAddress
+			,admin_detailaddress adminDetailAddress
+			,admin_email adminEmail
+		FROM admin
+			WHERE member_id = #{memberId}
+	</select>
+	
+	<update id="updateAdmin"
+			parameterType="kr.co.javajoy.lms.vo.MemberUpdateForm">
+		UPDATE admin SET
+			admin_name = #{adminName} 
+			,admin_phone = #{adminPhone}
+			,admin_address = #{adminAddress}
+			,admin_detailaddress = #{adminDetailAddress}
+			,admin_email = #{adminEmail}
+			,update_date = NOW()
+		WHERE member_id = #{memberId}
+	</update>
+	
 </mapper>

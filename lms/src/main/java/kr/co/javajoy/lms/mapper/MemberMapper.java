@@ -55,4 +55,8 @@ public interface MemberMapper {
 	List<String> selectPhotoNameByMemberId(String memberId);
 	// 검색 결과 카운트
 	int selectTotalCount();
+	// admin 상세보기
+	public Admin selectAdminOne(String memberId);
+	// admin정보 수정
+	public void updateAdmin(Admin admin);
 }

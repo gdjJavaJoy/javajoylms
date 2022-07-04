@@ -17,6 +17,7 @@ import kr.co.javajoy.lms.vo.Admin;
 import kr.co.javajoy.lms.vo.InsertMemberPhotoForm;
 import kr.co.javajoy.lms.vo.Member;
 import kr.co.javajoy.lms.vo.MemberPhoto;
+import kr.co.javajoy.lms.vo.MemberUpdateForm;
 import kr.co.javajoy.lms.vo.Password;
 import kr.co.javajoy.lms.vo.SignupForm;
 import kr.co.javajoy.lms.vo.Student;
@@ -213,6 +214,37 @@ public class MemberService {
 		return row;
 	}
 	
+	public Admin getAdminOne(String memberId){
+		log.debug(CF.YHJ+"MemberService.getAdminOne.memberId: "+ memberId + CF.RESET); // 디버깅
+		return memberMapper.selectAdminOne(memberId);
+	}
 	
+	public void modifyAdmin(MemberUpdateForm memberUpdateForm) {
+		 // 디버깅
+		log.debug(CF.YHJ + "MemberService.modifyAdminOne.getMemberId : " + memberUpdateForm.getMemberId());
+		log.debug(CF.YHJ + "MemberService.modifyAdminOne.getMemberName : " + memberUpdateForm.getMemberName());
+		log.debug(CF.YHJ + "MemberService.modifyAdminOne.getMemberPhone : " + memberUpdateForm.getMemberPhone());
+		log.debug(CF.YHJ + "MemberService.modifyAdminOne.getMemberEmail : " + memberUpdateForm.getMemberEmail());
+		log.debug(CF.YHJ + "MemberService.modifyAdminOne.getCurrentMemberAddress : " + memberUpdateForm.getCurrentMemberAddress());
+		log.debug(CF.YHJ + "MemberService.modifyAdminOne.getChangeMemberAddress : " + memberUpdateForm.getChangeMemberAddress());
+		log.debug(CF.YHJ + "MemberService.modifyAdminOne.getMemberDetailAddress : " + memberUpdateForm.getMemberDetailAddress());
+		
+		Admin admin = new Admin();
+		admin.setMemberId(memberUpdateForm.getMemberId());
+		admin.setAdminName(memberUpdateForm.getMemberName());
+		admin.setAdminPhone(memberUpdateForm.getMemberPhone());
+		admin.setAdminEmail(memberUpdateForm.getMemberEmail());
+		// getChangeMemberAddress가 없으면 변경을 하지 않음
+		if(memberUpdateForm.getChangeMemberAddress() == null) {
+			admin.setAdminAddress(memberUpdateForm.getCurrentMemberAddress());
+		} else { // 변경했다면 
+			admin.setAdminAddress(memberUpdateForm.getChangeMemberAddress());
+		}
+		admin.setAdminDetailAddress(memberUpdateForm.getMemberDetailAddress());
+		
+		log.debug(CF.YHJ + "StudentController.modifyStudentOne.student : " + admin + CF.RESET); // 디버깅
+		
+		memberMapper.updateAdmin(admin);
+	}
 	
  }
