@@ -55,7 +55,12 @@
 							<!-- You should use a button here, as the anchor is only used for the example  -->
 	
 							<hr class="my-8" />
-	
+							<h1 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+							admin -&gt; id : admin  pw : 1234 </h1>
+							<h1 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+							teahcer -&gt; id : teahcer  pw : 1234 </h1>
+							<h1 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+							student -&gt; id : student  pw : 1234 </h1>
 							<button
 								class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
 								<svg class="w-4 h-4 mr-2" aria-hidden="true" viewBox="0 0 24 24"

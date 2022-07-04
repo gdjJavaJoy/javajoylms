@@ -43,6 +43,7 @@ public class AllStudentListService {
 		log.debug(CF.LGN + "AllStudentListController.selecAllStudentList startRow : " + startRow);
 		log.debug(CF.LGN + "AllStudentListController.selecAllStudentList lastPage : " + lastPage );
 		log.debug(CF.LGN + "AllStudentListController.selecAllStudentList list.size() : " + list);
+		
 		return returnMap;
 	}
 }

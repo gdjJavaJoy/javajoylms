@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.javajoy.lms.mapper.SurveyMapper">
-	<select id="getSurvey"
+	<select id="selectSurvey"
 			parameterType="int"
 			resultType="kr.co.javajoy.lms.vo.Survey">
 		SELECT 
@@ -44,4 +44,19 @@
 			,NOW()
 			,NOW())
 	</insert>
+	
+	<select id="selectStudentSurveyResult"
+			parameterType="string"
+			resultType="java.util.Map">
+		SELECT s.survey_no surveyNo
+			,s.survey_question surveyQuestion
+			,sr.result result
+		FROM survey s
+			INNER JOIN survey_result sr 
+				ON s.survey_no = sr.survey_no
+			INNER JOIN member_id m
+				ON sr.member_id = m.member_id
+		WHERE sr.member_id = #{memberId}
+	</select>
+	
 </mapper>

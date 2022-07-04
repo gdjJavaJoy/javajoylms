@@ -22,7 +22,7 @@ public class SurveyService {
 	public List<Survey> getSurvey(int subjectNo){
 		log.debug(CF.YHJ + "SurveyService.getSurvey.subjectNo : " + subjectNo + CF.RESET); // 디버깅
 		
-		List<Survey> list = surveyMapper.getSurvey(subjectNo);
+		List<Survey> list = surveyMapper.selectSurvey(subjectNo);
 		
 		
 		log.debug(CF.YHJ + "SurveyService.getSurvey.list : " + list + CF.RESET); // 디버깅
@@ -49,5 +49,14 @@ public class SurveyService {
 	public void addSurveyQuestion(Survey survey) {
 		log.debug(CF.YHJ + "SurveyService.addSurveyQuestion.survey : " + survey + CF.RESET); // 디버깅
 		surveyMapper.insertSurveyQuestion(survey);
+	}
+	
+	public List<Map<String,Object>> getStudentSurveyResult(String memberId){
+		log.debug(CF.YHJ + "SurveyService.getStudentSurveyResult.memberId : " + memberId + CF.RESET); // 디버깅
+		
+		List<Map<String,Object>> list = surveyMapper.selectStudentSurveyResult(memberId);
+		log.debug(CF.YHJ + "SurveyService.getStudentSurveyResult.memberId : " + list + CF.RESET); // 디버깅
+		
+		return list;
 	}
 }
