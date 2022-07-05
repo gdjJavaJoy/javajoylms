@@ -68,6 +68,7 @@ public class MemberService {
 			teacher.setTeacherName(signupForm.getMemberName());
 			teacher.setTeacherPhone(signupForm.getMemberPhone());
 			teacher.setTeacherAddress(signupForm.getMemberAddress());
+			teacher.setTeacherGender(signupForm.getGender());
 			teacher.setTeacherDetailAddress(signupForm.getMemberDetailAddress());
 			teacher.setTeacherEmail(signupForm.getMemberEmail());
 			teacher.setTeacherJoin(signupForm.getMemberJoin());

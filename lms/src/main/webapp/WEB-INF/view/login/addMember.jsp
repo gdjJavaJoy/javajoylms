@@ -486,36 +486,7 @@
 						alert("이메일을 정확히 입력하세요");
 						$('#memberEmail').focus();
 						return false;
-				 } else if ($('#level').val() =="'2'") {
-					 if($('#idck').val() =='') {
-							alert('중복검사 할 id를 입력해 주세요');
-							focus('#idck');
-							return false;
-						} else if ($('#id').val() =='') {
-							alert('id 중복검사를 해주세요');
-							focus('#idck');
-							return false;
-						} else if(!/^[a-zA-z0-9]{8,16}$/.test($('#pw').val())) { // 영어 문자만 가능한 정규표현식 8자리 이상 16자리 이하
-							alert("영문, 숫자로 8자리 이상 입력하세요.");
-							$('#pw').focus();
-							return false;
-						} else if ($('#memberName').val() == '') {
-							alert('이름을 입력해주세요');
-							$('#memberName').focus();
-							return false;
-						} else if (! /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/.test($('#memberPhone').val())){ //핸드폰 1/2번째자리는 01로 시작함/ 번호 사이사이 대쉬는 무시
-							alert('-제외 전화번호를 입력해주세요 ');
-							$('#memberPhone').focus();
-							return false;
-						} else if(!/^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/.test($('#memberEmail').val())){
-						// 이메일의 경우 첫글자 _가 허용되므로 첫번째 글자 검사식을 따로 두었다.
-						// 영어 대/소문자 구분
-						// @ 반드시 하나만 입력, . 반드시 하나만 입력
-						// .뒤에 최소 한글자에서 최대 3글자까지
-							alert("이메일을 정확히 입력하세요");
-							$('#memberEmail').focus();
-							return false;
-						} else if ($('input[name=gender]:radio:checked').length < 1) {
+				 } else if ($('input[name=gender]:radio:checked').length < 1) {
 							alert("성별을 선택하세요");
 							return false;
 						} else if ($('#education').val == '') {
@@ -537,10 +508,10 @@
 							 $('#memberDetailAddress').focus();
 							 return false;
 							} else {
-						$('#addMemberForm').submit();
+								$('#addMemberForm').submit();
 					 } 
 			 }
-		 } 
+		 
 	});
 	
 </script>
