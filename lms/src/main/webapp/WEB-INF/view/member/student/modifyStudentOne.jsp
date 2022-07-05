@@ -38,35 +38,35 @@ img {
 						class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
 						회원정보 수정</h2>
 					<c:choose>
-	           	 <c:when test="${student.memberPhotoName != null}">
-	            <img
-	                 class="object-cover w-350 h-350 rounded-full"
-	                 src="${pageContext.request.contextPath}/file/memberPhoto/${student.memberPhotoName}"
-	                 style="width:350px; height:350px;"
-	                 alt=""
-	                 loading="lazy"
-	            />
-	            </c:when>
-	            <c:otherwise>
-	             <img
+				<c:when test="${student.memberPhotoName != null}">
+				<img
+					class="object-cover w-350 h-350 rounded-full"
+					src="${pageContext.request.contextPath}/file/memberPhoto/${student.memberPhotoName}"
+					style="width:350px; height:350px;"
+					alt=""
+					loading="lazy"
+				/>
+				</c:when>
+				<c:otherwise>
+				<img
 	                 class="object-cover w-350 h-350 rounded-full"
 	                 src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
 	                 alt=""
 	                 loading="lazy"
 	                 />
 	            </c:otherwise>
-            </c:choose>
-             <form method="post" action="${pageContext.request.contextPath}/addMemberPhoto" enctype="multipart/form-data">
-            <input type="file" name="memberPhotoList" id="memberPhotoList">
-            <input type="text" hidden="hidden" name="memberId" id="memberId" value="${student.memberId}"> 
-             <button
-                  class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-              	  id="updatePhotoBtn"
-              	  type="submit"
-                >
-                  사진수정
-                </button>
-                </form>
+			</c:choose>
+			<form method="post" action="${pageContext.request.contextPath}/addMemberPhoto" enctype="multipart/form-data">
+			<input type="file" name="memberPhotoList" id="memberPhotoList">
+			<input type="text" hidden="hidden" name="memberId" id="memberId" value="${student.memberId}"> 
+			<button
+					class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+					id="updatePhotoBtn"
+					type="submit"
+				>
+					사진수정
+  			</button>
+				</form>
 					<!-- With avatar -->
 					<h4
 						class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">

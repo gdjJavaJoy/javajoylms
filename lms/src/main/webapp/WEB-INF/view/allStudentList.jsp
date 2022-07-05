@@ -657,7 +657,7 @@
 	                <span class="flex items-center col-span-3">
 	                  	Search Student :
 	                  	<input name="searchStudentName"class="form-control" type="text"  placeholder=" 학생 이름 검색">
-	                  	<button type="submit" class="grid px-4 py-3 text-sm">검색</button>                 
+	                  	<button type="submit" class="grid px-4 py-3 text-sm">검색</button>
 	                </span>
                 </form>
                 <span class="col-span-2"></span>

@@ -54,7 +54,9 @@ public class TeacherController {
 		return "member/teacher/modifyTeacherOne";
 	}
 	@PostMapping("/modifyTeacherOne")
-	public String modifyTeacherOne(MemberUpdateForm memberUpdateForm) {
+	public String modifyTeacherOne(HttpSession session,
+									MemberUpdateForm memberUpdateForm) {
+		String level = (String) session.getAttribute("level");
 		// 디버깅
 		log.debug(CF.PSG+"TehacerController.modifyTeacherOne.post().memberId :"+ memberUpdateForm.getMemberId()+CF.RESET);
 		log.debug(CF.PSG+"TehacerController.modifyTeacherOne.post().memberName :"+ memberUpdateForm.getMemberName()+CF.RESET);
@@ -67,18 +69,13 @@ public class TeacherController {
 		for(int i=0; i<memberUpdateForm.getLanguageNo().size(); i++) {
 			log.debug(CF.PSG+"TeacherController.modifyTeacherOne.post().LanguageNo : "+memberUpdateForm.getLanguageNo().get(i)+CF.RESET);
 		}
-		
-		int row = teacherService.modifyTeacherOne(memberUpdateForm);
-		
-		if (row == 0) {
-			log.debug(CF.PSG+"TeacherController modifyTeacherOne  수정실패"+CF.RESET);
-			return "redirect:/modifyTeacherOne?memberId="+memberUpdateForm.getMemberId();
-		} else {
-			log.debug(CF.PSG+"TeacherController.modifyTeacherOne 수정성공"+CF.RESET);
+		teacherService.modifyTeacherOne(memberUpdateForm);
+		if(level.equals("1")) {
+			log.debug(CF.LGN + "TehacerController.allTeacherList이동" + CF.RESET);
+			return "redirect:allTeacherList";
+		} else {   
+			return "redirect:/teacherOne";
 		}
-		
-		
-		return "redirect:/teacherOne";
 	}
 	//경력 삭제 하는 컨트롤러 
 	@GetMapping("/removeCareer")

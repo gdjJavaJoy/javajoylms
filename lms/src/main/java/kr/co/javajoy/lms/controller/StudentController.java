@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.service.StudentService;
 import kr.co.javajoy.lms.vo.MemberUpdateForm;
-import kr.co.javajoy.lms.vo.Student;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -50,7 +49,9 @@ public class StudentController {
 	}
 	
 	@PostMapping("/modifyStudentOne")
-	public String modifyStudentOne(MemberUpdateForm memberUpdateForm) {
+	public String modifyStudentOne(HttpSession session,
+									MemberUpdateForm memberUpdateForm) {
+		String level = (String) session.getAttribute("level");
 		// 디버깅
 		log.debug(CF.YHJ + "StudentController.modifyStudentOne.getMemberId : " + memberUpdateForm.getMemberId());
 		log.debug(CF.YHJ + "StudentController.modifyStudentOne.getMemberName : " + memberUpdateForm.getMemberName());
@@ -63,8 +64,11 @@ public class StudentController {
 		log.debug(CF.YHJ + "StudentController.modifyStudentOne.getMemberDetailAddress : " + memberUpdateForm.getMemberDetailAddress());
 		
 		studentService.modifyStudent(memberUpdateForm);
-		
-		return "redirect:studentOne";
+		if(level.equals("1")) {
+			log.debug(CF.LGN + "StudentController.allStudentList이동" + CF.RESET);
+			return "redirect:allStudentList";
+		} else {
+			return "redirect:studentOne";
+		}
 	}
-	
 }
