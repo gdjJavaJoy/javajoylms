@@ -10,7 +10,7 @@ import kr.co.javajoy.lms.vo.SubjectData;
 @Mapper
 public interface SubjectDataMapper {
 	// 강좌자료실 출력
-	List<SubjectData> getSubjectDataList(Map<String, Object> map);
+	List<Map<String, Object>> selectSubjectDataListByPage(Map<String, Object> map);
 	// 커리큘럼 총 수
-	int selectTotalCount();
+	int selectTotalCount(String searchName);
 }

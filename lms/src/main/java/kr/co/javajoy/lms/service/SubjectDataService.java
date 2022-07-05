@@ -19,30 +19,35 @@ import lombok.extern.slf4j.Slf4j;
 public class SubjectDataService {
 	@Autowired SubjectDataMapper subjectdataMapper;
 
-	// 강좌자료실 리스트 출력
-	public Map<String, Object> getSubjectDataList(int currentPage, int rowPerPage, int subjectNo) {
-		// 리스트 출력 페이징
-		int startRow = (currentPage - 1) * rowPerPage;
-		
+	// 강좌자료 리스트 출력
+	public Map<String, Object> getSubjectDataListByPage(int currentPage, int rowPerPage, int subjectNo, String searchName) {
+		// 디버깅
+		log.debug(CF.YHJ + "SubjectDataService.getSubjectDataListByPage.currentPage : " + currentPage + CF.RESET);
+		log.debug(CF.YHJ + "SubjectDataService.getSubjectDataListByPage.rowPerPage : " + rowPerPage + CF.RESET);
+		log.debug(CF.YHJ + "SubjectDataService.getSubjectDataListByPage.subjectNo : " + subjectNo + CF.RESET);
+		log.debug(CF.YHJ + "SubjectDataService.getSubjectDataListByPage.searchName : " + searchName + CF.RESET);
+
+		// 페이징
+		int beginRow = (currentPage - 1) * rowPerPage;
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("rowPerPage", rowPerPage);
-		map.put("startRow", startRow);
+		map.put("beginRow", beginRow);
 		map.put("subjectNo", subjectNo);
-		// Mapper에서 반환 된 값 가공
-		List<SubjectData> list = subjectdataMapper.getSubjectDataList(map);
-		int totalCount = subjectdataMapper.selectTotalCount();
+		map.put("searchName", searchName);
+		
+		List<Map<String, Object>> list = subjectdataMapper.selectSubjectDataListByPage(map);
+		int totalCount = subjectdataMapper.selectTotalCount(searchName);
 		int lastPage = (int)(Math.ceil((double)totalCount / (double)rowPerPage));
+		
+		// 디버깅
+		log.debug(CF.YHJ + "SubjectDataService.getSubjectDataListByPage list : " + list + CF.RESET);
+		log.debug(CF.YHJ + "SubjectDataService.getSubjectDataListByPage totalCount : " + totalCount + CF.RESET);
+		log.debug(CF.YHJ + "SubjectDataService.getSubjectDataListByPage lastPage : " + lastPage + CF.RESET);
 		
 		Map<String, Object> returnMap = new HashMap<>();
 		returnMap.put("list", list);
 		returnMap.put("lastPage", lastPage);
-		returnMap.put("subjectNo", subjectNo);
 		
-		// 디버깅
-		log.debug(CF.LGN + "StudentListController.selecStudentList rowPerPage : " + CF.RESET + rowPerPage);
-		log.debug(CF.LGN + "StudentListController.selecStudentList startRow : " + CF.RESET + startRow);
-		log.debug(CF.LGN + "StudentListController.selecStudentList lastPage : " + CF.RESET + lastPage );
-		log.debug(CF.LGN + "StudentListController.selecStudentList list.size() : " + CF.RESET + list);
 		return returnMap;
 	}
 }

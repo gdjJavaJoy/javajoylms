@@ -76,7 +76,7 @@
            	  <div class="container">
 					<ol class="breadcrumb" style="float:rigth;">
 						<li>
-							<a style="float:right;" href="${pageContext.request.contextPath}/subjectDataList?subjectNo=${subject.subjectNo}">&nbsp&nbsp강좌 자료(미구현)&nbsp&nbsp</a>
+							<a style="float:right;" href="${pageContext.request.contextPath}/getSubjectDataListByPage?subjectNo=${subject.subjectNo}">&nbsp&nbsp강좌 자료(미구현)&nbsp&nbsp</a>
 						</li>
 						<li >
 							<a style="float:right;" href="${pageContext.request.contextPath}/subjectNoticeList?subjectNo=${subject.subjectNo}">&nbsp&nbsp강좌 공지사항(미구현)&nbsp&nbsp</a>
