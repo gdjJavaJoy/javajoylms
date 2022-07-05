@@ -38,41 +38,33 @@ textarea {
 		$(document).ready(function(){
 			let flag = true;
 			$('#addFileupload').click(function(){
-				$('.subjectReportFileList').each(function(){
+				$('.subjectBoardFileList').each(function(){
 					if($(this).val() == '') {
 						flag = false;
 					}
 				});
 				
 				if(flag) {
-					$('#fileSection').append("<div><input type='file' class='subjectReportFileList' onchange='checkFile(this)' id='subjectReportFileList' name='subjectReportFileList'></div>");
+					$('#fileSection').append("<div><input type='file' class='subjectBoardFileList' onchange='checkFile(this)' name='subjectBoardFileList'></div>");
 				} else {
 					Swal.fire('파일 첨부를 다시 확인하십시오');
 				}
 			});
 			
-			$('#addSubjectReport').click(function(){
-				if($('#subjectBoardNo').val() == '') {
-					Swal.fire('test');
-			    } else if($('#subjectNo').val() == '') {
-					Swal.fire('test');
-			    } else if($('#memberId').val() == '') {
-			    	Swal.fire('test');
-				} else if($('#subjectReportTitle').val() == '') {
-					Swal.fire('과제 게시판 제목을 설정하세오!');	
-				}  else if($('#subjectReportPeriod').val() == '') {
-					Swal.fire('과제 기한을 설정하세요!');
-				}  else if($('#subjectReportContent').val() == '') {
-					Swal.fire('과제 게시판 내용을 입력하세요!');
+			$('#addSubjectDataBtn').click(function(){
+				if($('#subjectBoardTitle').val() == '') {
+					Swal.fire('제목을 입력하세요.');	
+				} else if($('#subjectBoardContent').val() == '') {
+					Swal.fire('내용을 입력하세요.');
 				} else {
-					$('.subjectReportFileList').each(function(){
+					$('.subjectBoardFileList').each(function(){
 						if($(this).val() == '') {
 							flag = false;
 							return;
 						}
 					});
 					if(flag) {
-						$('#addSubjectReportForm').submit();
+						$('#addSubjectBoardForm').submit();
 					} else {
 						Swal.fire('파일 첨부를 다시 확인하십시오');
 					}
@@ -143,8 +135,7 @@ textarea {
 						강좌 자료 추가</h4>
 					<div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
 						<div class="w-full overflow-x-auto">
-							<form id="addSubjectDataForm" method="post"
-								name="addSubjectDataForm"
+							<form id="addSubjectBoardForm" method="post" name="addSubjectBoardForm"
 								action="${pageContext.request.contextPath}/addSubjectData"
 								enctype="multipart/form-data">
 								<input type="hidden" id="subjectNo" name="subjectNo"
@@ -176,7 +167,7 @@ textarea {
 											<div class="flex items-center text-sm">
 												<!-- Avatar with inset shadow -->
 												<div>
-													<p class="font-semibold">과제 제목</p>
+													<p class="font-semibold">강좌 자료 제목</p>
 												</div>
 											</div>
 										</td>
@@ -186,7 +177,7 @@ textarea {
 												<div>
 													<p
 														class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
-														<input type="text" id="subjectReportTitle" name="subjectReportTitle" placeholder="과제 제목">
+														<input type="text" id="subjectBoardTitle" name="subjectBoardTitle" placeholder="제목">
 													</p>
 												</div>
 											</div>
@@ -206,8 +197,8 @@ textarea {
 												<!-- Avatar with inset shadow -->
 												<div>
 													<p class="font-semibold">
-														<textarea id="subjectReportContent"
-															name="subjectReportContent" class="form-control"></textarea>
+														<textarea id="subjectBoardContent"
+															name="subjectBoardContent" class="form-control"></textarea>
 													</p>
 												</div>
 											</div>
@@ -243,7 +234,7 @@ textarea {
 									<button
 										class="px-10 py-4 font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
 										style="margin: auto; display: block;" type="button"
-										id="addSubjectData">과제 입력</button>
+										id="addSubjectDataBtn">강좌 자료 추가</button>
 								</div>
 							</form>
 						</div>

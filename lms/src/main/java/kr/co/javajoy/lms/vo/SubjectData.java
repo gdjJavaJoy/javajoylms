@@ -8,5 +8,5 @@ public class SubjectData {
 	private String memberId;
 	private String subjectDataTitle;
 	private String subjectDataContent;
-	private String createDate;
+	private String updateDate;
 }

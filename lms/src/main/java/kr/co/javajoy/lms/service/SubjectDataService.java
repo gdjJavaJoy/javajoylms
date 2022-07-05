@@ -1,16 +1,22 @@
 package kr.co.javajoy.lms.service;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.mapper.SubjectDataMapper;
+import kr.co.javajoy.lms.vo.SubjectBoard;
+import kr.co.javajoy.lms.vo.SubjectBoardInsertForm;
 import kr.co.javajoy.lms.vo.SubjectData;
+import kr.co.javajoy.lms.vo.SubjectFile;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -50,4 +56,59 @@ public class SubjectDataService {
 		
 		return returnMap;
 	}
+	
+	public void addSubjectData(SubjectBoardInsertForm subjectBoardInsertForm, String path) {
+		// 디버깅
+		log.debug(CF.YHJ + "SubjectDataService.addSubjectData.subjectBoardInsertForm : " + subjectBoardInsertForm + CF.RESET);
+		log.debug(CF.YHJ + "SubjectDataService.addSubjectData.path : " + path + CF.RESET);
+		
+		SubjectBoard subjectBoard = new SubjectBoard();
+		subjectBoard.setSubjectNo(subjectBoardInsertForm.getSubjectNo());
+		
+		log.debug(CF.YHJ + "SubjectDataService.addSubjectData.subjectBoard : " + subjectBoard + CF.RESET); // 디버깅
+		
+		subjectdataMapper.insertSubjectBoard(subjectBoard);
+		
+		SubjectData subjectData = new SubjectData();
+		subjectData.setSubjectDataNo(subjectBoard.getSubjectBoardNo());
+		subjectData.setMemberId(subjectBoardInsertForm.getMemberId());
+		subjectData.setSubjectDataTitle(subjectBoardInsertForm.getSubjectBoardTitle());
+		subjectData.setSubjectDataContent(subjectBoardInsertForm.getSubjectBoardContent());
+		
+		log.debug(CF.YHJ + "SubjectDataService.addSubjectData.subjectData : " + subjectData + CF.RESET); // 디버깅
+		
+		subjectdataMapper.insertSubjectData(subjectData);
+		
+		if (subjectBoardInsertForm.getSubjectBoardFileList() != null && subjectBoardInsertForm.getSubjectBoardFileList().get(0).getSize() > 0) { // 파일을 첨부했을 때 
+			log.debug(CF.YHJ +"SubjectDataService.addSubjectData 파일 첨부됨 " + CF.RESET); // 디버깅
+			
+		for(MultipartFile mf : subjectBoardInsertForm.getSubjectBoardFileList()) {
+			SubjectFile subjectFile = new SubjectFile();
+			
+			String originalName = mf.getOriginalFilename(); // 파일 오리지널이름 
+			String ext = originalName.substring(originalName.lastIndexOf("."));
+			
+			String fileName = UUID.randomUUID().toString(); // 파일 저장할때 중복되지않는 이름 사용 UUID API
+			
+			fileName = fileName+ext;
+			subjectFile.setSubjectFileBoardNo(subjectData.getSubjectDataNo());
+			subjectFile.setSubjectFileName(fileName);
+			subjectFile.setSubjectFileOriginalName(originalName);
+			subjectFile.setSubjectFileSize(mf.getSize());
+			subjectFile.setSubjectFileType(mf.getContentType());
+			
+			log.debug(CF.YHJ + "SubjectDataService.addSubjectData.subjectFile : " + subjectFile + CF.RESET); // 디버깅
+			
+			subjectdataMapper.insertSubjectFile(subjectFile);
+			
+			try {
+				mf.transferTo(new File(path+fileName));
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException(); //RuntimeException은 예외처리 하지않아도 컴파일 됨
+				}
+			}
+		}
+	}
+	
 }

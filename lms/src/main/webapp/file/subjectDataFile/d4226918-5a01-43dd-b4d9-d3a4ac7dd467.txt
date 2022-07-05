@@ -1,0 +1,11 @@
+$mysql -uroot -p 입력후 비밀번호 입력후엔터(비밀번호입력하는 커서는 안나오지만 입력되는중)
+$ SET GLOBAL innodb_fast_shutdown = 0;
+입력후 ctrl+c 로 빠져나온다.
+밑에 한줄씩 복사 붙여넣기
+sudo apt-get install software-properties-common dirmngr apt-transport-https
+sudo apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc'
+sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://mirror.yongbok.net/mariadb/repo/10.3/ubuntu bionic main'
+sudo apt update
+sudo apt install mariadb-server
+--분홍색화면 나오면 비밀번호 입력(2번나옴)
+설치 확인 :   sudo service mysql status

@@ -2,38 +2,92 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.javajoy.lms.mapper.SubjectDataMapper">
 
-<select id="selectSubjectDataListByPage"
-		parameterType="java.util.Map"
-		resultType="java.util.Map">
-	SELECT 
-		s.subject_data_no subjectDataNo
-		,s.member_id memberId
-		,t.teacher_name teacherName
-		,subject_data_title subjectDataTitle
-		,subject_data_content subjectDataContent
-		,s.create_date createDate
-	FROM subject_board sb
-		INNER JOIN subject_data s
-			ON sb.subject_board_no = s.subject_data_no
-		INNER JOIN teacher t 
-			ON s.member_id = t.member_id
-	WHERE sb.subject_no = #{subjectNo}
-	<if test='searchName != null and !"".equals(searchName) '>
-		AND CONCAT('%', s.subject_data_title, '%') 
-		LIKE CONCAT('%', #{searchName}, '%')
-	</if>
-	LIMIT #{beginRow}, #{rowPerPage}
-</select>
-
-<select id="selectTotalCount" 
-		parameterType="String"
-		resultType="int" >
-	SELECT COUNT(*)
-	FROM subject_data
-	<if test='searchName != null and !"".equals(searchName) '>
-		WHERE CONCAT('%', subject_data_title, '%') 
-		LIKE CONCAT('%', #{searchName}, '%')
-	</if>
-</select>
+	<select id="selectSubjectDataListByPage"
+			parameterType="java.util.Map"
+			resultType="java.util.Map">
+		SELECT 
+			s.subject_data_no subjectDataNo
+			,t.teacher_name teacherName
+			,s.member_id memberId
+			,subject_data_title subjectDataTitle
+			,subject_data_content subjectDataContent
+			,sb.create_date createDate
+		FROM subject_board sb
+			INNER JOIN subject_data s
+				ON sb.subject_board_no = s.subject_data_no
+			INNER JOIN subject sj
+				ON sb.subject_no = sj.subject_no
+			INNER JOIN teacher t
+				ON t.member_id = sj.teacher_id				
+		WHERE sb.subject_no = 12
+		<if test='searchName != null and !"".equals(searchName) '>
+			AND CONCAT('%', s.subject_data_title, '%') 
+			LIKE CONCAT('%', #{searchName}, '%')
+		</if>
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<select id="selectTotalCount" 
+			parameterType="String"
+			resultType="int" >
+		SELECT COUNT(*)
+		FROM subject_data
+		<if test='searchName != null and !"".equals(searchName) '>
+			WHERE CONCAT('%', subject_data_title, '%') 
+			LIKE CONCAT('%', #{searchName}, '%')
+		</if>
+	</select>
+	
+	<insert id="insertSubjectBoard"
+			parameterType="kr.co.javajoy.lms.vo.SubjectBoard">
+			<selectKey resultType="int" keyProperty="subjectBoardNo" order="AFTER">
+				select last_insert_id()
+			</selectKey>
+			INSERT INTO subject_board (
+				subject_no
+				,create_date
+			) VALUES(
+				#{subjectNo}
+				,NOW()
+		)	
+	</insert>
+	
+	<insert id="insertSubjectData"
+			parameterType="kr.co.javajoy.lms.vo.SubjectData">
+		INSERT INTO subject_data(
+			subject_data_no
+			,member_id
+			,subject_data_title
+			,subject_data_content
+			,update_date
+		) VALUES(
+			#{subjectDataNo}
+			,#{memberId}
+			,#{subjectDataTitle}
+			,#{subjectDataContent}
+			,NOW()
+		)
+	</insert>
+	
+	<insert id="insertSubjectFile"
+			parameterType="kr.co.javajoy.lms.vo.SubjectFile">
+		INSERT INTO subject_file(
+			subject_file_board_no
+			,subject_file_name
+			,subject_file_original_name
+			,subject_file_type
+			,subject_file_size
+			,create_date
+			,update_date
+		) VALUES(
+			#{subjectFileBoardNo}
+			,#{subjectFileName}
+			,#{subjectFileOriginalName}
+			,#{subjectFileType}
+			,#{subjectFileSize}
+			,NOW()
+			,NOW()
+		)
+	</insert>
 
 </mapper>
