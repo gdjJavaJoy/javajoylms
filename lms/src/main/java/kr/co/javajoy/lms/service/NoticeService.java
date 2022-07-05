@@ -42,6 +42,8 @@ public class NoticeService {
 		// 전체 총 게시물 수 구하기
 		int totalCount = noticeMapper.selectTotalCount(searchNoticeTitle);
 		int lastPage = (int)(Math.ceil((double)totalCount / (double)rowPerPage));
+		log.debug(CF.WSH + "NoticeService.getNoticeByPage.totalCount : "+totalCount);
+		log.debug(CF.WSH + "NoticeService.getNoticeByPage.lastPage : "+lastPage);
 
 		Map<String, Object> returnMap = new HashMap<>();
 		returnMap.put("list", list);
