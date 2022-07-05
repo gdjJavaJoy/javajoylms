@@ -49,7 +49,6 @@ public class SubjectDataController {
 		
 		return "/subject/getSubjectDataListByPage";
 	}
-		
 		// 강좌자료 추가
 		@GetMapping("addSubjectData")
 		public String addSubjectData (@RequestParam(value="subjectNo") int subjectNo
@@ -61,6 +60,7 @@ public class SubjectDataController {
 			return "/subject/addSubjectData";
 		}
 		
+		// 강좌 자료 추가
 		@PostMapping("addSubjectData")
 		public String addSubjectData (SubjectBoardInsertForm subjectBoardInsertForm
 									,HttpServletRequest request) {
@@ -74,5 +74,31 @@ public class SubjectDataController {
 			
 			return "redirect:getSubjectDataListByPage?subjectNo="+ subjectBoardInsertForm.getSubjectNo();
 		}
+		
+		// 강좌자료 상세보기
+		@GetMapping("getSubjectDataOne")
+		public String getSubjectDataOne(@RequestParam(value="subjectDataNo") int subjectDataNo
+										,@RequestParam(value="subjectNo") int subjectNo
+										,Model model) {
+			// 디버깅
+			log.debug(CF.YHJ + "SubjectDataController.getSubjectDataOne.subjectDataNo : " + subjectDataNo + CF.RESET);
+			log.debug(CF.YHJ + "SubjectDataController.getSubjectDataOne.subjectNo : " + subjectNo + CF.RESET); 
+			
+			Map<String,Object> map = subjectdataService.getSubjectDataOne(subjectDataNo);
+			
+			// 디버깅
+			log.debug(CF.YHJ + "SubjectDataController.getSubjectDataOne.map : " + map + CF.RESET); 
+			log.debug(CF.YHJ + "SubjectDataController.getSubjectDataOne.dataMap : " + map.get("dataMap") + CF.RESET);
+			log.debug(CF.YHJ + "SubjectDataController.getSubjectDataOne.subjectFile : " + map.get("subjectFile") + CF.RESET);
+			log.debug(CF.YHJ + "SubjectDataController.getSubjectDataOne.fileCount : " + map.get("fileCount") + CF.RESET);
+			
+			model.addAttribute("dataMap",map.get("dataMap"));
+			model.addAttribute("subjectDataFile",map.get("subjectDataFile"));
+			model.addAttribute("fileCount",map.get("fileCount"));
+			model.addAttribute("subjectNo",subjectNo);
+			
+			return "/subject/getSubjectDataOne"; 
+		}
+		
 		
 }

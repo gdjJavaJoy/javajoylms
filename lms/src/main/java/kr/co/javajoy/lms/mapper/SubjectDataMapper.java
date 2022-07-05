@@ -21,4 +21,10 @@ public interface SubjectDataMapper {
 	void insertSubjectBoard(SubjectBoard subjectBoard);
 	// 첨부파일 추가
 	void insertSubjectFile(SubjectFile subjectFile);
+	// 강좌 자료 상세보기
+	Map<String,Object> selectSubjectDataOne(int subjectDataNo);
+	// 강자 좌료 파일
+	List<SubjectFile> selectSubjectDataFile(int subjectDataNo);
+	// file 개수 구하기
+	int selectDataFileCount(int subjectDataNo);
 }

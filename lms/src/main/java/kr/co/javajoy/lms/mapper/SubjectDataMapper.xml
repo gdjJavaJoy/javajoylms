@@ -19,7 +19,7 @@
 				ON sb.subject_no = sj.subject_no
 			INNER JOIN teacher t
 				ON t.member_id = sj.teacher_id				
-		WHERE sb.subject_no = 12
+		WHERE sb.subject_no = #{subjectNo}
 		<if test='searchName != null and !"".equals(searchName) '>
 			AND CONCAT('%', s.subject_data_title, '%') 
 			LIKE CONCAT('%', #{searchName}, '%')
@@ -90,4 +90,46 @@
 		)
 	</insert>
 
+	<select id="selectSubjectDataOne"
+			parameterType="int"
+			resultType="java.util.Map">
+		SELECT 	s.subject_data_no subjectDataNo
+			,t.teacher_name teacherName
+			,s.member_id memberId
+			,subject_data_title subjectDataTitle
+			,subject_data_content subjectDataContent
+			,sb.create_date createDate
+		FROM subject_board sb
+			INNER JOIN subject_data s
+				ON sb.subject_board_no = s.subject_data_no
+			INNER JOIN subject sj
+				ON sb.subject_no = sj.subject_no
+			INNER JOIN teacher t
+				ON t.member_id = sj.teacher_id
+			WHERE s.subject_data_no = #{subjectDataNo}	
+	</select>
+	
+	<select id="selectSubjectDataFile"
+			parameterType="int"
+			resultType="kr.co.javajoy.lms.vo.SubjectFile">
+		SELECT 
+			subject_file_no subjectFileNo
+			,subject_file_board_no subjectFileBoardNo
+			,subject_file_name subjectFileName
+			,subject_file_original_name subjectFileOriginalName
+			,subject_file_type subjectFileType
+			,subject_file_size subjectFileSize
+			,create_date createDate
+			,update_date updateDate
+		FROM subject_file
+			WHERE subject_file_board_no = #{subjectDataNo}
+	</select>
+	
+	<select id="selectDataFileCount"
+			parameterType="int"
+			resultType="int">
+	SELECT COUNT(*)
+	FROM subject_file
+	WHERE subject_file_board_no = #{subjectDataNo}
+	</select>
 </mapper>

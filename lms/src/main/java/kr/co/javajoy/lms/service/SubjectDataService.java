@@ -111,4 +111,25 @@ public class SubjectDataService {
 		}
 	}
 	
+	// 강좌자료 상세보기
+	public Map<String,Object> getSubjectDataOne(int subjectDataNo){
+		log.debug(CF.YHJ + "SubjectDataService.getSubjectDataOne.subjectDataNo : " + subjectDataNo + CF.RESET); // 디버깅
+		
+		Map<String,Object> dataMap = subjectdataMapper.selectSubjectDataOne(subjectDataNo);
+		List<SubjectFile> subjectDataFile = subjectdataMapper.selectSubjectDataFile(subjectDataNo);
+		int fileCount = subjectdataMapper.selectDataFileCount(subjectDataNo);
+		
+		// 디버깅
+		log.debug(CF.YHJ + "SubjectDataService.getSubjectDataOne.dataMap : " + dataMap + CF.RESET); 
+		log.debug(CF.YHJ + "SubjectDataService.getSubjectDataOne.subjectFile : " + subjectDataFile + CF.RESET); 
+		log.debug(CF.YHJ + "SubjectDataService.getSubjectDataOne.fileCount : " + fileCount + CF.RESET); 
+		
+		Map<String,Object> returnMap = new HashMap<>();
+		returnMap.put("dataMap", dataMap);
+		returnMap.put("subjectDataFile", subjectDataFile);
+		returnMap.put("fileCount", fileCount);
+		
+		return returnMap;
+	}
+	
 }
