@@ -23,12 +23,17 @@
 		ORDER BY create_date DESC
 		LIMIT #{startRow}, #{rowPerPage}		
 	</select>
-	<!-- 전체 row(공지사항 수) -->
+	<!-- 검색결과 페이징, 전체 row(공지사항 수) -->
 	<select id="selectTotalCount"
+			parameterType="String"
 			resultType="int">
 		SELECT count(*) 
 		FROM board
 		WHERE board_category = "1"
+		<if test='searchNoticeTitle != null and !"".equals(searchNoticeTitle) '>
+			AND CONCAT('%', board_title, '%') 
+			LIKE CONCAT('%', #{searchNoticeTitle}, '%')
+		</if>
 	</select>
 	<!-- 공지사항 상세보기 -->
 	<select id="selectNoticeOne"

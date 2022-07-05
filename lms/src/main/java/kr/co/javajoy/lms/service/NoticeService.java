@@ -39,8 +39,8 @@ public class NoticeService {
 		log.debug(CF.WSH + "NoticeService.getNoticeByPage.searchNoticeTitle : "+searchNoticeTitle);
 		
 		List<Board> list = noticeMapper.selectNoticeByPage(map);
-		
-		int totalCount = noticeMapper.selectTotalCount();
+		// 전체 총 게시물 수 구하기
+		int totalCount = noticeMapper.selectTotalCount(searchNoticeTitle);
 		int lastPage = (int)(Math.ceil((double)totalCount / (double)rowPerPage));
 
 		Map<String, Object> returnMap = new HashMap<>();
@@ -48,12 +48,13 @@ public class NoticeService {
 		returnMap.put("lastPage", lastPage);
 		returnMap.put("totalCount", totalCount);
 		
+		
 		return returnMap;
 	}
 	
 	// 공지사항 상세보기
 	// 수정 (Get)
-	public Map<String, Object> getNoticeOne(int boardNo) {
+	public Map<String, Object> getNoticeOne(int boardNo, String searchNoticeTitle) {
 		// 쿼리불러오기 조회값 저장
 		List<Board> board = noticeMapper.selectNoticeOne(boardNo); 
 		log.debug(CF.WSH + "NoticeService.getNoticeOne.board : "+board);
@@ -67,7 +68,7 @@ public class NoticeService {
 		log.debug(CF.WSH + "NoticeService.getNoticeOne.fileTotalCount : "+fileTotalCount);
 		
 		// 게시글 번호받기 
-		int totalCount = noticeMapper.selectTotalCount();
+		int totalCount = noticeMapper.selectTotalCount(searchNoticeTitle);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("board", board);

@@ -120,11 +120,25 @@
                 <!-- Pagination -->
                 <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
                	 <c:if test="${currentPage > 1}">
+               	 <c:choose>
+               	 <c:when test="${searchNoticeTitle eq null}">
                    <a href="${pageContext.request.contextPath}/getNoticeByPage?currentPage=${currentPage-1}">이전</a>
+                </c:when>
+                <c:otherwise>
+                	<a href="${pageContext.request.contextPath}/getNoticeByPage?currentPage=${currentPage-1}&searchNoticeTitle=${searchNoticeTitle}">이전</a>
+                </c:otherwise>
+                </c:choose>
                  </c:if>
                 <span>&nbsp  &nbsp</span>
                  <c:if test="${currentPage < lastPage}">
+                 <c:choose>
+                 <c:when test="${searchNoticeTitle eq null}">
                    <a href="${pageContext.request.contextPath}/getNoticeByPage?currentPage=${currentPage+1}">다음</a>
+                 </c:when>
+                 <c:otherwise>
+                 	 <a href="${pageContext.request.contextPath}/getNoticeByPage?currentPage=${currentPage+1}&searchNoticeTitle=${searchNoticeTitle}">다음</a>
+                 </c:otherwise>
+                 </c:choose>
                  </c:if>
                 </span>
               </div>

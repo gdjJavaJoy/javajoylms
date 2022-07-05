@@ -46,8 +46,8 @@ public class NoticeController {
 		model.addAttribute("currentPage",currentPage);
 		model.addAttribute("totalCount",map.get("totalCount"));
 		model.addAttribute("rowPerPage",rowPerPage);
-		model.addAttribute("searchNoticeTitle", searchNoticeTitle);
-		log.debug(CF.WSH + "NoticeController.getNoticeByPage.notice : "+ currentPage);
+		model.addAttribute("searchNoticeTitle",searchNoticeTitle);
+		log.debug(CF.WSH + "NoticeController.getNoticeByPage.currentPage : "+ currentPage);
 		log.debug(CF.WSH + "NoticeController.getNoticeByPage.searchNoticeTitle : "+ searchNoticeTitle);
 		
 		return "board/notice/getNoticeByPage";
@@ -57,13 +57,14 @@ public class NoticeController {
 	public String getNoticeOne(Model model
 			,HttpServletRequest request
 			,HttpSession session
-			,@RequestParam(name = "boardNo") int boardNo) {
+			,@RequestParam(name = "boardNo") int boardNo
+			,@RequestParam @Nullable String searchNoticeTitle) {
 		log.debug(CF.WSH + "NoticeController.getNoticeOne.boardNo : "+ boardNo);
 		String path = request.getServletContext().getRealPath("/file/boardFile/");
 		String memberId = (String)session.getAttribute("loginUser");
 		String level = (String)session.getAttribute("level");
 		
-		Map<String, Object> map = noticeService.getNoticeOne(boardNo);
+		Map<String, Object> map = noticeService.getNoticeOne(boardNo, searchNoticeTitle);
 		model.addAttribute("path", path);
 		model.addAttribute("board", map.get("board"));
 		model.addAttribute("boardfile", map.get("boardfile"));
@@ -130,7 +131,8 @@ public class NoticeController {
 	public String modifyNotice(HttpSession session
 			,HttpServletRequest request
 			,Model model
-			,@RequestParam(name="boardNo") int boardNo) {
+			,@RequestParam(name="boardNo") int boardNo
+			,@RequestParam @Nullable String searchNoticeTitle) {
 		log.debug(CF.WSH + "NoticeController.modifyNotice(Get).boardNo : "+ boardNo);
 		String path = request.getServletContext().getRealPath("/file/boardFile/"); 
 		String memberId = (String) session.getAttribute("loginUser");
@@ -140,7 +142,7 @@ public class NoticeController {
 		if(level.equals("2, 3")) {
 			return "redirect:/login";
 		}
-		Map<String, Object> map = noticeService.getNoticeOne(boardNo);
+		Map<String, Object> map = noticeService.getNoticeOne(boardNo, searchNoticeTitle);
 		model.addAttribute("path", path);
 		model.addAttribute("board",map.get("board"));
 		model.addAttribute("boardfile",map.get("boardfile"));

@@ -12,8 +12,8 @@ import kr.co.javajoy.lms.vo.Notice;
 public interface NoticeMapper {
 	// Notice 리스트
 	List<Board> selectNoticeByPage(Map<String, Object>map);
-	// 전체 row(공지사항 수)
-	int selectTotalCount(); 
+	// 검색 페이징, 전체 row(공지사항 수)
+	int selectTotalCount(String searchNoticeTitle); 
 	// Notice One
 	List<Board>selectNoticeOne(int boardNo);
 	// add Notice
