@@ -84,11 +84,11 @@
                 <table class="w-full whitespace-no-wrap">
                   <thead>
                     <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">                 
-                      <th class="px-4 py-3">번호</th>
+                      <th class="px-4 py-3">번호(인덱스)</th>
+                      <th class="px-4 py-3">학생 과제 번호</th>
                       <th class="px-4 py-3">과제 번호</th>
                       <th class="px-4 py-3">제목</th>
                       <th class="px-4 py-3">학생ID</th>
-                      <th class="px-4 py-3">학생</th>
                       <th class="px-4 py-3">점수</th>
                       <th class="px-4 py-3">채점상태</th>
                       <th class="px-4 py-3">제출시간</th>
@@ -96,15 +96,19 @@
                   </thead>
                   <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                    <c:forEach var="s" items="${list}" varStatus="cnt">
-                     <tr onClick="location.href='${pageContext.request.contextPath}/getSubjectReportStudentOne?subjectReportNo=${s.subjectReportNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
+                     <tr onClick="location.href='${pageContext.request.contextPath}/getSubjectReportStudentOne?subjectReportStudentNo=${s.subjectReportStudentNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
 						<td class="px-4 py-3 text-sm">${cnt.index+1}</td>
 						<td class="px-4 py-3 text-sm">${s.subjectReportStudentNo}</td>
 						<td class="px-4 py-3 text-sm">${s.subjectReportNo}</td>
-						<td class="px-4 py-3 text-sm">${s.subjectReportTitle}</td>
+						<td class="px-4 py-3 text-sm">${s.subjectReportStudentTitle}</td>
 						<td class="px-4 py-3 text-sm">${s.memberId}</td>
-						<td class="px-4 py-3 text-sm">${s.studentName}</td>
 						<td class="px-4 py-3 text-sm">${s.score}</td>
-						<td class="px-4 py-3 text-sm">${s.status}</td>
+						<c:if test="${s.status eq 1}">
+							<td class="px-4 py-3 text-sm">채점 중</td>
+						</c:if>
+						<c:if test="${s.status eq 2}">
+							<td class="px-4 py-3 text-sm">채점 완</td>
+						</c:if>
 						<td class="px-4 py-3 text-sm">${s.createDate}</td>
 					</tr>
                   </c:forEach>
@@ -114,7 +118,7 @@
               <div
                 class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-12 dark:text-gray-400 dark:bg-gray-800"
               >
-               	<form method="get" action="${pageContext.request.contextPath}/getSubjectReportListByPage" name="search">
+               	<form method="get" action="${pageContext.request.contextPath}/getSubjectReportListStudentByPage" name="search">
 	                <span class="flex items-center col-span-3">
                		<input name="subjectReportNo" class="form-control" type="hidden" value="${subjectReportNo}">
 	                <input name="sSubjectReportStudentTitle" class="form-control" type="text"  placeholder="학생 검색">

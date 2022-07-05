@@ -15,7 +15,7 @@ public interface SubjectReportStudentMapper {
 	// 학생 - 과제 게시판 글 총 개수
 	int selectTotalCount();
 	// 학생 - 과제 게시판 글 리스트 출력
-	List<SubjectReportStudent> selectSubjectReportStudentListByPage(Map<String, Object> map);
+	List<Map<String, Object>> selectSubjectReportStudentListByPage(Map<String, Object> map);
 
 	// 2) 학생 - 과제 게시판 글 상세보기 + 파일 이름 리스트 출력 + 댓글 리스트 출력
 	
@@ -48,4 +48,5 @@ public interface SubjectReportStudentMapper {
 	int deleteAllStudentFileBySubjectReportStudentNo(int subjectReportStudentNo);
 	// 학생 - 과제 게시판 삭제
 	int deleteStudentReportStudentBySubjectReportStudentNo(int subjectReportStudentNo);
+
 }
