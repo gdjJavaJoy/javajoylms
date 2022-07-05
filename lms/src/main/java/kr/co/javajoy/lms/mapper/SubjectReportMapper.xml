@@ -12,7 +12,7 @@
 	<!-- 과제 게시판 글 리스트 출력 -->
 	<select id="selectSubjectReportListByPage"
 			parameterType="java.util.Map"
-			resultType="kr.co.javajoy.lms.vo.SubjectReport">
+			resultType="java.util.Map">
 		SELECT 
 			b.subject_board_no subjectBoardNo
 			,s.subject_no subjectNo
@@ -24,8 +24,8 @@
 			,r.subject_report_content subjectReportContent
 			,r.subject_report_period subjectReportPeriod 
 			,r.create_date createDate
-		FROM subject_board AS b 
-		LEFT JOIN subject_report AS r ON r.subject_report_no = b.subject_board_no
+		FROM subject_report AS r 
+		LEFT JOIN subject_board AS b ON r.subject_report_no = b.subject_board_no
 		LEFT JOIN subject AS s ON s.subject_no = b.subject_no
 		LEFT JOIN teacher AS t ON t.member_id = r.member_id
 		WHERE b.subject_no = #{subjectNo}
@@ -42,7 +42,7 @@
 	<!-- 과제 게시판 상세보기 -->
 	<select id="selectSubjectReportOne"
 			parameterType="int"
-			resultType="kr.co.javajoy.lms.vo.SubjectReport">
+			resultType="java.util.Map">
 		SELECT 
 			b.subject_board_no subjectBoardNo
 			,r.subject_report_no subjectReportNo
@@ -54,8 +54,8 @@
 			,r.subject_report_content subjectReportContent
 			,r.subject_report_period subjectReportPeriod
 			,r.create_date createDate
-		FROM subject_board AS b
-		LEFT JOIN subject_report AS r ON r.subject_report_no = b.subject_board_no
+		FROM subject_report AS r
+		LEFT JOIN subject_board AS b ON r.subject_report_no = b.subject_board_no
 		LEFT JOIN subject AS s ON s.subject_no = b.subject_no
 		LEFT JOIN teacher AS t ON t.member_id = r.member_id
 		WHERE b.subject_board_no = #{subjectBoardNo};
@@ -115,7 +115,7 @@
 	
 	<!-- subject_board 글 입력 -->
 	<insert id="insertSubjectBoard" 
-			parameterType="kr.co.javajoy.lms.vo.SubjectReport">
+			parameterType="kr.co.javajoy.lms.vo.SubjectBoard">
 		 <selectKey resultType="int" keyProperty="subjectBoardNo" order="AFTER">
 				select last_insert_id()
 		 </selectKey>
@@ -131,13 +131,15 @@
 	<insert id="insertSubjectReport" 
 			parameterType="kr.co.javajoy.lms.vo.SubjectReport">
 		INSERT INTO subject_report (
-			member_id
+			subject_report_no
+			,member_id
 			,subject_report_title
 			,subject_report_content
 			,subject_report_period
 			,create_date
 		) VALUES (
-			#{memberId}
+			#{subjectReportNo}
+			,#{memberId}
 			,#{subjectReportTitle}
 			,#{subjectReportContent}
 			,#{subjectReportPeriod}
@@ -170,7 +172,7 @@
 	
 	<!-- 과제 게시판 글 수정 -->
 	<update id="updateSubjectReport"
-			parameterType="kr.co.javajoy.lms.vo.SubjectReport">
+			parameterType="kr.co.javajoy.lms.vo.InsertSubjectReportForm">
 		UPDATE subject_report AS r 
 		LEFT JOIN subject_board AS b ON r.subject_report_no = b.subject_board_no
 		SET 

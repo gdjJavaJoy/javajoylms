@@ -13,6 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.mapper.SubjectReportMapper;
+import kr.co.javajoy.lms.vo.InsertSubjectReportForm;
+import kr.co.javajoy.lms.vo.SubjectBoard;
+import kr.co.javajoy.lms.vo.SubjectBoardInsertForm;
 import kr.co.javajoy.lms.vo.SubjectFile;
 import kr.co.javajoy.lms.vo.SubjectReport;
 import kr.co.javajoy.lms.vo.SubjectReportComment;
@@ -45,7 +48,7 @@ public class SubjectReportService {
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.rowPerPage" + rowPerPage);
 
 		// 1) 컨트롤러에서 넘오온 변수값 가공 후 맵퍼 호출
-		List<SubjectReport> list = subjectReportMapper.selectSubjectReportListByPage(map);
+		List<Map<String, Object>> list = subjectReportMapper.selectSubjectReportListByPage(map);
 		// 2) 맵퍼에서 반환된 값을 가공 후, 컨트롤러에 변환
 		int totalCount = subjectReportMapper.selectTotalCount(); // 과제 게시판 글 총 수
 		int lastPage = (int) (Math.ceil((double) totalCount / (double) rowPerPage));
@@ -73,26 +76,30 @@ public class SubjectReportService {
 	
 	// 2-1) 과제 게시판 글 입력 + 파일 입력
 	public void addSubjectReport(SubjectReportForm subjectReportForm, String path) {
-		log.debug(CF.PBJ + "NoticeService.addNotice.path : " + path);
-		log.debug(CF.PBJ + "NoticeService.addNotice.subjectReportForm : " + subjectReportForm);
-		// SubjectReportMapper
+		log.debug(CF.PBJ + "NoticeService.addSubjectReport.path : " + path);
+		log.debug(CF.PBJ + "NoticeService.addSubjectReport.subjectBoardInsertForm: " + subjectReportForm);
+		//
+		SubjectBoard subjectBoard = new SubjectBoard();
+		subjectBoard.setSubjectNo(subjectReportForm.getSubjectNo());
+		
+		log.debug(CF.PBJ + "NoticeService.addSubjectReport.subjectBoard: " + subjectBoard);
+		subjectReportMapper.insertSubjectBoard(subjectBoard);
+		// InsertSubjectReportFormMapper
 		SubjectReport subjectReport = new SubjectReport();
-		subjectReport.setSubjectNo(subjectReportForm.getSubjectNo());
+		subjectReport.setSubjectReportNo(subjectBoard.getSubjectBoardNo());
 		subjectReport.setMemberId(subjectReportForm.getMemberId());
 		subjectReport.setSubjectReportTitle(subjectReportForm.getSubjectReportTitle());
 		subjectReport.setSubjectReportContent(subjectReportForm.getSubjectReportContent());
 		subjectReport.setSubjectReportPeriod(subjectReportForm.getSubjectReportPeriod());
 		// subjectReport.getSubjectBoardNo() --> 0
-		int row = subjectReportMapper.insertSubjectBoard(subjectReport);
-		int row2 = subjectReportMapper.insertSubjectReport(subjectReport);
-		log.debug(CF.PBJ + "SubjectReportService.addSubjectReport.row : " + row);
-		log.debug(CF.PBJ + "SubjectReportService.addSubjectReport.row2 : " + row2);
+		log.debug(CF.PBJ + "NoticeService.addSubjectReport.subjectReport: " + subjectReport);
+		subjectReportMapper.insertSubjectReport(subjectReport);
 		// insert 성공시, 기본키 값이 출력됨
-		log.debug(CF.PBJ + "SubjectReportService.addSubjectReport.subjectBoardNo : " + subjectReport.getSubjectBoardNo());
+		log.debug(CF.PBJ + "SubjectReportService.addSubjectReport.subjectBoardNo : " + subjectBoard.getSubjectBoardNo());
 		log.debug(CF.PBJ + "SubjectReportService.addSubjectReport.subjectReportNo : " + subjectReport.getSubjectReportNo());
 
 		// SubjectReportMapper -> file insert
-		if (subjectReportForm.getSubjectReportFileList() != null && subjectReportForm.getSubjectReportFileList().get(0).getSize() > 0 && row == 1 && row2 == 1) {
+		if (subjectReportForm.getSubjectReportFileList() != null && subjectReportForm.getSubjectReportFileList().get(0).getSize() > 0) {
 			log.debug(CF.PBJ + "SubjectReportService.addSubjectReport : 첨부된 파일이 있습니다.");
 			for (MultipartFile mf : subjectReportForm.getSubjectReportFileList()) {
 				SubjectFile subjectFile = new SubjectFile();
@@ -106,7 +113,7 @@ public class SubjectReportService {
 				log.debug(CF.PBJ + "SubjectReportService.addSubjectReport.originName : " + originName);
 				log.debug(CF.PBJ + "SubjectReportService.addSubjectReport.filename : " + filename);
 				// subject_file 데이터 가공
-				subjectFile.setSubjectFileBoardNo(subjectReport.getSubjectBoardNo());
+				subjectFile.setSubjectFileBoardNo(subjectReport.getSubjectReportNo());
 				subjectFile.setSubjectFileName(filename);
 				subjectFile.setSubjectFileOriginalName(mf.getOriginalFilename());
 				subjectFile.setSubjectFileType(mf.getContentType());
@@ -145,7 +152,7 @@ public class SubjectReportService {
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.commentRowPerPage:" + commentRowPerPage);
 		
 		// 선택된 과게 게시판 글 상세보기
-		List<SubjectReport> subjectReport = subjectReportMapper.selectSubjectReportOne(subjectBoardNo);
+		List<Map<String, Object>> subjectReport = subjectReportMapper.selectSubjectReportOne(subjectBoardNo);
 		// 선택된 과제 게시판 글의 파일 리스트 
 		List<SubjectFile> subjectFileList = subjectReportMapper.selectSubjectReportFileList(subjectBoardNo);
 		// 선택된 과제 게시판 댓글 리스트
@@ -185,7 +192,7 @@ public class SubjectReportService {
 	public Map<String, Object> getSubjectReportOne(int subjectBoardNo) {
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportOne(Form).subjectBoardNo :" + subjectBoardNo);
 		// 과제 게시판 글 불러오기
-		List<SubjectReport> subjectReport = subjectReportMapper.selectSubjectReportOne(subjectBoardNo);
+		List<Map<String, Object>> subjectReport = subjectReportMapper.selectSubjectReportOne(subjectBoardNo);
 		// 과제 게시판 파일 리스트 불러오기
 		List<SubjectFile> subjectFile = subjectReportMapper.selectSubjectReportFileList(subjectBoardNo);
 		// 해시 맵으로 데이터 보냄
@@ -204,17 +211,17 @@ public class SubjectReportService {
 		log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport(Action).subjectReportForm: " + subjectReportForm);
 		log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport(Action).path: " + path);
 		
-		SubjectReport subjectReport = new SubjectReport();
-		subjectReport.setSubjectBoardNo(subjectReportForm.getSubjectBoardNo());
-		subjectReport.setSubjectNo(subjectReportForm.getSubjectNo());
-		subjectReport.setMemberId(subjectReportForm.getMemberId());
-		subjectReport.setSubjectReportTitle(subjectReportForm.getSubjectReportTitle());
-		subjectReport.setSubjectReportContent(subjectReportForm.getSubjectReportContent());
-		subjectReport.setSubjectReportPeriod(subjectReportForm.getSubjectReportPeriod());		
+		InsertSubjectReportForm insertSubjectReportForm = new InsertSubjectReportForm();
+		insertSubjectReportForm.setSubjectBoardNo(subjectReportForm.getSubjectBoardNo());
+		insertSubjectReportForm.setSubjectNo(subjectReportForm.getSubjectNo());
+		insertSubjectReportForm.setMemberId(subjectReportForm.getMemberId());
+		insertSubjectReportForm.setSubjectReportTitle(subjectReportForm.getSubjectReportTitle());
+		insertSubjectReportForm.setSubjectReportContent(subjectReportForm.getSubjectReportContent());
+		insertSubjectReportForm.setSubjectReportPeriod(subjectReportForm.getSubjectReportPeriod());		
 		
-		int row = subjectReportMapper.updateSubjectReport(subjectReport);
+		int row = subjectReportMapper.updateSubjectReport(insertSubjectReportForm);
 		log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport(Action).row : " + row);
-		log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport(Action).subjectReport :" + subjectReport);
+		log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport(Action).subjectReport :" + insertSubjectReportForm);
 		
 		if (subjectReportForm.getSubjectReportFileList() != null && subjectReportForm.getSubjectReportFileList().get(0).getSize() > 0) {
 			log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport(Action) : 첨부된 파일이 있습니다.");
@@ -230,7 +237,7 @@ public class SubjectReportService {
 				log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport(Action).originName : " + originName);
 				log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport(Action).filename : " + filename);
 				// subject_file 데이터 가공
-				subjectFile.setSubjectFileBoardNo(subjectReport.getSubjectBoardNo());
+				subjectFile.setSubjectFileBoardNo(insertSubjectReportForm.getSubjectBoardNo());
 				subjectFile.setSubjectFileName(filename);
 				subjectFile.setSubjectFileOriginalName(mf.getOriginalFilename());
 				subjectFile.setSubjectFileType(mf.getContentType());

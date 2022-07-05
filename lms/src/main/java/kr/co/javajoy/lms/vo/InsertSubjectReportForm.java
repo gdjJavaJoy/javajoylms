@@ -3,7 +3,9 @@ package kr.co.javajoy.lms.vo;
 import lombok.Data;
 
 @Data
-public class SubjectReport {
+public class InsertSubjectReportForm {
+	private int subjectBoardNo;
+	private int subjectNo; 
 	private int subjectReportNo;
 	private String memberId;
 	private String subjectReportTitle;
