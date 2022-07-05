@@ -96,7 +96,7 @@
           	
             <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의 Subject Report One</h2>
             <!-- CTA -->
-            <c:forEach var="subjectReport" items="${subjectReportStudent}">
+            <c:forEach var="subjectReportStudent" items="${subjectReportStudent}">
 	            <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
 	              href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage?subjectReportNo=${subjectReportStudent.subjectReportNo}">
 	              <div class="flex items-center">
@@ -105,19 +105,20 @@
 	                </svg>
 	                <span>Subject Report Management Page</span>
 	              </div>
-	              <span>${subjectReportStudent.subjectReportNo} 과제 게시판 &RightArrow;</span>
+	              <span>${subjectReportStudent.subjectReportNo}번 과제 제출 리스트 &RightArrow;</span>
 	            </a>
-            </c:forEach>
+            
             <!-- With avatar -->
-           		<h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">과제 상세보기
+           		<h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">${subjectReportStudent.memberId}의 과제 상세보기
            		</h4> 
+           	</c:forEach>
             <!-- 과제 상세보기 테이블 -->
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto">
               	 <c:forEach var="subjectReportStudent" items="${subjectReportStudent}">
                		<table class="w-full whitespace-no-wrap">
                			 <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-	                    	<th class="px-4 py-3">번호</th>
+	                    	<th class="px-4 py-3">학생 과제 번호</th>
 	                    	<td class="px-4 py-3 text-sm">${subjectReportStudent.subjectReportStudentNo}</td>
 	                    </tr>
 	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
@@ -132,13 +133,21 @@
 	                    	<th class="px-4 py-3">과제 제목</th>
 	                    	<td class="px-4 py-3 text-sm">${subjectReportStudent.subjectReportStudentTitle}</td>
 	                    </tr>
-	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-	                    	<th class="px-4 py-3">과제 생성 날짜</th>
-	                    	<td class="px-4 py-3 text-sm">${subjectReportStudent.createDate}</td>
-	                    </tr>
 	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
 	                    	<th class="px-4 py-3">과제 내용</th>
 	                    	<td class="px-4 py-3 text-sm">${subjectReportStudent.subjectReportStudentContent}</td>
+	                    </tr>
+	                     <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+	                    	<th class="px-4 py-3">과제 점수</th>
+	                    	<td class="px-4 py-3 text-sm">${subjectReportStudent.score}</td>
+	                    </tr>
+	                     <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+	                    	<th class="px-4 py-3">status</th>
+	                    	<td class="px-4 py-3 text-sm">${subjectReportStudent.status}</td>
+	                    </tr>
+	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+	                    	<th class="px-4 py-3">과제 생성 날짜</th>
+	                    	<td class="px-4 py-3 text-sm">${subjectReportStudent.createDate}</td>
 	                    </tr>
               		</table> 
 	              	<div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">

@@ -55,13 +55,13 @@ public class SubjectReportStudentController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", map.get("lastPage"));
-		model.addAttribute("subjectNo", map.get("subjectReportNo"));
-		model.addAttribute("rSubjectReportTitle", map.get("sSubjectReportStudentTitle"));
+		model.addAttribute("subjectReportNo", map.get("subjectReportNo"));
+		model.addAttribute("sSubjectReportStudentTitle", map.get("sSubjectReportStudentTitle"));
 		
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.list" + map.get("list"));
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.currentPage" + currentPage);
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.lastPage" + map.get("lastPage"));
-		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectNo" + map.get("subjectReportNo"));
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectReportNo" + map.get("subjectReportNo"));
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.rSubjectReportTitle" + map.get("sSubjectReportStudentTitle"));
 		
 		return "subject/getSubjectReportStudentListByPage";
@@ -78,7 +78,7 @@ public class SubjectReportStudentController {
 		return "redirect:/addSubjectReport?subjectNo=" + subjectNo;
 	}
 	*/
-	
+
 	// ------------------------ 2) 과제 게시판 글 입력 <INSERT> ------------------------ 
 	
 	// 2-1) 과제 게시판 글 입력 + 파일 입력 Form 받기
@@ -137,7 +137,7 @@ public class SubjectReportStudentController {
 	public String getSubjectReportStudentOne(HttpSession session
 									,Model model
 									,HttpServletRequest request
-									,@RequestParam(name="subjectReportNo") int subjectReportNo) {
+									,@RequestParam(name="subjectReportStudentNo") int subjectReportStudentNo) {
 		// 운영자 + 강사 or  학생 별로 보이는 페이지가 다름...
 		String memberId = (String)session.getAttribute("loginUser");
 		String level = (String)session.getAttribute("level");
@@ -149,12 +149,12 @@ public class SubjectReportStudentController {
 	
 		// 댓글 데이터 
 		Map<String, Object> map = new HashMap<>();
-		map.put("subjectReportNo", subjectReportNo);
+		map.put("subjectReportStudentNo", subjectReportStudentNo);
 		
-		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.subjectBoardNo : " + subjectReportNo);
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportOne.subjectBoardNo : " + subjectReportStudentNo);
 		
 		// 댓글 데이터 + 파일 리스트 데이터
-		Map<String, Object> returnMap = subjectReportStudentService.getSubjectReportAndFileNameList(map);
+		Map<String, Object> returnMap = subjectReportStudentService.getSubjectReportStudentAndFileNameList(map);
 		model.addAttribute("path", path);
 		model.addAttribute("subjectReportStudent", returnMap.get("subjectReportStudent"));
 		model.addAttribute("studentFileList", returnMap.get("studentFileList"));
@@ -256,4 +256,25 @@ public class SubjectReportStudentController {
 		
 		return "redirect:/getSubjectReportListByPage?subjectNo=" + subjectReportStudentNo;
 	} 
+
 }
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

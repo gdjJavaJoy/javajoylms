@@ -6,8 +6,13 @@
 	
 	<!-- 과제 게시판 글 총 개수 -->
 	<select id="selectTotalCount"
+			parameterType="String"
 			resultType="int">
 		SELECT COUNT(*) FROM subject_report
+		<if test='rSubjectReportTitle != null and !"".equals(rSubjectReportTitle)'>
+			AND CONCAT('%', r.subject_report_title, '%') 
+			LIKE CONCAT('%', #{rSubjectReportTitle}, '%')
+		</if>
 	</select>
 	<!-- 과제 게시판 글 리스트 출력 -->
 	<select id="selectSubjectReportListByPage"

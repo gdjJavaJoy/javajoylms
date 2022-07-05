@@ -44,9 +44,9 @@ public class SubjectReportStudentService {
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.rowPerPage" + rowPerPage);
 
 		// 1) 컨트롤러에서 넘오온 변수값 가공 후 맵퍼 호출
-		List<SubjectReportStudent> list = subjectReportStudentMapper.selectSubjectReportStudentListByPage(map);
+		List<Map<String, Object>> list = subjectReportStudentMapper.selectSubjectReportStudentListByPage(map);
 		// 2) 맵퍼에서 반환된 값을 가공 후, 컨트롤러에 변환
-		int totalCount =subjectReportStudentMapper.selectTotalCount(); // 과제 게시판 글 총 수
+		int totalCount = subjectReportStudentMapper.selectTotalCount(); // 과제 게시판 글 총 수
 		int lastPage = (int) (Math.ceil((double) totalCount / (double) rowPerPage));
 
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.list------------" + list);
@@ -67,7 +67,7 @@ public class SubjectReportStudentService {
 
 		return returnMap;
 	}
-	
+
 	// ------------------------ 2) 과제 게시판 글 입력 <INSERT> ------------------------ 
 	
 	// 2-1) 과제 게시판 글 입력 + 파일 입력
@@ -123,11 +123,11 @@ public class SubjectReportStudentService {
 	// ------------------------ 3) 과제 게시판 글 상세보기 <SELECT ONE>------------------------ 
 	
 	// 3-1) 과제 게시판 글 상세보기 + 파일 이름 리스트 출력 + 댓글 리스트 출력
-	public Map<String, Object> getSubjectReportAndFileNameList (Map<String, Object> map) {
+	public Map<String, Object> getSubjectReportStudentAndFileNameList (Map<String, Object> map) {
 		int subjectReportStudentNo = (int)map.get("subjectReportStudentNo");
 		
 		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("subjectReportNo", subjectReportStudentNo);
+		paramMap.put("subjectReportStudentNo", subjectReportStudentNo);
 
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportAndFileNameListAndCommentList.subjectBoardNo :" + subjectReportStudentNo);
 	
