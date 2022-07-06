@@ -51,4 +51,17 @@ public class AllTeacherListController {
 		// allTeacherList.jsp로 이동
 		return "allTeacherList";
 	}
+	
+	@GetMapping("/deleteTeacher")
+	public String allTeacherList(@RequestParam(name="memberId") String memberId) {
+		
+		int deleteTeacher = allTeacherListService.deleteTeacher(memberId);
+		int deleteMemberId = allTeacherListService.deleteMemberId(memberId);
+	      if(deleteTeacher == 1 && deleteMemberId == 1 ) {
+	    	  log.debug(CF.LGN + "allTeacherListController.deleteTeacher.deleteTeacher : "+ deleteTeacher); // 성공
+	      } else {
+	    	  log.debug(CF.LGN + "allTeacherListController.deleteTeacher.deleteMemberId : "+ deleteMemberId); // 실패
+	      }
+	      return "redirect:/allTeacherList"; 
 	}
+}

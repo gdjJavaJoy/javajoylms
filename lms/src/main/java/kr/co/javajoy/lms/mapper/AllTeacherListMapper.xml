@@ -5,25 +5,52 @@
 	<select id="AllTeacherList"
 			parameterType="java.util.Map"
 			resultType="map">
-		 SELECT
-			 member_id memberId
-			,teacher_name teacherName
-			,teacher_phone teacherPhone
-			,teacher_gender teacherGender
-			,teacher_address teacherAddress
-			,teacher_detailaddress teacherDetailAddress
-			,teacher_email teacherEmail
-			,teacher_join teacherJoin
-		FROM teacher
+		SELECT
+			 a.member_id memberId
+			,b.teacher_name teacherName
+			,b.teacher_phone teacherPhone
+			,b.teacher_gender teacherGender
+			,b.teacher_address teacherAddress
+			,b.teacher_detailaddress teacherDetailAddress
+			,b.teacher_email teacherEmail
+			,b.teacher_join teacherJoin
+			,a.member_active memberActive
+		FROM 
+			member_id a
+			INNER JOIN teacher b ON a.member_id = b.member_id
+		WHERE
+			NOT a.member_active IN ('3')
 		<if test='SearchTeacherName != null and !"".equals( SearchTeacherName ) '>
-		WHERE CONCAT( '%', teacher_name, '%' ) 
-		LIKE CONCAT( '%', #{SearchTeacherName} , '%' )
+		AND 
+			CONCAT( '%', b.teacher_name, '%' ) 
+			LIKE CONCAT( '%', #{SearchTeacherName} , '%' )
 		</if>
 	</select>
 	<!-- 전체 강사 수 -->
 	<select id="selectTotalCount" 
-			resultType="int" >
+			resultType="int">
 		SELECT COUNT(*)
 		FROM teacher
 	</select>
+	<!-- 전체 강사 삭제 -->
+	<update id="deleteTeacher"
+			parameterType="String">
+		UPDATE teacher SET
+				 teacher_name = '111111'
+				,teacher_phone = '11111111111'
+				,teacher_address =  '111111'
+				,teacher_detailaddress = '111111'
+				,teacher_email = '111111'
+		WHERE
+				member_id = #{memberId}
+	</update>
+	<update id="deleteMemberId"
+			parameterType="String">
+		UPDATE member_id SET
+				 member_pw = '111111'
+				,member_active = '3'
+				,delete_date = NOW()
+		WHERE
+				member_id = #{memberId}
+	</update>
 </mapper>

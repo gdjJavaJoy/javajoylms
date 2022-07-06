@@ -19,7 +19,15 @@ import lombok.extern.slf4j.Slf4j;
 public class AllTeacherListService {
 	@Autowired AllTeacherListMapper allTeacherListMapper;
 	
-	// 학생 리스트 출력
+	public int deleteTeacher(String memberId) {
+		return allTeacherListMapper.deleteTeacher(memberId);
+	}
+	
+	public int deleteMemberId(String memberId) {
+		return allTeacherListMapper.deleteMemberId(memberId);
+	}
+	
+	// 강사 리스트 출력
 	public Map<String, Object> AllTeacherList(int currentPage, int rowPerPage, String SearchTeacherName) {
 		// 리스트 출력 페이징
 		int startRow = (currentPage - 1) * rowPerPage;
@@ -44,6 +52,7 @@ public class AllTeacherListService {
 		log.debug(CF.LGN + "AllTeacherListController.selecAllTeacherList SearchTeacherName : "+ SearchTeacherName);
 		log.debug(CF.LGN + "AllTeacherListController.selecAllTeacherList lastPage : " + lastPage );
 		log.debug(CF.LGN + "AllTeacherListController.selecAllTeacherList list.size() : " + list);
+		
 		return returnMap;
 	}
 }

@@ -11,6 +11,9 @@ import kr.co.javajoy.lms.vo.Teacher;
 public interface AllTeacherListMapper {
 	// 강사 리스트 출력
 	List<Teacher> AllTeacherList(Map<String, Object> map);
+	// 강사 삭제(업데이트)
+	int deleteTeacher(String memberId);
+	int deleteMemberId(String memberId);
 	// 강사 총 수
 	int selectTotalCount();
 }
