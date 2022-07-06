@@ -10,10 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.mapper.AllStudentListMapper;
-import kr.co.javajoy.lms.vo.Board;
-import kr.co.javajoy.lms.vo.Boardfile;
 import kr.co.javajoy.lms.vo.Student;
-import kr.co.javajoy.lms.vo.SubjectReport;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

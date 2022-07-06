@@ -11,7 +11,7 @@ import kr.co.javajoy.lms.vo.Student;
 public interface AllStudentListMapper {
 	// 학생 리스트 출력
 	List<Student> AllStudentList(Map<String, Object> map);
-	// 학생 삭제 업데이트
+	// 학생 삭제 (업데이트)
 	int deleteStudent(String memberId);
 	int deleteMemberId(String memberId);
 	// 학생 총 수

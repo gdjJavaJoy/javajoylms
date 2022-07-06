@@ -2,7 +2,6 @@ package kr.co.javajoy.lms.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +59,7 @@ public class AllStudentListController {
 		int deleteStudent = allStudentListService.deleteStudent(memberId);
 		int deleteMemberId = allStudentListService.deleteMemberId(memberId);
 	      if(deleteStudent == 1 && deleteMemberId == 1 ) {
-	    	  log.debug(CF.LGN + "allStudentListController.deleteStudent.deleteStudent : "+ deleteStudent);
+	    	  log.debug(CF.LGN + "allStudentListController.deleteStudent.deleteStudent : "+ deleteStudent); // 성공
 	      } else {
 	    	  log.debug(CF.LGN + "allStudentListController.deleteStudent.deleteMemberId : "+ deleteMemberId); // 실패
 	      }
