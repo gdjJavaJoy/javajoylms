@@ -11,19 +11,23 @@
    ,s.student_name studentName
    ,b.board_title boardTitle
    ,b.private_no privateNo
+   ,COUNT(bc.board_comment_content) cnt
    ,b.create_date createDate
    ,b.update_date updateDate
 FROM board b
-LEFT JOIN teacher t
-	   ON t.member_id = b.member_id
-LEFT JOIN student s
-	   ON s.member_id = b.member_id
+ LEFT JOIN board_comment bc
+ 		ON bc.board_no = b.board_no
+ LEFT JOIN teacher t
+	    ON t.member_id = b.member_id
+ LEFT JOIN student s
+	    ON s.member_id = b.member_id
 WHERE board_category = "3"
 <if test='searchInquiryTitle != null and !"".equals(searchInquiryTitle) '>
 AND CONCAT('%', b.board_title, '%') 
 			LIKE CONCAT('%', #{searchInquiryTitle}, '%')
 </if>
-ORDER BY create_date desc
+GROUP BY b.board_no
+ORDER BY b.create_date desc
 LIMIT #{beginRow} , #{rowPerPage}
  </select>
  <select id="selectInquiryTotalCount"
@@ -145,4 +149,45 @@ SELECT
    ,receiver receiver
 FROM receiver
 </select>
+ <select id="selectInquiryByMemberId"
+ 		 parameterType="java.util.Map"
+ 		 resultType="java.util.Map">
+ SELECT 
+ 	b.board_no boardNo
+   ,b.member_id memberId
+   ,t.teacher_name teacherName
+   ,s.student_name studentName
+   ,b.board_title boardTitle
+   ,b.private_no privateNo
+   ,COUNT(bc.board_comment_content) cnt
+   ,b.create_date createDate
+   ,b.update_date updateDate
+FROM board b
+ LEFT JOIN board_comment bc
+ 		ON bc.board_no = b.board_no
+ LEFT JOIN teacher t
+	    ON t.member_id = b.member_id
+ LEFT JOIN student s
+	    ON s.member_id = b.member_id
+WHERE board_category = "3" AND b.member_id = #{memberId}
+<if test='searchInquiryTitle != null and !"".equals(searchInquiryTitle) '>
+AND CONCAT('%', b.board_title, '%') 
+			LIKE CONCAT('%', #{searchInquiryTitle}, '%')
+</if>
+GROUP BY b.board_no
+ORDER BY b.create_date desc
+LIMIT #{beginRow} , #{rowPerPage}
+ </select>
+ <select id="selectInquiryTotalCountByMemberId"
+ 		parameterType="String"
+ 		resultType="int">
+ SELECT
+ 	COUNT(*) cnt
+ FROM board
+ WHERE board_category = "3" AND member_id = #{memberId}
+<if test='searchInquiryTitle != null and !"".equals(searchInquiryTitle) '>
+	AND CONCAT('%', board_title, '%') 
+	LIKE CONCAT('%', #{searchInquiryTitle}, '%')
+</if>
+ </select>
 </mapper>

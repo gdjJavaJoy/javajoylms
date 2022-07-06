@@ -91,11 +91,11 @@
 								</li>
 								<li
 									class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-									<a class="w-full" href="#">내가 쓴 자유 게시판 글 (미구현)</a>
+									<a class="w-full" href="${pageContext.request.contextPath}/getFreeBoardByMemberId">내가 쓴 자유게시판 글</a>
 								</li>
 								<li
 									class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-									<a class="w-full" href="#">내가 쓴 건의 함 글    (미구현)</a>
+									<a class="w-full" href="${pageContext.request.contextPath}/getInquiryByMemberId">내가 쓴 건의함 글</a>
 								</li>
 							</ul>
 						</template>

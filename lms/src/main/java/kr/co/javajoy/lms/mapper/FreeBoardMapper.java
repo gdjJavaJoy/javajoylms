@@ -21,4 +21,8 @@ public interface FreeBoardMapper {
 	 int insertFreeBoardComment(BoardComment boardComment);
 	 
 	 int updateFreeBoard(Board board);
+	 
+	 List<Map<String,Object>> selectFreeBoardByMemberId(Map<String,Object> map);
+	 
+	 int selectFreeBoardTotalCountByMemberId(Map<String,Object> map);
 }

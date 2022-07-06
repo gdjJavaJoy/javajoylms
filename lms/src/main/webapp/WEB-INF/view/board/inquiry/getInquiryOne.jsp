@@ -212,11 +212,8 @@
 		            				<th class="px-4 py-3">작성자이름</th>
 					                <th class="px-4 py-3">내용</th>			             
 					                <th class="px-4 py-3">작성일</th>
-					                <c:if test="${loginUser eq ic.memberId}">
-					                <th class="px-4 py-3">수정 </th> 
-					                </c:if>
 					                <c:if test="${level eq 1 || loginUser eq ic.memberId}">
-					                <th class="px-4 py-3">삭제</th>
+					                	<th class="px-4 py-3">삭제</th>
 					                </c:if>
 		            			</tr>
 		            		</thead>
@@ -236,11 +233,8 @@
 		            					</td>
 		            					<td class="px-4 py-3 text-sm">${ic.boardCommentContent}</td>
 		            					<td class="px-4 py-3 text-sm">${ic.createDate}</td>
-		            					<c:if test="${loginUser eq ic.memberId}">
-		            					<td class="px-4 py-3 text-sm"><button type="button" id="modifyComment">수정</button></td>
-		            					</c:if>
 		            					<c:if test="${level eq 1 || loginUser eq ic.memberId}">
-		            					<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/removeInquiryComment?boardCommentNo=${ic.boardCommentNo}&boardNo=${board.boardNo}">삭제</a></td>
+		            						<td class="px-4 py-3 text-sm"><a href="${pageContext.request.contextPath}/removeInquiryComment?boardCommentNo=${ic.boardCommentNo}&boardNo=${board.boardNo}">삭제</a></td>
 		            					</c:if>	
 		            				</tr>
 		            			</c:forEach>

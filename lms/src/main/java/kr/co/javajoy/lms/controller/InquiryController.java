@@ -184,4 +184,26 @@ public class InquiryController {
 			
 		return "redirect:/modifyInquiry?boardNo="+boardNo;
 	}
+	@GetMapping("/getInquiryByMemberId")
+	public String getInquriyByMemberId(HttpSession session
+								,Model model
+								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+								,@RequestParam(value="rowPerPage", defaultValue="10") int rowPerPage
+								,@RequestParam @Nullable String searchInquiryTitle) {
+		String memberId = (String)session.getAttribute("loginUser");
+		
+		log.debug(CF.PSG+"InquiryController.getInquiryByMemberId memberId :" + memberId + CF.RESET);
+		log.debug(CF.PSG+"InquiryController.getInquiryByMemberId currentPage :" + currentPage + CF.RESET);
+		log.debug(CF.PSG+"InquiryController.getInquiryByMemberId rowPerPage :" + rowPerPage + CF.RESET);
+		log.debug(CF.PSG+"InquiryController.getInquiryByMemberId searchInquiryTitle :" + searchInquiryTitle + CF.RESET);
+		Map<String,Object> map = inquiryService.getInquiryByMemberId(currentPage, rowPerPage, searchInquiryTitle, memberId);
+		
+		model.addAttribute("searchFreeBoardTitle",searchInquiryTitle);
+		model.addAttribute("list",map.get("list"));
+		model.addAttribute("lastPage",map.get("lastPage"));
+		model.addAttribute("rowPerPage",map.get("rowPerPage"));
+		model.addAttribute("totalCount",map.get("totalCount"));
+		model.addAttribute("currentPage",currentPage);
+		return "board/inquiry/getInquiryByMemberId";
+	}
 }

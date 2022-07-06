@@ -3,6 +3,7 @@ package kr.co.javajoy.lms.controller;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
@@ -170,6 +171,29 @@ public class FreeBoardController {
 			log.debug(CF.PSG+"removeFreeBoardFileByBoardFileNo  파일 삭제 성공 "+CF.RESET);
 		}
 		return "redirect:/modifyFreeBoard?boardNo="+boardNo;
+	}
+	
+	@GetMapping("/getFreeBoardByMemberId")
+	public String getFreeBoardByMemberId(HttpSession session
+									,Model model
+									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+									,@RequestParam(value="rowPerPage", defaultValue="10") int rowPerPage
+									,@RequestParam @Nullable String searchFreeBoardTitle) {
+		String memberId = (String)session.getAttribute("loginUser");
+		
+		log.debug(CF.PSG+"FreeBoardController.getFreeBoardByMemberId memberId :" + memberId + CF.RESET);
+		log.debug(CF.PSG+"FreeBoardController.getFreeBoardByMemberId currentPage :" + currentPage + CF.RESET);
+		log.debug(CF.PSG+"FreeBoardController.getFreeBoardByMemberId rowPerPage :" + rowPerPage + CF.RESET);
+		log.debug(CF.PSG+"FreeBoardController.getFreeBoardByMemberId searchFreeBoardTitle :" + searchFreeBoardTitle + CF.RESET);
+		Map<String,Object> map = freeBoardService.getFreeBoardByMemberId(currentPage, rowPerPage, searchFreeBoardTitle, memberId);
+		
+		model.addAttribute("searchFreeBoardTitle",searchFreeBoardTitle);
+		model.addAttribute("list",map.get("list"));
+		model.addAttribute("lastPage",map.get("lastPage"));
+		model.addAttribute("rowPerPage",map.get("rowPerPage"));
+		model.addAttribute("totalCount",map.get("totalCount"));
+		model.addAttribute("currentPage",currentPage);
+		return "board/freeBoard/getFreeBoardByMemberId";
 	}
 				
 }

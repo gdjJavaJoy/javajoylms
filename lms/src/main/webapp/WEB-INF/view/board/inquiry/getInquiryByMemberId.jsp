@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>자유게시판</title>
+<title>건의함</title>
 <link
 	href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
 	rel="stylesheet" />
@@ -19,7 +19,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-<div class="flex h-screen bg-gray-50 dark:bg-gray-900"
+	<div class="flex h-screen bg-gray-50 dark:bg-gray-900"
 		:class="{ 'overflow-hidden': isSideMenuOpen }">
 		<!-- Desktop sidebar -->
 		<aside
@@ -57,16 +57,8 @@
 				<div class="container px-6 mx-auto grid">
 					<h2
 						class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-						자유게시판</h2>
+						내가 쓴 건의함</h2>
 						<div>
-						<c:if test="${level != 1}">
-						<button
-			                  class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-			               	   onclick="location.href='${pageContext.request.contextPath}/addFreeBoard'"
-			               		 >
-			                  글 작성
-			                </button>
-			             </c:if>
 			                <br>
 			            </div>
 					<!-- New Table -->
@@ -80,62 +72,58 @@
 											<th class="px-4 py-3">작성자ID</th>
 											<th class="px-4 py-3">작성자</th>
 											<th class="px-4 py-3">제목</th>
+											<th class="px-4 py-3">답변</th>
 											<th class="px-4 py-3">작성일</th>
 										</tr>
 									</thead>
 									<!-- 글번호 1부터 매기는 부분  --> 
+									<tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
 									<c:set var="num" value="${totalCount-((currentPage-1)*rowPerPage)}"></c:set>
-										<tbody
-											class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-										<c:forEach var="l" items="${list}" varStatus="i">
-											<tr onClick="location.href='${pageContext.request.contextPath}/getFreeBoardOne?boardNo=${l.boardNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
+									<c:forEach var="l" items="${list}">
+												<tr onClick="location.href='${pageContext.request.contextPath}/getInquiryOne?boardNo=${l.boardNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
 													<td class="px-4 py-3 text-sm">${num}</td>
 													<td class="px-4 py-3">
 														<div class="flex items-center text-sm">
-														<c:choose>
-															<c:when test="${l.privateNo eq 1 || level eq 1 || l.memberId eq loginUser}">
-																<p class="font-semibold">${l.memberId}</p>
-															</c:when>
-															<c:otherwise>
-																익명 
-															</c:otherwise>
-														</c:choose>
+															<!-- Avatar with inset shadow -->
+															<p class="font-semibold">${l.memberId}</p>
 														</div>
 													</td>
 													<td class="px-4 py-3">
-													<c:choose>
-														<c:when test="${l.privateNo eq 1 || level eq 1 || l.memberId eq loginUser}">
-														<c:if test="${l.adminName != null}">
-																${l.adminName}
-															</c:if>
-															<c:if test="${l.teacherName != null}">
-																${l.teacherName}
-															</c:if>
-															<c:if test="${l.studentName != null}">
-																${l.studentName}
-															</c:if>
-														</c:when>
-														<c:otherwise>
-															익명
-														</c:otherwise>
-													</c:choose>
+														<c:choose>
+															<c:when test="${l.teacherName != null}">
+															${l.teacherName}
+															</c:when>
+															<c:otherwise>
+															${l.studentName}
+															</c:otherwise>
+														</c:choose>
 													</td>
 													<td class="px-4 py-3 text-sm">${l.boardTitle}</td>
+													<td class="px-4 py-3 text-sm">
+													<c:choose>
+													<c:when test="${l.cnt > 0}">
+													답변완료
+													</c:when>
+													<c:otherwise>
+													답변중
+													</c:otherwise>
+													</c:choose>
+													</td>
 													<td class="px-4 py-3 text-sm">${l.createDate}</td>
 												</tr>
 												<c:set var="num" value="${num-1}"></c:set>
 											</c:forEach>
 										</tbody>
-									</table>
-								</div>
-							</div>
+								</table>
+						</div>
+					</div>
 					     <div
                 class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-12 dark:text-gray-400 dark:bg-gray-800">
-              <form method="get" action="${pageContext.request.contextPath}/getFreeBoardByPage">
+              <form method="get" action="${pageContext.request.contextPath}/getInquiryByMemberId" name="searchInquiryTitle">
                 <span class="flex items-center col-span-3">
-                  <input name="searchFreeBoardTitle" class="form-control" type="text"  placeholder="제목 검색">
+                  <input name="searchInquiryTitle" class="form-control" type="text"  placeholder="제목 검색">
                 	<button type="submit" class="grid px-4 py-3 text-sm">검색</button>
-                	<a href="${pageContext.request.contextPath}/getFreeBoardByPage">초기화</a>
+                	<a href="${pageContext.request.contextPath}/getInquiryByMemberId">초기화</a>
                 </span>
                 </form>
                 <span class="col-span-2"></span>
@@ -144,10 +132,10 @@
                	<c:if test="${currentPage > 1}">
                	<c:choose>
                	<c:when test="${searchInquiryTitle eq null}">
-               <a href="${pageContext.request.contextPath}/getFreeBoardByPage?currentPage=${currentPage-1}">이전</a>
+               <a href="${pageContext.request.contextPath}/getInquiryByMemberId?currentPage=${currentPage-1}">이전</a>
                </c:when>
                <c:otherwise>
-               <a href="${pageContext.request.contextPath}/getFreeBoardByPage?currentPage=${currentPage-1}&searchFreeBoardTitle=${searchFreeBoardTitle}">이전</a>
+               <a href="${pageContext.request.contextPath}/getInquiryByMemberId?currentPage=${currentPage-1}&searchInquiryTitle=${searchInquiryTitle}">이전</a>
                </c:otherwise>
                </c:choose>
        			</c:if>
@@ -155,10 +143,10 @@
                 <c:if test="${currentPage  < lastPage}">
                 <c:choose>
                 <c:when test="${searchInquiryTitle eq null}">
-               <a  href="${pageContext.request.contextPath}/getFreeBoardByPage?currentPage=${currentPage+1}">다음</a>
+               <a  href="${pageContext.request.contextPath}/getInquiryByMemberId?currentPage=${currentPage+1}">다음</a>
                </c:when>
                <c:otherwise>
-                  <a href="${pageContext.request.contextPath}/getFreeBoardByPage?currentPage=${currentPage+1}&searchFreeBoardTitle=${searchFreeBoardTitle}">다음</a>
+                  <a href="${pageContext.request.contextPath}/getInquiryByMemberId?currentPage=${currentPage+1}&searchInquiryTitle=${searchInquiryTitle}">다음</a>
                </c:otherwise>
                </c:choose>
       		  </c:if>

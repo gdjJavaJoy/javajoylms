@@ -80,17 +80,19 @@
 											<th class="px-4 py-3">작성자ID</th>
 											<th class="px-4 py-3">작성자</th>
 											<th class="px-4 py-3">제목</th>
+											<th class="px-4 py-3">답변</th>
 											<th class="px-4 py-3">작성일</th>
 										</tr>
 									</thead>
 									<!-- 글번호 1부터 매기는 부분  --> 
-									<c:forEach var="l" items="${list}" varStatus="i">
 										<tbody
 											class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+											<c:set var="num" value="${totalCount-((currentPage-1)*rowPerPage)}"></c:set>
+											<c:forEach var="l" items="${list}">
 											<c:choose>
 												<c:when test="${l.privateNo eq 3}">
 												<c:forEach var="rec" items="${receiverList}">
-												<c:if test="${level eq 1 || (rec.receiver eq loginUser && rec.boardNo == l.boardNo)}">
+												<c:if test="${l.memberId eq loginUser || level eq 1 || (rec.receiver eq loginUser && rec.boardNo == l.boardNo)}">
 													<tr onClick="location.href='${pageContext.request.contextPath}/getInquiryOne?boardNo=${l.boardNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
 												</c:if>
 													</c:forEach>
@@ -99,7 +101,7 @@
 													<tr onClick="location.href='${pageContext.request.contextPath}/getInquiryOne?boardNo=${l.boardNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
 												</c:otherwise>
 											</c:choose>
-													<td class="px-4 py-3 text-sm">${(totalCount - (currentPage-1)*rowPerPage) - i.index}</td>
+													<td class="px-4 py-3 text-sm">${num}</td>
 													<td class="px-4 py-3">
 														<div class="flex items-center text-sm">
 															<!-- Avatar with inset shadow -->
@@ -131,10 +133,21 @@
 														<td class="px-4 py-3 text-sm">${l.boardTitle}</td>
 														</c:otherwise>
 													</c:choose>
+													<td class="px-4 py-3 text-sm">
+													<c:choose>
+													<c:when test="${l.cnt > 0}">
+													답변완료
+													</c:when>
+													<c:otherwise>
+													답변중
+													</c:otherwise>
+													</c:choose>
+													</td>
 													<td class="px-4 py-3 text-sm">${l.createDate}</td>
 												</tr>
+												<c:set var="num" value="${num-1}"></c:set>
+												</c:forEach>
 										</tbody>
-									</c:forEach>
 								</table>
 						</div>
 					</div>

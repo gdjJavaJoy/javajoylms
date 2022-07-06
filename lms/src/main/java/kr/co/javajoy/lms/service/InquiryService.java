@@ -267,6 +267,30 @@ public class InquiryService {
 		
 		return row; 
 	}
-	
+	public Map<String,Object> getInquiryByMemberId(int currentPage, int rowPerPage, String searchInquiryTitle, String memberId) {
+		log.debug(CF.PSG+"InquiryService.sessionId : " + memberId + CF.RESET);
+		
+		int beginRow = (currentPage-1)*rowPerPage;
+		log.debug(CF.PSG+"InquiryService.getInquiryByMemberId.beginRow :"+beginRow+CF.RESET);
+		log.debug(CF.PSG+"InquiryService.getInquiryByMemberId.rowPerPage :"+rowPerPage+CF.RESET);
+		log.debug(CF.PSG+"InquiryService.getInquiryByMemberId.searchInquiryTitle :"+searchInquiryTitle+CF.RESET);
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("beginRow", beginRow);
+		map.put("rowPerPage", rowPerPage);
+		map.put("searchInquiryTitle", searchInquiryTitle);
+		map.put("memberId", memberId);
+		List<Map<String,Object>> list = inquiryMapper.selectInquiryByMemberId(map);
+		
+		int totalCount = inquiryMapper.selectInquiryTotalCountByMemberId(map);
+		int lastPage =  (int)(Math.ceil((double)totalCount / (double)rowPerPage));
+		log.debug(CF.PSG+"InquiryService.getInquiryByMemberId totalCount: " +totalCount+ CF.RESET);
+		log.debug(CF.PSG+"InquiryService.getInquiryByMemberId lastPage: " +lastPage+ CF.RESET);
+		Map<String,Object> returnMap = new HashMap<>();
+		returnMap.put("list", list);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("totalCount", totalCount);
+		
+		return returnMap;
+	}
 
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.ibatis.javassist.runtime.Cflow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -212,5 +213,32 @@ public int removeFreeBoardfileByBoardFileNo(int boardFileNo,String path) {
 		row = boardMapper.deleteBoardfile(boardFileNo);
 		
 		return row; 
+	}
+public Map<String,Object> getFreeBoardByMemberId (int currentPage, int rowPerPage, String searchFreeBoardTitle, String memberId) {
+		log.debug(CF.PSG+"FreeBoardSerivce.sessionId : " + memberId+CF.RESET);
+		//page 출력  
+		int beginRow = (currentPage-1)*rowPerPage;
+		// 디버깅 
+		log.debug(CF.PSG+"FreeBoardService.getFreeBoardByMemberId.beginRow :" + beginRow + CF.RESET);
+		log.debug(CF.PSG+"FreeBoardService.getFreeBoardByMemberId.rowPerPage :" + rowPerPage + CF.RESET);
+		log.debug(CF.PSG+"FreeBoardService.getFreeBoardByMemberId.searchFreeBoardTitle :" + searchFreeBoardTitle + CF.RESET);
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("beginRow",beginRow);
+		map.put("rowPerPage", rowPerPage);
+		map.put("searchFreeBoardTitle", searchFreeBoardTitle);
+		map.put("memberId", memberId);
+		List<Map<String,Object>> list = freeBoardMapper.selectFreeBoardByMemberId(map);
+		// 게시물 총 갯수 구하기 
+		int totalCount = freeBoardMapper.selectFreeBoardTotalCountByMemberId(map);
+		int lastPage =  (int)(Math.ceil((double)totalCount / (double)rowPerPage));
+		log.debug(CF.PSG+"FreeBoardService.getFreeBoardByMemberId totalCount: " +totalCount+ CF.RESET);
+		log.debug(CF.PSG+"FreeBoardService.getFreeBoardByMemberId totalCount: " +lastPage+ CF.RESET);
+		Map<String,Object> returnMap = new HashMap<>();
+		returnMap.put("list", list);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("totalCount", totalCount);
+
+		
+		return returnMap;
 	}
 }

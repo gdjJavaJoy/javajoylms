@@ -36,4 +36,8 @@ public interface InquiryMapper {
 	
 	List<Receiver> receiverList();
 	
+	List<Map<String,Object>> selectInquiryByMemberId (Map<String,Object> map); 
+	
+	int selectInquiryTotalCountByMemberId(Map<String,Object> map);
+	
 }
