@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.mapper.SubjectDataMapper;
+import kr.co.javajoy.lms.mapper.SubjectReportMapper;
 import kr.co.javajoy.lms.vo.SubjectBoard;
 import kr.co.javajoy.lms.vo.SubjectBoardInsertForm;
 import kr.co.javajoy.lms.vo.SubjectData;
@@ -23,7 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Transactional
 public class SubjectDataService {
-	@Autowired SubjectDataMapper subjectdataMapper;
+	@Autowired SubjectDataMapper subjectDataMapper;
+	@Autowired SubjectReportMapper subjectReportMapper;
 
 	// 강좌자료 리스트 출력
 	public Map<String, Object> getSubjectDataListByPage(int currentPage, int rowPerPage, int subjectNo, String searchName) {
@@ -41,8 +43,8 @@ public class SubjectDataService {
 		map.put("subjectNo", subjectNo);
 		map.put("searchName", searchName);
 		
-		List<Map<String, Object>> list = subjectdataMapper.selectSubjectDataListByPage(map);
-		int totalCount = subjectdataMapper.selectTotalCount(searchName);
+		List<Map<String, Object>> list = subjectDataMapper.selectSubjectDataListByPage(map);
+		int totalCount = subjectDataMapper.selectTotalCount(searchName);
 		int lastPage = (int)(Math.ceil((double)totalCount / (double)rowPerPage));
 		
 		// 디버깅
@@ -67,7 +69,7 @@ public class SubjectDataService {
 		
 		log.debug(CF.YHJ + "SubjectDataService.addSubjectData.subjectBoard : " + subjectBoard + CF.RESET); // 디버깅
 		
-		subjectdataMapper.insertSubjectBoard(subjectBoard);
+		subjectDataMapper.insertSubjectBoard(subjectBoard);
 		
 		SubjectData subjectData = new SubjectData();
 		subjectData.setSubjectDataNo(subjectBoard.getSubjectBoardNo());
@@ -77,7 +79,7 @@ public class SubjectDataService {
 		
 		log.debug(CF.YHJ + "SubjectDataService.addSubjectData.subjectData : " + subjectData + CF.RESET); // 디버깅
 		
-		subjectdataMapper.insertSubjectData(subjectData);
+		subjectDataMapper.insertSubjectData(subjectData);
 		
 		if (subjectBoardInsertForm.getSubjectBoardFileList() != null && subjectBoardInsertForm.getSubjectBoardFileList().get(0).getSize() > 0) { // 파일을 첨부했을 때 
 			log.debug(CF.YHJ +"SubjectDataService.addSubjectData 파일 첨부됨 " + CF.RESET); // 디버깅
@@ -99,7 +101,7 @@ public class SubjectDataService {
 			
 			log.debug(CF.YHJ + "SubjectDataService.addSubjectData.subjectFile : " + subjectFile + CF.RESET); // 디버깅
 			
-			subjectdataMapper.insertSubjectFile(subjectFile);
+			subjectDataMapper.insertSubjectFile(subjectFile);
 			
 			try {
 				mf.transferTo(new File(path+fileName));
@@ -115,9 +117,9 @@ public class SubjectDataService {
 	public Map<String,Object> getSubjectDataOne(int subjectDataNo){
 		log.debug(CF.YHJ + "SubjectDataService.getSubjectDataOne.subjectDataNo : " + subjectDataNo + CF.RESET); // 디버깅
 		
-		Map<String,Object> dataMap = subjectdataMapper.selectSubjectDataOne(subjectDataNo);
-		List<SubjectFile> subjectDataFile = subjectdataMapper.selectSubjectDataFile(subjectDataNo);
-		int fileCount = subjectdataMapper.selectDataFileCount(subjectDataNo);
+		Map<String,Object> dataMap = subjectDataMapper.selectSubjectDataOne(subjectDataNo);
+		List<SubjectFile> subjectDataFile = subjectDataMapper.selectSubjectDataFile(subjectDataNo);
+		int fileCount = subjectDataMapper.selectDataFileCount(subjectDataNo);
 		
 		// 디버깅
 		log.debug(CF.YHJ + "SubjectDataService.getSubjectDataOne.dataMap : " + dataMap + CF.RESET); 
@@ -130,6 +132,92 @@ public class SubjectDataService {
 		returnMap.put("fileCount", fileCount);
 		
 		return returnMap;
+	}
+	
+	// 강좌좌료One 삭제
+	public void removeSubjectDataOne(int subjectDataNo, String path) {
+		// 디버깅
+		log.debug(CF.YHJ + "SubjectDataService.removeSubjectDataOne.subjectDataNo : " + subjectDataNo + CF.RESET);
+		log.debug(CF.YHJ + "SubjectDataService.removeSubjectDataOne.path : " + path + CF.RESET);
+		
+		List<SubjectFile> subjectDataFileList = subjectDataMapper.selectSubjectDataFile(subjectDataNo);
+		log.debug(CF.PBJ + "SubjectDataService.removeSubjectDataOne.subjectDataFileList : " + subjectDataFileList); // 디버깅
+		
+		for(int i = 0; i < subjectDataFileList.size(); i++) {
+			File f = new File(path + subjectDataFileList.get(i).getSubjectFileName());
+			if(f.exists()) {
+				f.delete();
+			}
+		}
+		
+		subjectDataMapper.deleteSubjectDataFile(subjectDataNo);
+		subjectDataMapper.deleteSubjectDataOne(subjectDataNo);
+		subjectReportMapper.deleteSubjectBoardBySubjectBoardNo(subjectDataNo);
+		
+	}
+	
+	// 강의자료 수정
+	public void modifySubjectDataOne(SubjectBoardInsertForm subjectBoardInsertForm, String path) {
+		// 디버깅
+		log.debug(CF.YHJ + "SubjectDataService.modifySubjectDataOne.subjectBoardInsertForm : " + subjectBoardInsertForm + CF.RESET);
+		log.debug(CF.YHJ + "SubjectDataService.modifySubjectDataOne.path : " + path + CF.RESET);
+		
+		SubjectData subjectData = new SubjectData();
+		subjectData.setSubjectDataNo(subjectBoardInsertForm.getSubjectBoardNo());
+		subjectData.setSubjectDataTitle(subjectBoardInsertForm.getSubjectBoardTitle());
+		subjectData.setSubjectDataContent(subjectBoardInsertForm.getSubjectBoardContent());
+		
+		log.debug(CF.YHJ + "SubjectDataService.modifySubjectDataOne.subjectData : " + subjectData + CF.RESET);
+		
+		subjectDataMapper.updateSubjectOne(subjectData);
+		
+		if (subjectBoardInsertForm.getSubjectBoardFileList() != null && subjectBoardInsertForm.getSubjectBoardFileList().get(0).getSize() > 0) {
+			log.debug(CF.YHJ + "SubjectDataService.modifySubjectDataOne : 첨부된 파일이 있습니다.");
+			for (MultipartFile mf : subjectBoardInsertForm.getSubjectBoardFileList()) {
+				String originName = mf.getOriginalFilename();
+				String ext = originName.substring(originName.lastIndexOf(".")); // originName에서 마지막 .문자열 위치
+				String filename = UUID.randomUUID().toString(); // 파일을 저장할 때 사용할 증븍되지않는 새로운 이름 (UUID API사용)
+				filename = filename + ext;
+				
+				// 디버깅
+				log.debug(CF.YHJ + "SubjectDataService.modifySubjectDataOne.originName : " + originName);
+				log.debug(CF.YHJ + "SubjectDataService.modifySubjectDataOne.filename : " + filename);
+				
+				SubjectFile subjectFile = new SubjectFile();
+				subjectFile.setSubjectFileBoardNo(subjectBoardInsertForm.getSubjectBoardNo());
+				subjectFile.setSubjectFileName(filename);
+				subjectFile.setSubjectFileOriginalName(mf.getOriginalFilename());
+				subjectFile.setSubjectFileType(mf.getContentType());
+				subjectFile.setSubjectFileSize(mf.getSize());
+				
+				log.debug(CF.YHJ + "SubjectDataService.modifySubjectDataOne.SubjectFile : " + subjectFile); // 디버깅
+				
+				subjectDataMapper.insertSubjectFile(subjectFile);
+				try {
+					mf.transferTo(new File(path + filename));
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new RuntimeException();
+				}
+			}
+		}
+		
+	}
+	
+	public void removeSubjectDataFileOne(int subjectFileNo, String path) {
+		log.debug(CF.YHJ + "SubjectDataService.removeSubjectDataFileOne.subjectFileNo : " + subjectFileNo + CF.RESET);
+		log.debug(CF.YHJ + "SubjectDataService.removeSubjectDataFileOne.path : " + path + CF.RESET);
+		
+		List<SubjectFile> subjectDataFileList = subjectDataMapper.selectSubjectDataFile(subjectFileNo);
+		log.debug(CF.PBJ + "SubjectDataService.removeSubjectDataFileOne.subjectDataFileList : " + subjectDataFileList); // 디버깅
+		
+		for(int i = 0; i < subjectDataFileList.size(); i++) {
+			File f = new File(path + subjectDataFileList.get(i).getSubjectFileName());
+			if(f.exists()) {
+				f.delete();
+			}
+		}
+		subjectDataMapper.deleteSubjectDataFileOne(subjectFileNo);
 	}
 	
 }

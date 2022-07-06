@@ -100,9 +100,9 @@
 							</table>
 							<div class="px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
 								<c:if test="${level eq 1 || loginUser eq dataMap.memberId }">
-									<a href="${pageContext.request.contextPath}/modifySubjectData?subjectDataNo=${dataMap.subjectDataNo}">과제 수정</a>
+									<a href="${pageContext.request.contextPath}/modifySubjectData?subjectDataNo=${dataMap.subjectDataNo}&subjectNo=${subjectNo}">자료 수정</a>
 									<span>&nbsp | &nbsp</span>
-									<a href="${pageContext.request.contextPath}/removeSubjectData?subjectDataNo=${dataMap.subjectDataNo}&subjectNo=${subjectNo}">과제 삭제</a>
+									<a href="${pageContext.request.contextPath}/removeSubjectData?subjectDataNo=${dataMap.subjectDataNo}&subjectNo=${subjectNo}">자료 삭제</a>
 								</c:if>
 							</div>
 						</div>

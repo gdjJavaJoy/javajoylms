@@ -27,4 +27,12 @@ public interface SubjectDataMapper {
 	List<SubjectFile> selectSubjectDataFile(int subjectDataNo);
 	// file 개수 구하기
 	int selectDataFileCount(int subjectDataNo);
+	// file 전체 삭제
+	void deleteSubjectDataFile(int subjectDataNo);
+	// subjectDataOne삭제
+	void deleteSubjectDataOne(int subjectDataNo);
+	// subjectDataOne 수정
+	void updateSubjectOne(SubjectData subjectData);
+	// subjectDataFileOne 삭제
+	void deleteSubjectDataFileOne(int subjectFileNo);
 }

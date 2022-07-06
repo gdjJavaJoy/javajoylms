@@ -132,4 +132,35 @@
 	FROM subject_file
 	WHERE subject_file_board_no = #{subjectDataNo}
 	</select>
+	
+	<delete id="deleteSubjectDataFile"
+			parameterType="int">
+		DELETE FROM subject_file
+		WHERE subject_file_board_no = #{subjectDataNo}
+	</delete>
+	
+	<delete id="deleteSubjectDataOne"
+			parameterType="int">
+		DELETE FROM subject_data
+		WHERE subject_data_no = #{subjectDataNo}
+	</delete>
+	
+	<update id="updateSubjectOne"
+			parameterType="kr.co.javajoy.lms.vo.SubjectData">
+		UPDATE subject_data 
+		SET 
+			subject_data_title = #{subjectDataTitle}
+			,subject_data_content = #{subjectDataContent}
+			,update_date = NOW()
+		WHERE subject_data_no = #{subjectDataNo}
+	</update>
+	
+	<delete id="deleteSubjectDataFileOne"
+			parameterType="kr.co.javajoy.lms.vo.SubjectFile">
+		DELETE FROM subject_file
+		WHERE subject_file_no = #{subjectFileNo}
+	</delete>
+	
+	
+	
 </mapper>

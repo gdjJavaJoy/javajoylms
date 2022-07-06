@@ -91,4 +91,5 @@
 			,update_date = NOW()
 		WHERE board_no = #{boardNo}
 	</update>
+	
 </mapper>

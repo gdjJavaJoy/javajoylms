@@ -1,5 +1,6 @@
 package kr.co.javajoy.lms.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.service.SubjectDataService;
@@ -20,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class SubjectDataController {
-	@Autowired SubjectDataService subjectdataService;
+	@Autowired SubjectDataService subjectDataService;
 	
 		// 강좌자료 리스트
 		@GetMapping("/getSubjectDataListByPage")
@@ -35,7 +37,7 @@ public class SubjectDataController {
 		log.debug(CF.YHJ + "SubjectDataController.getSubjectDataListByPage.subjectNo : " + subjectNo + CF.RESET);
 		log.debug(CF.YHJ + "SubjectDataController.getSubjectDataListByPage.searchName : " + searchName + CF.RESET);
 			
-		Map<String, Object> map = subjectdataService.getSubjectDataListByPage(currentPage, rowPerPage, subjectNo,searchName);
+		Map<String, Object> map = subjectDataService.getSubjectDataListByPage(currentPage, rowPerPage, subjectNo,searchName);
 		log.debug(CF.YHJ + "SubjectDataController.getSubjectDataListByPage.map : " + map + CF.RESET); // 디버깅
 		log.debug(CF.YHJ + "SubjectDataController.getSubjectDataListByPage.list : " + map.get("list") + CF.RESET); // 디버깅
 		log.debug(CF.YHJ + "SubjectDataController.getSubjectDataListByPage.lastPage : " + map.get("lastPage") + CF.RESET); // 디버깅
@@ -70,7 +72,7 @@ public class SubjectDataController {
 			log.debug(CF.YHJ + "SubjectDataController.addSubjectData.subejctBoardInsertForm : " + subjectBoardInsertForm + CF.RESET); 
 			log.debug(CF.YHJ + "SubjectDataController.addSubjectData.post() path : "+ path + CF.RESET);
 			
-			subjectdataService.addSubjectData(subjectBoardInsertForm, path);
+			subjectDataService.addSubjectData(subjectBoardInsertForm, path);
 			
 			return "redirect:getSubjectDataListByPage?subjectNo="+ subjectBoardInsertForm.getSubjectNo();
 		}
@@ -84,7 +86,7 @@ public class SubjectDataController {
 			log.debug(CF.YHJ + "SubjectDataController.getSubjectDataOne.subjectDataNo : " + subjectDataNo + CF.RESET);
 			log.debug(CF.YHJ + "SubjectDataController.getSubjectDataOne.subjectNo : " + subjectNo + CF.RESET); 
 			
-			Map<String,Object> map = subjectdataService.getSubjectDataOne(subjectDataNo);
+			Map<String,Object> map = subjectDataService.getSubjectDataOne(subjectDataNo);
 			
 			// 디버깅
 			log.debug(CF.YHJ + "SubjectDataController.getSubjectDataOne.map : " + map + CF.RESET); 
@@ -98,6 +100,91 @@ public class SubjectDataController {
 			model.addAttribute("subjectNo",subjectNo);
 			
 			return "/subject/getSubjectDataOne"; 
+		}
+		
+		// 강좌자료 삭제
+		@GetMapping("removeSubjectData")
+		public String removeSubjectData(HttpServletRequest request
+										,@RequestParam(value="subjectDataNo") int subjectDataNo
+										,@RequestParam(value="subjectNo") int subjectNo) {
+			String path = request.getServletContext().getRealPath("/file/subjectDataFile/");
+			// 디버깅
+			log.debug(CF.YHJ + "SubjectDataController.removeSubjectData.subjectDataNo : " + subjectDataNo + CF.RESET);
+			log.debug(CF.YHJ + "SubjectDataController.removeSubjectData.subjectNo : " + subjectNo + CF.RESET);
+			log.debug(CF.YHJ + "SubjectDataController.removeSubjectData.path : " + path + CF.RESET);
+			
+			// 파일삭제 -> One삭제 -> subjectBoard삭제
+			subjectDataService.removeSubjectDataOne(subjectDataNo,path);
+			log.debug(CF.YHJ + "SubjectDataController.removeSubjectData 삭제 성공!" + CF.RESET);
+			
+			return "redirect:getSubjectDataListByPage?subjectNo="+ subjectNo;
+		}
+		
+		@GetMapping("modifySubjectData")
+		public String modifySubjectData(@RequestParam(value="subjectDataNo") int subjectDataNo
+										,@RequestParam(value="subjectNo") int subjectNo
+										,Model model) {
+			// 디버깅
+			log.debug(CF.YHJ + "SubjectDataController.modifySubjectData.subjectDataNo : " + subjectDataNo + CF.RESET); 
+			log.debug(CF.YHJ + "SubjectDataController.modifySubjectData.subjectNo : " + subjectNo + CF.RESET); 
+			
+			Map<String,Object> map = subjectDataService.getSubjectDataOne(subjectDataNo);
+			
+			// 디버깅
+			log.debug(CF.YHJ + "SubjectDataController.modifySubjectData.map : " + map + CF.RESET); 
+			log.debug(CF.YHJ + "SubjectDataController.modifySubjectData.dataMap : " + map.get("dataMap") + CF.RESET);
+			log.debug(CF.YHJ + "SubjectDataController.modifySubjectData.subjectFile : " + map.get("subjectFile") + CF.RESET);
+			log.debug(CF.YHJ + "SubjectDataController.modifySubjectData.fileCount : " + map.get("fileCount") + CF.RESET);
+			
+			model.addAttribute("dataMap",map.get("dataMap"));
+			model.addAttribute("subjectDataFile",map.get("subjectDataFile"));
+			model.addAttribute("fileCount",map.get("fileCount"));
+			model.addAttribute("subjectNo",subjectNo);
+			
+			
+			return "/subject/modifySubjectData";
+		}
+		
+		@PostMapping("modifySubjectData")
+		public String modifySubjectData(SubjectBoardInsertForm subjectBoardInsertForm
+										,HttpServletRequest request
+										,Model model) {
+			String path = request.getServletContext().getRealPath("/file/subjectDataFile/");
+			
+			// 디버깅
+			log.debug(CF.YHJ + "SubjectDataController.modifySubjectData.path : " + path + CF.RESET);
+			log.debug(CF.YHJ + "SubjectDataController.modifySubjectData.subjectBoardInsertForm : " + subjectBoardInsertForm + CF.RESET);
+			
+			List<MultipartFile> subjectDataFileList = subjectBoardInsertForm.getSubjectBoardFileList();
+			log.debug(CF.PBJ + "SubjectDataController.modifySubjectData.subjectDataFileList : " + subjectDataFileList);
+			// 파일이 한개 이상 업로드 되면
+			if (subjectDataFileList != null && subjectDataFileList.get(0).getSize() > 0) {
+				for (MultipartFile mf : subjectDataFileList) {
+					log.debug(CF.PBJ + "SubjectDataController.modifySubjectData.OriginalFilename : " + mf.getOriginalFilename());
+				}
+			}
+
+			subjectDataService.modifySubjectDataOne(subjectBoardInsertForm, path);
+						
+			return "redirect:getSubjectDataListByPage?subjectNo="+ subjectBoardInsertForm.getSubjectNo();
+		}
+		
+		// 파일 하나만 삭제
+		@GetMapping("removeSubjectDataFileOne")
+		public String removeSubjectDataFileOne(HttpServletRequest request
+												,int subjectFileNo 
+												,int subjectBoardNo
+												,int subjectNo) {
+			String path = request.getServletContext().getRealPath("/file/subjectDataFile/");
+			
+			// 디버깅
+			log.debug(CF.YHJ + "SubjectDataController.modifySubjectData.subjectNo : " + subjectFileNo + CF.RESET);
+			log.debug(CF.YHJ + "SubjectDataController.modifySubjectData.subjectFileBoardNo : " + subjectBoardNo + CF.RESET);
+			log.debug(CF.YHJ + "SubjectDataController.modifySubjectData.path : " + path + CF.RESET);
+			
+			subjectDataService.removeSubjectDataFileOne(subjectFileNo,path);
+			
+			return "redirect:modifySubjectData?subjectDataNo="+ subjectBoardNo +"&subjectNo=" + subjectNo;
 		}
 		
 		
