@@ -35,7 +35,6 @@
 	<!-- Desktop HeaderNav -->
       <div class="flex flex-col flex-1 w-full">
 			<div id="adminHeaderNav"></div>
-            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의 Subject List</h2>
         <main class="h-full pb-16 overflow-y-auto">
           <div class="container grid px-8 mx-auto">
             <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Student List</h2>
@@ -82,7 +81,7 @@
 							<td><form method="get" name="form">
 								<input type="hidden" value="${s.memberId}" name="memberId">
 								<input type="submit" value="수정" onclick="javascript: form.action='${pageContext.request.contextPath}/modifyStudentOne'"/>
-								<input type="submit" value="삭제" onclick="javascript: form.action='${pageContext.request.contextPath}/deleteStudent?memberId=${s.teacherName}'"/>
+								<input type="submit" value="삭제" onclick="javascript: form.action='${pageContext.request.contextPath}/deleteStudent'"/>
 								</form>
 							</td>
 						</tr>
