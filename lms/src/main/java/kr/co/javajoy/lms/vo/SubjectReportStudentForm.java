@@ -8,7 +8,6 @@ import lombok.Data;
 
 @Data
 public class SubjectReportStudentForm {
-
 	private int subjectReportStudentNo;
 	private int subjectReportNo;
 	private String memberId;

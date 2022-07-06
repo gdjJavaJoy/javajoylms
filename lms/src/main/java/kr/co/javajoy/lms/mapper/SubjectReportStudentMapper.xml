@@ -29,12 +29,32 @@
 			,s.create_date createDate
 			,s.update_date updateDate
 		FROM subject_report_student AS s 
-		LEFT JOIN subject_report AS r ON r.subject_report_no = s.subject_report_student_no
+		LEFT JOIN subject_report AS r ON r.subject_report_no = s.subject_report_no
 		WHERE r.subject_report_no = #{subjectReportNo}
 		<if test='sSubjectReportStudentTitle != null and !"".equals(sSubjectReportStudentTitle)'>
 			AND CONCAT('%', s.subject_report_student_title, '%') 
 			LIKE CONCAT('%', #{sSubjectReportStudentTitle}, '%')
 		</if>
+		ORDER BY s.create_date DESC
+		LIMIT #{startRow}, #{rowPerPage}
+	</select>
+	<!-- 학생 - 과제 게시판 글 리스트 출력 - 학생용 -->
+	<select id="selectSubjectReportStudentOnlyStudent"
+			parameterType="java.util.Map"
+			resultType="java.util.Map">
+		SELECT 
+			s.subject_report_student_no subjectReportStudentNo
+			,r.subject_report_no subjectReportNo
+			,s.member_id memberId
+			,s.subject_report_student_title subjectReportStudentTitle
+			,s.subject_report_student_content subjectReportStudentContent	
+			,s.score score
+			,s.status status
+			,s.create_date createDate
+			,s.update_date updateDate
+		FROM subject_report_student AS s 
+		LEFT JOIN subject_report AS r ON r.subject_report_no = s.subject_report_no
+		WHERE r.subject_report_no = #{subjectReportNo} AND s.member_id = #{memberId}
 		ORDER BY s.create_date DESC
 		LIMIT #{startRow}, #{rowPerPage}
 	</select>
@@ -90,12 +110,14 @@
 	<!-- 학생 - 과제 게시판 글 입력 -->
 	<insert id="insertSubjectReportStudent" 
 			parameterType="kr.co.javajoy.lms.vo.SubjectReportStudent">
+		<selectKey resultType="int" keyProperty="subjectReportStudentNo" order="AFTER">
+				select last_insert_id()
+		</selectKey>
 		INSERT INTO subject_report_student (
 			subject_report_no
 			,member_id
 			,subject_report_student_title
 			,subject_report_student_content
-			,subject_report_student_period
 			,score
 			,status
 			,create_date
@@ -103,9 +125,8 @@
 		) VALUES (
 			#{subjectReportNo}
 			,#{memberId}
-			,#{subjectReportTitle}
-			,#{subjectReportContent}
-			,#{subjectReportPeriod}
+			,#{subjectReportStudentTitle}
+			,#{subjectReportStudentContent}
 			,#{score}
 			,#{status}
 			,NOW()
@@ -115,7 +136,7 @@
 	<!-- 학생 - 과제 게시판 파일 입력 -->
 	<insert id="insertStudentFile"
 			parameterType="kr.co.javajoy.lms.vo.StudentFile">
-		INSERT INTO subject_file (
+		INSERT INTO student_file (
 			subject_report_student_no
 			,student_file_name
 			,student_file_original_name
@@ -148,26 +169,10 @@
 			,subject_report_student_content = #{subjectReportStudentContent}
 			,score = #{score}
 			,status = #{status}
-			update_date = NOW()
+			,update_date = NOW()
 		WHERE subject_report_student_no = #{subjectReportStudentNo}
 	</update>
-	
-	<!-- 학생 - 과제 게시판 파일 삭제 시, 파일 이름으로 된 리스트 출력 -->
-	<select id="selectStudentFileNameListByStudentFileNo"
-			parameterType="int"
-			resultType="String">
-		SELECT student_file_name studentFileName
-		FROM student_file
-		WHERE student_file_no = #{studentFileNo}
-	</select>
-	
-	<!-- 학생 - 과제 게시판 파일 부분 삭제 -->
-	<delete id="deleteStudentFile"
-			parameterType="int">
-		DELETE FROM student_file
-		WHERE student_file_no = #{studentFileNo}
-	</delete>
-	
+
 	<!-- 5) 학생 - 과제 게시판 삭제  -->
 
 	<!-- 학생 - 과제 게시판 파일 전체 삭제-->

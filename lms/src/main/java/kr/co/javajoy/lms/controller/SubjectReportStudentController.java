@@ -67,6 +67,40 @@ public class SubjectReportStudentController {
 		return "subject/getSubjectReportStudentListByPage";
 	}
 	
+	// 1-2) 과제 게시판 글 리스트 출력 + 페이징 <-학생용
+	@GetMapping("/getSubjectReportStudentOnlyStudent")
+	public String getSubjectReportStudentOnlyStudent(HttpSession session
+										   ,Model model
+										   ,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+										   ,@RequestParam(value="rowPerPage", defaultValue="10") int rowPerPage
+										   ,@RequestParam(value="subjectReportNo") int subjectReportNo) {
+		// session 처리
+		String memberId = (String)session.getAttribute("loginUser");
+		String level = (String)session.getAttribute("level");
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.sessionId : " + memberId);
+		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.level : " + level);
+		// 운영자 + 강사 / 학생 별로 보이는 페이지가 다름...
+		
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.currentPage" + currentPage);
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.rowPerPage" + rowPerPage);
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectNo" + subjectReportNo);
+		// 뷰를 호출 시, 모델계층으로 부터 반환된 모델값을 뷰로 보냄
+		Map<String, Object> map = subjectReportStudentService.getSubjectReportStudentOnlyStudent(currentPage, rowPerPage, subjectReportNo, memberId);
+		model.addAttribute("studentList", map.get("studentList"));
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("subjectReportNo", map.get("subjectReportNo"));
+		model.addAttribute("memberId", map.get("memberId"));
+		
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.list" + map.get("studentList"));
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.currentPage" + currentPage);
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.lastPage" + map.get("lastPage"));
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectReportNo" + map.get("subjectReportNo"));
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.memberId" + map.get("memberId"));
+		
+		return "subject/getSubjectReportStudentOnlyStudent";
+	}
+	
 	/*
 	// 1-2) 과제 게시판 리스트에서 과목번호 넘겨주기
 	@PostMapping("/getSubjectReportListByPage")
@@ -83,7 +117,7 @@ public class SubjectReportStudentController {
 	
 	// 2-1) 과제 게시판 글 입력 + 파일 입력 Form 받기
 	@GetMapping("/addSubjectReportStudent")
-	public String addSubjectReport(HttpSession session
+	public String addSubjectReportStudent(HttpSession session
 								,Model model
 								,@RequestParam(name = "subjectReportNo") int subjectReportNo) {
 		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport(Form).subjectNo : " + subjectReportNo);
@@ -94,10 +128,7 @@ public class SubjectReportStudentController {
 		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.sessionId : " + memberId);
 		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.level : " + level);
 		
-
-		// 학생만 과제 작성 가능 유효성?
-		
-		model.addAttribute("subjectNo", subjectReportNo);
+		model.addAttribute("subjectReportNo", subjectReportNo);
 		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport(Form).addAttribute.subjectNo : " + subjectReportNo);
 		
 		return "subject/addSubjectReportStudent";
@@ -105,7 +136,7 @@ public class SubjectReportStudentController {
 
 	// 2-2) 과제 게시판 글 입력 + 파일 입력 Action
 	@PostMapping("/addSubjectReportStudent")
-	public String addSubjectReport(Model model
+	public String addSubjectReportStudent(Model model
 								,HttpServletRequest request
 								,SubjectReportStudentForm subjectReportStudentForm 
 								,@RequestParam(name = "subjectReportNo") int subjectReportNo) {
@@ -127,7 +158,7 @@ public class SubjectReportStudentController {
 		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport(Action).addAttribute.subjectNo : " + subjectReportNo);
 		
 		subjectReportStudentService.addSubjectReportStudent(subjectReportStudentForm, path);
-		return "redirect:/getSubjectReportOne?subjectReportNo=" + subjectReportNo;
+		return "redirect:/getSubjectReportOne?subjectBoardNo=" + subjectReportNo;
 	}
 
 	// ------------------------ 3) 과제 게시판 글 상세보기 <SELECT ONE>------------------------ 
@@ -173,7 +204,7 @@ public class SubjectReportStudentController {
 	public String modifySubjectReportStudent(HttpSession session
 									,HttpServletRequest request
 									,Model model
-									,@RequestParam(name="subjectReportNo") int subjectReportStudentNo) {
+									,@RequestParam(name="subjectReportStudentNo") int subjectReportStudentNo) {
 		// 게시판 번호
 		log.debug(CF.PBJ + "SubjectReportController.modifySubjectReport(Form).subjectBoardNo : " + subjectReportStudentNo);
 		// session 처리 : 운영자와 강사만 글을 수정 할 수 있다.
@@ -238,7 +269,7 @@ public class SubjectReportStudentController {
 		log.debug(CF.PBJ + "SubjectReportController.modifySubjectReport(Action).subjectBoardNo : " + subjectReportStudentNo);
 		
 		subjectReportStudentService.modifySubjectReportStudent(subjectReportStudentForm, path);
-		return "redirect:/getSubjectReportOne?subjectBoardNo=" + subjectReportStudentNo;
+		return "redirect:/getSubjectReportStudentOne?subjectReportStudentNo=" + subjectReportStudentNo;
 	}
 	
 	// ------------------------ 5) 과제 게시판 글 삭제 <DELETE>------------------------ 

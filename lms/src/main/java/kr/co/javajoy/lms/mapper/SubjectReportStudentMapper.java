@@ -16,6 +16,8 @@ public interface SubjectReportStudentMapper {
 	int selectTotalCount();
 	// 학생 - 과제 게시판 글 리스트 출력
 	List<Map<String, Object>> selectSubjectReportStudentListByPage(Map<String, Object> map);
+	// 학생 - 과제 게시판 글 리스트 출력 - 학생용
+	List<Map<String, Object>> selectSubjectReportStudentOnlyStudent(Map<String, Object> map);
 
 	// 2) 학생 - 과제 게시판 글 상세보기 + 파일 이름 리스트 출력 + 댓글 리스트 출력
 	

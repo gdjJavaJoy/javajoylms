@@ -159,9 +159,16 @@
 	                <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
 	                <c:if test="${level eq 1 || level eq 2}">
 	              		<a href="${pageContext.request.contextPath}/modifySubjectReportStudent?subjectReportStudentNo=${subjectReportStudent.subjectReportStudentNo}">과제 채점</a>
-	              		<span>&nbsp | &nbsp</span>
-	                    <a href="${pageContext.request.contextPath}/removeSubjectReport?subjectReportStudentNo=${subjectReportStudent.subjectReportStudentNo}">과제 삭제</a> 
-	                </c:if>
+	              	</c:if>
+	              	<span>&nbsp | &nbsp</span>
+	              		<c:choose>
+			              	<c:when test="${status eq 2 && level eq 3}">
+			                  과제 삭제 불가(채점완료)  
+							</c:when>
+							<c:otherwise>
+								<a href="${pageContext.request.contextPath}/removeSubjectReportStudent?subjectReportStudentNo=${subjectReportStudent.subjectReportStudentNo}">과제 삭제</a> 
+		              		</c:otherwise>
+	              		 </c:choose>
 	                </span>
               	  </div>
               	 </c:forEach>

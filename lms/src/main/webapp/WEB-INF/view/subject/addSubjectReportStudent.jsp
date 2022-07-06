@@ -45,20 +45,18 @@
 			});
 			
 			$('#addSubjectReportStudent').click(function(){
-				if($('#subjectBoardNo').val() == '') {
+				if($('#subjectReportNo').val() == '') {
 					Swal.fire('test');
-			    } else if($('#subjectNo').val() == '') {
+			    } else if($('#score').val() == '') {
 					Swal.fire('test');
 			    } else if($('#memberId').val() == '') {
 			    	Swal.fire('test');
-				} else if($('#subjectReportTitle').val() == '') {
+				} else if($('#subjectReportStudentTitle').val() == '') {
 					Swal.fire('과제 게시판 제목을 설정하세오!');	
-				}  else if($('#subjectReportPeriod').val() == '') {
-					Swal.fire('과제 기한을 설정하세요!');
-				}  else if($('#subjectReportContent').val() == '') {
+				} else if($('#subjectReportStudentContent').val() == '') {
 					Swal.fire('과제 게시판 내용을 입력하세요!');
 				} else {
-					$('.subjectReportFileList').each(function(){
+					$('.studentFileList').each(function(){
 						if($(this).val() == '') {
 							flag = false;
 							return;
@@ -135,14 +133,14 @@
             <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의 과제 제출</h2>
             <!-- CTA -->
             <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
-              href="${pageContext.request.contextPath}/getSubjectReportOne?subjectReportNo=${subjectReportNo}">
+              href="${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${subjectReportNo}">
               <div class="flex items-center">
                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                 </svg>
                 <span>Subject Management Page</span>
               </div>
-              <span>과제 제출 &RightArrow;</span>
+              <span>과제 보기 &RightArrow;</span>
             </a>
        
             <!-- With avatar -->
@@ -155,8 +153,7 @@
               <div class="w-full overflow-x-auto">
              	<form id="addSubjectReportStudentForm" method="post" name="addSubjectReportStudentForm" action="${pageContext.request.contextPath}/addSubjectReportStudent" enctype="multipart/form-data">
                  <input type="hidden" id="subjectReportNo" name="subjectReportNo" class="form-control" value="${subjectReportNo}">   
-                 <input type="hidden" id="score" name="score" class="form-control" value="0">   
-                 <input type="hidden" id="status" name="status" class="form-control" value="1">              
+                 <input type="hidden" id="score" name="score" class="form-control" value="0">
                 	<table class="w-full whitespace-no-wrap">
 	                	<tr class="text-gray-700 dark:text-gray-400">
 	                      <td class="px-4 py-3">

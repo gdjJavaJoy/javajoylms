@@ -67,13 +67,56 @@ public class SubjectReportStudentService {
 
 		return returnMap;
 	}
+	
+	// 1-2) 과제 게시판 글 리스트 출력 - 학생용
+	public Map<String, Object> getSubjectReportStudentOnlyStudent(int currentPage, int rowPerPage, int subjectReportNo, String memberId) {
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.currentPage :" + currentPage);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.rowPerPage :" + rowPerPage);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.subjectReportNo :" + subjectReportNo);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.subjectReportNo :" + memberId);
+		// 페이징
+		int startRow = (currentPage - 1) * rowPerPage;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("startRow", startRow);
+		map.put("rowPerPage", rowPerPage);
+		map.put("subjectReportNo", subjectReportNo);
+		map.put("memberId", memberId);
+			
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.startRow" + startRow);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.rowPerPage" + rowPerPage);
+
+		// 1) 컨트롤러에서 넘오온 변수값 가공 후 맵퍼 호출
+		List<Map<String, Object>> studentList = subjectReportStudentMapper.selectSubjectReportStudentOnlyStudent(map);
+		// 2) 맵퍼에서 반환된 값을 가공 후, 컨트롤러에 변환
+		int totalCount = subjectReportStudentMapper.selectTotalCount(); // 과제 게시판 글 총 수
+		int lastPage = (int) (Math.ceil((double) totalCount / (double) rowPerPage));
+
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.list------------" + studentList);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.totalCount" + totalCount);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.lastPage" + lastPage);
+
+		// 리스트 결과값 해쉬 맵에 저장
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("studentList", studentList);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("subjectReportNo", subjectReportNo);
+		returnMap.put("memberId", memberId);
+			
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.returnMap.list.size()  :" + studentList.size());
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.returnMap.lastPage	:" + lastPage);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.returnMap.subjectNo	:" + subjectReportNo);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.returnMap.subjectNo	:" + memberId);
+
+		return returnMap;
+	}
+
 
 	// ------------------------ 2) 과제 게시판 글 입력 <INSERT> ------------------------ 
 	
 	// 2-1) 과제 게시판 글 입력 + 파일 입력
 	public void addSubjectReportStudent (SubjectReportStudentForm subjectReportStudentForm, String path) {
-		log.debug(CF.PBJ + "NoticeService.addNotice.path : " + path);
-		log.debug(CF.PBJ + "NoticeService.addNotice.subjectReportStudentForm : " + subjectReportStudentForm);
+		log.debug(CF.PBJ + "SubjectReportService.addSubjectReportStudent.path : " + path);
+		log.debug(CF.PBJ + "SubjectReportService.addSubjectReportStudent.subjectReportStudentForm : " + subjectReportStudentForm);
 		// SubjectReportMapper
 		SubjectReportStudent subjectReportStudent = new SubjectReportStudent();
 		subjectReportStudent.setSubjectReportNo(subjectReportStudentForm.getSubjectReportNo());
@@ -81,10 +124,11 @@ public class SubjectReportStudentService {
 		subjectReportStudent.setSubjectReportStudentTitle(subjectReportStudentForm.getSubjectReportStudentTitle());
 		subjectReportStudent.setSubjectReportStudentContent(subjectReportStudentForm.getSubjectReportStudentContent());
 		subjectReportStudent.setScore(subjectReportStudentForm.getScore());
-		subjectReportStudent.setScore(subjectReportStudentForm.getScore());
+		subjectReportStudent.setStatus("1");
 		// subjectReport.getSubjectBoardNo() --> 0
 		int row = subjectReportStudentMapper.insertSubjectReportStudent(subjectReportStudent);
 		log.debug(CF.PBJ + "SubjectReportService.addSubjectReport.row : " + row);
+		log.debug(CF.PBJ + "SubjectReportService.addSubjectReport.subjectReportStudent : " + subjectReportStudent);
 		// insert 성공시, 기본키 값이 출력됨
 	
 		if (subjectReportStudentForm.getStudentFileList() != null && subjectReportStudentForm.getStudentFileList().get(0).getSize() > 0 && row == 1) {
@@ -109,6 +153,7 @@ public class SubjectReportStudentService {
 				log.debug(CF.PBJ + "SubjectReportService.addSubjectReport.SubjectFile : " + studentFile);
 				// 데이터베이스에 인서트
 				subjectReportStudentMapper.insertStudentFile(studentFile);
+				log.debug(CF.PBJ + "SubjectReportService.addSubjectReport.SubjectFile : " + studentFile);
 				// try + catch
 				try {
 					mf.transferTo(new File(path + filename));
@@ -122,7 +167,7 @@ public class SubjectReportStudentService {
 
 	// ------------------------ 3) 과제 게시판 글 상세보기 <SELECT ONE>------------------------ 
 	
-	// 3-1) 과제 게시판 글 상세보기 + 파일 이름 리스트 출력 + 댓글 리스트 출력
+	// 3-1) 과제 게시판 글 상세보기 + 파일 이름 리스트 출력 + 댓글
 	public Map<String, Object> getSubjectReportStudentAndFileNameList (Map<String, Object> map) {
 		int subjectReportStudentNo = (int)map.get("subjectReportStudentNo");
 		
@@ -175,48 +220,17 @@ public class SubjectReportStudentService {
 		
 		// SubjectReportMapper
 		SubjectReportStudent subjectReportStudent = new SubjectReportStudent();
+		subjectReportStudent.setSubjectReportStudentNo(subjectReportStudentForm.getSubjectReportStudentNo());
 		subjectReportStudent.setSubjectReportNo(subjectReportStudentForm.getSubjectReportNo());
 		subjectReportStudent.setMemberId(subjectReportStudentForm.getMemberId());
 		subjectReportStudent.setSubjectReportStudentTitle(subjectReportStudentForm.getSubjectReportStudentTitle());
 		subjectReportStudent.setSubjectReportStudentContent(subjectReportStudentForm.getSubjectReportStudentContent());
 		subjectReportStudent.setScore(subjectReportStudentForm.getScore());
-		subjectReportStudent.setScore(subjectReportStudentForm.getScore());
+		subjectReportStudent.setStatus("2");
 		// subjectReport.getSubjectBoardNo() --> 0
-		int row = subjectReportStudentMapper.insertSubjectReportStudent(subjectReportStudent);
+		int row = subjectReportStudentMapper.updateSubjectReportStudent(subjectReportStudent);
 		log.debug(CF.PBJ + "SubjectReportService.addSubjectReport.row : " + row);
 		// insert 성공시, 기본키 값이 출력됨
-			
-		if (subjectReportStudentForm.getStudentFileList() != null && subjectReportStudentForm.getStudentFileList().get(0).getSize() > 0 && row == 1) {
-			log.debug(CF.PBJ + "SubjectReportService.addSubjectReport : 첨부된 파일이 있습니다.");
-			for (MultipartFile mf : subjectReportStudentForm.getStudentFileList()) {
-				StudentFile studentFile = new StudentFile();
-
-				String originName = mf.getOriginalFilename();
-				// originName에서 마지막 .문자열 위치
-				String ext = originName.substring(originName.lastIndexOf("."));
-				// 파일을 저장할 때 사용할 증븍되지않는 새로운 이름 (UUID API사용)
-				String filename = UUID.randomUUID().toString();
-				filename = filename + ext;
-				log.debug(CF.PBJ + "SubjectReportService.addSubjectReport.originName : " + originName);
-				log.debug(CF.PBJ + "SubjectReportService.addSubjectReport.filename : " + filename);
-				// subject_file 데이터 가공
-				studentFile.setSubjectReportStudentNo(subjectReportStudent.getSubjectReportStudentNo());
-				studentFile.setStudentFileName(filename);
-				studentFile.setStudentFileOriginalName(mf.getOriginalFilename());
-				studentFile.setStudentFileType(mf.getContentType());
-				studentFile.setStudentFileSize(mf.getSize());
-				log.debug(CF.PBJ + "SubjectReportService.addSubjectReport.SubjectFile : " + studentFile);
-				// 데이터베이스에 인서트
-				subjectReportStudentMapper.insertStudentFile(studentFile);
-				// try + catch
-				try {
-					mf.transferTo(new File(path + filename));
-				} catch (Exception e) {
-					e.printStackTrace();
-					throw new RuntimeException();
-				}
-			}
-		}
 	}
 	
 	// 4-3) 과제 게시판 수정 할 때, 선택 파일 삭제 처리

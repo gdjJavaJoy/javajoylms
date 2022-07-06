@@ -7,7 +7,6 @@ public class SubjectReportStudent {
 	private int subjectReportStudentNo;
 	private int subjectReportNo;
 	private String memberId;
-	private String studentName;
 	private String subjectReportStudentTitle;
 	private String subjectReportStudentContent;
 	private int score;

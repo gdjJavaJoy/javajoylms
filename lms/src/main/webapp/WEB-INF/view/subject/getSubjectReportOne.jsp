@@ -113,13 +113,13 @@
            		<h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">${subjectReport.subjectName} 과제 상세보기
 						<c:if test="${level eq 3}">
 							<a href="${pageContext.request.contextPath}/addSubjectReportStudent?subjectReportNo=${subjectReport.subjectReportNo}" class="text-sm" style="float: right;">[과제 제출]</a>
-							<a href="${pageContext.request.contextPath}/getSubjectReportStudentOne?subjectReportNo=${subjectReport.subjectReportNo}" class="text-sm" style="float: right;">[점수 확인]</a>
+							<a href="${pageContext.request.contextPath}/getSubjectReportStudentOnlyStudent?subjectReportNo=${subjectReport.subjectReportNo}&memberId=${loginUser}" class="text-sm" style="float: right;">[과제 제출 확인]</a>
 						</c:if>
 		           		<c:if test="${level eq 2}">
-		           			<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage?subjectReportNo=${subjectReport.subjectReportNo}" class="text-sm" style="float: right;">과제 제출 현황(미구현) -></a>
+		           			<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage?subjectReportNo=${subjectReport.subjectReportNo}" class="text-sm" style="float: right;">과제 제출 현황 -></a>
 		           		</c:if>
 		           		<c:if test="${level eq 1}">
-		           			<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage?subjectReportNo=${subjectReport.subjectReportNo}" class="text-sm" style="float: right;">과제 제출 현황(미구현) -></a>
+		           			<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage?subjectReportNo=${subjectReport.subjectReportNo}" class="text-sm" style="float: right;">과제 제출 현황 -></a>
 		           		</c:if>
            		</h4> 
             </c:forEach>
