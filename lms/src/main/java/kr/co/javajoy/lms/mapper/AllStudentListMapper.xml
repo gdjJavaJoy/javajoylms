@@ -15,10 +15,14 @@
 			,b.student_email studentEmail
 			,b.student_education studentEducation
 			,a.member_active memberActive
-		FROM member_id a
+		FROM 
+			member_id a
 			INNER JOIN student b ON a.member_id = b.member_id
+		WHERE 
+			NOT a.member_active IN ('3')
 		<if test='searchStudentName != null and !"".equals( searchStudentName ) '>
-			WHERE CONCAT( '%', b.student_name, '%' ) 
+		AND
+			CONCAT( '%', b.student_name, '%' ) 
 			LIKE CONCAT( '%', #{searchStudentName} , '%' )
 		</if>
 	</select>
@@ -28,4 +32,25 @@
 		SELECT COUNT(*)
 		FROM student
 	</select>
+	<!-- 전체 학생 삭제 -->
+	<update id="deleteStudent"
+			parameterType="String">
+		UPDATE student SET
+				 student_name = '111111'
+				,student_phone = '11111111111'
+				,student_address =  '111111'
+				,student_detailaddress = '111111'
+				,student_email = '111111'
+		WHERE
+				member_id = #{memberId}
+	</update>
+	<update id="deleteMemberId"
+			parameterType="String">
+		UPDATE member_id SET
+				 member_pw = '111111'
+				,member_active = '3'
+				,delete_date = NOW()
+		WHERE
+				member_id = #{memberId}
+	</update>
 </mapper>

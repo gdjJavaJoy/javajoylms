@@ -2,6 +2,7 @@ package kr.co.javajoy.lms.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,11 @@ public class AllStudentListController {
 	@Autowired AllStudentListService allStudentListService;
 
 	@Autowired MemberService memberService;
+	
 	// 학생 리스트 URL GetMapping
 	@GetMapping("/allStudentList")
 	public String allStudentList(HttpSession session
-								, Model model
+								,Model model
 								,@RequestParam @Nullable String searchStudentName // @NULLABLE = 널값허용 + 검색 파라메터 값 받아오기
 								,@RequestParam(value = "currentPage", defaultValue = "1") int currentPage
 								,@RequestParam(value = "rowPerPage", defaultValue = "10") int rowPerPage) {
@@ -35,6 +37,7 @@ public class AllStudentListController {
 	log.debug(CF.LGN + "AllStudentListController.allStudentList.level : " + level);
 	model.addAttribute("list", map.get("list"));
 	model.addAttribute("currentPage", currentPage);
+	model.addAttribute("rowPerPage", rowPerPage);
 	model.addAttribute("lastPage", map.get("lastPage"));
 	model.addAttribute("searchStudentName", searchStudentName);
 	log.debug(CF.LGN + "AllStudentListController.allStudentList.currentPage : " + currentPage);
@@ -51,4 +54,16 @@ public class AllStudentListController {
 		return "allStudentList";
 	}
 	
+	@GetMapping("/deleteStudent")
+	public String allStudentList(@RequestParam(name="memberId") String memberId) {
+		
+		int deleteStudent = allStudentListService.deleteStudent(memberId);
+		int deleteMemberId = allStudentListService.deleteMemberId(memberId);
+	      if(deleteStudent == 1 && deleteMemberId == 1 ) {
+	    	  log.debug(CF.LGN + "allStudentListController.deleteStudent.deleteStudent : "+ deleteStudent);
+	      } else {
+	    	  log.debug(CF.LGN + "allStudentListController.deleteStudent.deleteMemberId : "+ deleteMemberId); // 실패
+	      }
+	      return "redirect:/allStudentList"; 
+	}
 }

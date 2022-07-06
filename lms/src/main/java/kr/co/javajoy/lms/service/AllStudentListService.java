@@ -10,7 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.mapper.AllStudentListMapper;
+import kr.co.javajoy.lms.vo.Board;
+import kr.co.javajoy.lms.vo.Boardfile;
 import kr.co.javajoy.lms.vo.Student;
+import kr.co.javajoy.lms.vo.SubjectReport;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -18,6 +21,14 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class AllStudentListService {
 	@Autowired AllStudentListMapper allStudentListMapper;
+	
+	public int deleteStudent(String memberId) {
+		return allStudentListMapper.deleteStudent(memberId);
+	}
+	
+	public int deleteMemberId(String memberId) {
+		return allStudentListMapper.deleteMemberId(memberId);
+	}
 	
 	// 학생 리스트 출력
 	public Map<String, Object> AllStudentList(int currentPage, int rowPerPage, String searchStudentName) {
@@ -48,3 +59,4 @@ public class AllStudentListService {
 		return returnMap;
 	}
 }
+
