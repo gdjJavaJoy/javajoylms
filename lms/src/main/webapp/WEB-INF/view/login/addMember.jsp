@@ -212,7 +212,9 @@
           $('#active').val("'4'");
        }else {
           $('#passwordBox').show();
+          $('#pw').val('');
           $('#active').val("'1'");
+          
        }
     });
 
@@ -347,6 +349,7 @@
    
 });
    $('#addrBtn').click(function(){
+	   $('#memberAddr').empty();
       $.ajax({
          type:'get'
          ,url:'/lms/getAddr'
