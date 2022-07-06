@@ -75,26 +75,6 @@ INNER JOIN teacher t
 		   ,NOW()
 		)
 </insert>
-<insert id="insertBoardFile"
-		parameterType="kr.co.javajoy.lms.vo.Boardfile">
-	INSERT INTO board_file(
-			    board_no
-			   ,board_file_original_name
-			   ,board_file_name
-			   ,board_file_type
-			   ,board_file_size
-			   ,create_date
-			   ,update_date
-		) VALUES (
-				#{boardNo}
-			   ,#{boardFileOriginalName}
-			   ,#{boardFileName}
-			   ,#{boardFileType}
-			   ,#{boardFileSize}
-			   ,NOW()
-			   ,NOW()
-		)
-</insert>
 <insert id="insertReceiver"
 		parameterType="kr.co.javajoy.lms.vo.Receiver">
 	INSERT INTO receiver (
@@ -107,94 +87,6 @@ INNER JOIN teacher t
 			   ,NOW()
 		)
 </insert>
-<select id="selectInquiryBoardOne"
-		parameterType="int"
-		resultType="java.util.Map">
-SELECT
-	b.board_no boardNo
-   ,b.member_id memberId
-   ,t.teacher_name teacherName
-   ,s.student_name studentName
-   ,b.board_title boardTitle
-   ,b.board_content boardContent
-   ,b.private_no privateNo
-   ,b.create_date createDate
-   ,b.update_date updateDate
-	 FROM board b
-LEFT JOIN teacher t
-       ON t.member_id = b.member_id
-LEFT JOIN student s
-       ON s.member_id = b.member_id
-    WHERE board_no = #{boardNo} 
-</select>
-<select id="selectInquiryBoardfileOne"
-		parameterType="int"
-		resultType="kr.co.javajoy.lms.vo.Boardfile">
-SELECT
-	board_file_no boardFileNo
-   ,board_no boardNo
-   ,board_file_original_name boardFileOriginalName
-   ,board_file_name boardFileName
-   ,board_file_type boardFileType
-   ,board_file_size boardFileSize
-   ,create_date createDate
-   ,update_date updateDate
-FROM board_file
-WHERE board_no = #{boardNo}			
-</select>
-<select id="selectInquiryComment"
-		parameterType="int"
-		resultType="java.util.Map">
-SELECT
-	 bc.board_comment_no boardCommentNo
-    ,bc.member_id memberId
-    ,a.admin_name adminName
-    ,t.teacher_name teacherName
-    ,bc.board_no boardNo
-    ,bc.board_comment_content boardCommentContent
-    ,bc.create_date createDate
-    ,bc.update_date updateDate
-     FROM board_comment bc
-LEFT JOIN teacher t 
-	ON bc.member_id = t.member_id
-LEFT JOIN admin a
-	 ON a.member_id = bc.member_id
-WHERE board_no = #{boardNo}
-</select>
-<select id="selectBoardCountByBoardNo"
-		parameterType="int"
-		resultType="int">
-SELECT
-	COUNT(*)
-FROM board_file
-WHERE board_no = #{boardNo}
-</select>
-<delete id="deleteInquiry"
-		parameterType="int">
-DELETE
- FROM board
-WHERE board_no = #{boardNo}
-</delete>
-<delete id="deleteAllInquiryFile"
-		parameterType="int">
-DELETE 
- FROM board_file
-WHERE board_no = #{boardNo}		
-</delete>
-<delete id="deleteAllInquiryComment"
-		parameterType="int">
-DELETE
-FROM board_comment
-where board_no = #{boardNo}		
-</delete>
-<select id="selectFiletNameList"
-		parameterType="int"
-		resultType="String">
-SELECT
-	 board_file_name boardFileName
-FROM board_file
-WHERE board_no = #{boardNo}
-</select>
 <select id="selectReceiverListByBoardNo"
 		parameterType="int"
 		resultType="String">
@@ -203,7 +95,7 @@ SELECT
 FROM receiver
 WHERE board_no = #{boardNo}
 </select>
-<insert id="insertboardComment"
+<insert id="insertInquiryComment"
 		parameterType="kr.co.javajoy.lms.vo.BoardComment">
 INSERT INTO board_comment (
 			member_id
@@ -221,12 +113,6 @@ INSERT INTO board_comment (
 		   ,NOW()
 		)
 </insert>
-<delete id="deleteInquiryCommentByBoardCommentNo"
-		parameterType="int">
-DELETE 
-FROM board_comment
-WHERE board_comment_no = #{boardCommentNo}
-</delete>
 <select id="selectCheckedReceiverTeacherName"
 		parameterType="int"
 		resultType="kr.co.javajoy.lms.vo.Teacher">
@@ -237,12 +123,6 @@ INNER JOIN teacher t
 		ON t.member_id = r.receiver
 	 WHERE r.board_no = #{boardNo}
 </select>
-<delete id="deleteBoardfile"
-		parameterType="int">
-DELETE
-FROM board_file
-WHERE board_file_no =  #{boardFileNo}
-</delete>
 <delete id="deleteReceiver"
 		parameterType="int">
 DELETE 
@@ -258,14 +138,6 @@ UPDATE board
       ,update_date = NOW()
  WHERE board_no = #{boardNo}
 </update>
-<select id="selectBoardFileNameByBoardFileNo"
-		parameterType="int"
-		resultType="String">
-SELECT
-	board_file_name boardFileName
-FROM board_file
-WHERE board_file_no = #{boardFileNo}
-</select>
 <select id="receiverList"
 		resultType="kr.co.javajoy.lms.vo.Receiver">
 SELECT

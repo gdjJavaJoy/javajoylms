@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.javajoy.lms.mapper.FreeBoardMapper">
+<select id="selectFreeBoardByPage"
+		parameterType="java.util.Map"
+		resultType="java.util.Map">
+SELECT
+	b.board_no boardNo
+   ,b.member_id memberId
+   ,a.admin_name adminName
+   ,t.teacher_name teacherName
+   ,s.student_name studentName
+   ,b.board_title boardTitle
+   ,b.private_no privateNo
+   ,b.create_date createDate
+   ,b.update_date updateDate
+FROM board b
+LEFT JOIN admin a
+	   ON a.member_id = b.member_id
+LEFT JOIN teacher t
+	   ON t.member_id = b.member_id
+LEFT JOIN student s
+	   ON s.member_id = b.member_id
+WHERE board_category = "2"
+<if test='searchFreeBoardTitle != null and !"".equals(searchFreeBoardTitle) '>
+AND CONCAT('%', b.board_title, '%') 
+			LIKE CONCAT('%', #{searchFreeBoardTitle}, '%')
+</if>
+ORDER BY create_date desc
+LIMIT #{beginRow} , #{rowPerPage}
+</select>
+<select id="selectFreeBoardTotalCount"
+		parameterType="String"
+		resultType="int">
+SELECT
+	COUNT(*) cnt
+FROM board
+WHERE board_category = "2"
+<if test='searchFreeBoardTitle != null and !"".equals(searchFreeBoardTitle) '>
+AND CONCAT('%', board_title, '%') 
+			LIKE CONCAT('%', #{searchFreeBoardTitle}, '%')
+</if>
+</select>
+<insert id="addFreeBoard"
+		parameterType="kr.co.javajoy.lms.vo.Board">
+<selectKey resultType="int" keyProperty="boardNo" order="AFTER">
+		select last_insert_id()
+</selectKey>
+INSERT INTO board (
+			member_id
+		   ,board_category
+		   ,board_title
+		   ,board_content
+		   ,private_no
+		   ,create_date
+		   ,update_date
+		) VALUES (
+		   #{memberId}
+		  ,"2"
+		  ,#{boardTitle}
+		  ,#{boardContent}
+		  ,#{privateNo}		
+		  ,NOW()
+		  ,NOW()
+		)
+</insert>
+<insert id="insertFreeBoardComment"
+		parameterType="kr.co.javajoy.lms.vo.BoardComment">
+INSERT INTO board_comment (
+			member_id
+		   ,board_no
+		   ,board_comment_content
+		   ,comment_anony
+		   ,create_date
+		   ,update_date
+		) VALUES (
+			#{memberId}
+		   ,#{boardNo}
+		   ,#{boardCommentContent}
+		   ,#{commentAnony}
+		   ,NOW()
+		   ,NOW()
+		)
+</insert>
+<update id="updateFreeBoard"
+		parameterType="kr.co.javajoy.lms.vo.Board">
+UPDATE board
+   SET board_title = #{boardTitle}
+   	  ,board_content = #{boardContent}
+   	  ,private_no = #{privateNo}
+   	  ,update_date = NOW()
+WHERE board_no = #{boardNo}
+</update>
+</mapper>

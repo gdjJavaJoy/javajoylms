@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.javajoy.lms.mapper.BoardMapper">
+	<insert id="insertBoardFile"
+		parameterType="kr.co.javajoy.lms.vo.Boardfile">
+	INSERT INTO board_file(
+			    board_no
+			   ,board_file_original_name
+			   ,board_file_name
+			   ,board_file_type
+			   ,board_file_size
+			   ,create_date
+			   ,update_date
+		) VALUES (
+				#{boardNo}
+			   ,#{boardFileOriginalName}
+			   ,#{boardFileName}
+			   ,#{boardFileType}
+			   ,#{boardFileSize}
+			   ,NOW()
+			   ,NOW()
+		)
+</insert>
+<select id="selectBoardOne"
+		parameterType="int"
+		resultType="java.util.Map">
+SELECT
+	b.board_no boardNo
+   ,b.member_id memberId
+   ,a.admin_name adminName
+   ,t.teacher_name teacherName
+   ,s.student_name studentName
+   ,b.board_title boardTitle
+   ,b.board_content boardContent
+   ,b.private_no privateNo
+   ,b.create_date createDate
+   ,b.update_date updateDate
+FROM board b
+LEFT JOIN admin a
+	   ON a.member_id = b.member_id
+LEFT JOIN teacher t
+	   ON t.member_id = b.member_id
+LEFT JOIN student s
+	   ON s.member_id = b.member_id
+WHERE board_no = #{boardNo}		
+</select>
+<select id="selectBoardfileList"
+		parameterType="int"
+		resultType="kr.co.javajoy.lms.vo.Boardfile">
+SELECT
+	board_file_no boardFileNo
+   ,board_no boardNo
+   ,board_file_original_name boardFileOriginalName
+   ,board_file_name boardFileName
+   ,board_file_type boardFileType
+   ,board_file_size boardFileSize
+   ,create_date createDate
+   ,update_date updateDate
+FROM board_file
+WHERE board_no = #{boardNo}			
+</select>
+<select id="selectBoardComment"
+		parameterType="int"
+		resultType="java.util.Map">
+SELECT
+	 bc.board_comment_no boardCommentNo
+    ,bc.member_id memberId
+    ,a.admin_name adminName
+    ,t.teacher_name teacherName
+    ,s.student_name studentName
+    ,bc.board_no boardNo
+    ,bc.board_comment_content boardCommentContent
+    ,bc.comment_anony anony
+    ,bc.create_date createDate
+    ,bc.update_date updateDate
+     FROM board_comment bc
+LEFT JOIN teacher t 
+	ON bc.member_id = t.member_id
+LEFT JOIN admin a
+	 ON a.member_id = bc.member_id
+LEFT JOIN student s
+	 ON s.member_id = bc.member_id
+WHERE board_no = #{boardNo}
+</select>
+<select id="selectBoardCountByBoardNo"
+		parameterType="int"
+		resultType="int">
+SELECT
+	COUNT(*)
+FROM board_file
+WHERE board_no = #{boardNo}
+</select>
+<delete id="deleteCommentByBoardCommentNo"
+		parameterType="int">
+DELETE 
+FROM board_comment
+WHERE board_comment_no = #{boardCommentNo}
+</delete>
+<delete id="deleteBoard"
+		parameterType="int">
+DELETE
+ FROM board
+WHERE board_no = #{boardNo}
+</delete>
+<delete id="deleteBoardFileByBoardNo"
+		parameterType="int">
+DELETE 
+ FROM board_file
+WHERE board_no = #{boardNo}		
+</delete>
+<delete id="deleteBoardCommentByBoardNo"
+		parameterType="int">
+DELETE
+FROM board_comment
+where board_no = #{boardNo}		
+</delete>
+<select id="selectFiletNameList"
+		parameterType="int"
+		resultType="String">
+SELECT
+	 board_file_name boardFileName
+FROM board_file
+WHERE board_no = #{boardNo}
+</select>
+<delete id="deleteBoardfile"
+		parameterType="int">
+DELETE
+FROM board_file
+WHERE board_file_no =  #{boardFileNo}
+</delete>
+<select id="selectBoardFileNameByBoardFileNo"
+		parameterType="int"
+		resultType="String">
+SELECT
+	board_file_name boardFileName
+FROM board_file
+WHERE board_file_no = #{boardFileNo}
+</select>
+</mapper>

@@ -111,9 +111,9 @@ public class InquiryController {
 		int row = inquiryService.addInquiryComment(boardComment);
 		
 		if (row == 1) {
-			log.debug(CF.PSG+"InquiryController.addComment 답변 추가 성공 " + CF.RESET);
+			log.debug(CF.PSG+"InquiryController.adInquiryComment 답변 추가 성공 " + CF.RESET);
 		} else {
-			log.debug(CF.PSG+"InquiryController.addComment 답변 추가 실패 " + CF.RESET);
+			log.debug(CF.PSG+"InquiryController.addInquiryComment 답변 추가 실패 " + CF.RESET);
 		}
 		
 		return "redirect:/getInquiryOne?boardNo="+boardComment.getBoardNo();
@@ -164,8 +164,8 @@ public class InquiryController {
 			
 		return "redirect:/getInquiryOne?boardNo="+addInquiryForm.getBoardNo();
 	}
-	@GetMapping("/removeFileByBoardFileNo")
-	public String removeFileByBoardFileNo(@RequestParam(value="boardFileNo") int boardFileNo
+	@GetMapping("/removeInquiryFileByBoardFileNo")
+	public String removeInquiryFileByBoardFileNo(@RequestParam(value="boardFileNo") int boardFileNo
 										,@RequestParam(value="boardNo")int boardNo
 										,HttpServletRequest request) {
 		log.debug(CF.PSG+"InquiryController.removeFileByBoardFileNo.removeFileByBoardFileNo : "+ boardFileNo +CF.RESET);
