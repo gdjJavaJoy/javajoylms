@@ -38,15 +38,6 @@
 				<div id="studentSideNav"></div>
 			</c:if>
 		</aside>
-		<!-- Backdrop -->
-		<div x-show="isSideMenuOpen"
-			x-transition:enter="transition ease-in-out duration-150"
-			x-transition:enter-start="opacity-0"
-			x-transition:enter-end="opacity-100"
-			x-transition:leave="transition ease-in-out duration-150"
-			x-transition:leave-start="opacity-100"
-			x-transition:leave-end="opacity-0"
-			class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"></div>
 		<div class="flex flex-col flex-1 w-full">
 			<c:if test="${level eq 2}">
 				<div id="teacherHeaderNav"></div>
@@ -58,7 +49,7 @@
 				<div class="container px-6 mx-auto grid">
 					<h2
 						class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-						공지사항</h2>
+						초기화면</h2>
 					<!-- New Table -->
 					<div class="w-full overflow-hidden rounded-lg shadow-xs">
 						<div class="w-full overflow-x-auto">
