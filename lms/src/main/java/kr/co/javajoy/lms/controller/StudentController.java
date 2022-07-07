@@ -1,10 +1,12 @@
 package kr.co.javajoy.lms.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.service.StudentService;
 import kr.co.javajoy.lms.vo.MemberUpdateForm;
+import kr.co.javajoy.lms.vo.StudentJob;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -71,4 +74,71 @@ public class StudentController {
 			return "redirect:studentOne";
 		}
 	}
+	
+	// 취업한 학생 리스트 뽑기
+	@GetMapping("employedStudentList")
+	public String employedStudentList(Model model
+									,@RequestParam @Nullable String searchName
+									,@RequestParam(value = "currentPage", defaultValue = "1") int currentPage
+									,@RequestParam(value = "rowPerPage", defaultValue = "10") int rowPerPage)	{
+		// 디버깅
+		log.debug(CF.YHJ + "StudentController.employedStudentList.searchName : " + searchName);
+		log.debug(CF.YHJ + "StudentController.employedStudentList.currentPage : " + currentPage);
+		log.debug(CF.YHJ + "StudentController.employedStudentList.rowPerPage : " + rowPerPage);
+		
+		List<Map<String,Object>> list = studentService.getEmploytedStudentList(currentPage,rowPerPage,searchName); // 취업 학생 리스트
+		log.debug(CF.YHJ + "StudentController.employedStudentList.list : " + list); // 디버깅
+		
+		model.addAttribute("list",list);
+		
+		return "/member/admin/getEmployedStudentList";
+	}
+	
+	// 취업 학생 등록
+	@GetMapping("addEmployedStudent")
+	public String addEmployedStudent() {
+		
+		return "/member/admin/addEmployedStudent";
+	}
+	
+	@PostMapping("addEmployedStudent")
+	public String addEmployedStudent(StudentJob studentJob) {
+		log.debug(CF.YHJ + "StudentController.addEmployedStudent.studentJob : " + studentJob); // 디버깅
+		studentService.addEmployedStudent(studentJob); // 취업 학생 등록
+		
+		return "redirect:employedStudentList";
+	}
+	
+	// 취업 학생 삭제
+	@GetMapping("deleteEmployedStudent")
+	public String deleteEmployedStudent(@RequestParam(value="memberId") String memberId) {
+		log.debug(CF.YHJ + "StudentController.deleteEmployedStudent.memberId : " + memberId);
+		studentService.removeEmployedStudent(memberId); // 취업 학생 삭제
+		
+		return "redirect:employedStudentList";
+	}
+	
+	// 취업 학생 수정
+	@GetMapping("modifyEmployedStudent")
+	public String modifyEmployedStudent(String memberId
+										,Model model) {
+		log.debug(CF.YHJ + "StudentController.modifyEmployedStudent.memberId : " + memberId); // 디버깅
+		
+		StudentJob studentJob = studentService.selectEmployedStudentOne(memberId); // 취업학생 한명 출력
+		log.debug(CF.YHJ + "StudentController.modifyEmployedStudent.studentJob : " + studentJob); // 디버깅
+		
+		// 모델에 값 넣기
+		model.addAttribute("studentJob",studentJob);
+		
+		return "/member/admin/modifyEmployedStudent";
+	}
+	
+	@PostMapping("modifyEmployedStudent")
+	public String modifyEmployedStudent(StudentJob studentJob) {
+		log.debug(CF.YHJ + "StudentController.modifyEmployedStudent.studentJob : " + studentJob); // 디버깅
+		studentService.modifyEmployedStudent(studentJob); // 취업 학생 등록
+		
+		return "redirect:employedStudentList";
+	}
+	
 }

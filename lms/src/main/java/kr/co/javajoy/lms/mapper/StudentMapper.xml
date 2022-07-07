@@ -35,4 +35,64 @@
 		WHERE member_id = #{memberId}
 	</update>
 	
+	<select id="selectEmploytedStudentList"
+			parameterType="java.util.Map"
+			resultType="java.util.Map">
+		SELECT s.member_id memberId
+				,s.student_name studentName
+				,company company
+				,start_salary startSalary
+				,sj.create_date createDate
+				,sj.update_date updateDate
+		FROM student_job sj
+		INNER JOIN student s ON s.member_id = sj.member_id
+		<if test='searchName != null and !"".equals( searchName ) '>
+		WHERE 
+			CONCAT( '%', s.student_name, '%' ) 
+			LIKE CONCAT( '%', #{searchName} , '%' )
+		</if>
+	</select>
+	
+	<insert id="insertEmployedStudent"
+			parameterType="kr.co.javajoy.lms.vo.StudentJob">
+		INSERT INTO student_job	(
+			member_id
+			,company
+			,start_salary
+			,create_date
+			,update_date
+		) VALUES(
+			#{memberId}
+			,#{company}
+			,#{startSalary}
+			,NOW()
+			,NOW()		
+		)	
+	</insert>
+	
+	<delete id="deleteEmployedStudent">
+		DELETE FROM student_job
+		 WHERE member_id = #{memberId}
+	</delete>
+	
+	<select id="selectEmployedStudentOne"
+			parameterType="String"
+			resultType="kr.co.javajoy.lms.vo.StudentJob">
+		SELECT member_id memberId
+				,company company
+				,start_salary startSalary
+				,create_date createDate
+				,update_date updateDate
+		FROM student_job
+		WHERE member_id= #{memberId}
+	</select>
+	
+	<update id="updateEmployedStudent"
+			parameterType="kr.co.javajoy.lms.vo.StudentJob">
+		UPDATE student_job 
+		SET company = #{company}
+			,start_salary = #{startSalary}
+			, update_date = NOW()
+		WHERE member_id = #{memberId}		
+	</update>
 </mapper>
