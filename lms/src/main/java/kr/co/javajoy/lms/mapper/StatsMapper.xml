@@ -4,7 +4,7 @@
 <select id="subjectReportCountBySubjectNo"
 		resultType="java.util.Map">
 SELECT
-	COUNT(*) COUNT
+	COUNT(*) reportCount
 	,s.subject_name subjectName
 FROM subject_report sr
 INNER JOIN subject_board sb
