@@ -14,34 +14,35 @@
 <body>
 <div class="container">
     <h1>커리큘럼 리스트</h1>
+    	<div><a href="${pageContext.request.contextPath}/getLanguageList">프로그래밍 언어 관리</a></div>
+    	<div><a href="${pageContext.request.contextPath}/getBookList">교육 도서 관리</a></div>
+    	<div><a href="${pageContext.request.contextPath}/addCurriculum?subjectNo=${subjectNo}">커리큘럼 추가</a></div>
     <table class="table table-striped">
         <thead>
         <tr>
-        	<th>분반</th>
-			<th>아이디</th>
-			<th>언어</th>
-			<th>커리큘럼제목</th>
+        	<th>번호</th>
+			<th>강사 이름</th>
+			<th>교육 언어</th>
+			<th>제목</th>
 			<th>시작날짜</th>
 			<th>종료날짜</th>
+			<th></th>
         </tr>
         </thead>
         <tbody>
-            <c:forEach var="s" items="${list}">
+            <c:forEach var="s" items="${curriculumList}" varStatus="cnt">
                 <tr>
-                   <td>${s.subjectNo}</td>
-                   <td>${s.memberId}</td>
+                   <td class="px-4 py-3 text-sm">${cnt.index+1}</td>
+                   <td>${s.teacherName}</td>
                    <td>${s.languageName}</td>
                    <td>${s.curriculumTitle}</td>
                    <td>${s.startDay}</td>
                    <td>${s.endDay}</td>
+                   <td>삭제?수정?</td>
                 </tr>
             </c:forEach>
         </tbody>
     </table>
-   <ul class="pager">
-      <li class="previous"><a href="${pageContext.request.contextPath}/curriculumList?currentPage=${currentPage-1}">이전</a></li>
-      <li class="next"><a href="${pageContext.request.contextPath}/curriculum?currentPage=${currentPage+1}">다음</a></li>
-   </ul>
 </div>
 </body>
 </html>

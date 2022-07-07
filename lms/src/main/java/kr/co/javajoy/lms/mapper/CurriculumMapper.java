@@ -5,12 +5,35 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.javajoy.lms.vo.Book;
 import kr.co.javajoy.lms.vo.Curriculum;
+import kr.co.javajoy.lms.vo.CurriculumBook;
+import kr.co.javajoy.lms.vo.Language;
 
 @Mapper
 public interface CurriculumMapper {
+	// 1) 커리큘럼 리스트 출력
+	
 	// 커리큘럼 리스트 출력
-	List<Curriculum> getCurriculumList(Map<String, Object> map);
+	List<Map<String, Object>> selectCurriculumList(Map<String, Object> map);
+	// 강사 이름, 아이디 리스트
+	List<Map<String, Object>> selectTeacherName();
+	// 프로그래밍 언어, 넘버 리스트
+	List<Map<String, Object>> selectLanguageName();
+	// 도서 이름, 넘버 리스트
+	List<Map<String, Object>> selectBookName();
 	// 커리큘럼 총 수
 	int selectTotalCount();
+	
+	// 2) 커리큘럼 추가
+	
+	// 커리큘럼 추가
+	int insertCurriculum(Curriculum curriculum);
+	// 프로그래밍 언어 추가
+	int insertLanguage(Language language);
+	// 교육 도서 추가
+	int insertBook(Book book);
+	// 커리큘럼에 교육 도서 정보 추가 
+	int insertBookByCurriculum(CurriculumBook curriculumBook);
+	
 }

@@ -79,10 +79,10 @@
 							<a style="float:right;" href="${pageContext.request.contextPath}/getSubjectDataListByPage?subjectNo=${subject.subjectNo}">&nbsp&nbsp강좌 자료&nbsp&nbsp</a>
 						</li>
 						<li >
-							<a style="float:right;" href="${pageContext.request.contextPath}/subjectNoticeList?subjectNo=${subject.subjectNo}">&nbsp&nbsp강좌 공지사항(미구현)&nbsp&nbsp</a>
+							<a style="float:right;" href="${pageContext.request.contextPath}/subjectNoticeList?subjectNo=${subject.subjectNo}">&nbsp&nbsp강좌 공지사항(구현중)&nbsp&nbsp</a>
 						</li>
 						<li>
-							<a style="float:right;" href="${pageContext.request.contextPath}/curriculumList?subjectNo=${subject.subjectNo}">&nbsp&nbsp커리큘럼(미구현)&nbsp&nbsp</a>
+							<a style="float:right;" href="${pageContext.request.contextPath}/getCurriculumList?subjectNo=${subject.subjectNo}">&nbsp&nbsp커리큘럼&nbsp&nbsp</a>
 						</li>
 						<c:if test="${surveyChk < 1}"> <!--  설문조사를 하지 않은사람만 보이게 -->
 							<li>
