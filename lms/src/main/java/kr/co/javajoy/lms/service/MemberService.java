@@ -100,7 +100,6 @@ public class MemberService {
 		map.put("active",active);
 		map.put("period", period);
 		map.put("level", level);
-		memberMapper.updateMemberActive(memberId);
 		return map;
 	}
 	

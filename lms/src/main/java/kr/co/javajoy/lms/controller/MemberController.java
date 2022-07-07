@@ -104,7 +104,7 @@ public class MemberController {
 			log.debug(CF.PSG+"ParkseongjunController.mdoifyPw  비밀번호 변경창 이동" +CF.RESET);
 			model.addAttribute("active",active);
 			return "login/modifyPw"; // 비밀번호 변경창으로 이동
-			} 
+			}  
 		if (level.equals("1")) { // 관리자일때
 			log.debug(CF.PSG+"ParkseongjunController.modifyPw 관리자index 이동" +CF.RESET);
 			return "redirect:/getSubjectByPage"; //관리자 페이지 이동  -> adminIndex 
