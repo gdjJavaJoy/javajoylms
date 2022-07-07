@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- Notice 리스트 출력 -->
 <mapper namespace="kr.co.javajoy.lms.mapper.NoticeMapper">
+	<!-- Notice 리스트 출력 -->
 	<select id="selectNoticeByPage"
 			parameterType="java.util.Map"
 			resultType="kr.co.javajoy.lms.vo.Board">
@@ -23,6 +23,7 @@
 		ORDER BY create_date DESC
 		LIMIT #{startRow}, #{rowPerPage}		
 	</select>
+	
 	<!-- 검색결과 페이징, 전체 row(공지사항 수) -->
 	<select id="selectTotalCount"
 			parameterType="String"
@@ -35,6 +36,7 @@
 			LIKE CONCAT('%', #{searchNoticeTitle}, '%')
 		</if>
 	</select>
+	
 	<!-- 공지사항 상세보기 -->
 	<select id="selectNoticeOne"
 			parameterType="int"
@@ -51,6 +53,7 @@
 		FROM board
 		WHERE board_no = #{boardNo}
 	</select>
+	
 	<!-- 공지사항 입력 -->
 	<insert id="insertNotice"	
 			parameterType="kr.co.javajoy.lms.vo.Board">
@@ -75,12 +78,14 @@
 			,NOW()
 		)
 	</insert>
+	
 	<!-- 공지사항 삭제 -->
 	<delete id="deleteNotice"
 			parameterType="int">
 		DELETE FROM board
 		WHERE board_no = #{boardNo}
 	</delete>
+	
 	<!-- 공지사항 수정 -->
 	<update id="updateNotice"
 			parameterType="kr.co.javajoy.lms.vo.Board">
@@ -91,5 +96,4 @@
 			,update_date = NOW()
 		WHERE board_no = #{boardNo}
 	</update>
-	
 </mapper>

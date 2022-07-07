@@ -10,6 +10,7 @@ import lombok.Data;
 public class SubjectBoardInsertForm {
 	private int subjectBoardNo;
 	private int subjectNo;
+	private int subjectNoticeNo;
 	private String memberId;
 	private String subjectBoardTitle;
 	private String subjectBoardContent;

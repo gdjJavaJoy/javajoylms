@@ -81,7 +81,7 @@ public class NoticeController {
 		String level = (String) session.getAttribute("level");
 		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.sessionId : " + memberId);
 		log.debug(CF.PBJ + "SubjectController.getSubjectByPage.level : " + level);
-		if(level.equals("2, 3")) {
+		if(level.equals("2") || level.equals("3")) {
 			return "redirect:/login";
 		}
 		
@@ -101,10 +101,16 @@ public class NoticeController {
 			}
 			
 		}
-		noticeService.addNotice(boardForm, path);
-		log.debug(CF.WSH + "NoticeController.addNotice(Post).boardForm : "+boardForm);
+		int row = noticeService.addNotice(boardForm, path);
+		
+		if (row == 0) {
+			log.debug(CF.WSH + "NoticeController.addNotice(Post). 공지사항 등록 실패"+ CF.RESET);
+		return "redirect:/addNotice";
+		}
+		log.debug(CF.WSH + "NoticeController.addNotice(Post). 공지사항 등록 성공"+ CF.RESET);
 		return "redirect:/getNoticeByPage";
 	}
+		
 	// 공지사항 파일 삭제 Form
 	@GetMapping("/removeNoticefile") // 파일 먼저 삭제
 	public String removeNoticefile(HttpServletRequest request

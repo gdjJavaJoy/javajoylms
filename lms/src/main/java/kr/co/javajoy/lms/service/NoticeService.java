@@ -38,6 +38,7 @@ public class NoticeService {
 		log.debug(CF.WSH + "NoticeService.getNoticeByPage.startRow : "+startRow);
 		log.debug(CF.WSH + "NoticeService.getNoticeByPage.searchNoticeTitle : "+searchNoticeTitle);
 		
+		// Mapper에서 반환된 값
 		List<Board> list = noticeMapper.selectNoticeByPage(map);
 		// 전체 총 게시물 수 구하기
 		int totalCount = noticeMapper.selectTotalCount(searchNoticeTitle);
@@ -82,7 +83,7 @@ public class NoticeService {
 	
 	
 	// 공지사항 추가하기
-	public void addNotice(BoardForm boardForm, String path) {
+	public int addNotice(BoardForm boardForm, String path) {
 		log.debug(CF.WSH + "NoticeService.addNotice.boardForm : "+ boardForm);
 		log.debug(CF.WSH + "NoticeService.addNotice.path : "+ path);
 		
@@ -102,10 +103,13 @@ public class NoticeService {
 			log.debug(CF.WSH + "NoticeService.addNotice.파일확인 : "+"첨부된 파일이 있습니다.");
 			for(MultipartFile mf : boardForm.getBoardfileList()) {
 				Boardfile boardfile = new Boardfile();
-				String originName = mf.getOriginalFilename();
+				String originName = mf.getOriginalFilename(); 
 				String ext = originName.substring(originName.lastIndexOf("."));
+				// originName에서 마지막.(점)위치
 				String filename = UUID.randomUUID().toString();
-				filename = filename.replace("-", ""); // -를 공백으로
+				// 저장 시 중복되지 않고 저장하기 위해 UUID API를 사용하여 이름 랜덤 지정
+				filename = filename.replace("-", ""); 
+				// -를 공백으로
 				filename = filename + ext;
 				boardfile.setBoardNo(board.getBoardNo());
 				boardfile.setBoardFileOriginalName(originName);
@@ -118,11 +122,12 @@ public class NoticeService {
 					mf.transferTo(new File(path+filename));
 				} catch (Exception e) {
 					e.printStackTrace();
-					
-					throw new RuntimeException();
+					// 예외 발생 시 @Transactional 작동 
+					throw new RuntimeException(); // RuntimeException 예외처리 안해도 컴파일 됨
 				}
 			}
 		}
+		return row;
 	}
 	// 삭제
 	public void removefileNotice (int boardfileNo, String path) {

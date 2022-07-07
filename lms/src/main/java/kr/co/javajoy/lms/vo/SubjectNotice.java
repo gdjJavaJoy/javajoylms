@@ -7,6 +7,6 @@ public class SubjectNotice {
 	private int subjectNoticeNo;
 	private String memberId;
 	private String subjectNoticeTitle;
-	private String subjectNoticeCount;
+	private String subjectNoticeContent;
 	private String createDate;
 }

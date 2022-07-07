@@ -2,27 +2,79 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.javajoy.lms.mapper.SubjectNoticeMapper">
 
-<select id="getSubjectNoticeList"
-		parameterType="java.util.Map"
-		resultType="map">
-		<!-- 관리자(Admin) 강의공지사항 리스트 -->
-	SELECT  
-		 a.subject_notice_no subjectNoticeNo
-	    ,b.subject_no subjcetNo
-	    ,a.member_id memberId
-	    ,a.subject_notice_title subjectNoticeTitle
-	    ,a.subject_notice_content subjectNoticeContent
-	    ,a.create_date createDate
-	FROM subject_notice AS a
-		INNER JOIN subject AS b
-	    ON a.subject_notice_no = b.subject_no
-    WHERE b.subject_no = #{subjectNo}
-	    LIMIT #{startRow}, #{rowPerPage}
-</select>
+	<!-- 관리자(Admin) 강의공지사항 리스트 -->
+	<select id="getSubjectNoticeList"
+			parameterType="java.util.Map"
+			resultType="java.util.Map">
+		SELECT  
+			b.subject_no subjectNo
+			,n.subject_notice_no subjectNoticeNo
+			,n.member_id memberId
+			,n.subject_notice_title subjectNoticeTitle
+			,n.subject_notice_content subjectNoticeContent
+		    ,n.create_date createDate 
+		    ,t.teacher_name teacherName
+		FROM subject_notice AS n
+			INNER JOIN subject_board AS b ON n.subject_notice_no = b.subject_board_no
+	   		INNER JOIN teacher t ON t.member_id = n.member_id
+	    WHERE b.subject_no = #{subjectNo}
+		    LIMIT #{startRow}, #{rowPerPage}
+	</select>
 	<!-- 리스트 전체 카운트 -->
-<select id="selectTotalCount" 
-		resultType="int" >
-	SELECT COUNT(*)
-	FROM curriculum
-</select>
-</mapper>
+	<select id="selectTotalCount" 
+			resultType="int" >
+		SELECT COUNT(*)
+		FROM subject_notice
+		WHERE subject_notice_no = "${subjectNoticeNo}"
+	</select>		
+	<!-- 리스트 추가(subjectNo 입력) -->
+	<insert id="insertSubjectNoticeBoardNo"
+			parameterType="kr.co.javajoy.lms.vo.SubjectBoard">
+		<selectKey resultType="int" keyProperty="subjectBoardNo" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+		INSERT INTO subject_board (
+			subject_no
+			,create_date
+		) VALUE (
+			#{subjectNo}
+			,NOW()
+		)
+	</insert>
+	<insert id="insertSubjectNotice"
+			parameterType="kr.co.javajoy.lms.vo.SubjectNotice">
+		INSERT INTO subject_notice(
+			subject_notice_no
+			,member_id
+			,subject_notice_title
+			,subject_notice_content 
+			,create_date
+		) VALUES (
+			#{subjectNoticeNo}
+			,#{memberId}
+			,#{subjectNoticeTitle}
+			,#{subjectNoticeContent}
+			,NOW()
+		)
+	</insert>
+	<insert id="insertSubjectNoticeFile"
+				parameterType="kr.co.javajoy.lms.vo.SubjectFile">
+		INSERT INTO subject_file(
+			subject_file_board_no
+			,subject_file_name
+			,subject_file_original_name
+			,subject_file_type
+			,subject_file_size
+			,create_date
+			,update_date
+		) VALUES (
+			#{subjectFileBoardNo}
+			,#{subjectFileName}
+			,#{subjectFileOriginalName}
+			,#{subjectFileType}
+			,#{subjectFileSize}
+			,NOW()
+			,NOW()
+		)
+	</insert>
+	</mapper>
