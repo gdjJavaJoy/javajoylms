@@ -90,9 +90,10 @@ public class MemberController {
 						  ,Model model
 						  ,@RequestParam(value="myPageChangePw", defaultValue="0") int myPageChangePw) {
 		String memberId = (String) session.getAttribute("loginUser"); // 세션에 있는 loginUser 값 변수에 저장 
-		String active = memberService.getMemberActive(memberId); // memberId를 사용해서 active값 받아오기
-		int period = memberService.getMemberPwPeriod(memberId); //  memberId사용해서 현재시간 - 마지막 변경날짜구하기 
-		String level = memberService.getMemberLevel(memberId);
+		Map<String,Object> map = memberService.modifyPw(memberId); // memberId 로 비밀번호 변경에 필요한 정보를 받아오기 
+		String active = (String) map.get("active"); // 활성화상태 변수에 저장 
+		int period = (Integer) map.get("period"); // 비밀번호 변경 gap구하기 
+		String level = (String)map.get("level"); // level값 변수에 저장 
 		//디버깅
 		log.debug(CF.PSG+"ParkseongjunController.modifyPw.Get().memberId : " + memberId+ CF.RESET);
 		log.debug(CF.PSG+"ParkseongjunController.modifyPw.Get().active : " + active + CF.RESET);

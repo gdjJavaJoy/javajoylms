@@ -87,18 +87,16 @@
 			   if(ck=='false') {
 				   Swal.fire('이미 사용한 비밀번호 입니다');
 				   $('#password').val('');
-			   } else {
+				   return false;
+			   } else if(!/^[a-zA-z0-9]{8,16}$/.test($('#password').val())) {
+					Swal.fire("영문, 숫자로 8자리 이상 입력하세요.");
+					$('#password').focus();
+					return false;
+				} else {
 				  Swal.fire('사용가능한 비밀번호 입니다');
 			   }
 		   }
 		});
-	});
-	$('#pwck').click(function(){
-		if(!/^[a-zA-z0-9]{8,16}$/.test($('#password').val())) {
-			Swal.fire("영문, 숫자로 8자리 이상 입력하세요.");
-			$('#password').focus();
-			return false;
-		} 
 	});
 	$('#confirmPw').blur(function(){
 		if($('#password').val() != ''){

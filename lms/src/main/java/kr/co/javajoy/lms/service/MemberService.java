@@ -92,25 +92,21 @@ public class MemberService {
 		}
 		return row;
 	}
-	// 활성화 상태 조회하는 서비스 
-	public String getMemberActive(String memberId) {
+	public Map<String,Object> modifyPw(String memberId) {
+		Map<String,Object> map = new HashMap<String,Object>();
 		String active = memberMapper.selectMemberActive(memberId);
-		return active;
+		int period = memberMapper.selectMemberPwPeriod(memberId); // 비밀번호 현재날짜 - 마지막으로 
+		String level = memberMapper.selectMemberLevel(memberId);	
+		map.put("active",active);
+		map.put("period", period);
+		map.put("level", level);
+		memberMapper.updateMemberActive(memberId);
+		return map;
 	}
 	
 	// 비활성화 member 활성화
 	public void modifyMemberActive(String memberId) {
 		memberMapper.updateMemberActive(memberId);
-	}
-	// 비밀번호 변경일 
-	public int getMemberPwPeriod(String memberId) {
-		memberMapper.selectMemberPwPeriod(memberId);
-		return memberMapper.selectMemberPwPeriod(memberId);
-	}
-	// level 값 받아오는서비스 
-	public String getMemberLevel(String memberId) {
-		String level = memberMapper.selectMemberLevel(memberId);
-		return level;
 	}
 	// 해당 회원이 같은비밀번호 사용하는 지 검사하는서비스 
 	public int getFindSamePw(String memberId,String password) {
