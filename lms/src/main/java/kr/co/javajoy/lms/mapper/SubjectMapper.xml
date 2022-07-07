@@ -217,10 +217,53 @@
 		WHERE subject_no = #{subjectNo}
 	</delete>
 	
+	<select id="selectLanguageList"
+			resultType="kr.co.javajoy.lms.vo.Language">
+		SELECT 
+			language_no languageNo
+			,language_name languageName
+			,create_date createDate
+			,update_date updateDate
+		FROM language
+	</select>
 	
+	<insert id="insertLanguage"
+			parameterType="kr.co.javajoy.lms.vo.Language">
+		INSERT INTO `language`(
+			language_name
+			,create_date
+			,update_date
+			) 
+			VALUES(
+				#{languageName}
+				,NOW()
+				,NOW()
+			)
+	</insert>
 	
+	<select id="selectlanguageOne"
+			parameterType="int"
+			resultType="kr.co.javajoy.lms.vo.Language">
+		SELECT 
+			language_no languageNo
+			,language_name languageName
+			,create_date createDate
+			,update_date updateDate
+		FROM language
+		WHERE language_no = #{languageNo}
+	</select>
 	
+	<update id="updateLanguageOne"
+			parameterType="kr.co.javajoy.lms.vo.Language">
+		UPDATE `language` SET 
+			language_name = #{languageName}
+			,update_date = NOW()
+		WHERE language_no = #{languageNo}
+	</update>
 	
-	
+	<delete id="deleteLanguageOne">
+		DELETE FROM `language`
+		WHERE language_no = #{languageNo}
+	</delete>
 	
 </mapper>

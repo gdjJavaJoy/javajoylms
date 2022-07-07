@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.service.SubjectService;
+import kr.co.javajoy.lms.vo.Language;
 import kr.co.javajoy.lms.vo.Student;
 import kr.co.javajoy.lms.vo.Subject;
 import kr.co.javajoy.lms.vo.SubjectVideo;
@@ -275,4 +276,62 @@ public class SubjectController {
 		
 		return "/subject/getSubjectStudentList";
 	}
+	
+	// 언어 리스트 출력
+	@GetMapping("getLanguageList")
+	public String getLanguageList(Model model) {
+		List<Language> languageList = subjectService.getLanguageList(); // 언어 리스트 출력
+		log.debug(CF.YHJ + "SubjectController.getSubjectStudentList.languageList : " + languageList + CF.RESET); // 디버깅
+		
+		model.addAttribute("languageList",languageList);
+		
+		return "/subject/getLanguageList";
+	}
+	
+	// 언어 추가
+	@GetMapping("addLanguage")
+	public String addLanguage() {
+		return "/subject/addLanguage";
+	}
+	
+	@PostMapping("addLanguage")
+	public String addLanguage(Language language) {
+		log.debug(CF.YHJ + "SubjectController.addLanguage.language : " + language + CF.RESET); // 디버깅
+		subjectService.addLanguage(language); // 언어 추가
+		
+		return "redirect:/getLanguageList";
+	}
+	
+	// 언어 수정
+	@GetMapping("modifyLanguage")
+	public String modifyLanguage(@RequestParam(value="languageNo") int languageNo
+								,Model model) {
+		log.debug(CF.YHJ + "SubjectController.modifyLanguage.languageNo : " + languageNo + CF.RESET); // 디버깅
+		
+		Language language = subjectService.getlanguageOne(languageNo); // LanguageOne 출력
+		log.debug(CF.YHJ + "SubjectController.modifyLanguage.language : " + language + CF.RESET); // 디버깅
+		
+		model.addAttribute("language",language);
+	
+		return "/subject/modifyLanguage";
+	}
+	
+	@PostMapping("modifyLanguage")
+	public String modifyLanguage(Language language) {
+		log.debug(CF.YHJ + "SubjectController.modifyLanguage.language : " + language + CF.RESET); // 디버깅
+		
+		subjectService.modifylanguageOne(language); // LanguageOne 출력
+		log.debug(CF.YHJ + "SubjectController.modifyLanguage.language : " + language + CF.RESET); // 디버깅
+		return "redirect:/getLanguageList";
+	}
+	
+	// 언어 삭제
+	@GetMapping("removeLanguage")
+	public String removeLanguage(@RequestParam(value="languageNo") int languageNo) {
+		log.debug(CF.YHJ + "SubjectController.removeLanguage.languageNo : " + languageNo + CF.RESET); // 디버깅
+		subjectService.removeLanguage(languageNo); // 언어 삭제
+		
+		return "redirect:/getLanguageList";
+	}
+	
 }

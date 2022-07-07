@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.mapper.SubjectMapper;
+import kr.co.javajoy.lms.vo.Language;
 import kr.co.javajoy.lms.vo.Student;
 import kr.co.javajoy.lms.vo.Subject;
 import kr.co.javajoy.lms.vo.SubjectVideo;
@@ -161,6 +162,39 @@ public class SubjectService {
 		log.debug(CF.YHJ + "SubjectService.getSubjectStudentList.studentList : " + studentList + CF.RESET);
 		
 		return studentList;
+	}
+	
+	// 언어 리스트 출력
+	public List<Language> getLanguageList(){
+		List<Language> list = subjectMapper.selectLanguageList(); 
+		log.debug(CF.YHJ + "SubjectService.getSubjectStudentList.list : " + list + CF.RESET); // 디버깅
+		
+		return list;
+	}
+	
+	public void addLanguage(Language language) {
+		log.debug(CF.YHJ + "SubjectService.addLanguage.language : " + language + CF.RESET); // 디버깅
+		subjectMapper.insertLanguage(language);
+	}
+	
+	// 강좌One 정보 출력
+	public Language getlanguageOne(int languageNo) {
+		log.debug(CF.YHJ + "SubjectService.getlanguageOne.languageNo : " + languageNo + CF.RESET); // 디버깅
+		Language language = subjectMapper.selectlanguageOne(languageNo);
+		
+		return language;
+	}
+	
+	// 언어 수정
+	public void modifylanguageOne(Language language) {
+		log.debug(CF.YHJ + "SubjectService.modifylanguageOne.language : " + language + CF.RESET); // 디버깅
+		subjectMapper.updateLanguageOne(language);
+	}
+	
+	// 언어삭제
+	public void removeLanguage(int languageNo) {
+		log.debug(CF.YHJ + "SubjectService.modifylanguageOne.languageNo : " + languageNo + CF.RESET); // 디버깅
+		subjectMapper.deleteLanguageOne(languageNo);
 	}
 }
 

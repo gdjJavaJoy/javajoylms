@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.javajoy.lms.vo.Language;
 import kr.co.javajoy.lms.vo.Subject;
 import kr.co.javajoy.lms.vo.SubjectVideo;
 
@@ -45,4 +46,20 @@ public interface SubjectMapper {
 	
 	// 특정 강좌의 학생 리스트
 	List<Map<String,Object>> selectSubjectStudentList(Map<String,Object> map);
+	
+	// 언어 리스트 
+	List<Language> selectLanguageList();
+	
+	// 언어 추가
+	public void insertLanguage(Language language);
+	
+	// 언어 One 정보 출력
+	public Language selectlanguageOne(int languageNo);
+	
+	// 언어 수정
+	public void updateLanguageOne(Language language);
+	
+	// 언어 삭제
+	public void deleteLanguageOne(int languageNo);
+	
 }
