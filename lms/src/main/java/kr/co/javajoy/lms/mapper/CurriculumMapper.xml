@@ -17,16 +17,11 @@
 		,l.language_name languageName
 		,c.curriculum_title curriculumTitle
 		,c.curriculum_content curriculumContent
-		,b.book_title bookTitle
-		,b.book_writer bookWriter
-		,b.book_company bookCompany
 		,c.start_day startDay
 		,c.end_day endDay
 	FROM curriculum AS c
 	LEFT JOIN teacher AS t ON t.member_id = c.member_id
 	LEFT JOIN language AS l ON l.language_no = c.language_no
-	LEFT JOIN curriculum_book AS cb ON cb.curriculum_no = c.curriculum_no
-	LEFT JOIN book AS b ON b.book_no = cb.book_no
 	WHERE c.subject_no = #{subjectNo}
 	ORDER BY b.create_date DESC
 	LIMIT #{startRow}, #{rowPerPage}
@@ -139,6 +134,70 @@
 		,NOW()
 	)
 </insert>
+
+<!-- 3) 커리큘럼 상세보기 -->
+
+<!-- 커리큘럼 상세보기 -->
+<select id="selectCurriculumOne"
+		parameterType="int"
+		resultType="java.util.Map">
+	SELECT 
+		c.curriculum_no curriculumNo
+		,c.subject_no subjectNo
+		,c.member_id memberId
+		,t.teacher_name teacherName
+		,c.language_no languageNo
+		,l.language_name languageName
+		,c.curriculum_title curriculumTitle
+		,c.curriculum_content curriculumContent
+		,c.start_day startDay
+		,c.end_day endDay
+	FROM curriculum AS c
+	LEFT JOIN teacher AS t ON t.member_id = c.member_id
+	LEFT JOIN language AS l ON l.language_no = c.language_no
+	WHERE c.curriculum_no = #{curriculumNo}
+</select>
+<!-- 커리큘럼 상세보기 속 도서 목록 출력 -->
+<select id="selectBookListByCurriculumNo"
+		parameterType="int"
+		resultType="kr.co.javajoy.lms.vo.Book">
+	SELECT 
+		b.book_no bookNo
+		,b.book_title bookTitle
+		,b.book_writer bookWriter
+		,b.book_company bookCompany
+	FROM book AS b
+	LEFT JOIN curriculum_book AS cb ON cb.book_no = b.book_no
+	LEFT JOIN curriculum AS c ON c.curriculum_no = cb.curriculum_no
+	WHERE c.curriculum_no = #{curriculumNo}
+</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </mapper>
 

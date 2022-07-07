@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> 	
 </head>
 <body>
 <div class="container">
@@ -31,7 +33,7 @@
         </thead>
         <tbody>
             <c:forEach var="s" items="${curriculumList}" varStatus="cnt">
-                <tr>
+                <tr onClick="location.href='${pageContext.request.contextPath}/getCurriculumOne?CurriculumNo=${s.CurriculumNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
                    <td class="px-4 py-3 text-sm">${cnt.index+1}</td>
                    <td>${s.teacherName}</td>
                    <td>${s.languageName}</td>

@@ -36,4 +36,10 @@ public interface CurriculumMapper {
 	// 커리큘럼에 교육 도서 정보 추가 
 	int insertBookByCurriculum(CurriculumBook curriculumBook);
 	
+	// 3) 커리큘럼 상세보기
+	
+	// 커리큘럼 내용 상세보기
+	List<Map<String, Object>> selectCurriculumOne(int curriculumNo);
+	// 커리큘럼 하나당 도서목록 리스트
+	List<Book> selectBookListByCurriculumNo(int curriculumNo);
 }
