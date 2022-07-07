@@ -14,6 +14,7 @@
 	defer></script>
 <script src="./public/assets/js/init-alpine.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 	<div
@@ -64,13 +65,13 @@
 <script>
 	$('#findPwBtn').click(function() {
 		if ($('#memberId').val() == '') {
-			alert('빈칸이 있습니다.');
+			Swal.fire('빈칸이 있습니다.');
 			return;
 		}else if ($('#memberName').val() == '') {
-			alert('빈칸이 있습니다.');
+			Swal.fire('빈칸이 있습니다.');
 			return;
 		} else if($('#memberPhone').val() == ''){
-			alert('빈칸이 있습니다.');
+			Swal.fire('빈칸이 있습니다.');
 			return;
 		}
 		$('#findMemberPwForm').submit();
