@@ -26,8 +26,8 @@ public class SubjectNoticeController {
 	
 	// 1) 강의공지사항 리스트 URL GetMapping
 	@GetMapping("/subjectNoticeList")
-	public String subjectNotice(Model model
-								,HttpSession session
+	public String subjectNotice(HttpSession session
+								,Model model
 								,@RequestParam(name = "currentPage", defaultValue = "1") int currentPage
 								,@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage
 								,@RequestParam(value = "subjectNo") int subjectNo) {
@@ -93,6 +93,7 @@ public class SubjectNoticeController {
 		
 		// SubjectBoardInsertForm에 받아왔던 자료들을 subjectNoitceFileList에 저장
 		List<MultipartFile> subjectNoitceFileList = subjectBoardInsertForm.getSubjectBoardFileList();
+		log.debug(CF.WSH + "SubjectNoticeController.addsubjectNotice.subjectNoitceFileList.post() : " + subjectNoitceFileList + CF.WSH);
 		if(subjectNoitceFileList != null && subjectNoitceFileList.get(0).getSize() > 0) {
 			// subjectNoitceFileList가 비어있지 않으면
 			for(MultipartFile mf : subjectNoitceFileList) {
@@ -105,6 +106,29 @@ public class SubjectNoticeController {
 		subjectNoticeService.addSubjectNotice(subjectBoardInsertForm, path);
 		return "redirect:/subjectNoticeList?subjectNo=" + subjectNo;
 		
+	}
+	@GetMapping("/subjectNoticeOne")
+	public String subjectNoticeOne(HttpSession session
+									,Model model
+									,HttpServletRequest request
+									,@RequestParam(name="subjectBoardNo") int subjectBoardNo) {
+		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeOne.subjectBoardNo.Get() : " + subjectBoardNo + CF.WSH);
+		
+		String memberId = (String)session.getAttribute("loginUser");
+		String level = (String)session.getAttribute("level"); 
+		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeOne.memberId : " + memberId + CF.WSH);
+		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeOne.level : " + level + CF.WSH);
+		
+		String path = request.getServletContext().getRealPath("/file/subjectFile/");
+		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeOne.path.Get() : " + path + CF.WSH);
+		
+		Map<String, Object> returnMap = subjectNoticeService.subjectNoticeOne(subjectBoardNo);
+		model.addAttribute("path", path);
+		model.addAttribute("subjectNotice", returnMap.get("subjectNotice"));
+		model.addAttribute("subjectNoticeFile", returnMap.get("subjectNoticeFile"));
+		model.addAttribute("FileCount", returnMap.get("FileCount"));
+		
+		return "subject/subjectNotice/subjectNoticeOne";
 	}
 	
 	

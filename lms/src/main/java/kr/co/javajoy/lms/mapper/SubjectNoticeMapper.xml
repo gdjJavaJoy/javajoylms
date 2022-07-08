@@ -8,6 +8,7 @@
 			resultType="java.util.Map">
 		SELECT  
 			b.subject_no subjectNo
+			,b.subject_board_no subjectBoardNo
 			,n.subject_notice_no subjectNoticeNo
 			,n.member_id memberId
 			,n.subject_notice_title subjectNoticeTitle
@@ -22,10 +23,13 @@
 	</select>
 	<!-- 리스트 전체 카운트 -->
 	<select id="selectTotalCount" 
-			resultType="int" >
-		SELECT COUNT(*)
-		FROM subject_notice
-		WHERE subject_notice_no = "${subjectNoticeNo}"
+			resultType="int" 
+			parameterType="int">
+		SELECT
+			COUNT(*) cnt
+		FROM subject_notice AS n
+			inner join subject_board AS b ON n.subject_notice_no = b.subject_board_no
+		WHERE b.subject_no = #{subjectNo}
 	</select>		
 	<!-- 리스트 추가(subjectNo 입력) -->
 	<insert id="insertSubjectNoticeBoardNo"
@@ -77,4 +81,43 @@
 			,NOW()
 		)
 	</insert>
+	<select id="subjectNoticeOne"
+				parameterType="int"
+				resultType="java.util.Map">
+		SELECT 
+			b.subject_board_no subjectBoardNo
+			,b.subject_no subjectNo
+			,n.subject_notice_no subjectNoticeNo
+			,n.member_id memberId
+			,n.subject_notice_title subjectNoticeTitle
+			,n.subject_notice_content subjectNoticeContent
+			,n.create_date createDate
+			,t.teacher_name teacherName
+		FROM
+			subject_notice n
+			inner join subject_board b ON n.subject_notice_no = b.subject_board_no
+			INNER JOIN teacher t ON t.member_id = n.member_id
+		WHERE b.subject_board_no = #{subjectBoardNo}
+	</select>
+	<select id="subjectNoticeFileOne"
+				parameterType="int"
+				resultType="java.util.Map">
+		SELECT
+			f.subject_file_no subjectFileNo
+			,f.subject_file_board_no subjectFileBoardNo
+			,f.subject_file_name subjectFileName
+			,f.subject_file_original_name subjectFileOriginalName
+			,f.subject_file_type subjectFileType
+			,f.subject_file_size subjectFileSize
+			,b.subject_board_no boardNo
+		FROM subject_file f
+			inner join subject_board b ON subject_board_no = subject_file_board_no
+		WHERE subject_board_no = #{subjectBoardNo}
+	</select>
+	<select id="subjectNoticeFileCount"
+				resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM student_file
+	</select>
 	</mapper>

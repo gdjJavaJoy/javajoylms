@@ -40,7 +40,7 @@ public class SubjectNoticeService {
 		
 		// Mapper에서 반환(호출) 된 값 가공
 		List<Map<String, Object>> list = subjectNoticeMapper.getSubjectNoticeList(map);
-		int totalCount = subjectNoticeMapper.selectTotalCount();
+		int totalCount = subjectNoticeMapper.selectTotalCount(subjectNo);
 		int lastPage = (int)(Math.ceil((double)totalCount / (double)rowPerPage));
 		
 		Map<String, Object> returnMap = new HashMap<>();
@@ -91,7 +91,7 @@ public class SubjectNoticeService {
 				filename = filename.replace("-", ""); 
 				// -를 공백으로
 				filename = filename + ext;
-				subjectFile.setSubjectBoardNo(subjectBoard.getSubjectBoardNo());
+				subjectFile.setSubjectFileBoardNo(subjectNotice.getSubjectNoticeNo());
 				subjectFile.setSubjectFileOriginalName(originName);
 				subjectFile.setSubjectFileName(filename);
 				subjectFile.setSubjectFileType(mf.getContentType());
@@ -108,8 +108,32 @@ public class SubjectNoticeService {
 				}
 				
 			}
+			
+			
 		}
 		
 	}
 	
-}
+
+	public Map<String, Object> subjectNoticeOne(int subjectBoardNo){
+		// 잘 넘어왔는지 확인
+		log.debug(CF.WSH + "SubjectNoticeService.subjectNoticeOne.subjectNo : " + subjectBoardNo + CF.WSH);
+		
+		List<Map<String, Object>> subjectNotice = subjectNoticeMapper.subjectNoticeOne(subjectBoardNo);
+		log.debug(CF.WSH + "SubjectNoticeService.subjectNoticeOne.subjectNotice : " + subjectNotice + CF.WSH);
+		
+		List<Map<String, Object>> subjectNoticeFile = subjectNoticeMapper.subjectNoticeFileOne(subjectBoardNo);
+		log.debug(CF.WSH + "SubjectNoticeService.subjectNoticeOne.subjectNoticeFile : " + subjectNoticeFile + CF.WSH);
+		
+		int FileCount = subjectNoticeMapper.subjectNoticeFileCount();
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("subjectNotice",subjectNotice);
+		map.put("subjectNoticeFile",subjectNoticeFile);
+		map.put("FileCount",FileCount);
+		return map;
+	}
+		
+	
+	
+ }
