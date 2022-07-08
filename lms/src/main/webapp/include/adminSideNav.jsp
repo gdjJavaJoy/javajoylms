@@ -40,7 +40,7 @@
 								aria-label="submenu">
 								<li
 									class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-									<a class="w-full" href="${pageContext.request.contextPath}/allAdminList">관리자 관리</a>
+									<a class="w-full" href="${pageContext.request.contextPath}/allAdminList">관리자 목록</a>
 								</li>
 								<li
 									class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
