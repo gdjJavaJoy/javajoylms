@@ -10,12 +10,16 @@ import kr.co.javajoy.lms.vo.StudentJob;
 
 @Mapper
 public interface StudentMapper {
+	// 학생 정원 구하기
+	public int totalStudent();
 	// 학생 상세보기
 	public Map<String,Object> selectStudentOne(String memberId);
 	// 학생 수정
 	public void updateStudentOne(Student student);
 	// 취업 학생 리스트 
 	public List<Map<String,Object>> selectEmploytedStudentList(Map<String,Object> map);
+	// 취업 학생 총 수
+	public int totalEmployedStudent();
 	// 취업 학생 등록
 	public void insertEmployedStudent(StudentJob studentJob);
 	// 취업 학생 삭제

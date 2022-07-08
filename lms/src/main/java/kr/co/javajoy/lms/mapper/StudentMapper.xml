@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.javajoy.lms.mapper.StudentMapper">
+	<select id="totalStudent"
+			resultType="int">
+		SELECT 
+			COUNT(member_id) studentCount 
+		FROM student		
+	</select>
+	
 	<select id="selectStudentOne"
 			parameterType="String"
 			resultType="java.util.Map">
@@ -51,6 +58,13 @@
 			CONCAT( '%', s.student_name, '%' ) 
 			LIKE CONCAT( '%', #{searchName} , '%' )
 		</if>
+	</select>
+	
+	<select id="totalEmployedStudent"
+			resultType="int">
+		SELECT 
+			COUNT(member_id) count 
+		FROM student_job
 	</select>
 	
 	<insert id="insertEmployedStudent"

@@ -96,6 +96,9 @@
 	</div>
 </body>
 <script>
+	$('#adminSideNav').load('${pageContext.request.contextPath}/include/adminSideNav.jsp');
+	$('#adminHeaderNav').load('${pageContext.request.contextPath}/include/adminHeaderNav.jsp');
+	
 	$('#addBtn').click(function() {
 		if ($('#languageName').val() == '') {
 			Swal.fire('언어를 입력해주세요');

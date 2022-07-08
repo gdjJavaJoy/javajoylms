@@ -7,5 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface StatsMapper {
+	// 강좌별 과제 개수
 	List<Map<String,Object>> subjectReportCountBySubjectNo();
 }
