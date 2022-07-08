@@ -2,217 +2,230 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.javajoy.lms.mapper.CurriculumMapper">
 
-<!-- 1) 커리큘럼 리스트 -->
-
-<!-- 관리자(Admin) 커리큘럼 리스트 -->
-<select id="selectCurriculumList"
-		parameterType="java.util.Map"
-		resultType="java.util.Map">
-	SELECT 
-		c.curriculum_no curriculumNo
-		,c.subject_no subjectNo
-		,s.subject_name subjectName
-		,c.member_id memberId
-		,t.teacher_name teacherName
-		,c.language_no languageNo
-		,l.language_name languageName
-		,c.curriculum_title curriculumTitle
-		,c.curriculum_content curriculumContent
-		,b.book_title bookTitle
-		,b.book_writer bookWriter
-		,b.book_company bookCompany
-		,c.start_day startDay
-		,c.end_day endDay
-	FROM curriculum AS c
-	LEFT JOIN teacher AS t ON t.member_id = c.member_id
-	LEFT JOIN language AS l ON l.language_no = c.language_no
-	LEFT JOIN curriculum_book AS cb ON cb.curriculum_no = c.curriculum_no
-	LEFT JOIN book AS b ON b.book_no = cb.book_no
-	LEFT JOIN subject AS s ON s.subject_no = c.subject_no
-	WHERE c.subject_no = #{subjectNo}
-	ORDER BY b.create_date DESC
-	LIMIT #{startRow}, #{rowPerPage}
-</select>
-<!-- 리스트 전체 카운트 -->
-<select id="selectTotalCount" 
-		resultType="int" >
-	SELECT COUNT(*)
-	FROM curriculum
-</select>
-
-<!-- 2) 커리큘럼 추가 -->
-
-<!-- 강사 이름, id 리스트 -->
-<select id="selectTeacherName" 
-		resultType="java.util.Map">
-	SELECT 
-		teacher_name teacherName
-		,member_id memberId
-	FROM teacher 
-</select>
-<!-- 프로그램닝 언어 이름, id 리스트 -->
-<select id="selectLanguageName" 
-		resultType="java.util.Map" >
-	SELECT 
-		language_no languageNo
-		,language_name languageName
-	FROM language
-</select>
-<!-- 교육 도서 이름, id 리스트 -->
-<select id="selectBookName" 
-		resultType="java.util.Map" >
-	SELECT
-		book_no bookNo
-		,book_title bookTitle
-	FROM book
-</select>
-<!-- 커리큘럼 추가 -->
-<insert id="insertCurriculum"
-		parameterType="kr.co.javajoy.lms.vo.Curriculum">
-	<selectKey resultType="int" keyProperty="curriculumNo" order="AFTER">
-		select last_insert_id()
-	</selectKey>
-	INSERT INTO curriculum (
-		subject_no
-		,member_id
-		,language_no
-		,curriculum_title
-		,curriculum_content
-		,start_day
-		,end_day
-		,create_date
-		,update_date
-	) VALUES (
-		#{subjectNo}
-		,#{memberId}
-		,#{languageNo}
-		,#{curriculumTitle}
-		,#{curriculumContent}
-		,#{startDay}
-		,#{endDay}
-		,NOW()
-		,NOW()
-	)
-</insert>
-<!-- 커리큘럼에 교육 도서 정보 추가 -->
-<insert id="insertBookByCurriculum"
-		parameterType="kr.co.javajoy.lms.vo.CurriculumBook">
-	INSERT INTO curriculum_book (
-		curriculum_no
-		,book_no
-		,update_date
-	) VALUES (
-		#{curriculumNo}
-		,#{bookNo}
-		,NOW()
-	)
-</insert>
-<!-- 프로그래밍 언어 추가  -->
-<insert id="insertLanguage"
-		parameterType="kr.co.javajoy.lms.vo.Language">
-	INSERT INTO language (
-		language_no
-		,language_name
-		,create_date
-		,update_date
-	) VALUES (
-		#{languageNo}
-		,#{languageName}
-		,NOW()
-		,NOW()
-	)
-</insert>
-<!-- 교육 도서 추가 -->
-<insert id="insertBook"
-		parameterType="kr.co.javajoy.lms.vo.Book">
-	INSERT INTO book (
-		book_no
-		,book_title
-		,book_Writer
-		,book_company
-		,create_date
-		,update_date
-	) VALUES (
-		#{bookNo}
-		,#{bookTitle}
-		,#{bookWriter}
-		,#{bookCompany}
-		,NOW()
-		,NOW()
-	)
-</insert>
-
-<!-- 3) 커리큘럼 상세보기 -->
-
-<!-- 커리큘럼 상세보기 -->
-<select id="selectCurriculumOne"
-		parameterType="int"
-		resultType="java.util.Map">
-	SELECT 
-		c.curriculum_no curriculumNo
-		,c.subject_no subjectNo
-		,s.subject_name subjectName
-		,c.member_id memberId
-		,t.teacher_name teacherName
-		,c.language_no languageNo
-		,l.language_name languageName
-		,c.curriculum_title curriculumTitle
-		,c.curriculum_content curriculumContent
-		,c.start_day startDay
-		,c.end_day endDay
-	FROM curriculum AS c
-	LEFT JOIN teacher AS t ON t.member_id = c.member_id
-	LEFT JOIN language AS l ON l.language_no = c.language_no
-	LEFT JOIN subject AS s ON s.subject_no = c.subject_no
-	WHERE c.curriculum_no = #{curriculumNo}
-</select>
-<!-- 커리큘럼 상세보기 속 도서 목록 출력 -->
-<select id="selectBookListByCurriculumNo"
-		parameterType="int"
-		resultType="java.util.Map">
-	SELECT 
-		b.book_no bookNo
-		,b.book_title bookTitle
-		,b.book_writer bookWriter
-		,b.book_company bookCompany
-		,c.curriculum_no curriculumNo
-	FROM book AS b
-	LEFT JOIN curriculum_book AS cb ON cb.book_no = b.book_no
-	LEFT JOIN curriculum AS c ON c.curriculum_no = cb.curriculum_no
-	WHERE c.curriculum_no = #{curriculumNo}
-</select>
-
-<!-- 커리큘럼 수정 -->
-
-<!-- 커리큘럼 수정 -->
-<update id="updateCurriculum"
-		parameterType="kr.co.javajoy.lms.vo.Curriculum">
-	<selectKey resultType="int" keyProperty="curriculumNo" order="AFTER">
-		select last_insert_id()
-	</selectKey>
-	UPDATE curriculum SET 
-		curriculum_no = #{curriculumNo}
-		,subject_no = #{subjectNo}
-		,member_id = #{memberId}
-		,language_no = #{languageNo}
-		,curriculum_title = #{curriculumTitle}
-		,curriculum_content = #{curriculumContent}
-		,start_day = #{startDay}
-		,end_day= #{endDay}
-		,update_date = NOW()
-	WHERE curriculum_no = #{curriculumNo}
-</update>
-
-<!--  -->
-<select id="languageRateByCurriculum"
-      resultType="java.util.Map">
-   SELECT 
-      l.language_name languageName
-      ,COUNT(*) count
-   FROM curriculum c
-   INNER JOIN language l ON l.language_no = c.language_no
-   GROUP BY c.language_no
-</select>
+	<!-- 1) 커리큘럼 리스트 -->
+	
+	<!-- 관리자(Admin) 커리큘럼 리스트 -->
+	<select id="selectCurriculumList"
+			parameterType="java.util.Map"
+			resultType="java.util.Map">
+		SELECT 
+			c.curriculum_no curriculumNo
+			,c.subject_no subjectNo
+			,s.subject_name subjectName
+			,c.member_id memberId
+			,t.teacher_name teacherName
+			,c.language_no languageNo
+			,l.language_name languageName
+			,c.curriculum_title curriculumTitle
+			,c.curriculum_content curriculumContent
+			,c.start_day startDay
+			,c.end_day endDay
+		FROM curriculum AS c
+		LEFT JOIN teacher AS t ON t.member_id = c.member_id
+		LEFT JOIN language AS l ON l.language_no = c.language_no
+		LEFT JOIN subject AS s ON s.subject_no = c.subject_no
+		WHERE c.subject_no = #{subjectNo}
+		ORDER BY c.create_date DESC
+		LIMIT #{startRow}, #{rowPerPage}
+	</select>
+	<!-- 리스트 전체 카운트 -->
+	<select id="selectTotalCount" 
+			resultType="int" >
+		SELECT COUNT(*)
+		FROM curriculum
+	</select>
+	
+	<!-- 2) 커리큘럼 추가 -->
+	
+	<!-- 강사 이름, id 리스트 -->
+	<select id="selectTeacherName" 
+			resultType="java.util.Map">
+		SELECT 
+			teacher_name teacherName
+			,member_id memberId
+		FROM teacher 
+	</select>
+	<!-- 프로그램닝 언어 이름, id 리스트 -->
+	<select id="selectLanguageName" 
+			resultType="java.util.Map" >
+		SELECT 
+			language_no languageNo
+			,language_name languageName
+		FROM language
+	</select>
+	<!-- 교육 도서 이름, id 리스트 -->
+	<select id="selectBookName" 
+			resultType="java.util.Map" >
+		SELECT
+			book_no bookNo
+			,book_title bookTitle
+		FROM book
+	</select>
+	<!-- 커리큘럼 추가 -->
+	<insert id="insertCurriculum"
+			parameterType="kr.co.javajoy.lms.vo.Curriculum">
+		<selectKey resultType="int" keyProperty="curriculumNo" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+		INSERT INTO curriculum (
+			subject_no
+			,member_id
+			,language_no
+			,curriculum_title
+			,curriculum_content
+			,start_day
+			,end_day
+			,create_date
+			,update_date
+		) VALUES (
+			#{subjectNo}
+			,#{memberId}
+			,#{languageNo}
+			,#{curriculumTitle}
+			,#{curriculumContent}
+			,#{startDay}
+			,#{endDay}
+			,NOW()
+			,NOW()
+		)
+	</insert>
+	<!-- 커리큘럼에 교육 도서 정보 추가 -->
+	<insert id="insertBookByCurriculum"
+			parameterType="kr.co.javajoy.lms.vo.CurriculumBook">
+		INSERT INTO curriculum_book (
+			curriculum_no
+			,book_no
+			,update_date
+		) VALUES (
+			#{curriculumNo}
+			,#{bookNo}
+			,NOW()
+		)
+	</insert>
+	<!-- 프로그래밍 언어 추가  -->
+	<insert id="insertLanguage"
+			parameterType="kr.co.javajoy.lms.vo.Language">
+		INSERT INTO language (
+			language_no
+			,language_name
+			,create_date
+			,update_date
+		) VALUES (
+			#{languageNo}
+			,#{languageName}
+			,NOW()
+			,NOW()
+		)
+	</insert>
+	<!-- 교육 도서 추가 -->
+	<insert id="insertBook"
+			parameterType="kr.co.javajoy.lms.vo.Book">
+		INSERT INTO book (
+			book_no
+			,book_title
+			,book_Writer
+			,book_company
+			,create_date
+			,update_date
+		) VALUES (
+			#{bookNo}
+			,#{bookTitle}
+			,#{bookWriter}
+			,#{bookCompany}
+			,NOW()
+			,NOW()
+		)
+	</insert>
+	
+	<!-- 3) 커리큘럼 상세보기 -->
+	
+	<!-- 커리큘럼 상세보기 -->
+	<select id="selectCurriculumOne"
+			parameterType="int"
+			resultType="java.util.Map">
+		SELECT 
+			c.curriculum_no curriculumNo
+			,c.subject_no subjectNo
+			,s.subject_name subjectName
+			,c.member_id memberId
+			,t.teacher_name teacherName
+			,c.language_no languageNo
+			,l.language_name languageName
+			,c.curriculum_title curriculumTitle
+			,c.curriculum_content curriculumContent
+			,c.start_day startDay
+			,c.end_day endDay
+		FROM curriculum AS c
+		LEFT JOIN teacher AS t ON t.member_id = c.member_id
+		LEFT JOIN language AS l ON l.language_no = c.language_no
+		LEFT JOIN subject AS s ON s.subject_no = c.subject_no
+		WHERE c.curriculum_no = #{curriculumNo}
+	</select>
+	<!-- 커리큘럼 상세보기 속 도서 목록 출력 -->
+	<select id="selectBookListByCurriculumNo"
+			parameterType="int"
+			resultType="java.util.Map">
+		SELECT 
+			cb.book_no bookNo
+			,b.book_title bookTitle
+			,b.book_writer bookWriter
+			,b.book_company bookCompany
+		FROM curriculum_book AS cb
+		LEFT JOIN book AS b ON b.book_no = cb.book_no
+		WHERE cb.curriculum_no = #{curriculumNo}
+	</select>
+	
+	<!-- 4) 커리큘럼 수정 -->
+	
+	<!-- 커리큘럼 수정 -->
+	<update id="updateCurriculum"
+			parameterType="kr.co.javajoy.lms.vo.Curriculum">
+		<selectKey resultType="int" keyProperty="curriculumNo" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+		UPDATE curriculum SET 
+			curriculum_no = #{curriculumNo}
+			,subject_no = #{subjectNo}
+			,member_id = #{memberId}
+			,language_no = #{languageNo}
+			,curriculum_title = #{curriculumTitle}
+			,curriculum_content = #{curriculumContent}
+			,start_day = #{startDay}
+			,end_day= #{endDay}
+			,update_date = NOW()
+		WHERE curriculum_no = #{curriculumNo}
+	</update>
+	
+	<!-- 5) 커리큘럼 삭제 -->
+	
+	<!-- 커리큘럼 도서 정보 삭제 -->
+	<delete id="deleteBookNoAndCurriculumNo"
+			parameterType="int">
+		DELETE FROM curriculum_book
+		WHERE curriculum_no = #{curriculumNo} AND
+	</delete>
+	<!-- 커리큘럼 삭제 -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!--  -->
+	<select id="languageRateByCurriculum"
+	      resultType="java.util.Map">
+	   SELECT 
+	      l.language_name languageName
+	      ,COUNT(*) count
+	   FROM curriculum c
+	   INNER JOIN language l ON l.language_no = c.language_no
+	   GROUP BY c.language_no
+	</select>
 
 
 

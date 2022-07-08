@@ -38,20 +38,20 @@
 			$('#signup').click(function(){
 				if($('subjectNo').val() == '') {
 					Swal.fire('test');
+			    } else if($('#curriculumNo').val() == '') {
+			    	Swal.fire('test');
 			    } else if($('#memberId').val() == '') {
 			    	Swal.fire('담당 강사를 입력하세요');
 			    } else if($('#languageNo').val() == '') {
 			    	Swal.fire('프로그래밍 언어 선택!');
 				} else if($('#curriculumTitle').val() == '') {
 					Swal.fire('커리큘럼 제목을 입력!');
-				} else if($('#curriculumContent').val() == '') {
-					Swal.fire('커리큘럼 내용을 입력하세요!');
 				} else if($('#startDay').val() == '') {
 					Swal.fire('커리큘럼 시작 날짜를 입력하세요!');
 				} else if($('#endDay').val() == '') {
 					Swal.fire('커리큘럼 마감 날짜를 입력하세요!');
-				} else if($('#bookNo').val() == '') {
-					Swal.fire('커리큘럼 도서 정보를 입력하세요!');
+				} else if($('#curriculumContent').val() == '') {
+					Swal.fire('커리큘럼 내용을 입력하세요!');
 				} else {
 					$('#addSubjectForm').submit();
 				}
@@ -86,23 +86,26 @@
             <div class="container grid px-6 mx-auto">
             <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의 커리큘럼 페이지</h2>
             <!-- CTA -->
-            <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
-              href="${pageContext.request.contextPath}/getCurriculumList?subjectNo=${subjectNo}&subjectName=${subjectName}">
-              <div class="flex items-center">
-                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                </svg>
-                <span>커리큘럼 관리 페이지</span>
-              </div>
-              <span>${subjectName} 커리큘럼 &RightArrow;</span>
-            </a>
-       
-            <!-- With avatar -->
-            <h4
-              class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300"
-            >
-              ${subjectName} 커리큘럼 수정
-            </h4>
+            <c:forEach var="curriculum" items="${curriculum}">
+	            <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
+	              href="${pageContext.request.contextPath}/getCurriculumOne?curriculumNo=${curriculum.curriculumNo}&subjectName=${curriculum.subjectName}">
+	              <div class="flex items-center">
+	                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+	                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+	                </svg>
+	                <span>커리큘럼 관리 페이지</span>
+	              </div>
+	              <span>${curriculum.curriculumTitle} &RightArrow;</span>
+	            </a>
+	       
+	            <!-- With avatar -->
+	            <h4
+	              class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300"
+	            >
+	              ${curriculum.curriculumTitle} 수정
+	            </h4>
+            </c:forEach>
+            
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto">
               <c:forEach var="curriculum" items="${curriculum}">
@@ -152,30 +155,6 @@
 			    						<option value="${s.languageNo}">${s.languageName}</option>
 				    			    </c:forEach>
 			    	 			</select>
-	                          </div>
-	                        </div>
-	                      </td>
-	                     </tr>
-	                       <tr class="text-gray-700 dark:text-gray-400">
-	                      <td class="px-4 py-3">
-	                        <div class="flex items-center text-sm">
-	                          <!-- Avatar with inset shadow -->
-	                          <div>
-	                            <p class="font-semibold">교육 도서 선택</p>
-	                          </div>
-	                        </div>
-	                      </td>
-	                       <td class="px-4 py-3">
-	                        <div class="flex items-center text-sm">
-	                          <!-- Avatar with inset shadow -->
-	                          <div>
-			    					<c:forEach var="b" items="${bookList}">
-			    						<input
-			                    			type="checkbox"
-			                    			class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-			                    			value="${b.bookNo}" id="bookNo" name="bookNo">
-			                  			${b.bookTitle}
-				    			    </c:forEach>
 	                          </div>
 	                        </div>
 	                      </td>
@@ -276,8 +255,31 @@
 	                </form>
 	               </div>
                  <br>
+                 
                </div>
-         	</div>
+               <!-- 도서 리스트 -->
+				<div class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
+	           		참고 도서 목록
+	           	</div>
+					<table class="w-full whitespace-no-wrap">
+		            	<thead>
+		            		<tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+		            			<th class="px-4 py-3">도서 제목</th>
+					            <th class="px-4 py-3">저자</th>			             
+					            <th class="px-4 py-3">출판사</th>
+		            		</tr>
+		            	</thead>
+		            	<tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+		            		<c:forEach var="modifyBookList" items="${modifyBookList}">
+		            			<tr class="text-gray-700 dark:text-gray-400">
+		            				<td class="px-4 py-3 text-sm">${modifyBookList.bookTitle}</td>
+		            				<td class="px-4 py-3 text-sm">${modifyBookList.bookWriter}</td>
+		            				<td class="px-4 py-3 text-sm">${modifyBookList.bookCompany}</td>	
+		            			</tr>
+		            		</c:forEach>
+		            	</tbody>
+		            </table>
+         		</div>
          	</main>
           </div>
       </div>

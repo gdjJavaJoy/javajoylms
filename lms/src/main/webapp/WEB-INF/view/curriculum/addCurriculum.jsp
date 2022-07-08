@@ -42,6 +42,8 @@
 			    	Swal.fire('담당 강사를 입력하세요');
 			    } else if($('#languageNo').val() == '') {
 			    	Swal.fire('프로그래밍 언어 선택!');
+				} else if($('#bookNo').val() == '') {
+					Swal.fire('커리큘럼 도서 정보를 입력하세요!');
 				} else if($('#curriculumTitle').val() == '') {
 					Swal.fire('커리큘럼 제목을 입력!');
 				} else if($('#curriculumContent').val() == '') {
@@ -50,9 +52,7 @@
 					Swal.fire('커리큘럼 시작 날짜를 입력하세요!');
 				} else if($('#endDay').val() == '') {
 					Swal.fire('커리큘럼 마감 날짜를 입력하세요!');
-				} else if($('#bookNo').val() == '') {
-					Swal.fire('커리큘럼 도서 정보를 입력하세요!');
-				} else {
+				}else {
 					$('#addSubjectForm').submit();
 				}
 			});
@@ -105,7 +105,7 @@
             </h4>
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto">
-             	<form id="addSubjectForm" method="post" name="addSujectForm" action="${pageContext.request.contextPath}/addCurriculum">
+             	<form id="addSubjectForm" method="post" name="addSujectForm" action="${pageContext.request.contextPath}/addCurriculum?subjectNo=${subjectNo}&subjectName=${subjectName}">
                 	<input type="hidden" id="subjectNo" name="subjectNo" class="form-control" value="${subjectNo}">
                 	<table class="w-full whitespace-no-wrap">
 	                	<tr class="text-gray-700 dark:text-gray-400">

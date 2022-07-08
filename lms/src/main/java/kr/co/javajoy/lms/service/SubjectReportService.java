@@ -31,10 +31,9 @@ public class SubjectReportService {
 	// ------------------------ 1) 과제 게시판 글 리스트 출력 <SELECT> ------------------------ 
 	
 	// 1-1) 과제 게시판 글 리스트 출력
-	public Map<String, Object> getSubjectReportListByPage(int currentPage, int rowPerPage, int subjectNo, String rSubjectReportTitle, String subjectName) {
+	public Map<String, Object> getSubjectReportListByPage(int currentPage, int rowPerPage, int subjectNo, String rSubjectReportTitle) {
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.currentPage" + currentPage);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.rowPerPage" + rowPerPage);
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.subjectName" + subjectName);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.subjectNo" + subjectNo);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.rSubjectReportTitle" + rSubjectReportTitle);
 		// 페이징
@@ -43,13 +42,11 @@ public class SubjectReportService {
 		map.put("startRow", startRow);
 		map.put("rowPerPage", rowPerPage);
 		map.put("subjectNo", subjectNo);
-		map.put("subjectName", subjectName);
 		map.put("rSubjectReportTitle", rSubjectReportTitle);
 		
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.startRow :" + startRow);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.rowPerPage :" + rowPerPage);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.subjectNo :" + subjectNo);
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.subjectName :" + subjectName);
 		
 		// 1) 컨트롤러에서 넘오온 변수값 가공 후 맵퍼 호출
 		List<Map<String, Object>> list = subjectReportMapper.selectSubjectReportListByPage(map);
@@ -66,13 +63,11 @@ public class SubjectReportService {
 		returnMap.put("list", list);
 		returnMap.put("lastPage", lastPage);
 		returnMap.put("subjectNo", subjectNo);
-		returnMap.put("subjectName", subjectName);
 		returnMap.put("rSubjectReportTitle)", rSubjectReportTitle);
 		
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.returnMap.list.size()" + list.size());
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.returnMap.lastPage" + lastPage);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.returnMap.subjectNo" + subjectNo);
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.returnMap.subjectName" + subjectName);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.returnMap.rSubjectReportTitle" + rSubjectReportTitle);
 
 		return returnMap;

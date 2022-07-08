@@ -70,16 +70,16 @@
                 </svg>
                 <span>과제 게시판</span>
               </div>
-              <span>${subjectName} 강좌로 돌아가기 &RightArrow;</span>
+              <span>강좌 &RightArrow;</span>
             </a>
             
           
             <!-- With avatar -->
        
-	           	 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">${subjectName} 강좌 과제 게시판
+	           	 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">과제 목록
 	         
 	            	<c:if test="${level eq 1 || level eq 2}">
-	            		<a href="${pageContext.request.contextPath}/addSubjectReport?subjectNo=${subjectNo}&subjectName=${subject.subjectName}" class="text-sm" style="float: right;">과제 추가 -></a>
+	            		<a href="${pageContext.request.contextPath}/addSubjectReport?subjectNo=${subjectNo}" class="text-sm" style="float: right;">과제 추가 -></a>
 	       			</c:if>
 	            </h4>
  

@@ -8,7 +8,10 @@
 	<select id="selectTotalCount"
 			parameterType="String"
 			resultType="int">
-		SELECT COUNT(*) FROM subject_report
+		SELECT COUNT(*) 
+		FROM subject_report AS r
+		LEFT JOIN subject_board AS b  ON b.subject_board_no = r.subject_report_no
+		WHERE b.subject_no = #{subjectNo}
 		<if test='rSubjectReportTitle != null and !"".equals(rSubjectReportTitle)'>
 			AND CONCAT('%', r.subject_report_title, '%') 
 			LIKE CONCAT('%', #{rSubjectReportTitle}, '%')

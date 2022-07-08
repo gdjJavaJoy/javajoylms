@@ -95,16 +95,6 @@ public class CurriculumService {
 		log.debug(CF.PBJ + "CurriculumListController.addCurriculum.curriculumBook : " + curriculumBook);
 		curriculumMapper.insertBookByCurriculum(curriculumBook);
 	}
-	// 2-5) 커리큘럼에 맞는 도서 추가
-	public int addBookByCurriculum(CurriculumBook curriculumBook) {
-		log.debug(CF.PBJ + "CurriculumListController.addBookByCurriculum.curriculumBook : " + curriculumBook);
-		return curriculumMapper.insertBookByCurriculum(curriculumBook);
-	}
-	// 2-6) 프로그래밍 언어 추가
-	public int addLanguage(Language language) {
-		log.debug(CF.PBJ + "CurriculumListController.addCurriculum.language : " + language);
-		return curriculumMapper.insertLanguage(language);
-	}
 
 	// ------------------------ 3) 커리큘럼 상세보기 <SELECT ONE>------------------------ 
 	
@@ -133,7 +123,31 @@ public class CurriculumService {
 	
 	// ------------------------ 4) 커리큘럼 수정 <UPDATE>------------------------ 
 	
-	// 4-1) 커리큘럼 수정 Action
+	// 4-1) 커리큘럼 수정 Form
+	public Map<String, Object> modifyCurriculumOneAndBookList(Map<String, Object> map) {
+		int curriculumNo = (int)map.get("curriculumNo");
+		log.debug(CF.PBJ + "CurriculumListController.modifyCurriculumOneAndBookList.curriculumNo : " + curriculumNo);
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("curriculumNo", curriculumNo);
+		log.debug(CF.PBJ + "CurriculumListController.modifyCurriculumOneAndBookList.paramMap.put(curriculumNo) : " + curriculumNo);
+		// 커리큘럼 상세보기
+		List<Map<String, Object>> curriculum = curriculumMapper.selectCurriculumOne(curriculumNo);
+		log.debug(CF.PBJ + "CurriculumListController.modifyCurriculumOneAndBookList.curriculumNo : " + curriculumNo);
+		// 커리큘럼의 교육 도서 리스트 출력
+		List<Book> modifyBookList = curriculumMapper.selectBookListByCurriculumNo(curriculumNo);
+		log.debug(CF.PBJ + "CurriculumListController.modifyCurriculumOneAndBookList.modifyBookList : " + modifyBookList);
+		// 커리큘럼 상세보기 + 교육 도서 리스트 저장
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("curriculum", curriculum);
+		returnMap.put("modifyBookList", modifyBookList);
+		
+		log.debug(CF.PBJ + "CurriculumListController.modifyCurriculumOneAndBookList.curriculum : " + curriculum);
+		log.debug(CF.PBJ + "CurriculumListController.modifyCurriculumOneAndBookList.modifyBookList : " + modifyBookList);
+		
+		return returnMap;
+	}
+	
+	// 4-2) 커리큘럼 수정 Action
 		public void modifyCurriculum(CurriculumForm curriculumForm) {
 		log.debug(CF.PBJ + "CurriculumListController.modifyCurriculum.curriculumFrom: " + curriculumForm);
 		// 커리큘럼 데이터 입력

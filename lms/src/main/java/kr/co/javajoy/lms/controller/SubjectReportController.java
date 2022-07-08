@@ -36,8 +36,7 @@ public class SubjectReportController {
 										   ,@RequestParam @Nullable String rSubjectReportTitle
 										   ,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 										   ,@RequestParam(value="rowPerPage", defaultValue="10") int rowPerPage
-										   ,@RequestParam(value="subjectNo") int subjectNo
-										   ,@RequestParam(value="subjectName") String subjectName) {
+										   ,@RequestParam(value="subjectNo") int subjectNo) {
 		// session 처리
 		String memberId = (String)session.getAttribute("loginUser");
 		String level = (String)session.getAttribute("level");
@@ -48,23 +47,20 @@ public class SubjectReportController {
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.currentPage" + currentPage);
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.rowPerPage" + rowPerPage);
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectNo" + subjectNo);
-		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectName" + subjectName);
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.rSubjectReportTitle" + rSubjectReportTitle);
 
 		// 뷰를 호출 시, 모델계층으로 부터 반환된 모델값을 뷰로 보냄
-		Map<String, Object> map = subjectReportService.getSubjectReportListByPage(currentPage, rowPerPage, subjectNo, subjectName, rSubjectReportTitle);
+		Map<String, Object> map = subjectReportService.getSubjectReportListByPage(currentPage, rowPerPage, subjectNo, rSubjectReportTitle);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("subjectNo", subjectNo);
-		model.addAttribute("subjectName", subjectName);
 		model.addAttribute("rSubjectReportTitle", map.get("rSubjectReportTitle"));
 		
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.list" + map.get("list"));
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.currentPage" + currentPage);
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.lastPage" + map.get("lastPage"));
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectNo" + subjectNo);
-		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectName" +subjectName);
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.rSubjectReportTitle" + map.get("rSubjectReportTitle"));
 		
 		return "subject/getSubjectReportListByPage";
@@ -73,10 +69,10 @@ public class SubjectReportController {
 	// 1-2) 과제 게시판 리스트에서 과목번호 넘겨주기
 	@PostMapping("/getSubjectReportListByPage")
 	public String getSubjectReportListByPage(Model model
-											,@RequestParam(name="subjectNo") int subjectNo) {
+			,@RequestParam(name="subjectNo") int subjectNo) {
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectNo : " + subjectNo);
 		model.addAttribute("subjectNo", subjectNo);
-		
+
 		return "redirect:/addSubjectReport?subjectNo=" + subjectNo;
 	}
 	
@@ -125,7 +121,7 @@ public class SubjectReportController {
 				log.debug(CF.PBJ + "SubjectReportController.addSubjectReport(Action).subjectFileOriginalName : " + mf.getOriginalFilename());
 			}
 		}
-		
+
 		model.addAttribute("subjectNo", subjectNo);
 		log.debug(CF.PBJ + "SubjectReportController.addSubjectReport(Action).addAttribute.subjectNo : " + subjectNo);
 		

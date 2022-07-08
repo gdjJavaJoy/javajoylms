@@ -30,7 +30,7 @@ public class CurriculumController {
 	public String getCurriculumList(HttpSession session
 								,Model model
 								,@RequestParam(value = "currentPage", defaultValue = "1") int currentPage
-								,@RequestParam(value = "rowPerPage", defaultValue = "10") int rowPerPage
+								,@RequestParam(value = "rowPerPage", defaultValue = "20") int rowPerPage
 							    ,@RequestParam(value = "subjectNo") int subjectNo
 							    ,@RequestParam(value = "subjectName") String subjectName) {
 		log.debug(CF.PBJ + "CurriculumListController.getCurriculumList.subjectNo : " + subjectNo);
@@ -113,16 +113,18 @@ public class CurriculumController {
 	@PostMapping("/addCurriculum")
 	public String addCurriculum(Model model
 							,CurriculumForm curriculumForm
-							,@RequestParam(name = "subjectNo") int subjectNo) {
+							,@RequestParam(name = "subjectNo") int subjectNo
+							,@RequestParam(name = "subjectName") String subjectName) {
 		log.debug(CF.PBJ + "CurriculumListController.addCurriculum(Action).curriculumForm : " + curriculumForm);
 		log.debug(CF.PBJ + "CurriculumListController.addCurriculum(Action).subjectNo : " + subjectNo);
 		
 		model.addAttribute("subjectNo", subjectNo);
+		model.addAttribute("subjectName", subjectName);
 		log.debug(CF.PBJ + "CurriculumListController.addCurriculum(Action).addAttribute.subjectNo : " + subjectNo);
 		
 		curriculumService.addCurriculum(curriculumForm);
 		log.debug(CF.PBJ + "CurriculumListController.addCurriculum(Action).curriculumForm : " + curriculumForm);
-		return "redirect:/getCurriculumList?subjectNo=" + subjectNo;
+		return "redirect:/getCurriculumList?subjectNo=" + subjectNo + "&subjectName=" + subjectName;
 	}
 	
 	// ------------------------ 3) 커리큘럼 상세보기 <SELECT ONE>------------------------ 
@@ -171,28 +173,26 @@ public class CurriculumController {
 			if(level.equals("2") || level.equals("3")) {
 				return "redirect:/login";
 			}
+			
 			// Form 불러오기 
 			// 커리큘럼 no
 			Map<String, Object> map = new HashMap<>();
 			map.put("curriculumNo", curriculumNo);
 			// 커리큘럼 상세보기 + 도서 리스트 
-			Map<String, Object> returnMap = curriculumService.getCurriculumOneAndBookList(map);
+			Map<String, Object> returnMap = curriculumService.modifyCurriculumOneAndBookList(map);
+			model.addAttribute("curriculum", returnMap.get("curriculum"));
+			model.addAttribute("modifyBookList", returnMap.get("modifyBookList"));
+			model.addAttribute("curriculumNo", curriculumNo);
 			// 강사 이름 리스트 출력
 			List<Map<String, Object>> teacherList = curriculumService.selectTeacherName();
 			// 프로그래밍 언어 리스트 출력
 			List<Map<String, Object>> languageList = curriculumService.selectLanguageName();
 			// 교육 도서 리스트 출력
 			List<Map<String, Object>> bookList = curriculumService.selectBookName();
-			model.addAttribute("curriculum", returnMap.get("curriculum"));
-			model.addAttribute("bookList", returnMap.get("bookList"));
 			model.addAttribute("teacherList", teacherList);
 			model.addAttribute("languageList", languageList);
 			model.addAttribute("bookList", bookList);
-			model.addAttribute("curriculumNo", curriculumNo);
-
-			log.debug(CF.PBJ + "CurriculumController.getCurriculumOne.curriculum : " + returnMap.get("curriculum"));
-			log.debug(CF.PBJ + "CurriculumController.getCurriculumOne.bookList : " + returnMap.get("bookList"));
-			log.debug(CF.PBJ + "CurriculumListController.modifyCurriculum(Form).curriculumNo : " + curriculumNo);
+			;
 			log.debug(CF.PBJ + "CurriculumListController.modifyCurriculum(Form).teacherList : " + teacherList);
 			log.debug(CF.PBJ + "CurriculumListController.modifyCurriculum(Form).languageList : " + languageList);
 			log.debug(CF.PBJ + "CurriculumListController.modifyCurriculum(Form).bookList : " + bookList);
