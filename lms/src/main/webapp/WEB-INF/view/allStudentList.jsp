@@ -78,10 +78,20 @@
 							<td class="px-4 py-3 text-sm">${s.studentDetailAddress}</td>
 							<td class="px-4 py-3 text-sm">${s.studentEmail}</td>
 							<td class="px-4 py-3 text-sm">${s.studentEducation}</td>
-							<td><form method="get" name="form">
-								<input type="hidden" value="${s.memberId}" name="memberId">
-								<input type="submit" value="수정" onclick="javascript: form.action='${pageContext.request.contextPath}/modifyStudentOne'"/>
-								<input type="submit" value="삭제" onclick="javascript: form.action='${pageContext.request.contextPath}/deleteStudent'"/>
+							<td>
+								<form method="get" id="form" name="form">
+									<div>
+										<input type="hidden" value="${s.memberId}" name="memberId">
+										<input type="submit" value="수정" onclick="javascript: form.action='${pageContext.request.contextPath}/modifyStudentOne'"/>
+									</div>
+								</form>
+							</td>
+							<td>
+								<form method="get" id="deleteForm-${s.memberId}" name="deleteForm-${s.memberId}" action="${pageContext.request.contextPath}/deleteStudent">
+									<div>
+										<input type="hidden" value="${s.memberId}" name="memberId">
+										<input type="button" value="삭제" class="deletebtn" name="deletebtn" data-value="${s.memberId}"/>
+									</div>
 								</form>
 							</td>
 						</tr>
@@ -115,8 +125,33 @@
        </div>
       </div>
   </body>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+$(document).ready(function(){
+	// 삭제버튼 클릭시 발생하는 이벤트
+	$(".deletebtn").on('click',function(){
+		var memberId = $(this).data('value')
+		Swal.fire({
+		    title: '정말 삭제 하시겠습니까?',
+		    text: "삭제후 다시 되돌릴 수 없습니다.",
+		    icon: 'warning',
+		    showCancelButton: true,
+		    confirmButtonColor: '#3085d6',
+		    cancelButtonColor: '#d33',
+		    confirmButtonText: '삭제',
+		    cancelButtonText: '취소'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				var deleteForm = 'deleteForm-';
+				deleteForm += memberId;
+				$('#'+ deleteForm ).submit();
+				Swal.fire('삭제','회원 정보가 삭제 되었습니다.','완료');
+		    }
+		});
+	});
  	$('#adminSideNav').load('${pageContext.request.contextPath}/include/adminSideNav.jsp');
 	$('#adminHeaderNav').load('${pageContext.request.contextPath}/include/adminHeaderNav.jsp');
+});	
+
 </script>
 </html>
