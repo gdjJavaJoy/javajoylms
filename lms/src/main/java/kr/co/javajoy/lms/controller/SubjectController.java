@@ -334,4 +334,10 @@ public class SubjectController {
 		return "redirect:/getLanguageList";
 	}
 	
+	// 강좌 엑셀 다운로드시 넘어가는 페이지
+	@GetMapping("downloadSubject")
+	public String downloadSubject() {
+		return "/subject/downloadSubject";
+	}
+	
 }

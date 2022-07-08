@@ -17,6 +17,8 @@ public interface SubjectMapper {
 	List<String> selectTeacherId();
 	// 강좌 리스트(운영자 용) 출력
 	List<Subject> selectSubjectByPage(Map<String, Object> map);
+	// 페이징 없는 리스트 출력 
+	List<Subject> selectSubjectList();
 	// 강좌 총 수
 	int selectTotalCount();
 	// 강좌 상세보기s

@@ -31,6 +31,26 @@
 		)
 	</insert>
 	
+	<select id="selectSubjectList"
+			resultType="kr.co.javajoy.lms.vo.Subject">
+		SELECT
+			s.subject_no subjectNo
+			,t.teacher_name teacherName
+			,s.admin_id adminId
+			,s.subject_name subjectName
+			,s.subject_student_max subjectStudentMax
+			,s.subject_info subjectInfo
+			,s.subject_start_date subjectStartDate
+			,s.subject_finish_date subjectFinishDate
+			,s.subject_start_time subjectStartTime
+			,s.subject_end_time subjectEndTime
+			,s.create_date createDate
+			,s.update_date updateDate
+		FROM subject AS s
+		LEFT JOIN teacher AS t ON s.teacher_id = t.member_id
+		ORDER BY create_date DESC
+	</select>
+	
 	<!-- 강좌 리스트(운영자용) -->
 	<select id="selectSubjectByPage"
 			parameterType="java.util.Map"

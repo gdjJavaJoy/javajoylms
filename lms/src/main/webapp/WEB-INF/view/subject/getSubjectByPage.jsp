@@ -58,6 +58,8 @@
             </a>
 
             <!-- With avatar -->
+           <a href="${pageContext.request.contextPath}/downloadSubject" target="_blank">다운로드</a>
+            
             <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">모든 강좌 목록</h4>
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto">
