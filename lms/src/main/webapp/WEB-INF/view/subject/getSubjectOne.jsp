@@ -76,29 +76,29 @@
            	  <div class="container">
 					<ol class="breadcrumb" style="float:rigth;">
 						<li>
-							<a style="float:right;" href="${pageContext.request.contextPath}/getSubjectDataListByPage?subjectNo=${subject.subjectNo}">&nbsp&nbsp강좌 자료&nbsp&nbsp</a>
+							<a class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" style="float:right;" href="${pageContext.request.contextPath}/getSubjectDataListByPage?subjectNo=${subject.subjectNo}">&nbsp;&nbsp;강좌 자료&nbsp;&nbsp;</a>
 						</li>
 						<li >
-							<a style="float:right;" href="${pageContext.request.contextPath}/subjectNoticeList?subjectNo=${subject.subjectNo}">&nbsp&nbsp강좌 공지사항(구현중)&nbsp&nbsp</a>
+							<a class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"style="float:right;" href="${pageContext.request.contextPath}/subjectNoticeList?subjectNo=${subject.subjectNo}">&nbsp;&nbsp;강좌 공지사항(구현중)&nbsp;&nbsp;</a>
 						</li>
 						<li>
-							<a style="float:right;" href="${pageContext.request.contextPath}/getCurriculumList?subjectNo=${subject.subjectNo}">&nbsp&nbsp커리큘럼&nbsp&nbsp</a>
+							<a class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"style="float:right;" href="${pageContext.request.contextPath}/getCurriculumList?subjectNo=${subject.subjectNo}">&nbsp;&nbsp;커리큘럼&nbsp;&nbsp;</a>
 						</li>
 						<c:if test="${surveyChk < 1}"> <!--  설문조사를 하지 않은사람만 보이게 -->
 							<li>
-								<a style="float:right;" href="${pageContext.request.contextPath}/getSurvey?subjectNo=${subject.subjectNo}">&nbsp&nbsp설문 조사&nbsp&nbsp</a>
+								<a class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" style="float:right;" href="${pageContext.request.contextPath}/getSurvey?subjectNo=${subject.subjectNo}">&nbsp;&nbsp;설문 조사&nbsp;&nbsp;</a>
 							</li>
 						</c:if>
 						<li>
-							<a style="float:right;" href="${pageContext.request.contextPath}/getSubjectVideo?subjectNo=${subject.subjectNo}">&nbsp&nbsp강좌 영상&nbsp&nbsp</a>
+							<a class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"style="float:right;" href="${pageContext.request.contextPath}/getSubjectVideo?subjectNo=${subject.subjectNo}">&nbsp;&nbsp;강좌 영상&nbsp;&nbsp;</a>
 						</li>
 						<li>
-							<a style="float:right;" href="${pageContext.request.contextPath}/getSubjectReportListByPage?subjectNo=${subject.subjectNo}&subjectName=${subject.subjectName}">&nbsp&nbsp과제 게시판&nbsp&nbsp</a>
+							<a class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"style="float:right;" href="${pageContext.request.contextPath}/getSubjectReportListByPage?subjectNo=${subject.subjectNo}&subjectName=${subject.subjectName}">&nbsp;&nbsp;과제 게시판&nbsp&nbsp;</a>
 						</li>
 						<!-- 운영자 + 강사 전용 페이지 -->
 						<c:if test="${level eq 1 || level eq 2}">
 							<li>
-								<a style="float:right;" href="${pageContext.request.contextPath}/getSubjectStudentList?subjectNo=${subject.subjectNo}">&nbsp&nbsp수강 학생&nbsp&nbsp</a>
+								<a class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" style="float:right;" href="${pageContext.request.contextPath}/getSubjectStudentList?subjectNo=${subject.subjectNo}">&nbsp;&nbsp;수강 학생&nbsp;&nbsp;</a>
 							</li>
 						</c:if>
 					</ol>

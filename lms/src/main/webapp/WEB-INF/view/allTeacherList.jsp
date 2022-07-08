@@ -78,7 +78,7 @@
 								<form method="get" id="form" name="form">
 									<div>
 										<input type="hidden" value="${s.memberId}" name="memberId">
-										<input type="submit" value="수정" onclick="javascript: form.action='${pageContext.request.contextPath}/modifyTeacherOne'"/>
+										<input class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-md active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue" type="submit" value="수정" onclick="javascript: form.action='${pageContext.request.contextPath}/modifyTeacherOne'"/>
 									</div>
 								</form>
 							</td>
@@ -86,7 +86,7 @@
 								<form method="get" id="deleteForm-${s.memberId}" name="deleteForm-${s.memberId}" action="${pageContext.request.contextPath}/deleteTeacher">
 									<div>
 										<input type="hidden" value="${s.memberId}" name="memberId">
-										<input type="button" value="삭제" class="deletebtn" name="deletebtn" data-value="${s.memberId}"/>
+										<input class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-md active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red" type="button" value="삭제" class="deletebtn" name="deletebtn" data-value="${s.memberId}"/>
 									</div>
 								</form>
 							</td>
@@ -107,11 +107,11 @@
                 <!-- Pagination -->
                 <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
                 	<c:if test="${currentPage > 1}">
-                   		<a class="btn btn-primary" href="${pageContext.request.contextPath}/allTeachertList?currentPage=${currentPage-1}">이전</a>
+                   		<a  class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" href="${pageContext.request.contextPath}/allTeachertList?currentPage=${currentPage-1}">이전</a>
                    	</c:if>
                    		<span>&nbsp;  &nbsp;</span>
                    	<c:if test="${currentPage < lastPage}">	
-                  		 <a class="btn btn-primary" href="${pageContext.request.contextPath}/allTeacherList?currentPage=${currentPage+1}">다음</a> 
+                  		 <a class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" href="${pageContext.request.contextPath}/allTeacherList?currentPage=${currentPage+1}">다음</a> 
                   	</c:if>	 
                 </span>
               </div>
