@@ -82,7 +82,7 @@
 							<a class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"style="float:right;" href="${pageContext.request.contextPath}/subjectNoticeList?subjectNo=${subject.subjectNo}">&nbsp;&nbsp;강좌 공지사항(구현중)&nbsp;&nbsp;</a>
 						</li>
 						<li>
-							<a class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"style="float:right;" href="${pageContext.request.contextPath}/getCurriculumList?subjectNo=${subject.subjectNo}">&nbsp;&nbsp;커리큘럼&nbsp;&nbsp;</a>
+							<a class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"style="float:right;" href="${pageContext.request.contextPath}/getCurriculumList?subjectNo=${subject.subjectNo}&subjectName=${subject.subjectName}">&nbsp;&nbsp;커리큘럼&nbsp;&nbsp;</a>
 						</li>
 						<c:if test="${surveyChk < 1}"> <!--  설문조사를 하지 않은사람만 보이게 -->
 							<li>

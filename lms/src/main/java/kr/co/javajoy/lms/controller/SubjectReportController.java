@@ -36,7 +36,8 @@ public class SubjectReportController {
 										   ,@RequestParam @Nullable String rSubjectReportTitle
 										   ,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 										   ,@RequestParam(value="rowPerPage", defaultValue="10") int rowPerPage
-										   ,@RequestParam(value="subjectNo") int subjectNo) {
+										   ,@RequestParam(value="subjectNo") int subjectNo
+										   ,@RequestParam(value="subjectName") String subjectName) {
 		// session 처리
 		String memberId = (String)session.getAttribute("loginUser");
 		String level = (String)session.getAttribute("level");
@@ -47,22 +48,23 @@ public class SubjectReportController {
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.currentPage" + currentPage);
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.rowPerPage" + rowPerPage);
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectNo" + subjectNo);
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectName" + subjectName);
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.rSubjectReportTitle" + rSubjectReportTitle);
 
 		// 뷰를 호출 시, 모델계층으로 부터 반환된 모델값을 뷰로 보냄
-		Map<String, Object> map = subjectReportService.getSubjectReportListByPage(currentPage, rowPerPage, subjectNo, rSubjectReportTitle);
+		Map<String, Object> map = subjectReportService.getSubjectReportListByPage(currentPage, rowPerPage, subjectNo, subjectName, rSubjectReportTitle);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", map.get("lastPage"));
-		model.addAttribute("subjectNo", map.get("subjectNo"));
-		model.addAttribute("subjectName", map.get("subjectName"));
+		model.addAttribute("subjectNo", subjectNo);
+		model.addAttribute("subjectName", subjectName);
 		model.addAttribute("rSubjectReportTitle", map.get("rSubjectReportTitle"));
 		
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.list" + map.get("list"));
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.currentPage" + currentPage);
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.lastPage" + map.get("lastPage"));
-		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectNo" + map.get("subjectNo"));
-		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectName" + map.get("subjectName"));
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectNo" + subjectNo);
+		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.subjectName" +subjectName);
 		log.debug(CF.PBJ + "SubjectReportController.getSubjectReportListByPage.rSubjectReportTitle" + map.get("rSubjectReportTitle"));
 		
 		return "subject/getSubjectReportListByPage";

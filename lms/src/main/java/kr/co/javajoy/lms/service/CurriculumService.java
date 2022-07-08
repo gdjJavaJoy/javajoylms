@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.mapper.CurriculumMapper;
+import kr.co.javajoy.lms.vo.Book;
 import kr.co.javajoy.lms.vo.Curriculum;
 import kr.co.javajoy.lms.vo.CurriculumBook;
 import kr.co.javajoy.lms.vo.CurriculumForm;
@@ -25,7 +26,7 @@ public class CurriculumService {
 	// ---------------------- 1) 커리쿨럼 리스트 출력 <SELECT> ----------------------
 	
 	// 1-1) 커리큘럼 리스트 출력
-	public Map<String, Object> selectCurriculumList(int currentPage, int rowPerPage, int subjectNo) {
+	public Map<String, Object> selectCurriculumList(int currentPage, int rowPerPage, int subjectNo, String subjectName) {
 		// 리스트 출력 페이징
 		int startRow = (currentPage - 1) * rowPerPage;
 		
@@ -33,8 +34,10 @@ public class CurriculumService {
 		map.put("rowPerPage", rowPerPage);
 		map.put("startRow", startRow);
 		map.put("subjectNo", subjectNo);
+		map.put("subjectName", subjectName);
 		
 		log.debug(CF.PBJ + "CurriculumListController.selectCurriculumList.subjectNo : " + subjectNo);
+		log.debug(CF.PBJ + "CurriculumListController.selectCurriculumList.subjectName : " + subjectName);
 		
 		// Mapper에서 반환 된 값 가공
 		List<Map<String, Object>> curriculumList = curriculumMapper.selectCurriculumList(map);
@@ -45,14 +48,16 @@ public class CurriculumService {
 		returnMap.put("curriculumList", curriculumList);
 		returnMap.put("lastPage", lastPage);
 		returnMap.put("subjectNo", subjectNo);
-		
-		log.debug(CF.PBJ + "CurriculumListController.selectCurriculumList.rowPerPage : " + rowPerPage);
-		log.debug(CF.PBJ + "CurriculumListController.selectCurriculumList.startRow : " + startRow);
+		returnMap.put("subjectName", subjectName);
+
 		log.debug(CF.PBJ + "CurriculumListController.selectCurriculumList.lastPage : " + lastPage );
 		log.debug(CF.PBJ + "CurriculumListController.selectCurriculumList.curriculumList : " + curriculumList);
+		log.debug(CF.PBJ + "CurriculumListController.selectCurriculumList.subjectNo: " + subjectNo);
+		log.debug(CF.PBJ + "CurriculumListController.selectCurriculumList.subjectName: " + subjectName);
 		
 		return returnMap;
 	}
+	
 	
 	// ---------------------- 2) 커리큘럼 입력(운영자용) <INSERT> ----------------------
 	
@@ -101,5 +106,95 @@ public class CurriculumService {
 		return curriculumMapper.insertLanguage(language);
 	}
 
+	// ------------------------ 3) 커리큘럼 상세보기 <SELECT ONE>------------------------ 
 	
+	public Map<String, Object> getCurriculumOneAndBookList(Map<String, Object> map) {
+		int curriculumNo = (int)map.get("curriculumNo");
+		log.debug(CF.PBJ + "CurriculumListController.getCurriculumOneAndBookList.curriculumNo : " + curriculumNo);
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("curriculumNo", curriculumNo);
+		log.debug(CF.PBJ + "CurriculumListController.getCurriculumOneAndBookList.paramMap.put(curriculumNo) : " + curriculumNo);
+		// 커리큘럼 상세보기
+		List<Map<String, Object>> curriculum = curriculumMapper.selectCurriculumOne(curriculumNo);
+		log.debug(CF.PBJ + "CurriculumListController.getCurriculumOneAndBookList.curriculumNo : " + curriculumNo);
+		// 커리큘럼의 교육 도서 리스트 출력
+		List<Book> bookList = curriculumMapper.selectBookListByCurriculumNo(curriculumNo);
+		log.debug(CF.PBJ + "CurriculumListController.getCurriculumOneAndBookList.bookList : " + bookList);
+		// 커리큘럼 상세보기 + 교육 도서 리스트 저장
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("curriculum", curriculum);
+		returnMap.put("bookList", bookList);
+		
+		log.debug(CF.PBJ + "CurriculumListController.getCurriculumOneAndBookList.curriculum : " + curriculum);
+		log.debug(CF.PBJ + "CurriculumListController.getCurriculumOneAndBookList.bookList : " + bookList);
+		
+		return returnMap;
+	}
+	
+	// ------------------------ 4) 커리큘럼 수정 <UPDATE>------------------------ 
+	
+	// 4-1) 커리큘럼 수정 Action
+		public void modifyCurriculum(CurriculumForm curriculumForm) {
+		log.debug(CF.PBJ + "CurriculumListController.modifyCurriculum.curriculumFrom: " + curriculumForm);
+		// 커리큘럼 데이터 입력
+		Curriculum curriculum = new Curriculum();
+		curriculum.setCurriculumNo(curriculumForm.getCurriculumNo());
+		curriculum.setSubjectNo(curriculumForm.getSubjectNo());
+		curriculum.setMemberId(curriculumForm.getMemberId());
+		curriculum.setLanguageNo(curriculumForm.getLanguageNo());
+		curriculum.setCurriculumTitle(curriculumForm.getCurriculumTitle());
+		curriculum.setCurriculumContent(curriculumForm.getCurriculumContent());
+		curriculum.setStartDay(curriculumForm.getStartDay());
+		curriculum.setEndDay(curriculumForm.getEndDay());
+		log.debug(CF.PBJ + "CurriculumListController.modifyCurriculum.curriculum : " + curriculum);
+		curriculumMapper.updateCurriculum(curriculum);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

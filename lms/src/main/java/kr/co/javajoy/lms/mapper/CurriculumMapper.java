@@ -43,6 +43,33 @@ public interface CurriculumMapper {
 	// 커리큘럼 하나당 도서목록 리스트
 	List<Book> selectBookListByCurriculumNo(int curriculumNo);
 	
-	// 커리큘럼별 언어 비율
+	// 4) 커리큘럼 수정
+	
+	// 커리큘럼 수정
+	int updateCurriculum(Curriculum curriculum);
+	//
+	
+	
+	
+	
+	
+	
+	//   
 	List<Map<String,Object>> languageRateByCurriculum();
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

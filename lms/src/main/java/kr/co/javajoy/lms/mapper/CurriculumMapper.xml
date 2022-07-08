@@ -11,17 +11,24 @@
 	SELECT 
 		c.curriculum_no curriculumNo
 		,c.subject_no subjectNo
+		,s.subject_name subjectName
 		,c.member_id memberId
 		,t.teacher_name teacherName
 		,c.language_no languageNo
 		,l.language_name languageName
 		,c.curriculum_title curriculumTitle
 		,c.curriculum_content curriculumContent
+		,b.book_title bookTitle
+		,b.book_writer bookWriter
+		,b.book_company bookCompany
 		,c.start_day startDay
 		,c.end_day endDay
 	FROM curriculum AS c
 	LEFT JOIN teacher AS t ON t.member_id = c.member_id
 	LEFT JOIN language AS l ON l.language_no = c.language_no
+	LEFT JOIN curriculum_book AS cb ON cb.curriculum_no = c.curriculum_no
+	LEFT JOIN book AS b ON b.book_no = cb.book_no
+	LEFT JOIN subject AS s ON s.subject_no = c.subject_no
 	WHERE c.subject_no = #{subjectNo}
 	ORDER BY b.create_date DESC
 	LIMIT #{startRow}, #{rowPerPage}
@@ -144,6 +151,7 @@
 	SELECT 
 		c.curriculum_no curriculumNo
 		,c.subject_no subjectNo
+		,s.subject_name subjectName
 		,c.member_id memberId
 		,t.teacher_name teacherName
 		,c.language_no languageNo
@@ -155,38 +163,56 @@
 	FROM curriculum AS c
 	LEFT JOIN teacher AS t ON t.member_id = c.member_id
 	LEFT JOIN language AS l ON l.language_no = c.language_no
+	LEFT JOIN subject AS s ON s.subject_no = c.subject_no
 	WHERE c.curriculum_no = #{curriculumNo}
 </select>
 <!-- 커리큘럼 상세보기 속 도서 목록 출력 -->
 <select id="selectBookListByCurriculumNo"
 		parameterType="int"
-		resultType="kr.co.javajoy.lms.vo.Book">
+		resultType="java.util.Map">
 	SELECT 
 		b.book_no bookNo
 		,b.book_title bookTitle
 		,b.book_writer bookWriter
 		,b.book_company bookCompany
+		,c.curriculum_no curriculumNo
 	FROM book AS b
 	LEFT JOIN curriculum_book AS cb ON cb.book_no = b.book_no
 	LEFT JOIN curriculum AS c ON c.curriculum_no = cb.curriculum_no
 	WHERE c.curriculum_no = #{curriculumNo}
 </select>
 
+<!-- 커리큘럼 수정 -->
+
+<!-- 커리큘럼 수정 -->
+<update id="updateCurriculum"
+		parameterType="kr.co.javajoy.lms.vo.Curriculum">
+	<selectKey resultType="int" keyProperty="curriculumNo" order="AFTER">
+		select last_insert_id()
+	</selectKey>
+	UPDATE curriculum SET 
+		curriculum_no = #{curriculumNo}
+		,subject_no = #{subjectNo}
+		,member_id = #{memberId}
+		,language_no = #{languageNo}
+		,curriculum_title = #{curriculumTitle}
+		,curriculum_content = #{curriculumContent}
+		,start_day = #{startDay}
+		,end_day= #{endDay}
+		,update_date = NOW()
+	WHERE curriculum_no = #{curriculumNo}
+</update>
+
+<!--  -->
 <select id="languageRateByCurriculum"
-		resultType="java.util.Map">
-	SELECT 
-		l.language_name languageName
-		,COUNT(*) count
-	FROM curriculum c
-	INNER JOIN language l ON l.language_no = c.language_no
-	GROUP BY c.language_no
+      resultType="java.util.Map">
+   SELECT 
+      l.language_name languageName
+      ,COUNT(*) count
+   FROM curriculum c
+   INNER JOIN language l ON l.language_no = c.language_no
+   GROUP BY c.language_no
 </select>
-
-
-
-
-
-
 
 
 

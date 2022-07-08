@@ -15,10 +15,12 @@
 </head>
 <body>
 <div class="container">
-    <h1>커리큘럼 리스트</h1>
-    	<div><a href="${pageContext.request.contextPath}/getLanguageList">프로그래밍 언어 관리</a></div>
+
+    <h1>${subjectName} 강좌 커리큘럼 리스트</h1>
+
+    	<div><a href="${pageContext.request.contextPath}/subject/getLanguageList">프로그래밍 언어 관리</a></div>
     	<div><a href="${pageContext.request.contextPath}/getBookList">교육 도서 관리</a></div>
-    	<div><a href="${pageContext.request.contextPath}/addCurriculum?subjectNo=${subjectNo}">커리큘럼 추가</a></div>
+    	<div><a href="${pageContext.request.contextPath}/addCurriculum?subjectNo=${subjectNo}&subjectName=${subjectName}">커리큘럼 추가</a></div>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -33,7 +35,7 @@
         </thead>
         <tbody>
             <c:forEach var="s" items="${curriculumList}" varStatus="cnt">
-                <tr onClick="location.href='${pageContext.request.contextPath}/getCurriculumOne?CurriculumNo=${s.CurriculumNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
+                <tr onClick="location.href='${pageContext.request.contextPath}/getCurriculumOne?curriculumNo=${s.curriculumNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
                    <td class="px-4 py-3 text-sm">${cnt.index+1}</td>
                    <td>${s.teacherName}</td>
                    <td>${s.languageName}</td>
