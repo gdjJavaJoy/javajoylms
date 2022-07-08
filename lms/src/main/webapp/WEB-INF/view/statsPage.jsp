@@ -33,6 +33,8 @@
 <script src="./asset/employedStudentFirstSalaryRate.js" defer></script>
 <!--  아이디 사용률  -->
 <script src="./asset/useMemberRate.js" defer></script>
+<!--  커리큘럼별 언어 사용률  -->
+<script src="./asset/languageRateByCurriculum.js" defer></script>
 </head>
 <body>
 	<div class="flex h-screen bg-gray-50 dark:bg-gray-900"
@@ -127,6 +129,14 @@
 									아이디 사용률</h4>
 								<canvas id="useMemberRate"></canvas>
 							</div>
+							
+							<div
+								class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+								<h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+									언어 사용률</h4>
+								<canvas id="languageRateByCurriculum"></canvas>
+							</div>
+							
 						</div>
 					</div>
 			</main>

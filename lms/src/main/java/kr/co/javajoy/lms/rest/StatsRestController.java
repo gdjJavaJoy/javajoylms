@@ -76,4 +76,13 @@ public class StatsRestController {
 		
 		return map;
 	}
+	
+	// 커리큘럼 기준 언어 사용률
+	@GetMapping("languageRateByCurriculum")
+	public List<Map<String,Object>> languageRateByCurriculum(){
+		List<Map<String,Object>> list = statsService.languageRateByCurriculum();
+		log.debug(CF.YHJ+"StatsRestController.languageRateByCurriculum.map : " + list + CF.RESET); // 디버깅
+		
+		return list;
+	}
 }

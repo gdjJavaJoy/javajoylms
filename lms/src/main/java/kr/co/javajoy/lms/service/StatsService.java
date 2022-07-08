@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.javajoy.lms.CF;
+import kr.co.javajoy.lms.mapper.CurriculumMapper;
 import kr.co.javajoy.lms.mapper.MemberMapper;
 import kr.co.javajoy.lms.mapper.StudentMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class StatsService {
 	@Autowired StudentMapper studentMapper;
 	@Autowired MemberMapper memberMapper;
+	@Autowired CurriculumMapper curriculumMapper;
 	
 	// 학생 취업률 
 	public Map<String,Object> studentEmployedRate(){
@@ -87,6 +89,15 @@ public class StatsService {
 		log.debug(CF.YHJ+"StatsService.useMemberRate.map : " + map + CF.RESET); 
 		
 		return map;
+	}
+	
+	// 커리큘럼별 언어 비율
+	public List<Map<String,Object>> languageRateByCurriculum(){
+		List<Map<String,Object>> list = curriculumMapper.languageRateByCurriculum();
+		
+		log.debug(CF.YHJ+"StatsService.useMemberRate.map : " + list + CF.RESET); // 디버깅
+		
+		return list;
 	}
 	
 }

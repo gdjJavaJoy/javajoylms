@@ -42,4 +42,7 @@ public interface CurriculumMapper {
 	List<Map<String, Object>> selectCurriculumOne(int curriculumNo);
 	// 커리큘럼 하나당 도서목록 리스트
 	List<Book> selectBookListByCurriculumNo(int curriculumNo);
+	
+	// 커리큘럼별 언어 비율
+	List<Map<String,Object>> languageRateByCurriculum();
 }

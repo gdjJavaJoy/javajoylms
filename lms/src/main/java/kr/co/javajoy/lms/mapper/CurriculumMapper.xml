@@ -172,6 +172,15 @@
 	WHERE c.curriculum_no = #{curriculumNo}
 </select>
 
+<select id="languageRateByCurriculum"
+		resultType="java.util.Map">
+	SELECT 
+		l.language_name languageName
+		,COUNT(*) count
+	FROM curriculum c
+	INNER JOIN language l ON l.language_no = c.language_no
+	GROUP BY c.language_no
+</select>
 
 
 
