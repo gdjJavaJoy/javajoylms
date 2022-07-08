@@ -37,7 +37,9 @@ public interface MemberMapper {
 	public void updateMemberActive(String memberId);
 	// 탈퇴한 회원 추출
 	public List<String> selectResignedMemberId();
+	// 비밀번호 중복검사
 	public int selectMemberPw(Map<String, Object> map);
+	// 비밀번호 변경
 	int updateMemberPassword(Password password);
 	// 학생이 들었던 또는 듣고있는 subject리스트 출력
 	public List<Map<String, Object>> studentIndex(String memerId);
@@ -53,8 +55,6 @@ public interface MemberMapper {
 	int insertMemberPhoto(MemberPhoto memberPhoto);
 	// 사진이름가져오는 메서드
 	List<String> selectPhotoNameByMemberId(String memberId);
-	// 검색 결과 카운트
-	int selectTotalCount();
 	// admin 상세보기
 	public Admin selectAdminOne(String memberId);
 	// admin정보 수정

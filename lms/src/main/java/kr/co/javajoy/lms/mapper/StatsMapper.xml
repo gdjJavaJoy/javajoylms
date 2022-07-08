@@ -3,14 +3,19 @@
 <mapper namespace="kr.co.javajoy.lms.mapper.StatsMapper">
 <select id="subjectReportCountBySubjectNo"
 		resultType="java.util.Map">
-SELECT
-	COUNT(*) reportCount
-	,s.subject_name subjectName
-FROM subject_report sr
-INNER JOIN subject_board sb
-		ON sb.subject_board_no = sr.subject_report_no
-INNER JOIN subject s
-		ON s.subject_no = sb.subject_no
-GROUP BY s.subject_no
+	SELECT
+		COUNT(*) reportCount
+		,s.subject_name subjectName
+	FROM subject_report sr
+	INNER JOIN subject_board sb
+			ON sb.subject_board_no = sr.subject_report_no
+	INNER JOIN subject s
+			ON s.subject_no = sb.subject_no
+	GROUP BY s.subject_no
+</select>
+
+<select id="studentEmployedRate"
+		resultType="java.util.Map">
+
 </select>
 </mapper>
