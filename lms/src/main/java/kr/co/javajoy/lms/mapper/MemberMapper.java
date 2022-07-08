@@ -59,4 +59,6 @@ public interface MemberMapper {
 	public Admin selectAdminOne(String memberId);
 	// admin정보 수정
 	public void updateAdmin(Admin admin);
+	// 아이디 사용률
+	public Map<String,Object> useMemberRate();
 }

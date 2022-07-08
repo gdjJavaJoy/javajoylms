@@ -1,23 +1,25 @@
 $.ajax({
 	type: 'get',
-	url: '/lms/studentEmployedRate',
+	url: '/lms/studentGenderRate',
 	success: function(jsonData) {
 		var totalStudentCount = jsonData.totalStudentCount;
-		var totalEmployedStudentCount = jsonData.totalEmployedStudentCount;
-		var employedAvg = jsonData.employedAvg;
-		document.getElementById('employedAvg').innerHTML = employedAvg + '%';
+		var totalStudentOfMan = jsonData.totalStudentOfMan;
+		var totalStudentOfWoman = jsonData.totalStudentOfWoman;
+		var studentGenderRate = jsonData.studentGenderRate;
+		document.getElementById('studentGenderAvg').innerHTML = studentGenderRate + '%';
 
 		console.log(totalStudentCount + 'totalStudentCount');
-		console.log(totalEmployedStudentCount + 'totalEmployedStudentCount');
-		console.log(employedAvg + 'employedAvg');
+		console.log(totalStudentOfMan + 'totalStudentOfMan');
+		console.log(totalStudentOfWoman + 'totalStudentOfWoman');
+		console.log(studentGenderRate + 'studentGenderRate');
 		
-		const ctx = document.getElementById('studentEmployedRate').getContext('2d');
+		const ctx = document.getElementById('studentGenderRate').getContext('2d');
 		const myChart = new Chart(ctx, {
 		    type: 'pie',
 		    data: {
-		        labels: ['취업학생', '미취업학생'],
+		        labels: ['남자', '여자'],
 		        datasets: [{
-		            data: [totalEmployedStudentCount, totalStudentCount - totalEmployedStudentCount],
+		            data: [totalStudentOfMan, totalStudentOfWoman],
 		            datalables:{
 						color:'black',
 						font:{size:24}

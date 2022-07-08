@@ -12,6 +12,10 @@ import kr.co.javajoy.lms.vo.StudentJob;
 public interface StudentMapper {
 	// 학생 정원 구하기
 	public int totalStudent();
+	// 남자 학생 수
+	public int totalStudentOfMan();
+	// 여자 학생 수
+	public int totalStudentOfWoman();
 	// 학생 상세보기
 	public Map<String,Object> selectStudentOne(String memberId);
 	// 학생 수정
@@ -28,4 +32,8 @@ public interface StudentMapper {
 	public StudentJob selectEmployedStudentOne(String memberId);
 	// 취업 학생 수정
 	public void updateEmployedStudent(StudentJob studentJob);
+	// 학생 최종학력 수
+	public List<Map<String,Object>> studentEducationRate();
+	// 취업한 학생 초봉 평균
+	public Map<String,Object> employedStudentFirstSalaryRate();
 }

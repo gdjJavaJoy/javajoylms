@@ -1,23 +1,20 @@
 $.ajax({
 	type: 'get',
-	url: '/lms/studentEmployedRate',
+	url: '/lms/useMemberRate',
 	success: function(jsonData) {
-		var totalStudentCount = jsonData.totalStudentCount;
-		var totalEmployedStudentCount = jsonData.totalEmployedStudentCount;
-		var employedAvg = jsonData.employedAvg;
-		document.getElementById('employedAvg').innerHTML = employedAvg + '%';
+		var active = jsonData.active;
+		var nonActive = jsonData.nonActive;
 
-		console.log(totalStudentCount + 'totalStudentCount');
-		console.log(totalEmployedStudentCount + 'totalEmployedStudentCount');
-		console.log(employedAvg + 'employedAvg');
+		console.log(active + 'active');
+		console.log(nonActive + 'nonActive');
 		
-		const ctx = document.getElementById('studentEmployedRate').getContext('2d');
+		const ctx = document.getElementById('useMemberRate').getContext('2d');
 		const myChart = new Chart(ctx, {
 		    type: 'pie',
 		    data: {
-		        labels: ['취업학생', '미취업학생'],
+		        labels: ['활성화', '비활성화'],
 		        datasets: [{
-		            data: [totalEmployedStudentCount, totalStudentCount - totalEmployedStudentCount],
+		            data: [active, nonActive],
 		            datalables:{
 						color:'black',
 						font:{size:24}

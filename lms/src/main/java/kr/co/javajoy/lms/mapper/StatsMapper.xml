@@ -14,8 +14,4 @@
 	GROUP BY s.subject_no
 </select>
 
-<select id="studentEmployedRate"
-		resultType="java.util.Map">
-
-</select>
 </mapper>

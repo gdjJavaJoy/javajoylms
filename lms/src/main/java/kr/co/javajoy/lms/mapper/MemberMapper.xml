@@ -276,4 +276,12 @@
 		WHERE member_id = #{memberId}
 	</update>
 	
+	<select id="useMemberRate"
+			resultType="java.util.Map">
+		SELECT 
+			COUNT(case when (member_active = 1) OR (member_active = 4) then 1 END) active
+			,COUNT(case when (member_active = 2) OR (member_active = 3) then 1 END) nonActive
+			,COUNT(member_id) totalCount
+		FROM member_id
+	</select>
 </mapper>

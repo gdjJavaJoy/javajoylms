@@ -8,6 +8,22 @@
 		FROM student		
 	</select>
 	
+	<select id="totalStudentOfMan"
+			resultType="int">
+		SELECT 
+			COUNT(member_id) manCount 
+		FROM student
+		WHERE student_gender = '남'
+	</select>
+	
+	<select id="totalStudentOfWoman"
+			resultType="int">
+		SELECT 
+			COUNT(member_id) womanCount 
+		FROM student
+		WHERE student_gender = '여'
+	</select>
+	
 	<select id="selectStudentOne"
 			parameterType="String"
 			resultType="java.util.Map">
@@ -109,4 +125,24 @@
 			, update_date = NOW()
 		WHERE member_id = #{memberId}		
 	</update>
+	
+	<select id="studentEducationRate"
+			resultType="java.util.Map">
+		SELECT
+			student_education studentEducation
+			,COUNT(student_education) educationCount
+		from student
+		GROUP BY student_education
+	</select>
+	
+	<select id="employedStudentFirstSalaryRate"
+			resultType="java.util.Map">
+			SELECT 
+				COUNT(case when <![CDATA[ start_salary < 2000 ]]> then 1 END ) salarayOne
+				,COUNT(case when (<![CDATA[ start_salary >= 2000 ]]>) AND (<![CDATA[ start_salary < 3000 ]]>) then 1 END ) salarayTwo
+				,COUNT(case when (<![CDATA[ start_salary >= 3000 ]]>) AND (<![CDATA[ start_salary < 3500 ]]>) then 1 END ) salarayThree
+				,COUNT(case when (<![CDATA[ start_salary >= 3500 ]]>) AND (<![CDATA[ start_salary < 4000 ]]>) then 1 END ) salarayFour
+				,COUNT(case when (<![CDATA[ start_salary >= 4000 ]]>)then 1 END ) salarayFive
+			FROM student_job
+	</select>
 </mapper>
