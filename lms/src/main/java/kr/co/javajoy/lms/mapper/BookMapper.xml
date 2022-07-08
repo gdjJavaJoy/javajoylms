@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.javajoy.lms.mapper.BookMapper">
+<select id="selectBookListByPage"
+		parameterType="java.util.Map"
+		resultType="kr.co.javajoy.lms.vo.Book">
+SELECT
+	book_no bookNo
+   ,book_title bookTitle
+   ,book_writer	bookWriter
+   ,book_company bookCompany
+   ,create_date createDate
+   ,update_date updateDate
+FROM book
+<if test='searchBookTitle != null and !"".equals(searchBookTitle) '>
+WHERE CONCAT('%',book_title, '%') 
+			LIKE CONCAT('%', #{searchBookTitle}, '%')
+</if>
+LIMIT #{beginRow} , #{rowPerPage}
+</select>
+<select id="selectBookListCount"
+		parameterType="String"
+		resultType="int">
+SELECT
+	COUNT(*) cnt
+FROM book
+<if test='searchBookTitle != null and !"".equals(searchBookTitle) '>
+WHERE CONCAT('%',book_title, '%') 
+			LIKE CONCAT('%', #{searchBookTitle}, '%')
+</if>
+</select>
+<insert id="insertBook"
+		parameterType="kr.co.javajoy.lms.vo.Book">
+INSERT INTO book (
+			book_title
+		   ,book_writer
+		   ,book_company
+		   ,create_date
+		   ,update_date
+		) VALUES (
+			#{bookTitle}
+		   ,#{bookWriter}
+		   ,#{bookCompany}
+		   ,NOW()
+		   ,NOW()
+		)
+</insert>
+<select id="selectBookOne"
+		parameterType="int"
+		resultType="kr.co.javajoy.lms.vo.Book">
+SELECT
+	book_no bookNo
+   ,book_title bookTitle
+   ,book_writer bookWriter
+   ,book_company bookCompany
+   ,create_date createDate
+   ,update_date updateDate
+FROM book
+WHERE book_no = #{bookNo}
+</select>
+<update id="updateBook"
+		parameterType="kr.co.javajoy.lms.vo.Book">
+UPDATE book SET 
+	book_title = #{bookTitle}
+   ,book_writer = #{bookWriter}
+   ,book_company = #{bookCompany}
+   ,update_date = NOW()
+WHERE book_no = #{bookNo}
+</update>
+</mapper>
