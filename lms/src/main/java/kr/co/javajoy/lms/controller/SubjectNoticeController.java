@@ -80,7 +80,7 @@ public class SubjectNoticeController {
 		}
 		return "redirect:/login";
 	}
-	// 2-1) 강의 추가
+	// 2-1) 강좌공지사항 추가
 	@PostMapping("/addsubjectNotice")
 	public String addsbujectNoitce(HttpServletRequest request
 									,Model model
@@ -108,6 +108,7 @@ public class SubjectNoticeController {
 		return "redirect:/subjectNoticeList?subjectNo=" + subjectNo;
 		
 	}
+	// 3) 강좌공지사항 상세보기
 	@GetMapping("/subjectNoticeOne")
 	public String subjectNoticeOne(HttpSession session
 									,Model model
@@ -133,6 +134,7 @@ public class SubjectNoticeController {
 		
 		return "subject/subjectNotice/subjectNoticeOne";
 	}
+	// 4) 강좌 공지사항 삭제
 	@GetMapping("/removeSubjectNotice")
 	public String removeSubjectNotice(HttpSession session
 										,HttpServletRequest request
@@ -158,6 +160,70 @@ public class SubjectNoticeController {
 		return "redirect:/subjectNoticeList?subjectNo=" + subjectNo;
 		
 	}
-	
-	
+	// 5) 강좌 공지사항 수정
+	@GetMapping("/modifySubjectNotice")
+	public String modifySubjectNotice(HttpSession session
+										,HttpServletRequest request
+										,Model model
+										,@RequestParam(name="subjectBoardNo") int subjectBoardNo
+										,@RequestParam(name="subjectNo") int subjectNo) {
+		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.subjectBoardNo.Get() : " + subjectBoardNo + CF.WSH);
+		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.subjectNo.Get() : " + subjectNo + CF.WSH);
+		
+		// 세션을 받아서 level2(강사)만 수정이 가능
+		String memberId = (String)session.getAttribute("loginUser");
+		String level = (String)session.getAttribute("level"); 
+		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.Get().memberId : " + memberId + CF.WSH);
+		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.Get().level : " + level + CF.WSH);
+		log.debug(CF.PBJ + "SubjectController.modifySubjectReport(Form).level : " + level);
+		// 강사가 아니면 로그인
+		if(level.equals("3") || level.equals("1")) {
+			return "redirect:/login";
+		}
+		// 파일 경로
+		String path = request.getServletContext().getRealPath("/file/subjectFile/");
+		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.Get().path : " + path + CF.WSH);
+		
+		// 서비스 호출하기(보여지는건 같으니 상세보기 Service사용)
+		Map<String,Object> rm = subjectNoticeService.subjectNoticeOne(subjectBoardNo, subjectNo);
+		model.addAttribute("path", path);
+		model.addAttribute("subjectNotice", rm.get("subjectNotice"));
+		model.addAttribute("subjectNoticeFile", rm.get("subjectNoticeFile"));
+		
+		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.Get().path : " + path + CF.WSH);
+		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.Get().subjectNotice : " +  rm.get("subjectNotice") + CF.WSH);
+		log.debug(CF.PBJ + "SubjectController.modifySubjectReport(Form).level : " + rm.get("subjectNoticeFile") + CF.WSH);
+		
+		return "subject/subjectNotice/modifySubjectNotice";
+	}
+	@PostMapping("/modifySubjectNotice")
+	public String modifySubjectNotice(HttpSession session
+										,Model model
+										,HttpServletRequest request
+										,SubjectBoardInsertForm subjectBoardInsertForm
+										,@RequestParam(name="subjectBoardNo") int subjectBoardNo
+										,@RequestParam(name="subjectNo") int subjectNo) {
+		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.subjectBoardNo.Get() : " + subjectBoardNo + CF.WSH);
+		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.subjectNo.Get() : " + subjectNo + CF.WSH);									
+		
+		// 파일 경로
+		String path = request.getServletContext().getRealPath("/file/subjectFile/");
+		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.Post().path : " + path + CF.WSH);
+		
+		List<MultipartFile> subjectNoticeFileList = subjectBoardInsertForm.getSubjectBoardFileList();
+		log.debug(CF.PBJ + "SubjectNoticeController.modifySubjectReport(Action).subjectReportFileList : " + subjectNoticeFileList);
+		// 파일이 한개 이상 업로드 되면
+		if (subjectNoticeFileList != null && subjectNoticeFileList.get(0).getSize() > 0) {
+			for (MultipartFile mf : subjectNoticeFileList) {
+				log.debug(CF.PBJ + "SubjectReportController.modifySubjectReport.Post().subjectFileOriginalName : " + mf.getOriginalFilename());
+			}
+		}
+		
+		model.addAttribute("subjectBoardNo", subjectBoardNo);
+		model.addAttribute("subjectNo", subjectNo);
+		log.debug(CF.PBJ + "SubjectNoticeController.modifySubjectReport.Post().subjectBoardNo : " + subjectBoardNo);
+		
+		subjectNoticeService.modifySubjectNotice(subjectBoardInsertForm, path);
+		return	"redirect:/subjectNoticeOne?subjectBoardNo=" + subjectBoardNo;					
+	}
 }

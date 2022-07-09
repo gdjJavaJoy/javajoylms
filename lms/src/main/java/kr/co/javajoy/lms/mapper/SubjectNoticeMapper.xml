@@ -153,4 +153,16 @@
 		DELETE FROM subject_board
 		WHERE subject_board_no = #{subjectBoardNo}
 	</delete>
+	<update id="updateSubjectNotice"
+				parameterType="kr.co.javajoy.lms.vo.SubjectBoardInsertForm">
+		UPDATE subject_notice n 
+		LEFT JOIN subject_board b ON n.subject_noticet_no = b.subject_board_no
+		SET 
+			b.subject_board_no = #{subjectBoardNo}
+			,b.subject_no = #{subjectNo}
+			,n.member_id = #{memberId}
+			,n.subject_report_title = #{subjectNoticeTitle}
+			,n.subject_report_content = #{subjectNoticeContent}
+		WHERE subject_board_no = #{subjectBoardNo}
+	</update>
 	</mapper>

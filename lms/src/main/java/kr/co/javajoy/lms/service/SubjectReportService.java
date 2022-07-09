@@ -228,7 +228,7 @@ public class SubjectReportService {
 			log.debug(CF.PBJ + "SubjectReportService.modifySubjectReport(Action) : 첨부된 파일이 있습니다.");
 			for (MultipartFile mf : subjectReportForm.getSubjectReportFileList()) {
 				SubjectFile subjectFile = new SubjectFile();
-
+				
 				String originName = mf.getOriginalFilename();
 				// originName에서 마지막 .문자열 위치
 				String ext = originName.substring(originName.lastIndexOf("."));

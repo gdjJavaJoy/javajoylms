@@ -5,7 +5,7 @@
  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Insert teacher Subject Notice Page</title>
+    <title>Insert Subject Notice Page</title>
     	<style>
 			img { display: block; margin: 0px auto; }
 			textarea{

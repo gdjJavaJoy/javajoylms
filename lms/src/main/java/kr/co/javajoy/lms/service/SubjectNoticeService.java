@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.mapper.SubjectNoticeMapper;
+import kr.co.javajoy.lms.vo.Boardfile;
 import kr.co.javajoy.lms.vo.SubjectBoard;
 import kr.co.javajoy.lms.vo.SubjectBoardInsertForm;
 import kr.co.javajoy.lms.vo.SubjectFile;
@@ -114,6 +115,7 @@ public class SubjectNoticeService {
 		
 	}
 	// 상세보기
+	// 수정(Get)
 	public Map<String, Object> subjectNoticeOne(int subjectBoardNo, int subjectNo){
 		// 잘 넘어왔는지 확인
 		log.debug(CF.WSH + "SubjectNoticeService.subjectNoticeOne.subjectBoardNo : " + subjectBoardNo + CF.WSH);
@@ -130,7 +132,6 @@ public class SubjectNoticeService {
 		map.put("subjectNotice",subjectNotice);
 		map.put("subjectNoticeFile",subjectNoticeFile);
 		map.put("FileCount",FileCount);
-		map.put("subjectNo", subjectNo);
 		return map;
 	}
 	// 삭제하기
@@ -158,5 +159,46 @@ public class SubjectNoticeService {
 		}
 		return row;
 	}
+	// 수정하기(Post)
+	public void modifySubjectNotice(SubjectBoardInsertForm subjectBoardInsertForm, String path) {
+		log.debug(CF.WSH + "SubjectNoticeService.removeSubjectNotice.subjectBoardInsertForm : " + subjectBoardInsertForm + CF.WSH);
+		log.debug(CF.WSH + "SubjectNoticeService.removeSubjectNotice.path : " + path + CF.WSH);
+		
+		int row = subjectNoticeMapper.updateSubjectNotice(subjectBoardInsertForm);
+		log.debug(CF.WSH + "SubjectNoticeService.modifySubjectNotice.row : " + row + CF.WSH);
+		
+		if (subjectBoardInsertForm.getSubjectBoardFileList() != null && subjectBoardInsertForm.getSubjectBoardFileList().get(0).getSize() > 0) {
+			log.debug(CF.PBJ + "SubjectNoticeService.modifySubjectNotice.Post : 첨부된 파일이 있습니다.");
+			for (MultipartFile mf : subjectBoardInsertForm.getSubjectBoardFileList()) {
+				SubjectFile subjectFile = new SubjectFile();
+
+				String originName = mf.getOriginalFilename();
+				// originName에서 마지막 .문자열 위치
+				String ext = originName.substring(originName.lastIndexOf("."));
+				// 파일을 저장할 때 사용할 증븍되지않는 새로운 이름 (UUID API사용)
+				String filename = UUID.randomUUID().toString();
+				filename = filename + ext;
+				log.debug(CF.PBJ + "SubjectNoticeService.modifySubjectNotice.Post.originName : " + originName);
+				log.debug(CF.PBJ + "SubjectNoticeService.modifySubjectNotice.Post.filename : " + filename);
+				// subject_file 데이터 가공
+				subjectFile.setSubjectFileBoardNo(subjectBoardInsertForm.getSubjectBoardNo());
+				subjectFile.setSubjectFileName(filename);
+				subjectFile.setSubjectFileOriginalName(mf.getOriginalFilename());
+				subjectFile.setSubjectFileType(mf.getContentType());
+				subjectFile.setSubjectFileSize(mf.getSize());
+				log.debug(CF.PBJ + "SubjectNoticeService.modifySubjectNotice.Post.SubjectFile : " + subjectFile);
+				// 파일 입력
+				subjectNoticeMapper.insertSubjectNoticeFile(subjectFile);
+				// try & catch
+				try {
+					mf.transferTo(new File(path + filename));
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new RuntimeException();
+				}
+			}
 	
- }
+		}
+		
+	}
+}

@@ -14,6 +14,7 @@ public class SubjectBoardInsertForm {
 	private String memberId;
 	private String subjectBoardTitle;
 	private String subjectBoardContent;
+	private String createDate;
 	
 	private List<MultipartFile> subjectBoardFileList;
 }

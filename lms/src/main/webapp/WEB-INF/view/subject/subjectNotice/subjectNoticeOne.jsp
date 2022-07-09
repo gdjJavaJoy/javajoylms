@@ -139,7 +139,7 @@
 	                </c:if>
 	              	<c:if test="${level eq 2}">
 	              		<span>&nbsp | &nbsp</span>
-	                    <a href="${pageContext.request.contextPath}/modifyNotice?boardNo=${n.boardNo}">수정</a> 
+	                    <a href="${pageContext.request.contextPath}/modifySubjectNotice?subjectBoardNo=${n.subjectBoardNo}&subjectNo=${n.subjectNo}">수정</a> 
 	               	</c:if>
 	                </span>
               	  </div>
