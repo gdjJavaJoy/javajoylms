@@ -47,14 +47,16 @@ public interface CurriculumMapper {
 	
 	// 커리큘럼 수정
 	int updateCurriculum(Curriculum curriculum);
-	//
 	
+	// 5) 커리큘럼 삭제
 	
+	// 커리큘럼 도서 목록 삭제
+	int deleteBookNoAndCurriculumNo(int curriculumNo);
+	// 커리큘럼 전체 삭제
+	int deleteCurriculum(int curriculumNo);
 	
-	
-	
-	
-	//   
+	// -----------------------------------------------------------------
+	// 언어 관련  
 	List<Map<String,Object>> languageRateByCurriculum();
 	
 }

@@ -42,7 +42,7 @@
 			    	Swal.fire('담당 강사를 입력하세요');
 			    } else if($('#languageNo').val() == '') {
 			    	Swal.fire('프로그래밍 언어 선택!');
-				} else if($('#bookNo').val() == '') {
+				} else if($('#bookNo').val() == 0) {
 					Swal.fire('커리큘럼 도서 정보를 입력하세요!');
 				} else if($('#curriculumTitle').val() == '') {
 					Swal.fire('커리큘럼 제목을 입력!');
@@ -154,7 +154,7 @@
 	                        </div>
 	                      </td>
 	                     </tr>
-	                       <tr class="text-gray-700 dark:text-gray-400">
+	                     <tr class="text-gray-700 dark:text-gray-400">
 	                      <td class="px-4 py-3">
 	                        <div class="flex items-center text-sm">
 	                          <!-- Avatar with inset shadow -->
@@ -172,7 +172,7 @@
 			                    			type="checkbox"
 			                    			class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
 			                    			value="${b.bookNo}" id="bookNo" name="bookNo">
-			                  			${b.bookTitle}
+			                  				${b.bookTitle}
 				    			    </c:forEach>
 	                          </div>
 	                        </div>

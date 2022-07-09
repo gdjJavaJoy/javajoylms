@@ -1,5 +1,7 @@
 package kr.co.javajoy.lms.vo;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -14,5 +16,6 @@ public class CurriculumForm {
 	private String endDay;
 	private String createDate;
 	private String updateDate;
-	private int bookNo;
+	private List<Integer> bookNo;
+
 }

@@ -180,9 +180,7 @@
 	<!-- 커리큘럼 수정 -->
 	<update id="updateCurriculum"
 			parameterType="kr.co.javajoy.lms.vo.Curriculum">
-		<selectKey resultType="int" keyProperty="curriculumNo" order="AFTER">
-			select last_insert_id()
-		</selectKey>
+	
 		UPDATE curriculum SET 
 			curriculum_no = #{curriculumNo}
 			,subject_no = #{subjectNo}
@@ -202,19 +200,16 @@
 	<delete id="deleteBookNoAndCurriculumNo"
 			parameterType="int">
 		DELETE FROM curriculum_book
-		WHERE curriculum_no = #{curriculumNo} AND
+		WHERE curriculum_no = #{curriculumNo}
 	</delete>
 	<!-- 커리큘럼 삭제 -->
+	<delete id="deleteCurriculum"
+			parameterType="int">
+		DELETE FROM curriculum
+		WHERE curriculum_no = #{curriculumNo}
+	</delete>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	<!-- 언어와 교육도서 CRUD -->
 	
 	<!--  -->
 	<select id="languageRateByCurriculum"

@@ -75,10 +75,12 @@ public class CurriculumService {
 	}	
 	
 	// 2-4) 커리큘럼 추가
-	public void addCurriculum(CurriculumForm curriculumForm) {
-		log.debug(CF.PBJ + "CurriculumListController.addCurriculum.curriculumFrom: " + curriculumForm);
+	public int addCurriculum(CurriculumForm curriculumForm) {
+		int row = 0;
+		log.debug(CF.PBJ + "CurriculumService.addCurriculum.curriculumFrom: " + curriculumForm);
 		// 커리큘럼 데이터 입력
 		Curriculum curriculum = new Curriculum();
+		curriculum.setCurriculumNo(curriculumForm.getCurriculumNo());
 		curriculum.setSubjectNo(curriculumForm.getSubjectNo());
 		curriculum.setMemberId(curriculumForm.getMemberId());
 		curriculum.setLanguageNo(curriculumForm.getLanguageNo());
@@ -86,14 +88,23 @@ public class CurriculumService {
 		curriculum.setCurriculumContent(curriculumForm.getCurriculumContent());
 		curriculum.setStartDay(curriculumForm.getStartDay());
 		curriculum.setEndDay(curriculumForm.getEndDay());
-		log.debug(CF.PBJ + "CurriculumListController.addCurriculum.curriculum : " + curriculum);
-		curriculumMapper.insertCurriculum(curriculum);
+		log.debug(CF.PBJ + "CurriculumService.addCurriculum.curriculum : " + curriculum);
+		row = curriculumMapper.insertCurriculum(curriculum);
 		// 커리큘럼 데이터 입력 후, 커리큘럼에 따른 도서 정보 입력
 		CurriculumBook curriculumBook = new CurriculumBook();
-		curriculumBook.setCurriculumNo(curriculum.getCurriculumNo());
-		curriculumBook.setBookNo(curriculumForm.getBookNo());
-		log.debug(CF.PBJ + "CurriculumListController.addCurriculum.curriculumBook : " + curriculumBook);
-		curriculumMapper.insertBookByCurriculum(curriculumBook);
+		if(curriculumForm.getBookNo() != null) {
+			log.debug(CF.PBJ + "CurriculumService.addCurriculum.insertBookCount : 0 ");
+			for(int i=0; i < curriculumForm.getBookNo().size(); i++) {
+				log.debug(CF.PBJ + "CurriculumService.addCurriculum.insertBookCount :" + i);
+				curriculumBook.setCurriculumNo(curriculum.getCurriculumNo());
+				curriculumBook.setBookNo(curriculumForm.getBookNo().get(i));
+				log.debug(CF.PBJ + "CurriculumService.addCurriculum.curriculumBook : " + curriculumBook);
+				curriculumMapper.insertBookByCurriculum(curriculumBook);
+				}
+		} else {
+			
+		}
+		return row;
 	}
 
 	// ------------------------ 3) 커리큘럼 상세보기 <SELECT ONE>------------------------ 
@@ -148,9 +159,11 @@ public class CurriculumService {
 	}
 	
 	// 4-2) 커리큘럼 수정 Action
-		public void modifyCurriculum(CurriculumForm curriculumForm) {
-		log.debug(CF.PBJ + "CurriculumListController.modifyCurriculum.curriculumFrom: " + curriculumForm);
-		// 커리큘럼 데이터 입력
+	public int modifyCurriculum(CurriculumForm curriculumForm) {
+		int row;
+		int curriculumNo = curriculumForm.getCurriculumNo();
+		log.debug(CF.PBJ + "CurriculumListController.modifyCurriculum(Action).curriculumFrom: " + curriculumForm);
+		// 커리큘럼 데이터 수정
 		Curriculum curriculum = new Curriculum();
 		curriculum.setCurriculumNo(curriculumForm.getCurriculumNo());
 		curriculum.setSubjectNo(curriculumForm.getSubjectNo());
@@ -160,8 +173,36 @@ public class CurriculumService {
 		curriculum.setCurriculumContent(curriculumForm.getCurriculumContent());
 		curriculum.setStartDay(curriculumForm.getStartDay());
 		curriculum.setEndDay(curriculumForm.getEndDay());
-		log.debug(CF.PBJ + "CurriculumListController.modifyCurriculum.curriculum : " + curriculum);
-		curriculumMapper.updateCurriculum(curriculum);
+		log.debug(CF.PBJ + "CurriculumListController.modifyCurriculum(Action).curriculum : " + curriculum);
+		row = curriculumMapper.updateCurriculum(curriculum);
+		// 교육 도서 목록 수정
+		// 수정 전 원래 교육 도서 목록 초기화(view의 checked로 데이터 값 보존)
+		curriculumMapper.deleteBookNoAndCurriculumNo(curriculumNo);
+		// 교육 도서 목록 새로 insert
+		CurriculumBook curriculumBook = new CurriculumBook();
+		if(curriculumForm.getBookNo() != null) {
+			for(int i=0; i < curriculumForm.getBookNo().size(); i++) {
+				log.debug(CF.PBJ + "CurriculumService.modifyCurriculum(Action).insertBookCount :" + i);
+				curriculumBook.setCurriculumNo(curriculum.getCurriculumNo());
+				curriculumBook.setBookNo(curriculumForm.getBookNo().get(i));
+				log.debug(CF.PBJ + "CurriculumService.modifyCurriculum(Action).curriculumBook : " + curriculumBook);
+				curriculumMapper.insertBookByCurriculum(curriculumBook);
+			}
+		}
+		return row;
+	}
+	
+	// ------------------------ 5) 커리큘럼 삭제 <DELETE>------------------------ 
+	
+	// 5-1) 커리큘럼 삭제
+	public int removeCurriculum(int curriculumNo) {
+		int row = 0;
+		log.debug(CF.PBJ + "CurriculumService.removeCurriculum.curriculumNo : " + curriculumNo);
+		
+		curriculumMapper.deleteBookNoAndCurriculumNo(curriculumNo);
+		row = curriculumMapper.deleteCurriculum(curriculumNo);
+		log.debug(CF.PBJ + "CurriculumService.removeCurriculum.row : " + row);
+		return row;
 	}
 }
 

@@ -159,6 +159,33 @@
 	                        </div>
 	                      </td>
 	                     </tr>
+	                    <tr class="text-gray-700 dark:text-gray-400">
+	                      <td class="px-4 py-3">
+	                        <div class="flex items-center text-sm">
+	                          <!-- Avatar with inset shadow -->
+	                          <div>
+	                            <p class="font-semibold">교육 도서 선택</p>
+	                          </div>
+	                        </div>
+	                      </td>
+	                       <td class="px-4 py-3">
+	                        <div class="flex items-center text-sm">
+	                          <!-- Avatar with inset shadow -->
+	                          <div>
+			    					<c:forEach var="b" items="${bookList}">
+			    						<input
+			                    			type="checkbox"
+			                    			class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+			                    			value="${b.bookNo}" id="bookNo" name="bookNo"
+			                    			<c:forEach var="mb" items="${modifyBookList}">
+			                    				<c:if test="${b.bookNo eq mb.bookNo}">checked</c:if>
+			                    			</c:forEach>>
+			                  				${b.bookTitle}
+				    			    </c:forEach>
+	                          </div>
+	                        </div>
+	                      </td>
+	                     </tr>
 		                 <tr class="text-gray-700 dark:text-gray-400">
 		                      <td class="px-4 py-3">
 		                        <div class="flex items-center text-sm">

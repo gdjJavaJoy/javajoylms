@@ -134,8 +134,8 @@
 	                <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
 	                <c:if test="${level eq 1 || level eq 2}">
 	              		<a href="${pageContext.request.contextPath}/modifyCurriculum?curriculumNo=${curriculum.curriculumNo}&subjectNo=${curriculum.subjectNo}&subjectName=${curriculum.subjectName}">커리큘럼 수정</a>
-	              		<span>&nbsp | &nbsp</span>
-	                    <a href="${pageContext.request.contextPath}/removeCurriculum?curriculumNo=${curriculum.curriculumNo}">커리큘럼 삭제</a> 
+	              		<span>&nbsp; | &nbsp;</span>
+	                    <a href="${pageContext.request.contextPath}/removeCurriculum?curriculumNo=${curriculum.curriculumNo}&subjectNo=${curriculum.subjectNo}&subjectName=${curriculum.subjectName}">커리큘럼 삭제</a> 
 	                </c:if>
 	                </span>
               	  </div>

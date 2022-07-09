@@ -76,7 +76,7 @@
           
             <!-- With avatar -->
        
-	           	 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">커리큘럼 목록 -- 입력 오류 고치고 삭제+수정 구현해야함;
+	           	 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">${subjectName} 커리큘럼 목록
 	            	<c:if test="${level eq 1 || level eq 2}">
 	            		<a href="${pageContext.request.contextPath}/getLanguageList" class="text-sm" style="float: right;">&nbsp;&nbsp;프로그래밍 언어 관리&nbsp;&nbsp;</a>
     					<a href="${pageContext.request.contextPath}/getBookList" class="text-sm" style="float: right;">&nbsp;&nbsp;교육 도서 관리&nbsp;&nbsp;</a>
