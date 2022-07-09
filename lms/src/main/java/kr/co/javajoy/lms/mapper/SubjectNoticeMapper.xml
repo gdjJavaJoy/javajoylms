@@ -19,6 +19,7 @@
 			INNER JOIN subject_board AS b ON n.subject_notice_no = b.subject_board_no
 	   		INNER JOIN teacher t ON t.member_id = n.member_id
 	    WHERE b.subject_no = #{subjectNo}
+		ORDER BY n.create_date DESC
 		    LIMIT #{startRow}, #{rowPerPage}
 	</select>
 	<!-- 리스트 전체 카운트 -->
@@ -26,9 +27,9 @@
 			resultType="int" 
 			parameterType="int">
 		SELECT
-			COUNT(*) cnt
+			COUNT(*)
 		FROM subject_notice AS n
-			inner join subject_board AS b ON n.subject_notice_no = b.subject_board_no
+			INNER JOIN subject_board AS b ON n.subject_notice_no = b.subject_board_no
 		WHERE b.subject_no = #{subjectNo}
 	</select>		
 	<!-- 리스트 추가(subjectNo 입력) -->
@@ -45,6 +46,7 @@
 			,NOW()
 		)
 	</insert>
+	<!-- 공지사항 추가 -->
 	<insert id="insertSubjectNotice"
 			parameterType="kr.co.javajoy.lms.vo.SubjectNotice">
 		INSERT INTO subject_notice(
@@ -61,6 +63,7 @@
 			,NOW()
 		)
 	</insert>
+	<!-- 공지사항 파일 추가 -->
 	<insert id="insertSubjectNoticeFile"
 				parameterType="kr.co.javajoy.lms.vo.SubjectFile">
 		INSERT INTO subject_file(
@@ -81,6 +84,7 @@
 			,NOW()
 		)
 	</insert>
+	<!-- 공지사항 상세보기 -->
 	<select id="subjectNoticeOne"
 				parameterType="int"
 				resultType="java.util.Map">
@@ -95,10 +99,11 @@
 			,t.teacher_name teacherName
 		FROM
 			subject_notice n
-			inner join subject_board b ON n.subject_notice_no = b.subject_board_no
+			INNER JOIN subject_board b ON n.subject_notice_no = b.subject_board_no
 			INNER JOIN teacher t ON t.member_id = n.member_id
 		WHERE b.subject_board_no = #{subjectBoardNo}
 	</select>
+	<!-- 공지사항 파일 상세보기(조회) -->
 	<select id="subjectNoticeFileOne"
 				parameterType="int"
 				resultType="java.util.Map">
@@ -111,13 +116,41 @@
 			,f.subject_file_size subjectFileSize
 			,b.subject_board_no boardNo
 		FROM subject_file f
-			inner join subject_board b ON subject_board_no = subject_file_board_no
+			INNER JOIN subject_board b ON subject_board_no = subject_file_board_no
 		WHERE subject_board_no = #{subjectBoardNo}
 	</select>
+	<!-- 첨부파일 있을경우 첨부파일 컬럼 추가 -->
 	<select id="subjectNoticeFileCount"
 				resultType="int">
 		SELECT 
 			COUNT(*) 
 		FROM student_file
 	</select>
+	<!-- 파일 삭제 전 name조회 -->
+	<select id="selectsubjectFileNameByBoardNo"
+				parameterType="int"
+				resultType="String">
+		SELECT f.subject_file_name
+		FROM subject_file f
+			INNER JOIN subject_board b ON b.subject_board_no = f.subject_file_board_no
+		WHERE b.subject_board_no = #{subjectBoardNo}
+	</select>
+	<!-- 파일삭제 -->
+	<delete id="deleteSubjectNoticeFile"
+				parameterType="int">
+		DELETE FROM subject_file
+		WHERE subject_file_board_no = #{subjectBoardNo}
+	</delete>
+	<!-- 게시글 삭제 -->
+	<delete id="deleteSubjectNotice"
+				parameterType="int">
+		DELETE FROM subject_notice
+		WHERE subject_notice_no = #{subjectBoardNo}		
+	</delete>
+	<!-- subject_board_no 삭제 -->
+	<delete id="deleteSubjectNoticeBoard"
+				parameterType="int">
+		DELETE FROM subject_board
+		WHERE subject_board_no = #{subjectBoardNo}
+	</delete>
 	</mapper>

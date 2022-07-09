@@ -28,4 +28,14 @@ public interface SubjectNoticeMapper {
 	List<Map<String, Object>> subjectNoticeFileOne(int studentFileNo);
 	// 파일 개수
 	int subjectNoticeFileCount();
+	// 파일 삭제 전 이름으로 조회
+	List<String> selectsubjectFileNameByBoardNo(int subjectBoardNo);
+	// 파일 삭제
+	int deleteSubjectNoticeFile(int subjectBoardNo);
+	// 게시글 삭제
+	int deleteSubjectNotice(int subjectBoardNo);
+	// subject_board_no 삭제
+	int deleteSubjectNoticeBoard(int subjectBoardNo);
 }
+
+

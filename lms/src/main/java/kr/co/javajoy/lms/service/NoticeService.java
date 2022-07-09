@@ -131,6 +131,9 @@ public class NoticeService {
 	}
 	// 삭제
 	public void removefileNotice (int boardfileNo, String path) {
+		log.debug(CF.WSH + "NoticeService.removefileNotice.boardfileNo : " + boardfileNo + CF.WSH);
+		log.debug(CF.WSH + "NoticeService.removefileNotice.path : " + path + CF.WSH);
+		
 			List<String> boardfileList = noticefileMapper.selectNoticefileNameListByBoardfileNo(boardfileNo);
 			log.debug(CF.WSH + "NoticeService.removefileNotice.boardfileList : "+ boardfileList);
 			for(String bfl : boardfileList ) {

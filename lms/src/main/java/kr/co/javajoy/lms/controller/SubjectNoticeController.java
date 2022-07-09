@@ -30,7 +30,7 @@ public class SubjectNoticeController {
 								,Model model
 								,@RequestParam(name = "currentPage", defaultValue = "1") int currentPage
 								,@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage
-								,@RequestParam(value = "subjectNo") int subjectNo) {
+								,@RequestParam(name = "subjectNo") int subjectNo) {
 		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeList.currentPage : " + currentPage + CF.WSH);
 		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeList.rowPerPage : " + rowPerPage + CF.WSH);
 		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeList.subjectNo : " + subjectNo + CF.WSH);
@@ -45,17 +45,18 @@ public class SubjectNoticeController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", map.get("lastPage"));
-		model.addAttribute("subjectNo", map.get("subjectNo"));
+		model.addAttribute("subjectNo", subjectNo);
+		model.addAttribute("totalCount", map.get("totalCount"));
 			
 		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeList.list성공 : " + map + CF.WSH);
 		return "subject/subjectNotice/subjectNoticeList";
 		// subjectNoticeList.jsp로 이동
 	}
 	
-	// 1-1) 강의 공지사항 리스트(add로 넘어갈때 번호를 못가져가서 model을 이용해 보내줌)
+	// 1-1) 강의 공지사항 리스트(add로 넘어갈때 번호를 못가져가서 model을 이용해 보내줌) ex.12번 강좌에 추가가능
 		@PostMapping("/subjectNoticeList")
 		public String addSubjectNotice(Model model
-										,@RequestParam(name="subjectNo") int subjectNo) {
+										,@RequestParam(name = "subjectNo") int subjectNo) {
 		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeList.post().subjectNo : " + subjectNo + CF.WSH);
 		model.addAttribute("subjcetNo", subjectNo);
 			
@@ -111,7 +112,8 @@ public class SubjectNoticeController {
 	public String subjectNoticeOne(HttpSession session
 									,Model model
 									,HttpServletRequest request
-									,@RequestParam(name="subjectBoardNo") int subjectBoardNo) {
+									,@RequestParam(name="subjectBoardNo") int subjectBoardNo
+									,@RequestParam(name="subjectNo") int subjectNo) {
 		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeOne.subjectBoardNo.Get() : " + subjectBoardNo + CF.WSH);
 		
 		String memberId = (String)session.getAttribute("loginUser");
@@ -122,13 +124,39 @@ public class SubjectNoticeController {
 		String path = request.getServletContext().getRealPath("/file/subjectFile/");
 		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeOne.path.Get() : " + path + CF.WSH);
 		
-		Map<String, Object> returnMap = subjectNoticeService.subjectNoticeOne(subjectBoardNo);
+		Map<String, Object> returnMap = subjectNoticeService.subjectNoticeOne(subjectBoardNo, subjectNo);
 		model.addAttribute("path", path);
 		model.addAttribute("subjectNotice", returnMap.get("subjectNotice"));
 		model.addAttribute("subjectNoticeFile", returnMap.get("subjectNoticeFile"));
 		model.addAttribute("FileCount", returnMap.get("FileCount"));
+		model.addAttribute("subjectNo", subjectNo);
 		
 		return "subject/subjectNotice/subjectNoticeOne";
+	}
+	@GetMapping("/removeSubjectNotice")
+	public String removeSubjectNotice(HttpSession session
+										,HttpServletRequest request
+										,@RequestParam(name="subjectBoardNo") int subjectBoardNo
+										,@RequestParam(name="subjectNo") int subjectNo) {
+		log.debug(CF.WSH + "SubjectNoticeController.removeSubjectNotice.subjectBoardNo.Get() : " + subjectBoardNo + CF.WSH);
+		log.debug(CF.WSH + "SubjectNoticeController.removeSubjectNotice.subjectNo.Get() : " + subjectNo + CF.WSH);
+		
+		String memberId = (String)session.getAttribute("loginUser");
+		String level = (String)session.getAttribute("level"); 
+		log.debug(CF.WSH + "SubjectNoticeController.removeSubjectNotice.Get().memberId : " + memberId + CF.WSH);
+		log.debug(CF.WSH + "SubjectNoticeController.removeSubjectNotice.Get().level : " + level + CF.WSH);
+		
+		String path = request.getServletContext().getRealPath("/file/subjectFile/");
+		log.debug(CF.WSH + "SubjectNoticeController.removeSubjectNotice.Get().path : " + path + CF.WSH);
+		
+		// service호출하기
+		int boardNo = subjectNoticeService.removeSubjectNotice(subjectBoardNo, path);
+		log.debug(CF.WSH + "SubjectNoticeController.removeSubjectNotice.Get().boardNo : " + boardNo + CF.WSH);
+		
+		
+		
+		return "redirect:/subjectNoticeList?subjectNo=" + subjectNo;
+		
 	}
 	
 	

@@ -113,9 +113,9 @@
 	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
 	                    	<th class="px-4 py-3">첨부 파일</th>
 	                    	<td class="px-4 py-3 text-sm">
-	                    		<c:forEach var="boardfile" items="${subjectNoticeFile}">
+	                    		<c:forEach var="SubjectFile" items="${subjectNoticeFile}">
 									<div>
-										<a href="${pageContext.request.contextPath}/file/boardFile/${boardfile.subjectFileName}" download="${boardfile.subjectFileOriginalName}">${boardfile.subjectFileOriginalName}</a>
+										<a href="${pageContext.request.contextPath}/file/subjectFile/${SubjectFile.subjectFileName}" download="${SubjectFile.subjectFileOriginalName}">${SubjectFile.subjectFileOriginalName}</a>
 									</div>
 								</c:forEach>
 	                    	</td>
@@ -134,11 +134,13 @@
 		            	<!-- Pagination -->
 		            	<!-- 운영자일때만 수정 삭제 가능 -->
 	                <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-	                <c:if test="${level eq 1}">
-	              		<a href="${pageContext.request.contextPath}/removeNotice?boardNo=${n.boardNo}">삭제</a>
+	                <c:if test="${level eq 1 || level eq 2}">
+	              		<a href="${pageContext.request.contextPath}/removeSubjectNotice?subjectBoardNo=${n.subjectBoardNo}&subjectNo=${n.subjectNo}">삭제</a>
+	                </c:if>
+	              	<c:if test="${level eq 2}">
 	              		<span>&nbsp | &nbsp</span>
 	                    <a href="${pageContext.request.contextPath}/modifyNotice?boardNo=${n.boardNo}">수정</a> 
-	                </c:if>
+	               	</c:if>
 	                </span>
               	  </div>
               	 </c:forEach>

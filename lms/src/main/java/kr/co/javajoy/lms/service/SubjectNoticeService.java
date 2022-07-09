@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class SubjectNoticeService {
 	@Autowired SubjectNoticeMapper subjectNoticeMapper;
-	// 커리큘럼 리스트 출력
+	// 리스트 출력
 	public Map<String, Object> getSubjectNoticeList(int currentPage, int rowPerPage, int subjectNo) {
 		// 리스트 출력 페이징
 		int startRow = (currentPage - 1) * rowPerPage;
@@ -47,7 +47,7 @@ public class SubjectNoticeService {
 		returnMap.put("list", list);
 		returnMap.put("lastPage", lastPage);
 		returnMap.put("subjectNo", subjectNo);
-			
+		returnMap.put("totalCount", totalCount);			
 		// 디버깅
 		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList lastPage : " + CF.WSH + lastPage );
 		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList list : " + CF.WSH + list);
@@ -113,11 +113,10 @@ public class SubjectNoticeService {
 		}
 		
 	}
-	
-
-	public Map<String, Object> subjectNoticeOne(int subjectBoardNo){
+	// 상세보기
+	public Map<String, Object> subjectNoticeOne(int subjectBoardNo, int subjectNo){
 		// 잘 넘어왔는지 확인
-		log.debug(CF.WSH + "SubjectNoticeService.subjectNoticeOne.subjectNo : " + subjectBoardNo + CF.WSH);
+		log.debug(CF.WSH + "SubjectNoticeService.subjectNoticeOne.subjectBoardNo : " + subjectBoardNo + CF.WSH);
 		
 		List<Map<String, Object>> subjectNotice = subjectNoticeMapper.subjectNoticeOne(subjectBoardNo);
 		log.debug(CF.WSH + "SubjectNoticeService.subjectNoticeOne.subjectNotice : " + subjectNotice + CF.WSH);
@@ -131,9 +130,33 @@ public class SubjectNoticeService {
 		map.put("subjectNotice",subjectNotice);
 		map.put("subjectNoticeFile",subjectNoticeFile);
 		map.put("FileCount",FileCount);
+		map.put("subjectNo", subjectNo);
 		return map;
 	}
+	// 삭제하기
+	public int removeSubjectNotice (int subjectBoardNo, String path) {
+		int row = 0;
+		log.debug(CF.WSH + "SubjectNoticeService.removeSubjectNotice.subjectBoardNo : " + subjectBoardNo + CF.WSH);
+		log.debug(CF.WSH + "SubjectNoticeService.removeSubjectNotice.path : " + path + CF.WSH);
 		
-	
+		// 삭제 전 이름조회
+		List<String> subjectNoticeFileName =  subjectNoticeMapper.selectsubjectFileNameByBoardNo(subjectBoardNo);
+		log.debug(CF.WSH + "SubjectNoticeService.removeSubjectNotice.boardfileList : "+ subjectNoticeFileName);
+		for(String snfn : subjectNoticeFileName ) {
+			File f = new File(path+snfn);
+			if(f.exists()) // 존재 시
+				f.delete(); // 삭제
+		}
+		// 파일 삭제
+		subjectNoticeMapper.deleteSubjectNoticeFile(subjectBoardNo);
+		// 게시글 삭제
+		subjectNoticeMapper.deleteSubjectNotice(subjectBoardNo);
+		// subject_board_no 삭제
+		row = subjectNoticeMapper.deleteSubjectNoticeBoard(subjectBoardNo);
+		if(row == 0) {
+			log.debug(CF.WSH + "SubjectNoticeService.deleteSubjectNoticeBoard.row : 삭제성공"+ row);
+		}
+		return row;
+	}
 	
  }

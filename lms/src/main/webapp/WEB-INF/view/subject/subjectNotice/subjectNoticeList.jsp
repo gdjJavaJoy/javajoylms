@@ -97,7 +97,7 @@
                   </thead>
                   <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                    <c:forEach var="s" items="${list}" varStatus="cnt"><!-- varStatus를 이용한 list순으로 번호 매김 -->
-                     <tr onClick="location.href='${pageContext.request.contextPath}/subjectNoticeOne?subjectBoardNo=${s.subjectBoardNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
+                     <tr onClick="location.href='${pageContext.request.contextPath}/subjectNoticeOne?subjectBoardNo=${s.subjectBoardNo}&subjectNo=${s.subjectNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
 						<td class="px-4 py-3 text-sm">${cnt.index+1}</td>
 						<td class="px-4 py-3 text-sm">${s.subjectNo}</td>
 						<c:choose>
@@ -131,11 +131,11 @@
                 <!-- Pagination -->
                 <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
                	 <c:if test="${currentPage > 1}">
-                   <a href="${pageContext.request.contextPath}/subjectNoticeList?currentPage=${currentPage-1}">이전</a>
+                   <a href="${pageContext.request.contextPath}/subjectNoticeList?currentPage=${currentPage-1}&subjectNo=${subjectNo}">이전</a>
                  </c:if>
                 <span>&nbsp  &nbsp</span>
                  <c:if test="${currentPage < lastPage}">
-                   <a href="${pageContext.request.contextPath}/subjectNoticeList?currentPage=${currentPage+1}">다음</a> 
+                   <a href="${pageContext.request.contextPath}/subjectNoticeList?currentPage=${currentPage+1}&subjectNo=${subjectNo}">다음</a> 
                  </c:if>
                 </span>
               </div>
