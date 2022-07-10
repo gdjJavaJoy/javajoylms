@@ -13,11 +13,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.mapper.SubjectNoticeMapper;
-import kr.co.javajoy.lms.vo.Boardfile;
 import kr.co.javajoy.lms.vo.SubjectBoard;
 import kr.co.javajoy.lms.vo.SubjectBoardInsertForm;
 import kr.co.javajoy.lms.vo.SubjectFile;
 import kr.co.javajoy.lms.vo.SubjectNotice;
+import kr.co.javajoy.lms.vo.SubjectNoticeInsertForm;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -160,16 +160,16 @@ public class SubjectNoticeService {
 		return row;
 	}
 	// 수정하기(Post)
-	public void modifySubjectNotice(SubjectBoardInsertForm subjectBoardInsertForm, String path) {
-		log.debug(CF.WSH + "SubjectNoticeService.removeSubjectNotice.subjectBoardInsertForm : " + subjectBoardInsertForm + CF.WSH);
-		log.debug(CF.WSH + "SubjectNoticeService.removeSubjectNotice.path : " + path + CF.WSH);
+	public void modifySubjectNotice(SubjectNoticeInsertForm subjectNoticeInsertForm, String path) {
+		log.debug(CF.WSH + "SubjectNoticeService.modifySubjectNotice.subjectBoardInsertForm : " + subjectNoticeInsertForm + CF.WSH);
+		log.debug(CF.WSH + "SubjectNoticeService.modifySubjectNotice.path : " + path + CF.WSH);
 		
-		int row = subjectNoticeMapper.updateSubjectNotice(subjectBoardInsertForm);
+		int row = subjectNoticeMapper.updateSubjectNotice(subjectNoticeInsertForm);
 		log.debug(CF.WSH + "SubjectNoticeService.modifySubjectNotice.row : " + row + CF.WSH);
 		
-		if (subjectBoardInsertForm.getSubjectBoardFileList() != null && subjectBoardInsertForm.getSubjectBoardFileList().get(0).getSize() > 0) {
-			log.debug(CF.PBJ + "SubjectNoticeService.modifySubjectNotice.Post : 첨부된 파일이 있습니다.");
-			for (MultipartFile mf : subjectBoardInsertForm.getSubjectBoardFileList()) {
+		if (subjectNoticeInsertForm.getSubjectNoticeFileList() != null && subjectNoticeInsertForm.getSubjectNoticeFileList().get(0).getSize() > 0) {
+			log.debug(CF.WSH + "SubjectNoticeService.modifySubjectNotice.Post : 첨부된 파일이 있습니다.");
+			for (MultipartFile mf : subjectNoticeInsertForm.getSubjectNoticeFileList()) {
 				SubjectFile subjectFile = new SubjectFile();
 
 				String originName = mf.getOriginalFilename();
@@ -178,15 +178,15 @@ public class SubjectNoticeService {
 				// 파일을 저장할 때 사용할 증븍되지않는 새로운 이름 (UUID API사용)
 				String filename = UUID.randomUUID().toString();
 				filename = filename + ext;
-				log.debug(CF.PBJ + "SubjectNoticeService.modifySubjectNotice.Post.originName : " + originName);
-				log.debug(CF.PBJ + "SubjectNoticeService.modifySubjectNotice.Post.filename : " + filename);
+				log.debug(CF.WSH + "SubjectNoticeService.modifySubjectNotice.Post.originName : " + originName);
+				log.debug(CF.WSH + "SubjectNoticeService.modifySubjectNotice.Post.filename : " + filename);
 				// subject_file 데이터 가공
-				subjectFile.setSubjectFileBoardNo(subjectBoardInsertForm.getSubjectBoardNo());
+				subjectFile.setSubjectFileBoardNo(subjectNoticeInsertForm.getSubjectBoardNo());
 				subjectFile.setSubjectFileName(filename);
 				subjectFile.setSubjectFileOriginalName(mf.getOriginalFilename());
 				subjectFile.setSubjectFileType(mf.getContentType());
 				subjectFile.setSubjectFileSize(mf.getSize());
-				log.debug(CF.PBJ + "SubjectNoticeService.modifySubjectNotice.Post.SubjectFile : " + subjectFile);
+				log.debug(CF.WSH + "SubjectNoticeService.modifySubjectNotice.Post.SubjectFile : " + subjectFile);
 				// 파일 입력
 				subjectNoticeMapper.insertSubjectNoticeFile(subjectFile);
 				// try & catch
@@ -200,5 +200,16 @@ public class SubjectNoticeService {
 	
 		}
 		
+	}
+	// 수정에서 파일만 삭제
+	public void removeSubjectNoticeFile(int subjectFileNo, String path) {
+		List<String> subjectNoticeFileList = subjectNoticeMapper.selectSubjectNoticeFileNameListBySubjectFileNo(subjectFileNo);
+		log.debug(CF.WSH + "SubjectNoticeService.removeSubjectNoticeFile.subjectNoticeFileList : " + subjectNoticeFileList);
+		for (String sfl : subjectNoticeFileList) {
+			File f = new File(path + sfl);
+			if (f.exists())
+				f.delete();
+		}
+		subjectNoticeMapper.deleteSubjectFile(subjectFileNo);
 	}
 }

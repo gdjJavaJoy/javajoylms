@@ -37,14 +37,14 @@
 		$(document).ready(function(){
 			let flag = true;
 			$('#addFileupload').click(function(){
-				$('.subjectBoardFileList').each(function(){
+				$('.subjectNoticeFileList').each(function(){
 					if($(this).val() == '') {
 						flag = false;
 					}
 				});
 				
 				if(flag) {
-					$('#fileSection').append("<div><input type='file' class='subjectReportFileList' onchange='checkFile(this)' id='subjectBoardFileList' name='subjectBoardFileList'></div>");
+					$('#fileSection').append("<div><input type='file' class='subjectNoticeFileList' onchange='checkFile(this)' id='subjectNoticeFileList' name='subjectNoticeFileList'></div>");
 				} else {
 					Swal.fire('파일 첨부를 다시 확인하십시오');
 				}
@@ -56,7 +56,7 @@
 				} else if($('#subjectNoticeContent').val() == '') {
 					Swal.fire('과제 게시판 내용을 입력하세요!');
 				} else {
-					$('.subjectBoardFileList').each(function(){
+					$('.subjectNoticeFileList').each(function(){
 						if($(this).val() == '') {
 							flag = false;
 							return;
@@ -78,7 +78,7 @@
 			var file = f.files;
 			// file[0].name 은 파일명 입니다.
 			// 정규식으로 확장자 체크
-			if(!/\.(pdf|hwp|docx|ppt|txt)$/i.test(file[0].name)) Swal.fire('pdf, hwp, docx, ppt, txt 파일만 선택해 주세요.\n\n현재 파일 : ' + file[0].name);
+			if(!/\.(pdf|hwp|docx|ppt|txt|png)$/i.test(file[0].name)) Swal.fire('pdf, hwp, docx, ppt, txt 파일만 선택해 주세요.\n\n현재 파일 : ' + file[0].name);
 			// 체크를 통과했다면 종료.
 			else return;
 			// 체크에 걸리면 선택된  내용 취소 처리를 해야함.
@@ -153,7 +153,7 @@
             	 	<c:forEach var="sn" items="${subjectNotice}">
 	                	<table class="w-full whitespace-no-wrap">
 	                		<input type="hidden" id="subjectBoardNo" name="subjectBoardNo" class="form-control" value="${sn.subjectBoardNo}">
-	                		<input type="hidden" id="subjectNo" name="subjectNo" class="form-control" value="${subjectNo}">
+	                		<input type="hidden" id="subjectNo" name="subjectNo" class="form-control" value="${sn.subjectNo}">
 		                	<tr class="text-gray-700 dark:text-gray-400">
 		                      <td class="px-4 py-3">
 		                        <div class="flex items-center text-sm">
@@ -253,7 +253,7 @@
                         <div class="flex items-center text-sm">
                           <!-- Avatar with inset shadow -->
                           <div>
-                            <p class="font-semibold">첨부 파일 삭제</p>
+                            <p class="font-semibold">첨부 파일</p>
                           </div>
                         </div>
                       </td>
@@ -261,10 +261,11 @@
                         <div class="flex items-center text-sm">
                           <!-- Avatar with inset shadow -->
                           <div>
-					    		<c:forEach var="subjectFile" items="${subjectFile}">
+					    		<c:forEach var="snf" items="${subjectNoticeFile}">
 									<div>
+										${snf.subjectFileOriginalName}
 										<a class="px-1 py-0.8 text-xs font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-										href="${pageContext.request.contextPath}/removeSubjectFile?subjectFileNo=${subjectFile.subjectFileNo}&subjectBoardNo=${subjectFile.subjectBoardNo}">삭제</a>${subjectFile.subjectFileOriginalName}
+										href="${pageContext.request.contextPath}/removeSubjectNoticeFile?subjectFileNo=${snf.subjectFileNo}&subjectBoardNo=${snf.boardNo}&subjectNo=${snf.subjectNo}">삭제</a>
 									</div>
 								</c:forEach>
                           </div>

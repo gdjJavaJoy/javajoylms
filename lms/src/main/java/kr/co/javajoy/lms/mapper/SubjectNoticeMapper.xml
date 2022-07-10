@@ -115,6 +115,7 @@
 			,f.subject_file_type subjectFileType
 			,f.subject_file_size subjectFileSize
 			,b.subject_board_no boardNo
+			,b.subject_no subjectNo
 		FROM subject_file f
 			INNER JOIN subject_board b ON subject_board_no = subject_file_board_no
 		WHERE subject_board_no = #{subjectBoardNo}
@@ -154,15 +155,27 @@
 		WHERE subject_board_no = #{subjectBoardNo}
 	</delete>
 	<update id="updateSubjectNotice"
-				parameterType="kr.co.javajoy.lms.vo.SubjectBoardInsertForm">
+				parameterType="kr.co.javajoy.lms.vo.SubjectNoticeInsertForm">
 		UPDATE subject_notice n 
-		LEFT JOIN subject_board b ON n.subject_noticet_no = b.subject_board_no
+		LEFT JOIN subject_board b ON n.subject_notice_no = b.subject_board_no
 		SET 
 			b.subject_board_no = #{subjectBoardNo}
 			,b.subject_no = #{subjectNo}
 			,n.member_id = #{memberId}
-			,n.subject_report_title = #{subjectNoticeTitle}
-			,n.subject_report_content = #{subjectNoticeContent}
+			,n.subject_notice_title = #{subjectNoticeTitle}
+			,n.subject_notice_content = #{subjectNoticeContent}
 		WHERE subject_board_no = #{subjectBoardNo}
 	</update>
+	<select id="selectSubjectNoticeFileNameListBySubjectFileNo"
+				parameterType="int"
+				resultType="String">
+			SELECT subject_file_name subjectFileName
+			FROM subject_file 
+			WHERE subject_file_no = #{subjectFileNo}
+	</select>
+	<delete id="deleteSubjectFile"
+				parameterType="int">
+			DELETE FROM subject_file
+			WHERE subject_file_no = #{subjectFileNo}
+	</delete>
 	</mapper>
