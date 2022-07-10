@@ -26,33 +26,40 @@ import lombok.extern.slf4j.Slf4j;
 public class SubjectNoticeService {
 	@Autowired SubjectNoticeMapper subjectNoticeMapper;
 	// 리스트 출력
-	public Map<String, Object> getSubjectNoticeList(int currentPage, int rowPerPage, int subjectNo) {
+	public Map<String, Object> getSubjectNoticeList(int currentPage, int rowPerPage, int subjectNo, String nsubjectNoticeTitle) {
 		// 리스트 출력 페이징
 		int startRow = (currentPage - 1) * rowPerPage;
 		// 디버깅
 		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList rowPerPage : " + CF.WSH + rowPerPage);
 		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList startRow : " + CF.WSH + startRow);
 		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList subjectNo : " + CF.WSH + subjectNo);
+		// 검색 내용 디버깅
+		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList nsubjectNoticeTitle : " + CF.WSH + nsubjectNoticeTitle);
 		// 값을 가공
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("rowPerPage", rowPerPage);
 		map.put("startRow", startRow);
 		map.put("subjectNo", subjectNo);
+		map.put("nsubjectNoticeTitle", nsubjectNoticeTitle);
 		
 		// Mapper에서 반환(호출) 된 값 가공
 		List<Map<String, Object>> list = subjectNoticeMapper.getSubjectNoticeList(map);
-		int totalCount = subjectNoticeMapper.selectTotalCount(subjectNo);
+		int totalCount = subjectNoticeMapper.selectTotalCount();
 		int lastPage = (int)(Math.ceil((double)totalCount / (double)rowPerPage));
+		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList list : " + CF.WSH + list);
 		
 		Map<String, Object> returnMap = new HashMap<>();
 		returnMap.put("list", list);
 		returnMap.put("lastPage", lastPage);
 		returnMap.put("subjectNo", subjectNo);
-		returnMap.put("totalCount", totalCount);			
+		returnMap.put("totalCount", totalCount);	
+		returnMap.put("nsubjectNoticeTitle", nsubjectNoticeTitle);
+		
 		// 디버깅
 		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList lastPage : " + CF.WSH + lastPage );
 		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList list : " + CF.WSH + list);
 		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList subjectNo : " + CF.WSH + subjectNo);
+		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList nSubjectNoticeTitle : " + CF.WSH + nsubjectNoticeTitle);
 		return returnMap;
 	}
 	// 번호 받고 추가하기
@@ -126,7 +133,7 @@ public class SubjectNoticeService {
 		List<Map<String, Object>> subjectNoticeFile = subjectNoticeMapper.subjectNoticeFileOne(subjectBoardNo);
 		log.debug(CF.WSH + "SubjectNoticeService.subjectNoticeOne.subjectNoticeFile : " + subjectNoticeFile + CF.WSH);
 		
-		int FileCount = subjectNoticeMapper.subjectNoticeFileCount();
+		int FileCount = subjectNoticeMapper.subjectNoticeFileCount(subjectBoardNo);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("subjectNotice",subjectNotice);

@@ -44,7 +44,7 @@
 				});
 				
 				if(flag) {
-					$('#fileSection').append("<div><input type='file' class='subjectNoticeFileList' onchange='checkFile(this)' id='subjectNoticeFileList' name='subjectNoticeFileList'></div>");
+					$('#fileSection').append("<div><input type='file' class='subjectNoticeFileList' onchange='checkFile(this)' id='subjectNoticeFileList' name='subjectNoticeFileList' accept='image/*, .xls, .xlsx, pdf, hwp, docx, ppt, txt'></div>");
 				} else {
 					Swal.fire('파일 첨부를 다시 확인하십시오');
 				}
@@ -52,9 +52,9 @@
 			
 			$('#modifySubjectNotice').click(function(){
 				if($('#subjectNoticeTitle').val() == '') {
-					Swal.fire('과제 게시판 제목을 설정하세오!');
+					Swal.fire('공지사항 제목을 설정하세요!');
 				} else if($('#subjectNoticeContent').val() == '') {
-					Swal.fire('과제 게시판 내용을 입력하세요!');
+					Swal.fire('공지사항 내용을 입력하세요!');
 				} else {
 					$('.subjectNoticeFileList').each(function(){
 						if($(this).val() == '') {
@@ -78,7 +78,7 @@
 			var file = f.files;
 			// file[0].name 은 파일명 입니다.
 			// 정규식으로 확장자 체크
-			if(!/\.(pdf|hwp|docx|ppt|txt|png)$/i.test(file[0].name)) Swal.fire('pdf, hwp, docx, ppt, txt 파일만 선택해 주세요.\n\n현재 파일 : ' + file[0].name);
+			if(!/\.(pdf|hwp|docx|ppt|txt|xls|xlsx|png|jpeg)$/i.test(file[0].name)) Swal.fire('pdf, hwp, docx, ppt, txt 파일만 선택해 주세요.\n\n현재 파일 : ' + file[0].name);
 			// 체크를 통과했다면 종료.
 			else return;
 			// 체크에 걸리면 선택된  내용 취소 처리를 해야함.

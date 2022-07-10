@@ -19,18 +19,28 @@
 			INNER JOIN subject_board AS b ON n.subject_notice_no = b.subject_board_no
 	   		INNER JOIN teacher t ON t.member_id = n.member_id
 	    WHERE b.subject_no = #{subjectNo}
+	    <!-- 제목 검색 / nsubjectNoticeTitle : 검색어 -->
+		<if test='nsubjectNoticeTitle != null and !"".equals(nsubjectNoticeTitle)'>
+			AND CONCAT('%', n.subject_notice_title , '%') 
+			LIKE CONCAT('%', #{nsubjectNoticeTitle}, '%')
+		</if>
 		ORDER BY n.create_date DESC
 		    LIMIT #{startRow}, #{rowPerPage}
 	</select>
 	<!-- 리스트 전체 카운트 -->
 	<select id="selectTotalCount" 
-			resultType="int" 
-			parameterType="int">
+			parameterType="String"
+			resultType="int">
 		SELECT
 			COUNT(*)
 		FROM subject_notice AS n
 			INNER JOIN subject_board AS b ON n.subject_notice_no = b.subject_board_no
 		WHERE b.subject_no = #{subjectNo}
+		<!-- 제목 검색 / nsubjectNoticeTitle : 검색어 -->
+		<if test='nsubjectNoticeTitle != null and !"".equals(nsubjectNoticeTitle)'>
+			AND CONCAT('%', n.subject_notice_title, '%') 
+			LIKE CONCAT('%', #{nsubjectNoticeTitle}, '%')
+		</if>
 	</select>		
 	<!-- 리스트 추가(subjectNo 입력) -->
 	<insert id="insertSubjectNoticeBoardNo"
@@ -65,7 +75,7 @@
 	</insert>
 	<!-- 공지사항 파일 추가 -->
 	<insert id="insertSubjectNoticeFile"
-				parameterType="kr.co.javajoy.lms.vo.SubjectFile">
+			parameterType="kr.co.javajoy.lms.vo.SubjectFile">
 		INSERT INTO subject_file(
 			subject_file_board_no
 			,subject_file_name
@@ -86,8 +96,8 @@
 	</insert>
 	<!-- 공지사항 상세보기 -->
 	<select id="subjectNoticeOne"
-				parameterType="int"
-				resultType="java.util.Map">
+			parameterType="int"
+			resultType="java.util.Map">
 		SELECT 
 			b.subject_board_no subjectBoardNo
 			,b.subject_no subjectNo
@@ -105,8 +115,8 @@
 	</select>
 	<!-- 공지사항 파일 상세보기(조회) -->
 	<select id="subjectNoticeFileOne"
-				parameterType="int"
-				resultType="java.util.Map">
+			parameterType="int"
+			resultType="java.util.Map">
 		SELECT
 			f.subject_file_no subjectFileNo
 			,f.subject_file_board_no subjectFileBoardNo
@@ -122,15 +132,18 @@
 	</select>
 	<!-- 첨부파일 있을경우 첨부파일 컬럼 추가 -->
 	<select id="subjectNoticeFileCount"
-				resultType="int">
+			parameterType="int"
+			resultType="int">
 		SELECT 
 			COUNT(*) 
-		FROM student_file
+		FROM subject_file f
+			INNER JOIN subject_board b ON f.subject_file_board_no = b.subject_board_no
+		WHERE b.subject_board_no = #{subjectBaordNo}
 	</select>
 	<!-- 파일 삭제 전 name조회 -->
 	<select id="selectsubjectFileNameByBoardNo"
-				parameterType="int"
-				resultType="String">
+			parameterType="int"
+			resultType="String">
 		SELECT f.subject_file_name
 		FROM subject_file f
 			INNER JOIN subject_board b ON b.subject_board_no = f.subject_file_board_no
@@ -138,24 +151,24 @@
 	</select>
 	<!-- 파일삭제 -->
 	<delete id="deleteSubjectNoticeFile"
-				parameterType="int">
+			parameterType="int">
 		DELETE FROM subject_file
 		WHERE subject_file_board_no = #{subjectBoardNo}
 	</delete>
 	<!-- 게시글 삭제 -->
 	<delete id="deleteSubjectNotice"
-				parameterType="int">
+			parameterType="int">
 		DELETE FROM subject_notice
 		WHERE subject_notice_no = #{subjectBoardNo}		
 	</delete>
 	<!-- subject_board_no 삭제 -->
 	<delete id="deleteSubjectNoticeBoard"
-				parameterType="int">
+			parameterType="int">
 		DELETE FROM subject_board
 		WHERE subject_board_no = #{subjectBoardNo}
 	</delete>
 	<update id="updateSubjectNotice"
-				parameterType="kr.co.javajoy.lms.vo.SubjectNoticeInsertForm">
+			parameterType="kr.co.javajoy.lms.vo.SubjectNoticeInsertForm">
 		UPDATE subject_notice n 
 		LEFT JOIN subject_board b ON n.subject_notice_no = b.subject_board_no
 		SET 
@@ -167,14 +180,14 @@
 		WHERE subject_board_no = #{subjectBoardNo}
 	</update>
 	<select id="selectSubjectNoticeFileNameListBySubjectFileNo"
-				parameterType="int"
-				resultType="String">
+			parameterType="int"
+			resultType="String">
 			SELECT subject_file_name subjectFileName
 			FROM subject_file 
 			WHERE subject_file_no = #{subjectFileNo}
 	</select>
 	<delete id="deleteSubjectFile"
-				parameterType="int">
+			parameterType="int">
 			DELETE FROM subject_file
 			WHERE subject_file_no = #{subjectFileNo}
 	</delete>

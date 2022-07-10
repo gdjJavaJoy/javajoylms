@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,10 +32,13 @@ public class SubjectNoticeController {
 								,Model model
 								,@RequestParam(name = "currentPage", defaultValue = "1") int currentPage
 								,@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage
-								,@RequestParam(name = "subjectNo") int subjectNo) {
+								,@RequestParam(name = "subjectNo") int subjectNo
+								,@RequestParam @Nullable String nsubjectNoticeTitle) {
 		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeList.currentPage : " + currentPage + CF.WSH);
 		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeList.rowPerPage : " + rowPerPage + CF.WSH);
 		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeList.subjectNo : " + subjectNo + CF.WSH);
+		// 검색어 디버깅
+		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeList.nSubjectNoticeTitle : " + nsubjectNoticeTitle + CF.WSH);
 				
 		// 세션값 처리(모든 이용자 리스트 확인가능, 비로그인 시 필터로 인해 login페이지로)
 		String memberId = (String) session.getAttribute("loginUser");
@@ -42,12 +46,13 @@ public class SubjectNoticeController {
 		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeList.memberId : " + memberId + CF.WSH);
 		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeList.level : " + level + CF.WSH);
 		
-		Map<String, Object> map = subjectNoticeService.getSubjectNoticeList(currentPage, rowPerPage, subjectNo);
+		Map<String, Object> map = subjectNoticeService.getSubjectNoticeList(currentPage, rowPerPage, subjectNo, nsubjectNoticeTitle);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("subjectNo", subjectNo);
 		model.addAttribute("totalCount", map.get("totalCount"));
+		model.addAttribute("nsubjectNoticeTitle", map.get("nsubjectNoticeTitle"));
 			
 		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeList.list성공 : " + map + CF.WSH);
 		return "subject/subjectNotice/subjectNoticeList";
