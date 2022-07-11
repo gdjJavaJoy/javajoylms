@@ -90,7 +90,7 @@
 								<form method="get" id="deleteForm-${s.memberId}" name="deleteForm-${s.memberId}" action="${pageContext.request.contextPath}/deleteStudent">
 									<div>
 										<input type="hidden" value="${s.memberId}" name="memberId">
-										<input class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-md active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red" type="button" value="삭제" class="deletebtn" name="deletebtn" data-value="${s.memberId}"/>
+										<input class="deletebtn px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-md active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red" type="button" value="삭제" class="deletebtn" data-value="${s.memberId}"/>
 									</div>
 								</form>
 							</td>
