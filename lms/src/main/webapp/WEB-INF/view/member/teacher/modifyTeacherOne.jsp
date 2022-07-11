@@ -19,6 +19,7 @@
       defer
     ></script>
     <script src="./public/assets/js/init-alpine.js"></script>
+   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
     <div class="flex h-screen bg-gray-50 dark:bg-gray-900"
@@ -95,7 +96,7 @@
             </h4>
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto">
-              <form method="post" action="${pageContext.request.contextPath}/modifyTeacherOne">
+              <form method="post" action="${pageContext.request.contextPath}/modifyTeacherOne" id="updateForm">
                 <table class="w-full whitespace-no-wrap">
                     <tr class="text-gray-700 dark:text-gray-400">
                       <td class="px-4 py-3">
@@ -137,6 +138,7 @@
 			                  type="text"
 			                  name="memberName"
 			                  value="${teacherOne.teacherName}"
+			                  id="memberName"
 			                /></p>
                           </div>
                         </div>
@@ -162,6 +164,7 @@
 			                  type="text"
 			                  name="memberPhone"
 			                  value="${teacherOne.teacherPhone}"
+							  id="memberPhone"			                  
 			                />
                             </p>
                           </div>
@@ -336,6 +339,8 @@
                 <br>
                   <button
                   class="px-10 py-4 font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                  type="button"
+                  id="submitBtn"
                 >
                   정보수정 
                 </button>
@@ -426,7 +431,7 @@
 	                </c:forEach>
 	              </tbody>
               	</table>
-              	<form method="post" action="${pageContext.request.contextPath}/addCareer">
+              	<form method="post" action="${pageContext.request.contextPath}/addCareer" id="insertCareer">
               		<table class="w-full whitespace-no-wrap">
               			<thead>
                     <tr
@@ -451,6 +456,7 @@
 			                  type="text"
 			                  name="career"
 			                  placeholder="경력"
+			                  id="insertCareer"
 			                />
 	                            </div>
 								</p>
@@ -465,20 +471,22 @@
 			                  type="text"
 			                  name="detailCareer"
 			                  placeholder="상세경력"
+			                  id="insertDetailCareer"
 			                />
 	                            </div>
 	                      </td>
 	                      <td>
-	                      <input type="text" name="memberId" hidden="hidden" value="${loginUser}">
+	                     	 <input type="text" name="memberId" hidden="hidden" value="${loginUser}">
 	                      </td>
 	                      <td class="px-4 py-3">
 	                      <div>
-	                       <button
-			                  class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-			                  type="submit"
-			                >
-			                  경력추가
-	               		 </button>
+		                       <button
+				                  class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+				                  type="button"
+				                  id="insertCareerBtn"
+				                >
+				                  경력추가
+		               		 </button>
                         	</div>
                       	</td>
 	                   </tr>		
@@ -530,17 +538,64 @@
 			}
 		});
 	});
+  $('#submitBtn').click(function() {
+		if($('#memberName').val() == '') {
+			Swal.fire('이름을 입력해주세요');
+			return;
+		} else if ($('#memberPhone').val() == '') {
+			Swal.fire('전화번호를 입력해주세요');
+			return;
+		} else if ($('#keyword').val() == '') {
+			Swal.fire('주소를 입력해주세요');
+			return;
+		} else if ($('#memberDetailAddress').val() == '') {
+			Swal.fire('상세주소를 입력해주세요');
+			return;
+		} else if (!/^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/.test($('#memberEmail').val())) {
+			// 이메일의 경우 첫글자 _가 허용되므로 첫번째 글자 검사식을 따로 두었다.
+			// 영어 대/소문자 구분
+			// @ 반드시 하나만 입력, . 반드시 하나만 입력
+			// .뒤에 최소 한글자에서 최대 3글자까지
+			Swal.fire('이메일을 입력하세요');
+			return;
+		} else if($("input:checked[Name='languageNo']").is(":checked")<1){
+			Swal.fire('언어를 하나 이상 선택해 주세요');
+			return;
+		} else {
+			$('#updateForm').submit();
+		}
+	});
+  
   $('#modifyCareerBtn').click(function(){
-	  $.ajax({
-		  type:'post'
-		 ,url:'/lms/modifyCareer'
-		 ,data:{careerInfo : $('#careerInfo').val()
-			   ,detailCareer : $('#detailCareer').val()
-			   ,careerNo : $('#careerNo').val()}
-	  	,success:function(mc) {
-	  		console.log('mc:',mc);
-	  	}
-	  });
+	 if ($('#careerInfo').val()=='') {
+		 Swal.fire('경력 정보를 입력해주세요');
+		 return;
+	 } else if ($('#detailCareer').val() == '') {
+		 Swal.fire('경력 상세 정보를 입력해주세요');
+		 return;
+	 } else {
+		 $.ajax({
+			  type:'post'
+			 ,url:'/lms/modifyCareer'
+			 ,data:{careerInfo : $('#careerInfo').val()
+				   ,detailCareer : $('#detailCareer').val()
+				   ,careerNo : $('#careerNo').val()}
+		  	,success:function(mc) {
+		  		console.log('mc:',mc);
+		  	}
+		  });
+	 }
+  });
+  $('#insertCareerBtn').click(function(){
+	 if($('#insertCareer').val() == ''){
+		 Swal.fire('경력을 입력해주세요');
+		 return;
+	 	} else if ($('#insertDetailCareer').val() == '') {
+	 		Swal.fire('경력의 상세정보를 입력해주세요');
+	 		return;
+	 	} else {
+	 		$('#insertCareer').submit();
+	 	}
   });
   </script>
 </html>

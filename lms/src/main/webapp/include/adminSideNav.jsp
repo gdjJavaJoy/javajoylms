@@ -94,7 +94,7 @@
 								</li>
 								<li
 									class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-									<a class="w-full" href="#">자유 게시판 관리(미구현)</a>
+									<a class="w-full" href="${pageContext.request.contextPath}/getFreeBoardByPage">자유 게시판 관리</a>
 								</li>
 							</ul>
 						</template>
