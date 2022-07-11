@@ -119,10 +119,10 @@
               <div
                 class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-12 dark:text-gray-400 dark:bg-gray-800"
               >
-               	<form method="get" action="${pageContext.request.contextPath}/getSubjectReportListByPage" name="search">
+               	<form method="get" action="${pageContext.request.contextPath}/subjectNoticeList" name="search">
 	                <span class="flex items-center col-span-3">
                		<input name="subjectNo" class="form-control" type="hidden" value="${subjectNo}">
-	                <input name="rSubjectReportTitle" class="form-control" type="text"  placeholder="구현중">
+	                <input name="nsubjectNoticeTitle" class="form-control" type="text"  placeholder="제목 검색">
 	                 	  <button type="submit" class="grid px-4 py-3 text-sm">검색</button>
 	                 	  <a href="${pageContext.request.contextPath}/subjectNoticeList?subjectNo=${subjectNo}">초기화</a>
 	                </span>
@@ -131,11 +131,25 @@
                 <!-- Pagination -->
                 <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
                	 <c:if test="${currentPage > 1}">
+               	 <c:choose>
+               	 <c:when test="${nsubjectNoticeTitle eq null}">
                    <a href="${pageContext.request.contextPath}/subjectNoticeList?currentPage=${currentPage-1}&subjectNo=${subjectNo}">이전</a>
+                </c:when>
+                <c:otherwise>
+                	<a href="${pageContext.request.contextPath}/subjectNoticeList?currentPage=${currentPage-1}&searchNoticeTitle=${searchNoticeTitle}&subjectNo=${subjectNo}">이전</a>
+                </c:otherwise>
+                </c:choose>
                  </c:if>
                 <span>&nbsp  &nbsp</span>
                  <c:if test="${currentPage < lastPage}">
-                   <a href="${pageContext.request.contextPath}/subjectNoticeList?currentPage=${currentPage+1}&subjectNo=${subjectNo}">다음</a> 
+                 <c:choose>
+                 <c:when test="${nsubjectNoticeTitle eq null}">
+                   <a href="${pageContext.request.contextPath}/subjectNoticeList?currentPage=${currentPage+1}&subjectNo=${subjectNo}">다음</a>
+                 </c:when>
+                 <c:otherwise>
+                 	 <a href="${pageContext.request.contextPath}/subjectNoticeList?currentPage=${currentPage+1}&searchNoticeTitle=${searchNoticeTitle}&subjectNo=${subjectNo}">다음</a>
+                 </c:otherwise>
+                 </c:choose>
                  </c:if>
                 </span>
               </div>

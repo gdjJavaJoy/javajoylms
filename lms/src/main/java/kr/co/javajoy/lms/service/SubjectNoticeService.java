@@ -13,11 +13,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.mapper.SubjectNoticeMapper;
-import kr.co.javajoy.lms.vo.Boardfile;
 import kr.co.javajoy.lms.vo.SubjectBoard;
 import kr.co.javajoy.lms.vo.SubjectBoardInsertForm;
 import kr.co.javajoy.lms.vo.SubjectFile;
 import kr.co.javajoy.lms.vo.SubjectNotice;
+import kr.co.javajoy.lms.vo.SubjectNoticeInsertForm;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -26,33 +26,40 @@ import lombok.extern.slf4j.Slf4j;
 public class SubjectNoticeService {
 	@Autowired SubjectNoticeMapper subjectNoticeMapper;
 	// 리스트 출력
-	public Map<String, Object> getSubjectNoticeList(int currentPage, int rowPerPage, int subjectNo) {
+	public Map<String, Object> getSubjectNoticeList(int currentPage, int rowPerPage, int subjectNo, String nsubjectNoticeTitle) {
 		// 리스트 출력 페이징
 		int startRow = (currentPage - 1) * rowPerPage;
 		// 디버깅
 		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList rowPerPage : " + CF.WSH + rowPerPage);
 		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList startRow : " + CF.WSH + startRow);
 		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList subjectNo : " + CF.WSH + subjectNo);
+		// 검색 내용 디버깅
+		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList nsubjectNoticeTitle : " + CF.WSH + nsubjectNoticeTitle);
 		// 값을 가공
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("rowPerPage", rowPerPage);
 		map.put("startRow", startRow);
 		map.put("subjectNo", subjectNo);
+		map.put("nsubjectNoticeTitle", nsubjectNoticeTitle);
 		
 		// Mapper에서 반환(호출) 된 값 가공
 		List<Map<String, Object>> list = subjectNoticeMapper.getSubjectNoticeList(map);
-		int totalCount = subjectNoticeMapper.selectTotalCount(subjectNo);
+		int totalCount = subjectNoticeMapper.selectTotalCount();
 		int lastPage = (int)(Math.ceil((double)totalCount / (double)rowPerPage));
+		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList list : " + CF.WSH + list);
 		
 		Map<String, Object> returnMap = new HashMap<>();
 		returnMap.put("list", list);
 		returnMap.put("lastPage", lastPage);
 		returnMap.put("subjectNo", subjectNo);
-		returnMap.put("totalCount", totalCount);			
+		returnMap.put("totalCount", totalCount);	
+		returnMap.put("nsubjectNoticeTitle", nsubjectNoticeTitle);
+		
 		// 디버깅
 		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList lastPage : " + CF.WSH + lastPage );
 		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList list : " + CF.WSH + list);
 		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList subjectNo : " + CF.WSH + subjectNo);
+		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList nSubjectNoticeTitle : " + CF.WSH + nsubjectNoticeTitle);
 		return returnMap;
 	}
 	// 번호 받고 추가하기
@@ -126,7 +133,7 @@ public class SubjectNoticeService {
 		List<Map<String, Object>> subjectNoticeFile = subjectNoticeMapper.subjectNoticeFileOne(subjectBoardNo);
 		log.debug(CF.WSH + "SubjectNoticeService.subjectNoticeOne.subjectNoticeFile : " + subjectNoticeFile + CF.WSH);
 		
-		int FileCount = subjectNoticeMapper.subjectNoticeFileCount();
+		int FileCount = subjectNoticeMapper.subjectNoticeFileCount(subjectBoardNo);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("subjectNotice",subjectNotice);
@@ -160,16 +167,16 @@ public class SubjectNoticeService {
 		return row;
 	}
 	// 수정하기(Post)
-	public void modifySubjectNotice(SubjectBoardInsertForm subjectBoardInsertForm, String path) {
-		log.debug(CF.WSH + "SubjectNoticeService.removeSubjectNotice.subjectBoardInsertForm : " + subjectBoardInsertForm + CF.WSH);
-		log.debug(CF.WSH + "SubjectNoticeService.removeSubjectNotice.path : " + path + CF.WSH);
+	public void modifySubjectNotice(SubjectNoticeInsertForm subjectNoticeInsertForm, String path) {
+		log.debug(CF.WSH + "SubjectNoticeService.modifySubjectNotice.subjectBoardInsertForm : " + subjectNoticeInsertForm + CF.WSH);
+		log.debug(CF.WSH + "SubjectNoticeService.modifySubjectNotice.path : " + path + CF.WSH);
 		
-		int row = subjectNoticeMapper.updateSubjectNotice(subjectBoardInsertForm);
+		int row = subjectNoticeMapper.updateSubjectNotice(subjectNoticeInsertForm);
 		log.debug(CF.WSH + "SubjectNoticeService.modifySubjectNotice.row : " + row + CF.WSH);
 		
-		if (subjectBoardInsertForm.getSubjectBoardFileList() != null && subjectBoardInsertForm.getSubjectBoardFileList().get(0).getSize() > 0) {
-			log.debug(CF.PBJ + "SubjectNoticeService.modifySubjectNotice.Post : 첨부된 파일이 있습니다.");
-			for (MultipartFile mf : subjectBoardInsertForm.getSubjectBoardFileList()) {
+		if (subjectNoticeInsertForm.getSubjectNoticeFileList() != null && subjectNoticeInsertForm.getSubjectNoticeFileList().get(0).getSize() > 0) {
+			log.debug(CF.WSH + "SubjectNoticeService.modifySubjectNotice.Post : 첨부된 파일이 있습니다.");
+			for (MultipartFile mf : subjectNoticeInsertForm.getSubjectNoticeFileList()) {
 				SubjectFile subjectFile = new SubjectFile();
 
 				String originName = mf.getOriginalFilename();
@@ -178,15 +185,15 @@ public class SubjectNoticeService {
 				// 파일을 저장할 때 사용할 증븍되지않는 새로운 이름 (UUID API사용)
 				String filename = UUID.randomUUID().toString();
 				filename = filename + ext;
-				log.debug(CF.PBJ + "SubjectNoticeService.modifySubjectNotice.Post.originName : " + originName);
-				log.debug(CF.PBJ + "SubjectNoticeService.modifySubjectNotice.Post.filename : " + filename);
+				log.debug(CF.WSH + "SubjectNoticeService.modifySubjectNotice.Post.originName : " + originName);
+				log.debug(CF.WSH + "SubjectNoticeService.modifySubjectNotice.Post.filename : " + filename);
 				// subject_file 데이터 가공
-				subjectFile.setSubjectFileBoardNo(subjectBoardInsertForm.getSubjectBoardNo());
+				subjectFile.setSubjectFileBoardNo(subjectNoticeInsertForm.getSubjectBoardNo());
 				subjectFile.setSubjectFileName(filename);
 				subjectFile.setSubjectFileOriginalName(mf.getOriginalFilename());
 				subjectFile.setSubjectFileType(mf.getContentType());
 				subjectFile.setSubjectFileSize(mf.getSize());
-				log.debug(CF.PBJ + "SubjectNoticeService.modifySubjectNotice.Post.SubjectFile : " + subjectFile);
+				log.debug(CF.WSH + "SubjectNoticeService.modifySubjectNotice.Post.SubjectFile : " + subjectFile);
 				// 파일 입력
 				subjectNoticeMapper.insertSubjectNoticeFile(subjectFile);
 				// try & catch
@@ -200,5 +207,16 @@ public class SubjectNoticeService {
 	
 		}
 		
+	}
+	// 수정에서 파일만 삭제
+	public void removeSubjectNoticeFile(int subjectFileNo, String path) {
+		List<String> subjectNoticeFileList = subjectNoticeMapper.selectSubjectNoticeFileNameListBySubjectFileNo(subjectFileNo);
+		log.debug(CF.WSH + "SubjectNoticeService.removeSubjectNoticeFile.subjectNoticeFileList : " + subjectNoticeFileList);
+		for (String sfl : subjectNoticeFileList) {
+			File f = new File(path + sfl);
+			if (f.exists())
+				f.delete();
+		}
+		subjectNoticeMapper.deleteSubjectFile(subjectFileNo);
 	}
 }

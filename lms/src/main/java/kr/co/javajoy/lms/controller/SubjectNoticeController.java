@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.service.SubjectNoticeService;
 import kr.co.javajoy.lms.vo.SubjectBoardInsertForm;
+import kr.co.javajoy.lms.vo.SubjectNoticeInsertForm;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -30,10 +32,13 @@ public class SubjectNoticeController {
 								,Model model
 								,@RequestParam(name = "currentPage", defaultValue = "1") int currentPage
 								,@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage
-								,@RequestParam(name = "subjectNo") int subjectNo) {
+								,@RequestParam(name = "subjectNo") int subjectNo
+								,@RequestParam @Nullable String nsubjectNoticeTitle) {
 		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeList.currentPage : " + currentPage + CF.WSH);
 		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeList.rowPerPage : " + rowPerPage + CF.WSH);
 		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeList.subjectNo : " + subjectNo + CF.WSH);
+		// 검색어 디버깅
+		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeList.nSubjectNoticeTitle : " + nsubjectNoticeTitle + CF.WSH);
 				
 		// 세션값 처리(모든 이용자 리스트 확인가능, 비로그인 시 필터로 인해 login페이지로)
 		String memberId = (String) session.getAttribute("loginUser");
@@ -41,12 +46,13 @@ public class SubjectNoticeController {
 		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeList.memberId : " + memberId + CF.WSH);
 		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeList.level : " + level + CF.WSH);
 		
-		Map<String, Object> map = subjectNoticeService.getSubjectNoticeList(currentPage, rowPerPage, subjectNo);
+		Map<String, Object> map = subjectNoticeService.getSubjectNoticeList(currentPage, rowPerPage, subjectNo, nsubjectNoticeTitle);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("subjectNo", subjectNo);
 		model.addAttribute("totalCount", map.get("totalCount"));
+		model.addAttribute("nsubjectNoticeTitle", map.get("nsubjectNoticeTitle"));
 			
 		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeList.list성공 : " + map + CF.WSH);
 		return "subject/subjectNotice/subjectNoticeList";
@@ -175,7 +181,7 @@ public class SubjectNoticeController {
 		String level = (String)session.getAttribute("level"); 
 		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.Get().memberId : " + memberId + CF.WSH);
 		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.Get().level : " + level + CF.WSH);
-		log.debug(CF.PBJ + "SubjectController.modifySubjectReport(Form).level : " + level);
+		log.debug(CF.WSH + "SubjectController.modifySubjectReport(Form).level : " + level);
 		// 강사가 아니면 로그인
 		if(level.equals("3") || level.equals("1")) {
 			return "redirect:/login";
@@ -192,7 +198,7 @@ public class SubjectNoticeController {
 		
 		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.Get().path : " + path + CF.WSH);
 		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.Get().subjectNotice : " +  rm.get("subjectNotice") + CF.WSH);
-		log.debug(CF.PBJ + "SubjectController.modifySubjectReport(Form).level : " + rm.get("subjectNoticeFile") + CF.WSH);
+		log.debug(CF.WSH + "SubjectController.modifySubjectReport.Get().level : " + rm.get("subjectNoticeFile") + CF.WSH);
 		
 		return "subject/subjectNotice/modifySubjectNotice";
 	}
@@ -200,30 +206,58 @@ public class SubjectNoticeController {
 	public String modifySubjectNotice(HttpSession session
 										,Model model
 										,HttpServletRequest request
-										,SubjectBoardInsertForm subjectBoardInsertForm
+										,SubjectNoticeInsertForm subjectNoticeInsertForm
 										,@RequestParam(name="subjectBoardNo") int subjectBoardNo
 										,@RequestParam(name="subjectNo") int subjectNo) {
 		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.subjectBoardNo.Get() : " + subjectBoardNo + CF.WSH);
 		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.subjectNo.Get() : " + subjectNo + CF.WSH);									
+		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.subjectNo.subjectBoardInsertForm() : " + subjectNoticeInsertForm + CF.WSH);
 		
 		// 파일 경로
 		String path = request.getServletContext().getRealPath("/file/subjectFile/");
 		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.Post().path : " + path + CF.WSH);
 		
-		List<MultipartFile> subjectNoticeFileList = subjectBoardInsertForm.getSubjectBoardFileList();
-		log.debug(CF.PBJ + "SubjectNoticeController.modifySubjectReport(Action).subjectReportFileList : " + subjectNoticeFileList);
+		List<MultipartFile> subjectBoardFileList = subjectNoticeInsertForm.getSubjectNoticeFileList();
+		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectReport(Action).subjectReportFileList : " + subjectBoardFileList);
 		// 파일이 한개 이상 업로드 되면
-		if (subjectNoticeFileList != null && subjectNoticeFileList.get(0).getSize() > 0) {
-			for (MultipartFile mf : subjectNoticeFileList) {
-				log.debug(CF.PBJ + "SubjectReportController.modifySubjectReport.Post().subjectFileOriginalName : " + mf.getOriginalFilename());
+		if (subjectBoardFileList != null && subjectBoardFileList.get(0).getSize() > 0) {
+			for (MultipartFile mf : subjectBoardFileList) {
+				log.debug(CF.PBJ + "SubjectReportController.modifySubjectNotice.Post().subjectFileOriginalName : " + mf.getOriginalFilename());
 			}
 		}
 		
 		model.addAttribute("subjectBoardNo", subjectBoardNo);
 		model.addAttribute("subjectNo", subjectNo);
-		log.debug(CF.PBJ + "SubjectNoticeController.modifySubjectReport.Post().subjectBoardNo : " + subjectBoardNo);
+		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.Post().subjectBoardNo : " + subjectBoardNo);
 		
-		subjectNoticeService.modifySubjectNotice(subjectBoardInsertForm, path);
-		return	"redirect:/subjectNoticeOne?subjectBoardNo=" + subjectBoardNo;					
+		subjectNoticeService.modifySubjectNotice(subjectNoticeInsertForm, path);
+		return   "redirect:/subjectNoticeOne?subjectBoardNo=" + subjectBoardNo + "&" + "subjectNo="+subjectNo;      		
+	}
+	// 5-1) 공지사항에서의 파일 삭제
+	@GetMapping("/removeSubjectNoticeFile")
+	public String removeSubjectNoticeFile(HttpServletRequest request
+										,HttpSession session
+										,@RequestParam(name="subjectFileNo") int subjectFileNo
+										,@RequestParam(name="subjectBoardNo") int subjectBoardNo
+										,@RequestParam(name="subjectNo") int subjectNo) {
+		log.debug(CF.WSH + "SubjectNoticeController.removeSubjectNoticeFile.subjectFileNo.Get() : " + subjectFileNo + CF.WSH);
+		log.debug(CF.WSH + "SubjectNoticeController.removeSubjectNoticeFile.subjectBoardNo.Get() : " + subjectBoardNo + CF.WSH);
+		log.debug(CF.WSH + "SubjectNoticeController.removeSubjectNoticeFile.subjectNo.Get() : " + subjectNo + CF.WSH);
+		
+		// 세션을 받아서 level2(강사)만 수정이 가능
+		String memberId = (String)session.getAttribute("loginUser");
+		String level = (String)session.getAttribute("level"); 
+		log.debug(CF.WSH + "SubjectNoticeController.removeSubjectNoticeFile.Get().memberId : " + memberId + CF.WSH);
+		log.debug(CF.WSH + "SubjectNoticeController.removeSubjectNoticeFile.Get().level : " + level + CF.WSH);
+		// 강사가 아니면 로그인
+		if(level.equals("3") || level.equals("1")) {
+			return "redirect:/login";
+		}
+		// 파일 경로
+		String path = request.getServletContext().getRealPath("/file/subjectFile/");
+		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.Get().path : " + path + CF.WSH);
+		
+		subjectNoticeService.removeSubjectNoticeFile(subjectFileNo, path);
+		return "redirect:/modifySubjectNotice?subjectBoardNo=" + subjectBoardNo + "&" + "subjectNo=" + subjectNo ;		
 	}
 }

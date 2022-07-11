@@ -6,15 +6,15 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.javajoy.lms.vo.SubjectBoard;
-import kr.co.javajoy.lms.vo.SubjectBoardInsertForm;
 import kr.co.javajoy.lms.vo.SubjectFile;
 import kr.co.javajoy.lms.vo.SubjectNotice;
+import kr.co.javajoy.lms.vo.SubjectNoticeInsertForm;
 @Mapper
 public interface SubjectNoticeMapper {
 	// 강좌공지사항 리스트 출력
 	List<Map<String,Object>> getSubjectNoticeList(Map<String, Object> map);
 	// 강좌공지사항 총 수
-	int selectTotalCount(int subjectNo);
+	int selectTotalCount();
 	
 	// 강좌를 확인할 SubjectNo를 subject_board에 전달
 	int insertSubjectNoticeBoardNo(SubjectBoard subjectBoard);
@@ -29,7 +29,7 @@ public interface SubjectNoticeMapper {
 	// 파일 상세보기
 	List<Map<String, Object>> subjectNoticeFileOne(int subjectBoardNo);
 	// 파일 개수
-	int subjectNoticeFileCount();
+	int subjectNoticeFileCount(int subjectBoardNo);
 	// 파일 삭제 전 이름으로 조회
 	List<String> selectsubjectFileNameByBoardNo(int subjectBoardNo);
 	// 파일 삭제
@@ -40,7 +40,11 @@ public interface SubjectNoticeMapper {
 	int deleteSubjectNoticeBoard(int subjectBoardNo);
 	
 	// 수정하기(Post)
-	int updateSubjectNotice(SubjectBoardInsertForm subjectBoardInsertForm);
+	int updateSubjectNotice(SubjectNoticeInsertForm subjectNoticeInsertForm);
+	// 수정에서 파일만 삭제 시 이름 리스트 출력
+	List<String> selectSubjectNoticeFileNameListBySubjectFileNo(int subjectFileNo);
+	// 수정에서 파일만 삭제
+	int deleteSubjectFile(int subjectFileNo);
 }
 
 
