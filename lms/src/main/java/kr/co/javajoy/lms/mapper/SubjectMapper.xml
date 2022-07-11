@@ -51,6 +51,16 @@
 		ORDER BY create_date DESC
 	</select>
 	
+	<!-- 강좌 이름 가져오기 -->
+	<select id="selectSubjectName"
+			parameterType="int"
+			resultType="String">
+		select
+			subject_name subjectName
+		FROM subject
+		WHERE subject_no = #{subjectNo}
+	</select>
+	
 	<!-- 강좌 리스트(운영자용) -->
 	<select id="selectSubjectByPage"
 			parameterType="java.util.Map"

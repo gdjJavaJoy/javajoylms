@@ -15,7 +15,7 @@ import kr.co.javajoy.lms.CF;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@WebFilter("/*") // 모든작업 끝난 후 경로 * 로 바꿔야함
+@WebFilter("/ㅁㄴㅇ") // 모든작업 끝난 후 경로 * 로 바꿔야함
 
 public class LoginCheckFilter implements Filter {
 	@Override

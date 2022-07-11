@@ -84,7 +84,7 @@
 	                </svg>
 	                <span>커리큘럼 관리 페이지</span>
 	              </div>
-	              <span>${curriculum.subjectName} 커리큘럼 &RightArrow;</span>
+	              <span>커리큘럼 &RightArrow;</span>
 	            </a>
             
               <!-- With avatar -->
@@ -117,7 +117,7 @@
 	                    	<td class="px-4 py-3 text-sm">${curriculum.startDay}</td>
 	                    </tr>
 	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-	                    	<th class="px-4 py-3">마감 날짜</th>
+	                    	<th class="px-4 py-3">종료 날짜</th>
 	                    	<td class="px-4 py-3 text-sm">${curriculum.endDay}</td>
 	                    </tr>
 	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
@@ -133,9 +133,9 @@
 		            	<!-- Pagination -->
 	                <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
 	                <c:if test="${level eq 1 || level eq 2}">
-	              		<a href="${pageContext.request.contextPath}/modifyCurriculum?curriculumNo=${curriculum.curriculumNo}&subjectNo=${curriculum.subjectNo}&subjectName=${curriculum.subjectName}">커리큘럼 수정</a>
+	              		<a href="${pageContext.request.contextPath}/modifyCurriculum?curriculumNo=${curriculum.curriculumNo}&subjectNo=${curriculum.subjectNo}">커리큘럼 수정</a>
 	              		<span>&nbsp; | &nbsp;</span>
-	                    <a href="${pageContext.request.contextPath}/removeCurriculum?curriculumNo=${curriculum.curriculumNo}&subjectNo=${curriculum.subjectNo}&subjectName=${curriculum.subjectName}">커리큘럼 삭제</a> 
+	                    <a href="${pageContext.request.contextPath}/removeCurriculum?curriculumNo=${curriculum.curriculumNo}&subjectNo=${curriculum.subjectNo}">커리큘럼 삭제</a> 
 	                </c:if>
 	                </span>
               	  </div>

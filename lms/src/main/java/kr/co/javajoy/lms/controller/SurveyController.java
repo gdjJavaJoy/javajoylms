@@ -107,6 +107,7 @@ public class SurveyController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("searchName", map.get("searchName"));
 		
 		return "/member/admin/getSurveyByPage";
 	}

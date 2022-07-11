@@ -31,8 +31,7 @@ public class CurriculumController {
 								,Model model
 								,@RequestParam(value = "currentPage", defaultValue = "1") int currentPage
 								,@RequestParam(value = "rowPerPage", defaultValue = "20") int rowPerPage
-							    ,@RequestParam(value = "subjectNo") int subjectNo
-							    ,@RequestParam(value = "subjectName") String subjectName) {
+							    ,@RequestParam(value = "subjectNo") int subjectNo) {
 		log.debug(CF.PBJ + "CurriculumListController.getCurriculumList.subjectNo : " + subjectNo);
 		// 운영자 session 처리
 		String memberId = (String)session.getAttribute("loginUser");
@@ -41,7 +40,8 @@ public class CurriculumController {
 		log.debug(CF.PBJ + "CurriculumListController.getCurriculumList.sessionId : " + memberId);
 		log.debug(CF.PBJ + "CurriculumListController.getCurriculumList.level : " + level);
 		
-		Map<String, Object> map = curriculumService.selectCurriculumList(currentPage, rowPerPage, subjectNo, subjectName);
+		Map<String, Object> map = curriculumService.selectCurriculumList(currentPage, rowPerPage, subjectNo);
+		
 		model.addAttribute("curriculumList", map.get("curriculumList"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", map.get("lastPage"));
@@ -75,8 +75,7 @@ public class CurriculumController {
 	@GetMapping("/addCurriculum")
 	public String addCurriculum(HttpSession session
 								, Model model
-								,@RequestParam(name = "subjectNo") int subjectNo
-								,@RequestParam(name = "subjectName") String subjectName) {
+								,@RequestParam(name = "subjectNo") int subjectNo) {
 		log.debug(CF.PBJ + "CurriculumListController.addCurriculum(Form).subjectNo : " + subjectNo);
 		String memberId = (String)session.getAttribute("loginUser");
 		String level = (String)session.getAttribute("level");
@@ -95,11 +94,11 @@ public class CurriculumController {
 		List<Map<String, Object>> languageList = curriculumService.selectLanguageName();
 		// 교육 도서 리스트 출력
 		List<Map<String, Object>> bookList = curriculumService.selectBookName();
+		
 		model.addAttribute("teacherList", teacherList);
 		model.addAttribute("languageList", languageList);
 		model.addAttribute("bookList", bookList);
 		model.addAttribute("subjectNo", subjectNo);
-		model.addAttribute("subjectName", subjectName);
 		
 		log.debug(CF.PBJ + "CurriculumListController.addCurriculum(Form).subjectNo : " + subjectNo);
 		log.debug(CF.PBJ + "CurriculumListController.addCurriculum(Form).teacherList : " + teacherList);
@@ -219,11 +218,10 @@ public class CurriculumController {
 	// ------------------------ 5) 커리큘럼 삭제 <DELETE>------------------------ 
 	@GetMapping("/removeCurriculum")
 	public String removeCurriculum(@RequestParam(name="curriculumNo") int curriculumNo
-								,@RequestParam(name = "subjectNo") int subjectNo
-								,@RequestParam(name = "subjectName") String subjectName) {
+								,@RequestParam(name = "subjectNo") int subjectNo) {
 		log.debug(CF.PBJ + "CurriculumListController.removeCurriculum.curriculumNo : " + curriculumNo);
 		curriculumService.removeCurriculum(curriculumNo);
-		return "redirect:/getCurriculumList?subjectNo=" + subjectNo + "&subjectName=" + subjectName;
+		return "redirect:/getCurriculumList?subjectNo=" + subjectNo;
 	}
 	
 	

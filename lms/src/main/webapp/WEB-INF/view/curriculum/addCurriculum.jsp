@@ -100,8 +100,7 @@
             <!-- With avatar -->
             <h4
               class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300"
-            >
-              ${subjectName} 커리큘럼 추가
+            >커리큘럼 추가
             </h4>
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto">

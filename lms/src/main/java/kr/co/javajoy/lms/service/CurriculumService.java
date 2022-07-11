@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.mapper.CurriculumMapper;
+import kr.co.javajoy.lms.mapper.SubjectMapper;
 import kr.co.javajoy.lms.vo.Book;
 import kr.co.javajoy.lms.vo.Curriculum;
 import kr.co.javajoy.lms.vo.CurriculumBook;
@@ -22,11 +23,12 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class CurriculumService {
 	@Autowired CurriculumMapper curriculumMapper;
+	@Autowired SubjectMapper subjectMapper;
 	
 	// ---------------------- 1) 커리쿨럼 리스트 출력 <SELECT> ----------------------
 	
 	// 1-1) 커리큘럼 리스트 출력
-	public Map<String, Object> selectCurriculumList(int currentPage, int rowPerPage, int subjectNo, String subjectName) {
+	public Map<String, Object> selectCurriculumList(int currentPage, int rowPerPage, int subjectNo) {
 		// 리스트 출력 페이징
 		int startRow = (currentPage - 1) * rowPerPage;
 		
@@ -34,13 +36,13 @@ public class CurriculumService {
 		map.put("rowPerPage", rowPerPage);
 		map.put("startRow", startRow);
 		map.put("subjectNo", subjectNo);
-		map.put("subjectName", subjectName);
 		
 		log.debug(CF.PBJ + "CurriculumListController.selectCurriculumList.subjectNo : " + subjectNo);
-		log.debug(CF.PBJ + "CurriculumListController.selectCurriculumList.subjectName : " + subjectName);
 		
 		// Mapper에서 반환 된 값 가공
 		List<Map<String, Object>> curriculumList = curriculumMapper.selectCurriculumList(map);
+		String subjectName = subjectMapper.selectSubjectName(subjectNo);
+		
 		int totalCount = curriculumMapper.selectTotalCount();
 		int lastPage = (int)(Math.ceil((double)totalCount / (double)rowPerPage));
 		
@@ -52,8 +54,8 @@ public class CurriculumService {
 
 		log.debug(CF.PBJ + "CurriculumListController.selectCurriculumList.lastPage : " + lastPage );
 		log.debug(CF.PBJ + "CurriculumListController.selectCurriculumList.curriculumList : " + curriculumList);
-		log.debug(CF.PBJ + "CurriculumListController.selectCurriculumList.subjectNo: " + subjectNo);
 		log.debug(CF.PBJ + "CurriculumListController.selectCurriculumList.subjectName: " + subjectName);
+		log.debug(CF.PBJ + "CurriculumListController.selectCurriculumList.subjectNo: " + subjectNo);
 		
 		return returnMap;
 	}

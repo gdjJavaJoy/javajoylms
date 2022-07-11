@@ -60,7 +60,7 @@
 			
         <main class="h-full pb-16 overflow-y-auto">
           <div class="container grid px-6 mx-auto">
-            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의 커리큘럼 목록</h2>
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">커리큘럼 목록</h2>
             <!-- CTA -->
             <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
               href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${subjectNo}">
@@ -76,11 +76,11 @@
           
             <!-- With avatar -->
        
-	           	 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">${subjectName} 커리큘럼 목록
+	           	 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">${subjectName}커리큘럼 목록
 	            	<c:if test="${level eq 1 || level eq 2}">
 	            		<a href="${pageContext.request.contextPath}/getLanguageList" class="text-sm" style="float: right;">&nbsp;&nbsp;프로그래밍 언어 관리&nbsp;&nbsp;</a>
     					<a href="${pageContext.request.contextPath}/getBookListByPage" class="text-sm" style="float: right;">&nbsp;&nbsp;교육 도서 관리&nbsp;&nbsp;</a>
-    					<a href="${pageContext.request.contextPath}/addCurriculum?subjectNo=${subjectNo}&subjectName=${subjectName}" class="text-sm" style="float: right;">&nbsp;&nbsp;커리큘럼 추가&nbsp;&nbsp;</a>
+    					<a href="${pageContext.request.contextPath}/addCurriculum?subjectNo=${subjectNo}" class="text-sm" style="float: right;">&nbsp;&nbsp;커리큘럼 추가&nbsp;&nbsp;</a>
 	       			</c:if>
 	            </h4>	         
 	            	

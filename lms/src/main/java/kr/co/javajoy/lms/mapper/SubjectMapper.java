@@ -28,6 +28,9 @@ public interface SubjectMapper {
 	// 강좌 삭제
 	int deleteSubject(int subjectNo);
 	
+	// subjectName 가져오기
+	String selectSubjectName(int subjectNo);
+	
 	// 강의 영상 하나만 뽑기
 	SubjectVideo selectSubjectVideoOne(int subjectVideoNo);
 	
