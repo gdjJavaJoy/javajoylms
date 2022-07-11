@@ -60,7 +60,7 @@
 			
         <main class="h-full pb-16 overflow-y-auto">
           <div class="container grid px-6 mx-auto">
-            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의 Subject Report List Page</h2>
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의 과제 게시판 목록</h2>
             <!-- CTA -->
             <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
               href="${pageContext.request.contextPath}/getSubjectOne?subjectNo=${subjectNo}">
@@ -75,14 +75,11 @@
             
           
             <!-- With avatar -->
-       
-	           	 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">과제 목록
-	         
+	           	 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300"> ${s.subjectName} 과제 목록
 	            	<c:if test="${level eq 1 || level eq 2}">
 	            		<a href="${pageContext.request.contextPath}/addSubjectReport?subjectNo=${subjectNo}" class="text-sm" style="float: right;">과제 추가 -></a>
 	       			</c:if>
 	            </h4>
- 
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto">
                 <table class="w-full whitespace-no-wrap">
@@ -96,7 +93,7 @@
                     </tr>
                   </thead>
                   <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                   <c:forEach var="s" items="${list}" varStatus="cnt">
+                  <c:forEach var="s" items="${list}" varStatus="cnt">
                      <tr onClick="location.href='${pageContext.request.contextPath}/getSubjectReportOne?subjectBoardNo=${s.subjectBoardNo}'" style="cursor:pointer;" class="text-gray-700 dark:text-gray-400">
 						<td class="px-4 py-3 text-sm">${cnt.index+1}</td>
 						<td class="px-4 py-3 text-sm">${s.subjectName}</td>
@@ -132,7 +129,7 @@
                	 <c:if test="${currentPage > 1}">
                    <a href="${pageContext.request.contextPath}/getSubjectReportListByPage?currentPage=${currentPage-1}">이전</a>
                  </c:if>
-                <span>&nbsp  &nbsp</span>
+                <span>&nbsp;  &nbsp;</span>
                  <c:if test="${currentPage < lastPage}">
                    <a href="${pageContext.request.contextPath}/getSubjectReportListByPage?currentPage=${currentPage+1}">다음</a> 
                  </c:if>

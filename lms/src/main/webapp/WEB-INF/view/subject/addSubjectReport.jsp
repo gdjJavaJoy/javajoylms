@@ -9,8 +9,8 @@
     	<style>
 			img { display: block; margin: 0px auto; }
 			textarea{
-				width:500px; 
-				height:100px; 
+				width:1000px; 
+				height:200px; 
 			    resize:none;
 			    /* 크기고정 */ 
 				/*   resize: horizontal; // 가로크기만 조절가능 
@@ -126,7 +126,7 @@
 			</c:if>
         <main class="h-full pb-16 overflow-y-auto">
             <div class="container grid px-6 mx-auto">
-            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의 Subject Report Insert</h2>
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의 과제 추가</h2>
             <!-- CTA -->
             <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
               href="${pageContext.request.contextPath}/getSubjectReportListByPage?subjectNo=${subjectNo}">
@@ -166,7 +166,6 @@
 	                          <div>
 			    		 	  	<p class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
 		                            	<input type="text" id="memberId" name="memberId" value="${loginUser}" readonly>
-		                            	<span id="memberIdHelper" class="helper"></span>	
 		                        </p>
 	                          </div>
 	                        </div>
@@ -187,7 +186,6 @@
 		                          <div>
 		                            <p class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
 		                            	<input type="text" id="subjectReportTitle" name="subjectReportTitle" placeholder="과제 제목">
-		                            	<span id="subjectReportTitleHelper" class="helper"></span>	
 		                            </p>
 		                          </div>
 		                        </div>
@@ -209,7 +207,6 @@
 	                            <p class="font-semibold">
 	                             	<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 	                             	type="datetime-local" id="subjectReportPeriod" name="subjectReportPeriod" placeholder="과제 기한 설정">
-			    					<span id="subjectReportPeriodHelper" class="helper"></span>	
 	                            </p>
                           </div>
                         </div>
@@ -231,7 +228,6 @@
                           <div>
                             <p class="font-semibold">
                              	<textarea id="subjectReportContent" name="subjectReportContent" class="form-control"></textarea>
-		    					<span id="subjectReportContentHelper" class="helper"></span>
                             </p>
                           </div>
                         </div>

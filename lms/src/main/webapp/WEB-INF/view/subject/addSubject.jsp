@@ -10,8 +10,8 @@
     	<style>
 			img { display: block; margin: 0px auto; }
 			textarea{
-				width:500px; 
-				height:100px; 
+				width:1000px; 
+				height:200px; 
 			    resize:none;
 			    /* 크기고정 */ 
 				/*   resize: horizontal; // 가로크기만 조절가능 
@@ -86,7 +86,7 @@
 			<div id="adminHeaderNav"></div>
         <main class="h-full pb-16 overflow-y-auto">
             <div class="container grid px-6 mx-auto">
-            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의 Subject Insert</h2>
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의 강좌 추가</h2>
             <!-- CTA -->
             <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
               href="${pageContext.request.contextPath}/getSubjectByPage">
@@ -94,16 +94,16 @@
                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                 </svg>
-                <span>Subject Management Page</span>
+                <span>강좌 페이지</span>
               </div>
-              <span>강좌 목록 &RightArrow;</span>
+              <span>모든 강좌 목록 &RightArrow;</span>
             </a>
        
             <!-- With avatar -->
             <h4
               class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300"
             >
-              운영자 강좌 추가
+            
             </h4>
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto">
@@ -149,7 +149,6 @@
 		                          <div>
 		                            <p class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
 		                            	<input type="text" id="adminId" name="adminId" value="${loginUser}" readonly>
-		                            	<span id="adminIdHelper" class="helper"></span>	
 		                            </p>
 		                          </div>
 		                        </div>
@@ -174,7 +173,6 @@
                             <p class="font-semibold">
                              	<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                              	type="text" id="subjectName" name="subjectName" placeholder="강좌 이름을 입력하세요">
-		    					<span id="subjectNameHelper" class="helper"></span>	
                             </p>
                           </div>
                         </div>
@@ -197,7 +195,6 @@
                             <p class="font-semibold">
                              	<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                              	type="number" id="subjectStudentMax" name="subjectStudentMax" placeholder="강좌 총원을 입력하세요">
-		    					<span id="subjectStudentMaxHelper" class="helper"></span>	
                             </p>
                           </div>
                         </div>
@@ -220,7 +217,6 @@
                             <p class="font-semibold">
                              	<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                              	type="date" id="subjectStartDate" name="subjectStartDate" placeholder="개강 일을 입력하세요">
-		    					<span id="subjectStartDateHelper" class="helper"></span>	
                             </p>
                           </div>
                         </div>
@@ -243,7 +239,6 @@
                             <p class="font-semibold">
                              	<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                              	type="date" id="subjectFinishDate" name="subjectFinishDate" placeholder="종강 일을 입력하세요">
-		    					<span id="subjectFinishDateHelper" class="helper"></span>	
                             </p>
                           </div>
                         </div>
@@ -266,7 +261,6 @@
                             <p class="font-semibold">
                              	<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                              	type="time" id="subjectStartTime" name="subjectStartTime" placeholder="수업 시작 시간을 입력하세요">
-		    					<span id="subjectStartTimeHelper" class="helper"></span>	
                             </p>
                           </div>
                         </div>
@@ -289,7 +283,6 @@
                             <p class="font-semibold">
                              	<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                              	type="time" id="subjectEndTime" name="subjectEndTime" placeholder="수업 마감 시간을 입력하세요">
-		    					<span id="subjectEndTimeHelper" class="helper"></span>	
                             </p>
                           </div>
                         </div>
@@ -312,7 +305,6 @@
                           <div>
                             <p class="font-semibold">
                              	<textarea id="subjectInfo" name="subjectInfo" class="form-control" placeholder="강좌 설명을 입력하세요"></textarea>
-		    					<span id="subjectInfoHelper" class="helper"></span>	
                             </p>
                           </div>
                         </div>

@@ -94,7 +94,7 @@
         <main class="h-full pb-16 overflow-y-auto">
           <div class="container grid px-6 mx-auto">
           	
-            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의 Subject Report One</h2>
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의 과제 상세보기</h2>
             <!-- CTA -->
             <c:forEach var="subjectReport" items="${subjectReport}">
 	            <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
@@ -110,16 +110,16 @@
             </c:forEach>
             <!-- With avatar -->
             <c:forEach var="subjectReport" items="${subjectReport}">
-           		<h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">${subjectReport.subjectReportTitle} 상세보기
+           		<h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">${subjectReport.subjectReportTitle}
 						<c:if test="${level eq 3}">
-							<a href="${pageContext.request.contextPath}/addSubjectReportStudent?subjectReportNo=${subjectReport.subjectReportNo}" class="text-sm" style="float: right;">[과제 제출]</a>
-							<a href="${pageContext.request.contextPath}/getSubjectReportStudentOnlyStudent?subjectReportNo=${subjectReport.subjectReportNo}&memberId=${loginUser}" class="text-sm" style="float: right;">[과제 제출 확인]</a>
+							<a href="${pageContext.request.contextPath}/addSubjectReportStudent?subjectReportNo=${subjectReport.subjectReportNo}" class="text-sm" style="float: right;">&nbsp;  &nbsp;[과제 제출]&nbsp;  &nbsp;</a>
+							<a href="${pageContext.request.contextPath}/getSubjectReportStudentOnlyStudent?subjectReportNo=${subjectReport.subjectReportNo}&memberId=${loginUser}" class="text-sm" style="float: right;">&nbsp;  &nbsp;[과제 제출 확인]&nbsp;  &nbsp;</a>
 						</c:if>
 		           		<c:if test="${level eq 2}">
-		           			<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage?subjectReportNo=${subjectReport.subjectReportNo}" class="text-sm" style="float: right;">과제 제출 현황 -></a>
+		           			<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage?subjectReportNo=${subjectReport.subjectReportNo}" class="text-sm" style="float: right;">[과제 제출 현황]</a>
 		           		</c:if>
 		           		<c:if test="${level eq 1}">
-		           			<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage?subjectReportNo=${subjectReport.subjectReportNo}" class="text-sm" style="float: right;">과제 제출 현황 -></a>
+		           			<a href="${pageContext.request.contextPath}/getSubjectReportStudentListByPage?subjectReportNo=${subjectReport.subjectReportNo}" class="text-sm" style="float: right;">[과제 제출 현황]</a>
 		           		</c:if>
            		</h4> 
             </c:forEach>
@@ -161,7 +161,9 @@
 	                    </tr>
 	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
 	                    	<th class="px-4 py-3">과제 내용</th>
-	                    	<td class="px-4 py-3 text-sm">${subjectReport.subjectReportContent}</td>
+	                    	<td class="px-4 py-3 text-sm">
+	                    		<textarea class="text-gray-700 dark:text-gray-400 text-sm" readonly>${subjectReport.subjectReportContent}</textarea>
+	                    	</td>
 	                    </tr>
               		</table> 
 	              	<div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">

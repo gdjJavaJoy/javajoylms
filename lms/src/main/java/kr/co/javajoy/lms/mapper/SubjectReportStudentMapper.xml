@@ -8,10 +8,13 @@
 	<select id="selectTotalCount"
 			parameterType="String"
 			resultType="int">
-		SELECT COUNT(*) FROM subject_report_student
-		<if test='sSubjectReportStudentTitle != null and !"".equals(sSubjectReportStudentTitle)'>
-			AND CONCAT('%', s.subject_report_student_title, '%') 
-			LIKE CONCAT('%', #{sSubjectReportStudentTitle}, '%')
+		SELECT COUNT(*) 
+		FROM subject_report_student AS s
+		LEFT JOIN student AS t ON t.member_id = s.member_id
+		WHERE subject_report_no = #{subjectReportNo}
+		<if test='sStudentName != null and !"".equals(sStudentName)'>
+			AND CONCAT('%', t.studentName, '%') 
+			LIKE CONCAT('%', #{sStudentName}, '%')
 		</if>
 	</select>
 	<!-- 학생 - 과제 게시판 글 리스트 출력 -->
@@ -22,6 +25,7 @@
 			s.subject_report_student_no subjectReportStudentNo
 			,r.subject_report_no subjectReportNo
 			,s.member_id memberId
+			,t.student_name studentName
 			,s.subject_report_student_title subjectReportStudentTitle
 			,s.subject_report_student_content subjectReportStudentContent	
 			,s.score score
@@ -30,10 +34,11 @@
 			,s.update_date updateDate
 		FROM subject_report_student AS s 
 		LEFT JOIN subject_report AS r ON r.subject_report_no = s.subject_report_no
+		LEFT JOIN student AS t ON t.member_id = s.member_id
 		WHERE r.subject_report_no = #{subjectReportNo}
-		<if test='sSubjectReportStudentTitle != null and !"".equals(sSubjectReportStudentTitle)'>
-			AND CONCAT('%', s.subject_report_student_title, '%') 
-			LIKE CONCAT('%', #{sSubjectReportStudentTitle}, '%')
+		<if test='sStudentName != null and !"".equals(sStudentName)'>
+			AND CONCAT('%', t.studentName, '%') 
+			LIKE CONCAT('%', #{sStudentName}, '%')
 		</if>
 		ORDER BY s.create_date DESC
 		LIMIT #{startRow}, #{rowPerPage}
@@ -46,6 +51,7 @@
 			s.subject_report_student_no subjectReportStudentNo
 			,r.subject_report_no subjectReportNo
 			,s.member_id memberId
+			,t.student_name studentName
 			,s.subject_report_student_title subjectReportStudentTitle
 			,s.subject_report_student_content subjectReportStudentContent	
 			,s.score score
@@ -54,6 +60,7 @@
 			,s.update_date updateDate
 		FROM subject_report_student AS s 
 		LEFT JOIN subject_report AS r ON r.subject_report_no = s.subject_report_no
+		LEFT JOIN student AS t ON t.member_id = s.member_id
 		WHERE r.subject_report_no = #{subjectReportNo} AND s.member_id = #{memberId}
 		ORDER BY s.create_date DESC
 		LIMIT #{startRow}, #{rowPerPage}
@@ -76,7 +83,7 @@
 			,s.create_date createDate
 			,s.update_date updateDate
 		FROM subject_report_student AS s 
-		LEFT JOIN subject_report AS r ON r.subject_report_no = s.subject_report_student_no
+		LEFT JOIN subject_report AS r ON r.subject_report_no = s.subject_report_no
 		WHERE s.subject_report_student_no = #{subjectReportStudentNo}
 	</select>
 	<!-- 학생 - 과제 게시판 상세보기에 파일 이름으로된 리스트 출력 -->

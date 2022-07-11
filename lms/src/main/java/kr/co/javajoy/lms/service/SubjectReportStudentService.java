@@ -27,18 +27,18 @@ public class SubjectReportStudentService {
 	// ------------------------ 1) 과제 게시판 글 리스트 출력 <SELECT> ------------------------ 
 	
 	// 1-1) 과제 게시판 글 리스트 출력
-	public Map<String, Object> getSubjectReportStudentListByPage(int currentPage, int rowPerPage, int subjectReportNo, String sSubjectReportStudentTitle) {
+	public Map<String, Object> getSubjectReportStudentListByPage(int currentPage, int rowPerPage, int subjectReportNo, String sStudentName) {
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.currentPage :" + currentPage);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.rowPerPage :" + rowPerPage);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.subjectReportNo :" + subjectReportNo);
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.sSubjectReportStudentTitle :" + sSubjectReportStudentTitle);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.sStudentName :" + sStudentName);
 		// 페이징
 		int startRow = (currentPage - 1) * rowPerPage;
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("startRow", startRow);
 		map.put("rowPerPage", rowPerPage);
 		map.put("subjectReportNo", subjectReportNo);
-		map.put("sSubjectReportStudentTitle", sSubjectReportStudentTitle);
+		map.put("sStudentName", sStudentName);
 		
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.startRow" + startRow);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.rowPerPage" + rowPerPage);
@@ -58,12 +58,12 @@ public class SubjectReportStudentService {
 		returnMap.put("list", list);
 		returnMap.put("lastPage", lastPage);
 		returnMap.put("subjectReportNo", subjectReportNo);
-		returnMap.put("sSubjectReportStudentTitle", sSubjectReportStudentTitle);
+		returnMap.put("sStudentName", sStudentName);
 		
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.returnMap.list.size()  :" + list.size());
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.returnMap.lastPage	:" + lastPage);
 		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.returnMap.subjectNo	:" + subjectReportNo);
-		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.returnMap.sSubjectReportStudentTitle	:" + sSubjectReportStudentTitle);
+		log.debug(CF.PBJ + "SubjectReportService.getSubjectReportListByPage.returnMap.sStudentName	:" + sStudentName);
 
 		return returnMap;
 	}
