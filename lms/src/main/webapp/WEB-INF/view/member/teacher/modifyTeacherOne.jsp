@@ -134,7 +134,6 @@
                           <div>
                             <p class="font-semibold"> <input
 			                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-			                  id="idck"
 			                  type="text"
 			                  name="memberName"
 			                  value="${teacherOne.teacherName}"
@@ -160,7 +159,6 @@
                             <p class="font-semibold">
                              <input
 			                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-			                  id="idck"
 			                  type="text"
 			                  name="memberPhone"
 			                  value="${teacherOne.teacherPhone}"
@@ -211,7 +209,7 @@
                             <p class="font-semibold">
                              <input
 			                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-			                  id="detailAddr"
+			                  id="memberDetailAddress"
 			                  name="memberDetailAddress"
 			                  type="text"
 			                  value="${teacherOne.teacherDetailAddress}"
@@ -550,7 +548,7 @@
 		if($('#memberName').val() == '') {
 			Swal.fire('이름을 입력해주세요');
 			return;
-		} else if ($('#memberPhone').val() == '') {
+		} else if ((! /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/.test($('#memberPhone').val()))) {
 			Swal.fire('전화번호를 입력해주세요');
 			return;
 		} else if ($('#keyword').val() == '') {
