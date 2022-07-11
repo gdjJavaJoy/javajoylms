@@ -93,9 +93,6 @@
 											<c:if test="${s.cnt < 1}">
 												<td class="px-4 py-3 text-sm">미제출</td>
 											</c:if>
-											<td><button type="button" class="grid px-4 py-3 text-sm"
-													onclick="location.href='${pageContext.request.contextPath}/allStudentList';"
-													class="grid px-4 py-3 text-sm">삭제(미구현)</button></td>
 										</tr>
 									</c:forEach>
 								</tbody>

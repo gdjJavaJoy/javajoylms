@@ -277,6 +277,19 @@ public class SubjectController {
 		return "/subject/getSubjectStudentList";
 	}
 	
+	// 강좌 학생 삭제
+	@GetMapping("removeSubjectStudent")
+	public String removeSubejctStudent(@RequestParam (value = "subjectNo") int subjectNo
+										,@RequestParam(value = "memberId") String memberId) {
+		// 디버깅
+		log.debug(CF.YHJ + "SubjectController.removeSubjectStudent.subjectNo : " + subjectNo + CF.RESET);
+		log.debug(CF.YHJ + "SubjectController.removeSubjectStudent.memberId : " + memberId + CF.RESET);
+		
+		subjectService.removeSubjectStudent(subjectNo,memberId); // 강좌학생 삭제
+		
+		return "redirect:getSubjectStudentList?subjectNo=" + subjectNo;
+	}
+	
 	// 언어 리스트 출력
 	@GetMapping("getLanguageList")
 	public String getLanguageList(Model model) {

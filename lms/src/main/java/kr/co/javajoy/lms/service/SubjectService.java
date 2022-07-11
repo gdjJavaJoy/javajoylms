@@ -164,6 +164,19 @@ public class SubjectService {
 		return studentList;
 	}
 	
+	// 강좌 수강학생 삭제
+	public void removeSubjectStudent(int subjectNo, String memberId) {
+		// 디버깅
+		log.debug(CF.YHJ + "SubjectController.removeSubejctStudent.subjectNo : " + subjectNo + CF.RESET);
+		log.debug(CF.YHJ + "SubjectController.removeSubejctStudent.memberId : " + memberId + CF.RESET);
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("subjectNo",subjectNo);
+		map.put("memberId",memberId);
+		
+		subjectMapper.deleteSubjectStudent(map); // 강좌학생 삭제
+	}
+	
 	// 언어 리스트 출력
 	public List<Language> getLanguageList(){
 		List<Language> list = subjectMapper.selectLanguageList(); 

@@ -222,13 +222,21 @@
 			   ON s.member_id = ss.member_id
 			   left JOIN survey_result as sr
 			   ON s.member_id = sr.member_id
-			WHERE ss.subject_no = 12
+			WHERE ss.subject_no = #{subjectNo}
 			GROUP BY s.member_id
 	<if test='searchStudentName != null and !"".equals( searchStudentName ) '>
 		AND CONCAT( '%', s.student_name, '%' ) LIKE CONCAT( '%',
 		#{searchStudentName} , '%' )
 	</if>
 </select>
+
+<delete id="deleteSubjectStudent"
+		parameterType="java.util.Map">
+	DELETE FROM subject_student
+	WHERE 
+		subject_no = #{subjectNo}
+	AND member_id = #{memberId}
+</delete>
 	
 	<!-- 강좌 삭제 -->
 	<delete id="deleteSubject"

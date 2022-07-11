@@ -49,6 +49,9 @@ public interface SubjectMapper {
 	// 특정 강좌의 학생 리스트
 	List<Map<String,Object>> selectSubjectStudentList(Map<String,Object> map);
 	
+	// 강좌 학생 삭제
+	void deleteSubjectStudent(Map<String,Object> map);
+	
 	// 언어 리스트 
 	List<Language> selectLanguageList();
 	
