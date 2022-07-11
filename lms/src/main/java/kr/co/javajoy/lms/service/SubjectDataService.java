@@ -204,11 +204,12 @@ public class SubjectDataService {
 		
 	}
 	
-	public void removeSubjectDataFileOne(int subjectFileNo, String path) {
+	public void removeSubjectDataFileOne(int subjectBoardNo, int subjectFileNo, String path) {
+		log.debug(CF.YHJ + "SubjectDataService.removeSubjectDataFileOne.subjectBoardNo : " + subjectBoardNo + CF.RESET);
 		log.debug(CF.YHJ + "SubjectDataService.removeSubjectDataFileOne.subjectFileNo : " + subjectFileNo + CF.RESET);
 		log.debug(CF.YHJ + "SubjectDataService.removeSubjectDataFileOne.path : " + path + CF.RESET);
 		
-		List<SubjectFile> subjectDataFileList = subjectDataMapper.selectSubjectDataFile(subjectFileNo);
+		List<SubjectFile> subjectDataFileList = subjectDataMapper.selectSubjectDataFile(subjectBoardNo);
 		log.debug(CF.PBJ + "SubjectDataService.removeSubjectDataFileOne.subjectDataFileList : " + subjectDataFileList); // 디버깅
 		
 		for(int i = 0; i < subjectDataFileList.size(); i++) {

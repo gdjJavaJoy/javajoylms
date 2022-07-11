@@ -133,7 +133,7 @@ public class SubjectDataController {
 			// 디버깅
 			log.debug(CF.YHJ + "SubjectDataController.modifySubjectData.map : " + map + CF.RESET); 
 			log.debug(CF.YHJ + "SubjectDataController.modifySubjectData.dataMap : " + map.get("dataMap") + CF.RESET);
-			log.debug(CF.YHJ + "SubjectDataController.modifySubjectData.subjectFile : " + map.get("subjectFile") + CF.RESET);
+			log.debug(CF.YHJ + "SubjectDataController.modifySubjectData.subjectDataFile : " + map.get("subjectDataFile") + CF.RESET);
 			log.debug(CF.YHJ + "SubjectDataController.modifySubjectData.fileCount : " + map.get("fileCount") + CF.RESET);
 			
 			model.addAttribute("dataMap",map.get("dataMap"));
@@ -172,9 +172,9 @@ public class SubjectDataController {
 		// 파일 하나만 삭제
 		@GetMapping("removeSubjectDataFileOne")
 		public String removeSubjectDataFileOne(HttpServletRequest request
-												,int subjectFileNo 
-												,int subjectBoardNo
-												,int subjectNo) {
+												,@RequestParam(value="subjectFileNo") int subjectFileNo 
+												,@RequestParam(value="subjectBoardNo") int subjectBoardNo
+												,@RequestParam(value="subjectNo") int subjectNo) {
 			String path = request.getServletContext().getRealPath("/file/subjectDataFile/");
 			
 			// 디버깅
@@ -182,7 +182,7 @@ public class SubjectDataController {
 			log.debug(CF.YHJ + "SubjectDataController.modifySubjectData.subjectFileBoardNo : " + subjectBoardNo + CF.RESET);
 			log.debug(CF.YHJ + "SubjectDataController.modifySubjectData.path : " + path + CF.RESET);
 			
-			subjectDataService.removeSubjectDataFileOne(subjectFileNo,path);
+			subjectDataService.removeSubjectDataFileOne(subjectBoardNo,subjectFileNo,path);
 			
 			return "redirect:modifySubjectData?subjectDataNo="+ subjectBoardNo +"&subjectNo=" + subjectNo;
 		}
