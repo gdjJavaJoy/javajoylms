@@ -133,7 +133,7 @@
 	                <c:if test="${level eq 1 || level eq 2}">
 	              		<a href="${pageContext.request.contextPath}/removeSubjectNotice?subjectBoardNo=${n.subjectBoardNo}&subjectNo=${n.subjectNo}">삭제</a>
 	                </c:if>
-	              	<c:if test="${level eq 2}">
+	              	<c:if test="${level eq 1 || level eq 2}">
 	              		<span>&nbsp | &nbsp</span>
 	                    <a href="${pageContext.request.contextPath}/modifySubjectNotice?subjectBoardNo=${n.subjectBoardNo}&subjectNo=${n.subjectNo}">수정</a> 
 	               	</c:if>

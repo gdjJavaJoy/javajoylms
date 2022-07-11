@@ -21,7 +21,7 @@
 	    WHERE b.subject_no = #{subjectNo}
 	    <!-- 제목 검색 / nsubjectNoticeTitle : 검색어 -->
 		<if test='nsubjectNoticeTitle != null and !"".equals(nsubjectNoticeTitle)'>
-			AND CONCAT('%', n.subject_notice_title , '%') 
+			AND CONCAT('%', n.subject_notice_title, '%') 
 			LIKE CONCAT('%', #{nsubjectNoticeTitle}, '%')
 		</if>
 		ORDER BY n.create_date DESC
@@ -29,7 +29,7 @@
 	</select>
 	<!-- 리스트 전체 카운트 -->
 	<select id="selectTotalCount" 
-			parameterType="String"
+			parameterType="java.util.Map"
 			resultType="int">
 		SELECT
 			COUNT(*)
@@ -38,7 +38,7 @@
 		WHERE b.subject_no = #{subjectNo}
 		<!-- 제목 검색 / nsubjectNoticeTitle : 검색어 -->
 		<if test='nsubjectNoticeTitle != null and !"".equals(nsubjectNoticeTitle)'>
-			AND CONCAT('%', n.subject_notice_title, '%') 
+			AND CONCAT('%', n.subject_notice_title , '%') 
 			LIKE CONCAT('%', #{nsubjectNoticeTitle}, '%')
 		</if>
 	</select>		

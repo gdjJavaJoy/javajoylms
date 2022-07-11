@@ -83,7 +83,7 @@
 								<a class="px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" style="float:right;" href="${pageContext.request.contextPath}/getSubjectDataListByPage?subjectNo=${subject.subjectNo}">&nbsp;&nbsp;&nbsp;&nbsp;강좌 자료&nbsp;&nbsp;&nbsp;&nbsp;</a>
 							</li>
 							<li >
-								<a class="px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"style="float:right;" href="${pageContext.request.contextPath}/subjectNoticeList?subjectNo=${subject.subjectNo}">&nbsp;&nbsp;&nbsp;&nbsp;강좌 공지사항(구현중)&nbsp;&nbsp;&nbsp;&nbsp;</a>
+								<a class="px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"style="float:right;" href="${pageContext.request.contextPath}/subjectNoticeList?subjectNo=${subject.subjectNo}">&nbsp;&nbsp;&nbsp;&nbsp;강좌 공지사항&nbsp;&nbsp;&nbsp;&nbsp;</a>
 							</li>
 							<li>
 								<a class="px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"style="float:right;" href="${pageContext.request.contextPath}/getCurriculumList?subjectNo=${subject.subjectNo}&subjectName=${subject.subjectName}">&nbsp;&nbsp;&nbsp;&nbsp;커리큘럼&nbsp;&nbsp;&nbsp;&nbsp;</a>

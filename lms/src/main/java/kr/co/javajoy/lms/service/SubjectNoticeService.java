@@ -44,15 +44,17 @@ public class SubjectNoticeService {
 		
 		// Mapper에서 반환(호출) 된 값 가공
 		List<Map<String, Object>> list = subjectNoticeMapper.getSubjectNoticeList(map);
-		int totalCount = subjectNoticeMapper.selectTotalCount();
+		int totalCount = subjectNoticeMapper.selectTotalCount(map);
 		int lastPage = (int)(Math.ceil((double)totalCount / (double)rowPerPage));
 		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList list : " + CF.WSH + list);
+		log.debug(CF.WSH + "SubjectNoticeService.getSubjectNoticeList totalCount : " + CF.WSH + totalCount);
 		
 		Map<String, Object> returnMap = new HashMap<>();
 		returnMap.put("list", list);
 		returnMap.put("lastPage", lastPage);
 		returnMap.put("subjectNo", subjectNo);
 		returnMap.put("totalCount", totalCount);	
+		returnMap.put("currentPage", currentPage);
 		returnMap.put("nsubjectNoticeTitle", nsubjectNoticeTitle);
 		
 		// 디버깅
