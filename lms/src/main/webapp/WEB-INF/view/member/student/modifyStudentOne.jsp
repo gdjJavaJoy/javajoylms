@@ -28,10 +28,20 @@ img {
 		:class="{ 'overflow-hidden': isSideMenuOpen}">
 		<!-- sidebar -->
 		<aside class="z-20 flex-shrink-0 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block">
-			<div id="studentSideNav"></div>
+			<c:if test="${level eq 1}">
+				<div id="adminSideNav"></div>
+			</c:if>
+			<c:if test="${level eq 3}">
+				<div id="studentSideNav"></div>
+			</c:if>
 		</aside>
 		<div class="flex flex-col flex-1 w-full">
-			<div id="studentHeaderNav"></div>
+			<c:if test="${level eq 1}">
+				<div id="adminHeaderNav"></div>
+			</c:if>
+			<c:if test="${level eq 3}">
+				<div id="studentHeaderNav"></div>
+			</c:if>
 			<main class="h-full pb-16 overflow-y-auto">
 				<div class="container grid px-6 mx-auto">
 					<h2
@@ -276,6 +286,8 @@ img {
 <script>
 	$('#studentSideNav').load('${pageContext.request.contextPath}/include/studentSideNav.jsp');
 	$('#studentHeaderNav').load('${pageContext.request.contextPath}/include/studentHeaderNav.jsp');
+	$('#adminSideNav').load('${pageContext.request.contextPath}/include/adminSideNav.jsp');
+	$('#adminHeaderNav').load('${pageContext.request.contextPath}/include/adminHeaderNav.jsp');
 
 	$('#updateAddr').click(function(){
 		$('#insertForm').empty();
