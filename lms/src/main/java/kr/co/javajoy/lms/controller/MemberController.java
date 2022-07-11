@@ -76,12 +76,21 @@ public class MemberController {
 		log.debug(CF.PSG+"MemberController.PostMapping.addMember.signUpForm :" + signUpForm+CF.RESET);
 		int row = memberService.addMember(signUpForm);
 		
-		if (row==1) {
-			log.debug(CF.PSG+"ParkseongjunController.PostMapping.addMember 추가성공"+CF.RESET);
-			return "redirect:/login";
-		} else {
+		if (row == 0) {
 			log.debug(CF.PSG+"ParkseongjunController.PostMapping.addMember 추가실패"+CF.RESET);
-		return "redirect:/addMember";
+			return "redirect:/addMember";
+		} else {
+			log.debug(CF.PSG+"ParkseongjunController.PostMapping.addMember 추가성공"+CF.RESET);
+			if (row == 1) {
+				log.debug(CF.PSG+"ParkseongjunController.PostMapping.addMember 관리자등록"+CF.RESET);
+				return "redirect:/allAdminList";
+			} else if (row == 2) {
+				log.debug(CF.PSG+"ParkseongjunController.PostMapping.addMember 강사등록"+CF.RESET);
+				return "redirect:/allTeacherList";
+			} else {
+				log.debug(CF.PSG+"ParkseongjunController.PostMapping.addMember 학생등록"+CF.RESET);
+				return "redirect:/allStudentList";
+			}
 		}
 		
 	}

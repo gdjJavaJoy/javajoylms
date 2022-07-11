@@ -56,13 +56,13 @@ img {
 	                 />
 	            </c:otherwise>
 			</c:choose>
-			<form method="post" action="${pageContext.request.contextPath}/addMemberPhoto" enctype="multipart/form-data">
+			<form method="post" action="${pageContext.request.contextPath}/addMemberPhoto" enctype="multipart/form-data" id="updatePhotoForm">
 			<input type="file" name="memberPhotoList" id="memberPhotoList">
 			<input type="text" hidden="hidden" name="memberId" id="memberId" value="${student.memberId}"> 
 			<button
 					class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
 					id="updatePhotoBtn"
-					type="submit"
+					type="button"
 				>
 					사진수정
   			</button>
@@ -307,7 +307,15 @@ img {
 			}
 		});
 	});
-		
+	$('#updatePhotoBtn').click(function(){
+		 if($('#memberPhotoList').val() == '') {
+			 Swal.fire('사진을 넣어주세요');
+			 return;
+		 	} else {
+				$('#updatePhotoForm').submit();
+		 	} 
+	  });	
+	
 	$('#submitBtn').click(function() {
 		console.log($('#memberName').val())
 		if($('#memberName').val() == '') {

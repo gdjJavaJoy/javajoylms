@@ -59,7 +59,7 @@ public class MemberService {
 			admin.setAdminAddress(signupForm.getMemberAddress());
 			admin.setAdminDetailAddress(signupForm.getMemberDetailAddress());
 			admin.setAdminEmail(signupForm.getMemberEmail());
-		row	= memberMapper.insertAdmin(admin);
+		row	= memberMapper.insertAdmin(admin) + 0;
 			
 		} else if(level.equals("'2'")) {
 			log.debug(CF.PSG+"MemberService.Teacherlevel"+CF.RESET);
@@ -72,7 +72,7 @@ public class MemberService {
 			teacher.setTeacherDetailAddress(signupForm.getMemberDetailAddress());
 			teacher.setTeacherEmail(signupForm.getMemberEmail());
 			teacher.setTeacherJoin(signupForm.getMemberJoin());
-		 row = memberMapper.insertTeacher(teacher);
+		 row = memberMapper.insertTeacher(teacher) + 1;
 			
 			
 		} else if (level.equals("'3'")) {
@@ -87,7 +87,7 @@ public class MemberService {
 			student.setStudentEmail(signupForm.getMemberEmail());
 			student.setStudentEducation(signupForm.getEducation());
 			student.setStudentRegisterDate(signupForm.getMemberJoin());
-			row = memberMapper.insertStudent(student);
+			row = memberMapper.insertStudent(student) +2;
 			
 		}
 		return row;
