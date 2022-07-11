@@ -76,10 +76,10 @@
           
             <!-- With avatar -->
 	           	 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">강좌 공지사항
-	            	<c:if test="${level eq 2}">
+	            	<c:if test="${level eq 1 || level eq 2}">
 	            		<a href="${pageContext.request.contextPath}/addSubjectNotice?subjectNo=${subjectNo}" class="text-sm" style="float: right;">공지사항 입력하기</a>
 	       			</c:if>
-	            </h4>
+	            </h4>	
 	  
  
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
@@ -91,7 +91,6 @@
                       <th class="px-4 py-3">분반</th>
                       <th class="px-4 py-3">작성자</th>
                       <th class="px-4 py-3">공지사항제목</th>
-                      <th class="px-4 py-3">공지사항내용</th>
                       <th class="px-4 py-3">작성일</th>
                     </tr>
                   </thead>
@@ -109,7 +108,6 @@
 							</c:otherwise>
 						</c:choose>
 						<td class="px-4 py-3 text-sm">${s.subjectNoticeTitle}</td>
-						<td class="px-4 py-3 text-sm">${s.subjectNoticeContent}</td>
 						<td class="px-4 py-3 text-sm">${s.createDate}</td>
 					</tr>
                   </c:forEach>

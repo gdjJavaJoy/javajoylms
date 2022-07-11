@@ -134,9 +134,9 @@
 			</c:if>
         <main class="h-full pb-16 overflow-y-auto">
             <div class="container grid px-6 mx-auto">
-            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Insert Notice</h2>
+            <h2 class="my-6 text-2xl1 font-semibold text-gray-700 dark:text-gray-200">Insert Notice</h2>
             <!-- CTA -->
-            <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
+            <a class="flex items-center justify-between p-41 mb-8 text-sm1 font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
               href="${pageContext.request.contextPath}/getNoticeByPage">
               <div class="flex items-center">
                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -148,7 +148,7 @@
             </a>
             
             <!-- With avatar -->
-            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
+            <h4 class="mb-4 text-lg1 font-semibold text-gray-600 dark:text-gray-300">
               공지사항 추가
             </h4>
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
@@ -159,7 +159,7 @@
                 	<table class="w-full whitespace-no-wrap">
 	                	<tr class="text-gray-700 dark:text-gray-400">
 	                      <td class="px-4 py-3">
-	                        <div class="flex items-center text-sm">
+	                        <div class="flex items-center text-sm1">
 	                          <!-- Avatar with inset shadow -->
 	                          <div>
 	                            <p class="font-semibold">작성자 ID</p>
@@ -167,7 +167,7 @@
 	                        </div>
 	                      </td>
 	                       <td class="px-4 py-3">
-	                        <div class="flex items-center text-sm">
+	                        <div class="flex items-center text-sm1">
 	                          <!-- Avatar with inset shadow -->
 	                          <div>
 			    		 	  	<p class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
@@ -180,7 +180,7 @@
 	                     </tr>
 		                 <tr class="text-gray-700 dark:text-gray-400">
 		                      <td class="px-4 py-3">
-		                        <div class="flex items-center text-sm">
+		                        <div class="flex items-center text-sm1">
 		                          <!-- Avatar with inset shadow -->
 		                          <div>
 		                            <p class="font-semibold">공지사항 제목</p>
@@ -188,7 +188,7 @@
 		                        </div>
 		                      </td>
 		                      <td class="px-4 py-3">
-		                        <div class="flex items-center text-sm">
+		                        <div class="flex items-center text-sm1">
 		                          <!-- Avatar with inset shadow -->
 		                          <div>
 		                            <p class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">		                            	
@@ -201,7 +201,7 @@
 		                 </tr>      
 		                 <tr class="text-gray-700 dark:text-gray-400">
                       <td class="px-4 py-3">
-                        <div class="flex items-center text-sm">
+                        <div class="flex items-center text-sm1">
                           <!-- Avatar with inset shadow -->
                           <div>
                             <p class="font-semibold">첨부 파일</p>
@@ -209,7 +209,7 @@
                         </div>
                       </td>
                        <td class="px-4 py-3">
-                        <div class="flex items-center text-sm">
+                        <div class="flex items-center text-sm1">
                           <!-- Avatar with inset shadow -->
                           <div>
                             <button type="button" id="addFileupload">첨부파일 추가</button>
@@ -223,7 +223,7 @@
                      </tr>
                      <tr class="text-gray-700 dark:text-gray-400">
                       <td class="px-4 py-3">
-                        <div class="flex items-center text-sm">
+                        <div class="flex items-center text-sm1">
                           <!-- Avatar with inset shadow -->
                           <div>
                             <p class="font-semibold">공지사항 내용</p>
@@ -231,7 +231,7 @@
                         </div>
                       </td>
                        <td class="px-4 py-3">
-                        <div class="flex items-center text-sm">
+                        <div class="flex items-center text-sm1">
                           <!-- Avatar with inset shadow -->
                           <div>
                           <!-- summernote를 이용해 이미지 업로드 -->

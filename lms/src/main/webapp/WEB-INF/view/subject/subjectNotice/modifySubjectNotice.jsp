@@ -27,8 +27,8 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
     <script src="./public/assets/js/init-alpine.js"></script>
      <!-- summernote --> 
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
  	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
   	<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>	
@@ -52,9 +52,9 @@
 			
 			$('#modifySubjectNotice').click(function(){
 				if($('#subjectNoticeTitle').val() == '') {
-					Swal.fire('공지사항 제목을 설정하세요!');
+					Sweet.alert('제목을 입력하세요!');
 				} else if($('#subjectNoticeContent').val() == '') {
-					Swal.fire('공지사항 내용을 입력하세요!');
+					Swal.fire('내용을 입력하세요!');
 				} else {
 					$('.subjectNoticeFileList').each(function(){
 						if($(this).val() == '') {
@@ -126,10 +126,10 @@
 			
         <main class="h-full pb-16 overflow-y-auto">
             <div class="container grid px-6 mx-auto">
-            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">${loginUser}님의 Subject Notice Update</h2>
-            <!-- CTA -->
             <c:forEach var="n" items="${subjectNotice}">
-            <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
+            <h2 class="my-6 text-2xl1 font-semibold text-gray-700 dark:text-gray-200">${n.subjectNoticeTitle}님의 Subject Notice Update</h2>
+            <!-- CTA -->
+            <a class="flex items-center justify-between p-41 mb-8 text-sm1 font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
               href="${pageContext.request.contextPath}/subjectNoticeList?subjectNo=${n.subjectNo}">
               <div class="flex items-center">
                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -139,12 +139,13 @@
               </div>
               <span>수정 취소 &RightArrow;</span>
             </a>
-           
+            
+            
        
             <!-- With avatar -->
             <h4
-              class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300"
-            >${n.subjectNoticeTitle} 수정
+              class="mb-4 text-lg1 font-semibold text-gray-600 dark:text-gray-300"
+            >${n.subjectNoticeTitle} 수정 페이지
             </h4>
              </c:forEach>
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
@@ -156,7 +157,7 @@
 	                		<input type="hidden" id="subjectNo" name="subjectNo" class="form-control" value="${sn.subjectNo}">
 		                	<tr class="text-gray-700 dark:text-gray-400">
 		                      <td class="px-4 py-3">
-		                        <div class="flex items-center text-sm">
+		                        <div class="flex items-center text-sm1">
 		                          <!-- Avatar with inset shadow -->
 		                          <div>
 		                            <p class="font-semibold">작성자 ID</p>
@@ -164,10 +165,10 @@
 		                        </div>
 		                      </td>
 		                       <td class="px-4 py-3">
-		                        <div class="flex items-center text-sm">
+		                        <div class="flex items-center text-sm1">
 		                          <!-- Avatar with inset shadow -->
 		                          <div>
-				    		 	  	<p class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
+				    		 	  	<p class="block w-full mt-1 text-sm1 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
 			                            	<input type="text" id="memberId" name="memberId" value="${sn.memberId}" readonly>
 			                        </p>
 		                          </div>
@@ -176,7 +177,7 @@
 		                     </tr>
 			                 <tr class="text-gray-700 dark:text-gray-400">
 			                      <td class="px-4 py-3">
-			                        <div class="flex items-center text-sm">
+			                        <div class="flex items-center text-sm1">
 			                          <!-- Avatar with inset shadow -->
 			                          <div>
 			                            <p class="font-semibold">강좌공지사항 제목</p>
@@ -184,10 +185,10 @@
 			                        </div>
 			                      </td>
 			                      <td class="px-4 py-3">
-			                        <div class="flex items-center text-sm">
+			                        <div class="flex items-center text-sm1">
 			                          <!-- Avatar with inset shadow -->
 			                          <div>
-			                            <p class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
+			                            <p class="block w-full mt-1 text-sm1 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
 			                            	<input type="text" id="subjectNoticeTitle" name="subjectNoticeTitle" value="${sn.subjectNoticeTitle}">
 			                            </p>
 			                          </div>
@@ -196,7 +197,7 @@
 			                 </tr>
 	                     <tr class="text-gray-700 dark:text-gray-400">
 	                      <td class="px-4 py-3">
-	                        <div class="flex items-center text-sm">
+	                        <div class="flex items-center text-sm1">
 	                          <!-- Avatar with inset shadow -->
 	                          <div>
 	                            <p class="font-semibold">강좌 공지사항 내용</p>
@@ -204,7 +205,7 @@
 	                        </div>
 	                      </td>
 	                       <td class="px-4 py-3">
-	                        <div class="flex items-center text-sm">
+	                        <div class="flex items-center text-sm1">
 	                          <!-- Avatar with inset shadow -->
 	                          <div>
 	                            <p class="font-semibold">
@@ -226,7 +227,7 @@
                      </c:forEach>
                     <tr class="text-gray-700 dark:text-gray-400">
                       <td class="px-4 py-3">
-                        <div class="flex items-center text-sm">
+                        <div class="flex items-center text-sm1">
                           <!-- Avatar with inset shadow -->
                           <div>
                             <p class="font-semibold">첨부 파일 추가</p>
@@ -234,7 +235,7 @@
                         </div>
                       </td>
                        <td class="px-4 py-3">
-                        <div class="flex items-center text-sm">
+                        <div class="flex items-center text-sm1">
                           <!-- Avatar with inset shadow -->
                           <div>
                             <button 
@@ -250,7 +251,7 @@
                      
                      <tr class="text-gray-700 dark:text-gray-400">
                       <td class="px-4 py-3">
-                        <div class="flex items-center text-sm">
+                        <div class="flex items-center text-sm1">
                           <!-- Avatar with inset shadow -->
                           <div>
                             <p class="font-semibold">첨부 파일</p>
@@ -258,7 +259,7 @@
                         </div>
                       </td>
                        <td class="px-4 py-3">
-                        <div class="flex items-center text-sm">
+                        <div class="flex items-center text-sm1">
                           <!-- Avatar with inset shadow -->
                           <div>
 					    		<c:forEach var="snf" items="${subjectNoticeFile}">
@@ -290,6 +291,7 @@
           </div>
       </div>
   </body>
+  <!-- 인클루드 -->
    	<script>
  		$('#adminSideNav').load('${pageContext.request.contextPath}/include/adminSideNav.jsp');
 		$('#adminHeaderNav').load('${pageContext.request.contextPath}/include/adminHeaderNav.jsp');

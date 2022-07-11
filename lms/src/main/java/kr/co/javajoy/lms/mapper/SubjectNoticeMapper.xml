@@ -17,8 +17,8 @@
 		    ,t.teacher_name teacherName
 		FROM subject_notice AS n
 			INNER JOIN subject_board AS b ON n.subject_notice_no = b.subject_board_no
-	   		INNER JOIN teacher t ON t.member_id = n.member_id
-	    WHERE b.subject_no = #{subjectNo}
+	   		LEFT JOIN teacher t ON t.member_id = n.member_id
+		    WHERE b.subject_no = #{subjectNo}
 	    <!-- 제목 검색 / nsubjectNoticeTitle : 검색어 -->
 		<if test='nsubjectNoticeTitle != null and !"".equals(nsubjectNoticeTitle)'>
 			AND CONCAT('%', n.subject_notice_title, '%') 
@@ -110,7 +110,7 @@
 		FROM
 			subject_notice n
 			INNER JOIN subject_board b ON n.subject_notice_no = b.subject_board_no
-			INNER JOIN teacher t ON t.member_id = n.member_id
+			LEFT JOIN teacher t ON t.member_id = n.member_id
 		WHERE b.subject_board_no = #{subjectBoardNo}
 	</select>
 	<!-- 공지사항 파일 상세보기(조회) -->

@@ -78,8 +78,8 @@ public class SubjectNoticeController {
 		String level = (String) session.getAttribute("level");
 		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeList.memberId : " + memberId + CF.WSH);
 		log.debug(CF.WSH + "SubjectNoticeController.subjectNoticeList.level : " + level + CF.WSH);
-		// 학생과 운영자가 addSubjectNotice에 접근하면 login으로
-		if(level.equals("2")) {
+		// 학생이 addSubjectNotice에 접근하면 login으로
+		if(level.equals("1") || level.equals("2")) {
 			// subjectNo(강좌번호) 보내주기
 			model.addAttribute("subjectNo", subjectNo);
 			return "subject/subjectNotice/addSubjectNotice";
@@ -89,7 +89,6 @@ public class SubjectNoticeController {
 	// 2-1) 강좌공지사항 추가
 	@PostMapping("/addsubjectNotice")
 	public String addsbujectNoitce(HttpServletRequest request
-									,Model model
 									,@RequestParam(name="subjectNo") int subjectNo
 									,SubjectBoardInsertForm subjectBoardInsertForm) {
 		log.debug(CF.WSH + "SubjectNoticeController.addsubjectNotice.subjectNo.post() : " + subjectNo + CF.WSH);
@@ -107,7 +106,6 @@ public class SubjectNoticeController {
 				log.debug(CF.WSH + "SubjectNoticeController.addsubjectNotice.post().mf : " + mf + CF.WSH);
 			}
 		}
-		model.addAttribute("subjectNo", subjectNo);
 		log.debug(CF.WSH + "SubjectNoticeController.addsubjectNotice.post().subjectNo : " + subjectNo + CF.WSH);
 		
 		subjectNoticeService.addSubjectNotice(subjectBoardInsertForm, path);
@@ -182,8 +180,8 @@ public class SubjectNoticeController {
 		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.Get().memberId : " + memberId + CF.WSH);
 		log.debug(CF.WSH + "SubjectNoticeController.modifySubjectNotice.Get().level : " + level + CF.WSH);
 		log.debug(CF.WSH + "SubjectController.modifySubjectReport(Form).level : " + level);
-		// 강사가 아니면 로그인
-		if(level.equals("3") || level.equals("1")) {
+		// 강사와 운영자가 아니면 로그인
+		if(level.equals("3")) {
 			return "redirect:/login";
 		}
 		// 파일 경로

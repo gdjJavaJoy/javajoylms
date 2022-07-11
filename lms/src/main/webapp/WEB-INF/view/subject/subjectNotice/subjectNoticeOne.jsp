@@ -94,7 +94,14 @@
                		<table class="w-full whitespace-no-wrap">
 	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
 	                    	<th class="px-4 py-3">작성자</th>
-	                    	<td class="px-4 py-3 text-sm">${n.teacherName}</td>
+	                    	<c:choose>
+								<c:when test="${n.teacherName != null}">
+								<td class="px-4 py-3 text-sm">${n.teacherName}</td>
+								</c:when>
+								<c:otherwise>
+								<td class="px-4 py-3 text-sm">운영자</td>
+								</c:otherwise>
+							</c:choose>
 	                    </tr>
 	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
 	                    	<th class="px-4 py-3">강좌 공지사항 제목</th>

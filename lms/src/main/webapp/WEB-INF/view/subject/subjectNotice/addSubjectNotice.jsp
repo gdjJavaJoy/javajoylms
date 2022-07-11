@@ -52,9 +52,9 @@
 		if($('#memberId').val() == ''){
 			alert('memberId 입력하세요');
 		} else if($('#subjectNoticeTitle').val() == ''){
-			alert('제목을 입력하세요');
+			Swal.fire('제목을 입력하세요');
 		} else if($('#subjectNoticeContent').val() == '') {
-			alert('내용을 입력하세요');
+			Swal.fire('내용을 입력하세요');
 		} else {
 			$('.subjectNoticefileList').each(function(){
 				if($(this).val() == '') {
@@ -84,7 +84,6 @@
 		// 체크에 걸리면 선택된  내용 취소 처리를 해야함.
 		// 현재 요소를 포함한 내부 html 전체를 새로 폼을 쓰는 방식으로 반환한다.
 	}
-
 	
 </script>
 </head>
@@ -134,12 +133,12 @@
 			</c:if>
         <main class="h-full pb-16 overflow-y-auto">
             <div class="container grid px-6 mx-auto">
-            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Insert Subject Notice</h2>
+            <h2 class="my-6 text-2xl1 font-semibold text-gray-700 dark:text-gray-200">Insert Subject Notice</h2>
             <!-- CTA -->
-            <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
+            <a class="flex items-center justify-between p-41 mb-8 text-sm1 font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
               href="${pageContext.request.contextPath}/subjectNoticeList?subjectNo=${subjectNo}">
               <div class="flex items-center">
-                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="w-5 h-5 mr-2 rem-2" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                 </svg>
                 <span>Insert Subject Notice Page</span>
@@ -148,8 +147,8 @@
             </a>
             
             <!-- With avatar -->
-            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
-              강좌공지사항 추가
+            <h4 class="mb-4 text-lg1 font-semibold text-gray-600 dark:text-gray-300">
+              강좌 공지사항 추가
             </h4>
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto">
@@ -159,7 +158,7 @@
                 	<table class="w-full whitespace-no-wrap">
 	                	<tr class="text-gray-700 dark:text-gray-400">
 	                      <td class="px-4 py-3">
-	                        <div class="flex items-center text-sm">
+	                        <div class="flex items-center text-sm1">
 	                          <!-- Avatar with inset shadow -->
 	                          <div>
 	                            <p class="font-semibold">작성자 ID</p>
@@ -167,7 +166,7 @@
 	                        </div>
 	                      </td>
 	                       <td class="px-4 py-3">
-	                        <div class="flex items-center text-sm">
+	                        <div class="flex items-center text-sm1">
 	                          <!-- Avatar with inset shadow -->
 	                          <div>
 			    		 	  	<p class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
@@ -179,7 +178,7 @@
 	                     </tr>
 		                 <tr class="text-gray-700 dark:text-gray-400">
 		                      <td class="px-4 py-3">
-		                        <div class="flex items-center text-sm">
+		                        <div class="flex items-center text-sm1">
 		                          <!-- Avatar with inset shadow -->
 		                          <div>
 		                            <p class="font-semibold">공지사항 제목</p>
@@ -187,7 +186,7 @@
 		                        </div>
 		                      </td>
 		                      <td class="px-4 py-3">
-		                        <div class="flex items-center text-sm">
+		                        <div class="flex items-center text-sm1">
 		                          <!-- Avatar with inset shadow -->
 		                          <div>
 		                            <p class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">		                            	
@@ -199,7 +198,7 @@
 		                 </tr>      
 		                 <tr class="text-gray-700 dark:text-gray-400">
                       <td class="px-4 py-3">
-                        <div class="flex items-center text-sm">
+                        <div class="flex items-center text-sm1">
                           <!-- Avatar with inset shadow -->
                           <div>
                             <p class="font-semibold">첨부 파일</p>
@@ -207,7 +206,7 @@
                         </div>
                       </td>
                        <td class="px-4 py-3">
-                        <div class="flex items-center text-sm">
+                        <div class="flex items-center text-sm1">
                           <!-- Avatar with inset shadow -->
                           <div>
                             <button type="button" id="addFileupload">첨부파일 추가</button>
@@ -221,7 +220,7 @@
                      </tr>
                      <tr class="text-gray-700 dark:text-gray-400">
                       <td class="px-4 py-3">
-                        <div class="flex items-center text-sm">
+                        <div class="flex items-center text-sm1">
                           <!-- Avatar with inset shadow -->
                           <div>
                             <p class="font-semibold">공지사항 내용</p>
@@ -229,7 +228,7 @@
                         </div>
                       </td>
                        <td class="px-4 py-3">
-                        <div class="flex items-center text-sm">
+                        <div class="flex items-center text-sm1">
                           <!-- Avatar with inset shadow -->
                           <div>
                           <!-- summernote를 이용해 이미지 업로드 -->
@@ -255,7 +254,7 @@
 	                 	<div style="float:inherit;" display:inline-block;"></div>
 			                  <button class="px-10 py-4 font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent 
 			                  rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" style="margin: auto; display: block;" 
-			                  type="button" id="addNotice">공지사항 입력
+			                  type="button" id="addNotice">강좌 공지사항 입력
 			                 </button>
 		            </div>
 	               </form>
