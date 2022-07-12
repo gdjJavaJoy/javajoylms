@@ -21,6 +21,14 @@ import lombok.extern.slf4j.Slf4j;
 public class StudentService {
 	@Autowired StudentMapper studentMapper;
 	
+	public int deleteStudent(String memberId) {
+		return studentMapper.deleteStudent(memberId);
+	}
+	
+	public int deleteMemberId(String memberId) {
+		return studentMapper.deleteMemberId(memberId);
+	}
+	
 	public Map<String,Object> getStudentOne(String memberId) {
 		return studentMapper.selectStudentOne(memberId);
 	}

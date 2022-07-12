@@ -36,4 +36,7 @@ public interface StudentMapper {
 	public List<Map<String,Object>> studentEducationRate();
 	// 취업한 학생 초봉 평균
 	public Map<String,Object> employedStudentFirstSalaryRate();
+	// 학생 삭제 (업데이트)
+	public int deleteStudent(String memberId);
+	public int deleteMemberId(String memberId);
 }

@@ -40,13 +40,6 @@ img {
 						class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
 						내 정보보기</h2>
 					<!-- CTA -->
-					<a
-						class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
-						href="${pageContext.request.contextPath}/modifyStudentOne?memberId=${student.memberId}"> <!-- 회원정보 수정창으로 -->
-						<div class="flex items-center">
-							<span></span>
-						</div> <span>회원정보 수정 &RightArrow;</span>
-					</a> 
 				<c:choose>
 		            <c:when test="${student.memberPhotoName != null}">
 		              <img
@@ -235,6 +228,12 @@ img {
 											</div>
 										</div>
 									</td>
+									<td>
+										<a class= "px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" href="${pageContext.request.contextPath}/modifyStudentOne?memberId=${student.memberId}">회원 수정</a> 
+									</td>
+									<td>
+										<a class= "deletebtn px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-md active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red">회원 탈퇴</a>
+									</td>
 								</tr>
 							</table>
 						</div>
@@ -244,8 +243,36 @@ img {
 		</div>
 	</div>
 </body>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+$(document).ready(function(){
+	// 삭제버튼 클릭시 발생하는 이벤트
+	$(".deletebtn").on('click',function(){
+		var memberId = $(this).data('value')
+		Swal.fire({
+		    title: '정말 삭제 하시겠습니까?'
+		   ,text: "삭제후 다시 되돌릴 수 없습니다."
+		   ,icon: 'warning'
+		   ,showCancelButton: true
+		   ,confirmButtonColor: '#3085d6'
+		   ,cancelButtonColor: '#d33'
+		   ,confirmButtonText: '삭제'
+		   ,cancelButtonText: '취소'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire({
+					 text: '완료 버튼을 누를시 로그인 페이지로 이동합니다.'
+					,buttons: ['완료']
+				})
+			window.location.href = '${pageContext.request.contextPath}/deleteStudentOne?memberId=${student.memberId}';
+				}
+			});
+		});
+init();
+function init(){
 	$('#studentSideNav').load('${pageContext.request.contextPath}/include/studentSideNav.jsp');
 	$('#studentHeaderNav').load('${pageContext.request.contextPath}/include/studentHeaderNav.jsp');
+	}
+});
 </script>
 </html>

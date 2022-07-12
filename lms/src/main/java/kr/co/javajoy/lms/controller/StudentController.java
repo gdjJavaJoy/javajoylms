@@ -140,5 +140,17 @@ public class StudentController {
 		
 		return "redirect:employedStudentList";
 	}
-	
+
+	@GetMapping("/deleteStudentOne")
+	public String deleteStudent(@RequestParam(name="memberId") String memberId) {
+		
+		int deleteStudent = studentService.deleteStudent(memberId);
+		int deleteMemberId = studentService.deleteMemberId(memberId);
+	      if(deleteStudent == 1 && deleteMemberId == 1) {
+	    	  log.debug(CF.LGN + "StudentController.deleteStudent.deleteStudent : "+ deleteStudent); // 성공
+	      } else {
+	    	  log.debug(CF.LGN + "StudentController.deleteStudent.deleteMemberId : "+ deleteMemberId); // 실패
+	      }
+	      return "redirect:/login"; 
+	}	
 }
