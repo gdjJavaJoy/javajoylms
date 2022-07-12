@@ -156,5 +156,8 @@
 			$('#addEmployStudentForm').submit();
 		}
 	});
+	
+	$('#adminSideNav').load('${pageContext.request.contextPath}/include/adminSideNav.jsp');
+	$('#adminHeaderNav').load('${pageContext.request.contextPath}/include/adminHeaderNav.jsp');
 </script>
 </html>

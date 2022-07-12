@@ -198,6 +198,7 @@
 			INNER JOIN curriculum c
 				ON s.subject_no = c.subject_no
 			WHERE c.member_id = #{memberId}
+			GROUP BY c.member_id
 			ORDER BY s.create_date
 	</select>
 	<select id="selectLanguageList"

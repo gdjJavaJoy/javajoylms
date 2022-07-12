@@ -43,7 +43,7 @@
 			}
 		});
 		if(flag) {
-			$('#fileSection').append("<div><input class='boardfileList' onchange='checkFile(this)' type='file' name='boardfileList' accept='image/*, .xls, .xlsx, pdf, hwp, docx, ppt, txt'></div>");
+			$('#fileSection').append("<div><input class='boardfileList' onchange='checkFile(this)' type='file' name='boardfileList'></div>");
 		} else {
 			alert('파일 첨부되지 않은 boardfileList가 존재합니다');
 		} 

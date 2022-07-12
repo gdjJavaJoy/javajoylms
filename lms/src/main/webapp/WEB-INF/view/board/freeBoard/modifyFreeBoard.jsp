@@ -46,7 +46,7 @@ $('#addFileUpload').click(function(){
 	});
 	
 	if(flag) {
-		$('#fileSection').append('<div><input class='FreeBoardFileList' onchange="checkFile(this)" type="file" name="boardfileList" accept="image/*, .xls, .xlsx, pdf, hwp, docx, ppt, txt"></div>');
+		$('#fileSection').append('<div><input class='FreeBoardFileList' onchange="checkFile(this)" type="file" name="boardfileList"></div>');
 	} else {
 		alert('파일이 첨부되지 않은 리스트가 존재합니다');
 		}
