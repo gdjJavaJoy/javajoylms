@@ -53,7 +53,7 @@
 			alert('memberId 입력하세요');
 		} else if($('#boardTitle').val() == ''){
 			alert('noticeTitle 입력하세요');
-		} else if($('#boardContent').val() == '') {
+		} else if($('#boardContent').val() == '' || $('#boardContent').val() == '<p><br></p>') {
 			alert('noticeContent 입력하세요');
 		} else {
 			$('.boardfileList').each(function(){
