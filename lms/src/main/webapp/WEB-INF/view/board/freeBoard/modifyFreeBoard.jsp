@@ -45,7 +45,7 @@ $('#addFileUpload').click(function(){
 		 if ($('#boardTitle').val() == '') {
 					alert('제목을 작성해주세요');
 					return;
-			} else if ($('#boardContent').val() == '') {
+			} else if ($('#boardContent').val() == '' || $('#boardContent').val() == '<p><br></p>') {
 					alert('내용을 입력해주세요');
 					return;
 			}  else  {

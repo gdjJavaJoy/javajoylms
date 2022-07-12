@@ -54,7 +54,7 @@
 				if($('#subjectNoticeTitle').val() == '') {
 					Swal.fire('제목을 입력하세요!');
 					return;
-				} else if($('#subjectNoticeContent').val() == '') {
+				} else if($('#subjectNoticeContent').val() == '' || $('#subjectNoticeContent').val() == '<p><br></p>') {
 					Swal.fire('내용을 입력하세요!');
 					return;
 				} else {
