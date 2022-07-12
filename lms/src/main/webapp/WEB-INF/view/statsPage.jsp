@@ -72,8 +72,6 @@
 						default legends are disabled and you should provide a description
 						for your charts in HTML. See source code for examples.
 					</p>
-
-					<div class="grid gap-6 mb-8 md:grid-cols-2">
 						<div
 							class="min-w-0 p-4 bg-white rounded-lg shadow-xsdark:bg-gray-800">
 							<h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
@@ -136,8 +134,6 @@
 									언어 사용률</h4>
 								<canvas id="languageRateByCurriculum"></canvas>
 							</div>
-							
-						</div>
 					</div>
 			</main>
 		</div>
