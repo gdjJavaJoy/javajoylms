@@ -230,14 +230,14 @@
 			FROM student AS s
 			INNER JOIN subject_student AS ss
 			   ON s.member_id = ss.member_id
-			   left JOIN survey_result as sr
+			left JOIN survey_result as sr
 			   ON s.member_id = sr.member_id
 			WHERE ss.subject_no = #{subjectNo}
-			GROUP BY s.member_id
 	<if test='searchStudentName != null and !"".equals( searchStudentName ) '>
 		AND CONCAT( '%', s.student_name, '%' ) LIKE CONCAT( '%',
 		#{searchStudentName} , '%' )
 	</if>
+	GROUP BY s.member_id
 </select>
 
 <delete id="deleteSubjectStudent"
