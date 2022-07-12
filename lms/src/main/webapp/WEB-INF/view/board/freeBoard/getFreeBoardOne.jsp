@@ -7,17 +7,17 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>자유게시판</title>
- <style>
-			img { display: block; margin: 0px auto; }
-			textarea{
-				width:500px; 
-				height:100px; 
-			    resize:none;
-			    /* 크기고정 */ 
-				/*   resize: horizontal; // 가로크기만 조절가능 
-				resize: vertical;  세로크기만 조절가능  */
-   			}
-		</style>
+ 	<style>
+		img { display: block; margin: 0px auto; }
+		textarea{
+			width:500px; 
+			height:100px; 
+			   resize:none;
+			   /* 크기고정 */ 
+			/*   resize: horizontal; // 가로크기만 조절가능 
+			resize: vertical;  세로크기만 조절가능  */
+   		}
+	</style>
 <link
 	href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
 	rel="stylesheet" />
@@ -116,9 +116,15 @@
 										</td>
 									</tr>
 									<tr class="text-gray-700 dark:text-gray-400">
+										<td class="px-4 py-3 text-sm">작성일</td>
+										<td class="px-4 py-3">
+										${board.createDate}
+										</td>
+									</tr>
+									<tr class="text-gray-700 dark:text-gray-400">
 										<td class="px-4 py-3 text-sm">내용</td>
 										<td class="px-4 py-3">
-										${board.boardContent}
+											<textarea class="text-gray-700 dark:text-gray-400" readonly>${board.boardContent}</textarea>
 										<c:if test="${fileCount > 0}">
 											<c:forEach var="img" items="${boardFile}">
 												<!-- 첨부파일 안에 이미지파일이 하나라도 있으면 실행 -->
@@ -127,12 +133,6 @@
 												</c:if>
 											</c:forEach>
 										</c:if>
-										</td>
-									</tr>
-									<tr class="text-gray-700 dark:text-gray-400">
-										<td class="px-4 py-3 text-sm">작성일</td>
-										<td class="px-4 py-3">
-										${board.createDate}
 										</td>
 									</tr>
 								</table>

@@ -7,11 +7,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>건의함</title>
- <style>
+		<style>
 			img { display: block; margin: 0px auto; }
 			textarea{
-				width:500px; 
-				height:100px; 
+				width:1000px; 
+				height:200px; 
 			    resize:none;
 			    /* 크기고정 */ 
 				/*   resize: horizontal; // 가로크기만 조절가능 
@@ -99,9 +99,15 @@
 										</td>
 									</tr>
 									<tr class="text-gray-700 dark:text-gray-400">
+										<td class="px-4 py-3 text-sm">작성일</td>
+										<td class="px-4 py-3">
+										${board.createDate}
+										</td>
+									</tr>
+									<tr class="text-gray-700 dark:text-gray-400">
 										<td class="px-4 py-3 text-sm">내용</td>
 										<td class="px-4 py-3">
-										${board.boardContent}
+											<textarea class="text-gray-700 dark:text-gray-400" readonly>${board.boardContent}</textarea>
 										<c:if test="${fileCount > 0}">
 											<c:forEach var="img" items="${boardFile}">
 												<!-- 첨부파일 안에 이미지파일이 하나라도 있으면 실행 -->
@@ -112,23 +118,16 @@
 										</c:if>
 										</td>
 									</tr>
-									<tr class="text-gray-700 dark:text-gray-400">
-										<td class="px-4 py-3 text-sm">작성일</td>
-										<td class="px-4 py-3">
-										${board.createDate}
-										</td>
-									</tr>
 								</table>
 								<div>
 								<!-- 수정삭제 버튼  -->
 									<div class="flex items-center space-x-4 text-sm">
-						<c:if test="${loginUser eq board.memberId}"> <!-- sessionID 와 board에 저장되어있는 Id가 같을 때 나타냄 -->
-                           <a href="${pageContext.request.contextPath}/modifyInquiry?boardNo=${board.boardNo}">수정</a>
-                         
-                          </c:if>
-                          <c:if test="${loginUser eq  board.memberId || level eq 1}">
-                           <a href="${pageContext.request.contextPath}/removeInquiry?boardNo=${board.boardNo}">삭제</a>
-                          </c:if>
+							<c:if test="${loginUser eq board.memberId}"> <!-- sessionID 와 board에 저장되어있는 Id가 같을 때 나타냄 -->
+                        		<a href="${pageContext.request.contextPath}/modifyInquiry?boardNo=${board.boardNo}">&nbsp;&nbsp;수정&nbsp;&nbsp;</a>
+                        	</c:if>
+                        	<c:if test="${loginUser eq  board.memberId || level eq 1}">
+                            	<a href="${pageContext.request.contextPath}/removeInquiry?boardNo=${board.boardNo}">&nbsp;&nbsp;삭제&nbsp;&nbsp;</a>
+                        	</c:if>
 						</div>
 						  <c:if test="${fileCount > 0}"> <!-- boardNo 에 저장되어있는 파일 이한개라도 있으면 실행  -->
 								<div style="display: inline-block; margin: 0 5px;  float: right;">

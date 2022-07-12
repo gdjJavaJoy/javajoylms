@@ -6,11 +6,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Subject Report One</title>
-    <style>
+   		<style>
 			img { display: block; margin: 0px auto; }
 			textarea{
-				width:500px; 
-				height:100px; 
+				width:1000px; 
+				height:200px; 
 			    resize:none;
 			    /* 크기고정 */ 
 				/*   resize: horizontal; // 가로크기만 조절가능 
@@ -122,7 +122,7 @@
 	                    </tr>
 	                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
 	                    	<th class="px-4 py-3">커리큘럼 상세 내용</th>
-	                    	<td class="px-4 py-3 text-sm">${curriculum.curriculumContent}</td>
+	                    	<td class="px-4 py-3 text-sm"><textarea class="text-gray-700 dark:text-gray-400" readonly>${curriculum.curriculumContent}</textarea></td>
 	                    </tr>
               		</table> 
 	              	<div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">

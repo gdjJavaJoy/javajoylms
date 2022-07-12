@@ -10,8 +10,8 @@
     	<style>
 			img { display: block; margin: 0px auto; }
 			textarea{
-				width:500px; 
-				height:100px; 
+				width:1000px; 
+				height:200px; 
 			    resize:none;
 			    /* 크기고정 */ 
 				/*   resize: horizontal; // 가로크기만 조절가능 
