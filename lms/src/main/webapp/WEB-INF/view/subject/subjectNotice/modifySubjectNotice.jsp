@@ -52,9 +52,11 @@
 			
 			$('#modifySubjectNotice').click(function(){
 				if($('#subjectNoticeTitle').val() == '') {
-					Sweet.alert('제목을 입력하세요!');
+					Swal.fire('제목을 입력하세요!');
+					return;
 				} else if($('#subjectNoticeContent').val() == '') {
 					Swal.fire('내용을 입력하세요!');
+					return;
 				} else {
 					$('.subjectNoticeFileList').each(function(){
 						if($(this).val() == '') {
@@ -209,7 +211,7 @@
 	                          <!-- Avatar with inset shadow -->
 	                          <div>
 	                            <p class="font-semibold">
-	                             	<textarea id="subjectNoticeContent" name="subjectNoticeContent" class="form-control">${sn.subjectNoticeContent}</textarea>
+	                             	<textarea id="subjectNoticeContent" name="subjectNoticeContent"class="form-control">${sn.subjectNoticeContent}</textarea>
 	                            	<script type="text/javascript">
 											$(document).ready(function(){
 												$('#subjectNoticeContent').summernote({
@@ -297,5 +299,7 @@
 		$('#adminHeaderNav').load('${pageContext.request.contextPath}/include/adminHeaderNav.jsp');
 		$('#teacherSideNav').load('${pageContext.request.contextPath}/include/teacherSideNav.jsp');
 		$('#teacherHeaderNav').load('${pageContext.request.contextPath}/include/teacherHeaderNav.jsp');
+		
+		
 	</script>
 </html>

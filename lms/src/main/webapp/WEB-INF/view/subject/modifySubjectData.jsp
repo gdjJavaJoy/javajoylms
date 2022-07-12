@@ -48,10 +48,13 @@ textarea {
 			$('#modifySubjectDataBtn').click(function(){
 				if($('#memberId').val() == '') {
 			    	Swal.fire('test');
+			    	return;
 				} else if($('#subjectDataTitle').val() == '') {
 					Swal.fire('제목을 입력하세요');
+					return;
 				} else if($('#subjectDataContent').val() == '') {
 					Swal.fire('내용을 입력하세요');
+					return;
 				} else {
 					$('.subjectBoardFileList').each(function(){
 						if($(this).val() == '') {
