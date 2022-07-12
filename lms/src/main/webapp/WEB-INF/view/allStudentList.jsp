@@ -21,23 +21,12 @@
 	<aside class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
 			<div id="adminSideNav"></div>
 	</aside>
-	      <!-- Backdrop -->
-      <div
-        x-show="isSideMenuOpen"
-        x-transition:enter="transition ease-in-out duration-150"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in-out duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-        class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
-      </div>
 	<!-- Desktop HeaderNav -->
       <div class="flex flex-col flex-1 w-full">
 			<div id="adminHeaderNav"></div>
         <main class="h-full pb-16 overflow-y-auto">
           <div class="container grid px-8 mx-auto">
-            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Student List</h2>
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">전체 학생 목록</h2>
             <!-- CTA -->
             <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
               href="${pageContext.request.contextPath}/addMember">
@@ -51,7 +40,8 @@
             </a>
 
             <!-- With avatar -->
-            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">전체 학생 목록</h4>
+            <a class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300" 
+            	href="${pageContext.request.contextPath}/employedStudentList">취업한 학생 리스트 보기</a>
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto">
                 <table class="w-full whitespace-no-wrap">
