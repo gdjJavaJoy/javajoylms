@@ -59,14 +59,12 @@
 						class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
 						자유게시판</h2>
 						<div>
-						<c:if test="${level != 1}">
 						<button
 			                  class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
 			               	   onclick="location.href='${pageContext.request.contextPath}/addFreeBoard'"
 			               		 >
 			                  글 작성
 			                </button>
-			             </c:if>
 			                <br>
 			            </div>
 					<!-- New Table -->
