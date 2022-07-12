@@ -6,6 +6,17 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>자유게시판</title>
+		<style>
+			img { display: block; margin: 0px auto; }
+			textarea{
+				width:1000px; 
+				height:200px; 
+			    resize:none;
+			    /* 크기고정 */ 
+				/*   resize: horizontal; // 가로크기만 조절가능 
+				resize: vertical;  세로크기만 조절가능  */
+   			}
+		</style>
 <link
 	href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
 	rel="stylesheet" />
