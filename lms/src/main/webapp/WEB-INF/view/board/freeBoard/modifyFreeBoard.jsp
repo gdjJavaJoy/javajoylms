@@ -35,7 +35,7 @@ $('#addFileUpload').click(function(){
 	});
 	
 	if(flag) {
-		$('#fileSection').append('<div><input class="FreeBoardFileList" type="file" name="boardfileList"></div>');
+		$('#fileSection').append('<div><input class='FreeBoardFileList' onchange="checkFile(this)" type="file" name="boardfileList" accept="image/*, .xls, .xlsx, pdf, hwp, docx, ppt, txt"></div>');
 	} else {
 		alert('파일이 첨부되지 않은 리스트가 존재합니다');
 		}
@@ -53,6 +53,23 @@ $('#addFileUpload').click(function(){
 			}
 	});
 });
+
+//파일 확장자 체크 
+// 공지사항은 pdf,hwp,docx,ppt,txt,xls,xlsx,png,jpeg만 가능
+function checkFile(f){
+	// append에 checkFile로 파일 정보 얻어오기
+	var file = f.files;
+	// 위 파일을 file에 저장
+	if(!/\.(pdf|hwp|docx|ppt|txt|xls|xlsx|png|jpeg)$/i.test(file[0].name)) alert('사진, 엑셀, pdf, hwp, docx, ppt, txt 파일만 선택해 주세요.\n\n현재 파일 : ' + file[0].name);
+	// file[0].name -> 파일명
+	// 허용 확장자를 필터
+	else return;
+	// 체크 완료(허용) 시 return
+	f.outerHTML = f.outerHTML;
+	// 체크에 걸리면 선택된  내용 취소 처리를 해야함.
+	// 현재 요소를 포함한 내부 html 전체를 새로 폼을 쓰는 방식으로 반환한다.
+}
+
 </script>
 </head>
 <body>

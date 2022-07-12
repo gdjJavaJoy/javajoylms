@@ -45,7 +45,7 @@ textarea {
 				});
 				
 				if(flag) {
-					$('#fileSection').append("<div><input type='file' class='subjectBoardFileList' onchange='checkFile(this)' name='subjectBoardFileList'></div>");
+					$('#fileSection').append("<div><input type='file' class='subjectBoardFileList' onchange='checkFile(this)' name='subjectBoardFileList'  accept='image/*, .xls, .xlsx, pdf, hwp, docx, ppt, txt' ></div>");
 				} else {
 					Swal.fire('파일 첨부를 다시 확인하십시오');
 				}
