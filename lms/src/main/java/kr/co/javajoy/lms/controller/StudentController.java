@@ -17,6 +17,8 @@ import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.service.StudentService;
 import kr.co.javajoy.lms.vo.MemberUpdateForm;
 import kr.co.javajoy.lms.vo.StudentJob;
+import kr.co.javajoy.lms.vo.Subject;
+import kr.co.javajoy.lms.vo.SubjectStudentForm;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -152,5 +154,28 @@ public class StudentController {
 	    	  log.debug(CF.LGN + "StudentController.deleteStudent.deleteMemberId : "+ deleteMemberId); // 실패
 	      }
 	      return "redirect:/login"; 
-	}	
+	}
+	@GetMapping("/addSubjectStudent")
+	public String addSubjectStudent (Model model) {
+		//map으로
+		Map<String,Object>  map = studentService.getSubjectListForm();
+		model.addAttribute("subjectList",map.get("subjectList"));
+		model.addAttribute("studentList",map.get("studentList"));
+		
+		return "/subject/addSubjectStudent";
+	}
+	@PostMapping("/addSubjectStudent")
+	public String addSubjectStudent(SubjectStudentForm subjectStudentForm) {
+		log.debug(CF.PSG+"StudentController.addSubjectStudent.post() addSubjectStudentForm : " + subjectStudentForm + CF.RESET);
+		
+		int row = studentService.addSubjectStudent(subjectStudentForm);
+		
+		if (row == 0) {
+			log.debug(CF.PSG+"StudentController.addSubjectStudent.Post() 등록실패"+CF.RESET);
+			return "redirect:/addSubjectStudent";
+		}
+		log.debug(CF.PSG+"StudentController.addSubjectStudent.Post() 등록성공"+CF.RESET);
+		return "redirect:/getSubjectStudentList?subjectNo="+subjectStudentForm.getSubjectNo();
+	}
+
 }

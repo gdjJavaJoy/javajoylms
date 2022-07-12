@@ -167,4 +167,53 @@
 		WHERE
 				member_id = #{memberId}
 	</update>
+	
+	<select id="selectStudentList"
+			resultType="kr.co.javajoy.lms.vo.Student">
+		(SELECT 
+				 s.member_id memberId
+   		    	,s.student_name studentName
+   		    	,s.student_gender studentGender
+   		    	,s.student_phone  studentPhone
+   		    	,s.student_email  studentEmail
+   		    	,s.student_education studentEducation
+	FROM student s
+	  INNER JOIN member_id m
+			  ON m.member_id = s.member_id
+	  INNER JOIN subject_student ss
+			  ON ss.member_id = s.member_id
+	  INNER JOIN subject su
+			  ON su.subject_no = ss.subject_no
+		   WHERE m.member_active NOT IN ('3') AND DATEDIFF(NOW(),su.subject_finish_date) > 0) 
+	UNION
+(SELECT
+		s.member_id memberId
+   	   ,s.student_name studentName
+   	   ,s.student_gender studentGender
+   	   ,s.student_phone  studentPhone
+   	   ,s.student_email  studentEmail
+   	   ,s.student_education studentEducation
+	  FROM student s
+INNER JOIN member_id m
+		ON m.member_id = s.member_id
+	 WHERE m.member_active NOT IN (3) 
+	   AND s.member_id NOT IN 
+ (SELECT 
+			  s.member_id
+		 FROM student s
+   INNER JOIN subject_student ss
+  		   ON s.member_id = ss.member_id))
+	</select>
+	<insert id="insertSubjectStudent"
+			parameterType="kr.co.javajoy.lms.vo.SubjectStudent">
+	INSERT INTO subject_student (
+				member_id
+			   ,subject_no
+			   ,update_date
+		) VALUES (
+				#{memberId}
+			   ,#{subjectNo}
+			   ,NOW()
+		)
+	</insert>
 </mapper>

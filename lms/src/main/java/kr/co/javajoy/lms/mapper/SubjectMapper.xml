@@ -303,5 +303,12 @@
 		DELETE FROM `language`
 		WHERE language_no = #{languageNo}
 	</delete>
-	
+	<select id="selectSubjectListByEndDate"
+			resultType="kr.co.javajoy.lms.vo.Subject">
+		SELECT
+			 subject_no subjectNo
+		    ,subject_name subjectName
+		FROM subject
+	   WHERE subject_finish_date > NOW()
+	</select>
 </mapper>

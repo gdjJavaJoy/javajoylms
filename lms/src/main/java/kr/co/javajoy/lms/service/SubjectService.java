@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.javajoy.lms.CF;
+import kr.co.javajoy.lms.mapper.StudentMapper;
 import kr.co.javajoy.lms.mapper.SubjectMapper;
 import kr.co.javajoy.lms.vo.Language;
 import kr.co.javajoy.lms.vo.Student;
@@ -21,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class SubjectService {
 @Autowired SubjectMapper subjectMapper;
-
     // ---------------------- 1) 강좌 리스트 출력(운영자용) <SELECT> ----------------------
 
 	// 1-1) 강좌 리스트(운영자용) 출력

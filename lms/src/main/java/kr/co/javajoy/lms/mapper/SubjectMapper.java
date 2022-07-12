@@ -69,5 +69,6 @@ public interface SubjectMapper {
 	
 	// 언어 삭제
 	public void deleteLanguageOne(int languageNo);
-	
+	// 수업이 안끝난 리스트만 출력
+	List<Subject> selectSubjectListByEndDate();
 }

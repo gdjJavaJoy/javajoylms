@@ -1,5 +1,6 @@
 package kr.co.javajoy.lms.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.mapper.StudentMapper;
+import kr.co.javajoy.lms.mapper.SubjectMapper;
 import kr.co.javajoy.lms.vo.MemberUpdateForm;
 import kr.co.javajoy.lms.vo.Student;
 import kr.co.javajoy.lms.vo.StudentJob;
+import kr.co.javajoy.lms.vo.Subject;
+import kr.co.javajoy.lms.vo.SubjectStudent;
+import kr.co.javajoy.lms.vo.SubjectStudentForm;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -20,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class StudentService {
 	@Autowired StudentMapper studentMapper;
+	@Autowired SubjectMapper subjectMapper;
 	
 	public int deleteStudent(String memberId) {
 		return studentMapper.deleteStudent(memberId);
@@ -110,5 +116,37 @@ public class StudentService {
 		log.debug(CF.YHJ + "StudentService.modifyEmployedStudent.studentJob : " + studentJob); // 디버깅
 		studentMapper.updateEmployedStudent(studentJob);
 	}
+	// 강의추가에 필요한 리스트 뽑는 서비스 
+		public Map<String,Object> getSubjectListForm() {
+			//강의 리스트 
+			List<Subject> subjectList = subjectMapper.selectSubjectListByEndDate();
+			List<Student> studentList = studentMapper.selectStudentList();
+			log.debug(CF.PSG+"StudentService.getStudentList studentList : " +studentList +CF.RESET);
+			// 학생리스트 
+			log.debug(CF.PSG+"SubjectService.getInsertSubjectStudentForm.subjectList :" + subjectList + CF.RESET);
+			Map<String,Object> map = new HashMap<>();
+			map.put("subjectList", subjectList);
+			map.put("studentList",studentList);
+			return map;
+		}
+			
+		public int addSubjectStudent(SubjectStudentForm subjectStudentForm) {
+			int row = 0;
+			SubjectStudent sb = new SubjectStudent();
+			sb.setSubjectNo(subjectStudentForm.getSubjectNo());
+			List<String> list = subjectStudentForm.getStudentId();
+			for (int i=0; i<list.size(); i++) {
+			sb.setSubjectNo(subjectStudentForm.getSubjectNo());
+			sb.setMemberId(list.get(i));
+			row = studentMapper.insertSubjectStudent(sb);
+			}
+			if (row > 0) {
+				log.debug(CF.PSG+"addSubjectStudent 등록성공"+CF.RESET);
+			} else {
+				log.debug(CF.PSG+"addSubjectStudent 등록실패"+CF.RESET);
+			}
+			return row;
+		}
+
 }
 
