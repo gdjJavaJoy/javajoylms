@@ -454,7 +454,6 @@
 			                  type="text"
 			                  name="career"
 			                  placeholder="경력"
-			                  id="insertCareer"
 			                />
 	                            </div>
 								</p>
@@ -465,7 +464,6 @@
 	                      	    <div>
 	                             <input
 			                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-			                  id="detailCareer"
 			                  type="text"
 			                  name="detailCareer"
 			                  placeholder="상세경력"
@@ -593,7 +591,7 @@
 	 }
   });
   $('#insertCareerBtn').click(function(){
-	 if($('#insertCareer').val() == ''){
+	 if($('#career').val() == ''){
 		 Swal.fire('경력을 입력해주세요');
 		 return;
 	 	} else if ($('#insertDetailCareer').val() == '') {
