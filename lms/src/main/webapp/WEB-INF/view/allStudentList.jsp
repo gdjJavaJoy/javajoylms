@@ -98,16 +98,6 @@
 	                </span>
                 </form>
                 <span class="col-span-2"></span>
-                <!-- Pagination -->
-                <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-                	<c:if test="${currentPage > 1}">
-                   		<a class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" href="${pageContext.request.contextPath}/allStudentList?currentPage=${currentPage-1}">이전</a>
-                   	</c:if>
-                   		<span>&nbsp;  &nbsp;</span>
-                   	<c:if test="${currentPage < lastPage}">	
-                  		 <a class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" href="${pageContext.request.contextPath}/allStudentList?currentPage=${currentPage+1}">다음</a> 
-                  	</c:if>	 
-               </span>
               </div>
             </div>
           </div>

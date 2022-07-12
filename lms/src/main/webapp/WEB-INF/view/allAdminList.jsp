@@ -88,16 +88,6 @@
 	                </span>
                 </form>
                 <span class="col-span-2"></span>
-                <!-- Pagination -->
-                <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-                	<c:if test="${currentPage > 1}">
-                   		<a class="btn btn-primary" href="${pageContext.request.contextPath}/allAdminList?currentPage=${currentPage-1}">이전</a>
-                   	</c:if>
-                   		<span>&nbsp;  &nbsp;</span>
-                   	<c:if test="${currentPage < lastPage}">	
-                  		 <a class="btn btn-primary" href="${pageContext.request.contextPath}/allAdminList?currentPage=${currentPage+1}">다음</a> 
-                  	</c:if>	 
-                </span>
               </div>
             </div>
           </div>
