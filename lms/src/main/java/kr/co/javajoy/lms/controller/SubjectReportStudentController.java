@@ -276,7 +276,8 @@ public class SubjectReportStudentController {
 	
 	@GetMapping("/removeSubjectReportStudent")
 	public String removeSubjectReportStudent(HttpServletRequest request
-								,@RequestParam(name = "subjectReportStudentNo") int subjectReportStudentNo) {
+								,@RequestParam(name = "subjectReportStudentNo") int subjectReportStudentNo
+								,@RequestParam(name = "subjectReportNo") int subjectReportNo) {
 		log.debug(CF.PBJ + "SubjectReportController.removeSubjectReport.subjectReportStudentNo : " + subjectReportStudentNo);
 		
 		String path = request.getServletContext().getRealPath("/file/studentFile/");
@@ -285,7 +286,7 @@ public class SubjectReportStudentController {
 		subjectReportStudentService.removeSubjectReportStudent(subjectReportStudentNo, path);
 		log.debug("SubjectReportController.removeSubjectReport.param.subjectBoardNo");
 		
-		return "redirect:/getSubjectReportListByPage?subjectNo=" + subjectReportStudentNo;
+		return "redirect:/getSubjectReportStudentListByPage?subjectReportNo=" + subjectReportNo;
 	} 
 
 }

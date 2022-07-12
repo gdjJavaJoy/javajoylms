@@ -159,7 +159,7 @@
 			                  과제 삭제 불가(채점완료)  
 							</c:when>
 							<c:otherwise>
-								<a href="${pageContext.request.contextPath}/removeSubjectReportStudent?subjectReportStudentNo=${subjectReportStudent.subjectReportStudentNo}">과제 삭제</a> 
+								<a href="${pageContext.request.contextPath}/removeSubjectReportStudent?subjectReportStudentNo=${subjectReportStudent.subjectReportStudentNo}&subjectReportNo=${subjectReportStudent.subjectReportNo}">과제 삭제</a> 
 		              		</c:otherwise>
 	              		 </c:choose>
 	                </span>

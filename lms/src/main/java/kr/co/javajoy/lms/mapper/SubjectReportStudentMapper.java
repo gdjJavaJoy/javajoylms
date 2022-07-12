@@ -51,4 +51,6 @@ public interface SubjectReportStudentMapper {
 	// 학생 - 과제 게시판 삭제
 	int deleteStudentReportStudentBySubjectReportStudentNo(int subjectReportStudentNo);
 
+	// 6) 통계
+	List<Map<String, Object>> studentReportRate();
 }

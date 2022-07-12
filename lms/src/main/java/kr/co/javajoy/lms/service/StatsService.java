@@ -12,6 +12,7 @@ import kr.co.javajoy.lms.CF;
 import kr.co.javajoy.lms.mapper.CurriculumMapper;
 import kr.co.javajoy.lms.mapper.MemberMapper;
 import kr.co.javajoy.lms.mapper.StudentMapper;
+import kr.co.javajoy.lms.mapper.SubjectReportStudentMapper;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -21,6 +22,7 @@ public class StatsService {
 	@Autowired StudentMapper studentMapper;
 	@Autowired MemberMapper memberMapper;
 	@Autowired CurriculumMapper curriculumMapper;
+	@Autowired SubjectReportStudentMapper subjectReportStudentMapper;
 	
 	// 학생 취업률 
 	public Map<String,Object> studentEmployedRate(){
@@ -100,4 +102,34 @@ public class StatsService {
 		return list;
 	}
 	
+	// 학생 과제 게시판 점수 통계
+	public List<Map<String, Object>> subjectReportRate() {
+		List<Map<String, Object>> list = subjectReportStudentMapper.studentReportRate();
+		return list;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

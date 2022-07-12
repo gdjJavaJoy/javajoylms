@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.javajoy.lms.CF;
@@ -85,4 +87,34 @@ public class StatsRestController {
 		
 		return list;
 	}
+	
+	// 강좌별 과제 게시판 점수 통계
+	@GetMapping("studentReportRate")
+	public List<Map<String, Object>> studentReportRate() {
+		List<Map<String, Object>> list = statsService.subjectReportRate();
+		
+		log.debug(CF.PBJ + "StatsRestController.studentReportRate.list : " + list); // 디버깅
+		return list;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

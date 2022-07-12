@@ -92,8 +92,8 @@
 			resultType="String">
 		SELECT
 			f.student_file_name studentFileName
-		FROM subject_report_student AS s
-		LEFT JOIN student_file AS f ON f.student_file_no = s.subject_report_student_no
+		FROM student_file AS f
+		LEFT JOIN subject_report_student AS s ON f.student_file_no = s.subject_report_student_no
 		WHERE s.subject_report_student_no = #{subjectReportStudentNo};
 	</select>
 	<!-- 학생 - 과제 게시판 상세보기 파일 리스트 출력 -->
@@ -195,6 +195,20 @@
 		DELETE FROM subject_report_student
 		WHERE subject_report_student_no = #{subjectReportStudentNo}
 	</delete>
+	
+	<!-- 과제 통계 -->
+	<select id="studentReportRate"
+			parameterType="int"
+			resultType="java.util.Map">
+		SELECT 
+			AVG(score) AS score
+			,s.subject_name AS subjectName
+		FROM subject_report_student AS srs
+		INNER JOIN subject_board AS sb ON srs.subject_report_no = sb.subject_board_no
+		INNER JOIN subject AS s ON s.subject_no = sb.subject_no
+		WHERE srs.status = 2
+		GROUP BY s.subject_no
+	</select>
 </mapper>
 
 
