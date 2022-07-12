@@ -90,7 +90,7 @@
 								<form method="get" id="deleteForm-${s.memberId}" name="deleteForm-${s.memberId}" action="${pageContext.request.contextPath}/deleteStudent">
 									<div>
 										<input type="hidden" value="${s.memberId}" name="memberId">
-										<input class="deletebtn px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-md active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red" type="button" value="삭제" class="deletebtn" data-value="${s.memberId}"/>
+										<input class="deletebtn px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-md active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red" type="button" value="삭제" data-value="${s.memberId}"/>
 									</div>
 								</form>
 							</td>
@@ -130,22 +130,21 @@
 $(document).ready(function(){
 	// 삭제버튼 클릭시 발생하는 이벤트
 	$(".deletebtn").on('click',function(){
-		var memberId = $(this).data('value')
+		var memberId = $(this).data('value');
 		Swal.fire({
-		    title: '정말 삭제 하시겠습니까?',
-		    text: "삭제후 다시 되돌릴 수 없습니다.",
-		    icon: 'warning',
-		    showCancelButton: true,
-		    confirmButtonColor: '#3085d6',
-		    cancelButtonColor: '#d33',
-		    confirmButtonText: '삭제',
-		    cancelButtonText: '취소'
+		    title: '정말 삭제 하시겠습니까?'
+		   ,text: "삭제후 다시 되돌릴 수 없습니다."
+		   ,icon: 'warning'
+		   ,showCancelButton: true
+		   ,confirmButtonColor: '#3085d6'
+		   ,cancelButtonColor: '#d33'
+		   ,confirmButtonText: '삭제'
+		   ,cancelButtonText: '취소'
 		}).then((result) => {
 			if (result.isConfirmed) {
 				var deleteForm = 'deleteForm-';
 				deleteForm += memberId;
 				$('#'+ deleteForm ).submit();
-				Swal.fire('삭제','회원 정보가 삭제 되었습니다.','완료');
 		    }
 		});
 	});
