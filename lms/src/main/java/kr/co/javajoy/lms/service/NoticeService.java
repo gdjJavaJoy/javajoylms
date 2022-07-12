@@ -190,7 +190,6 @@ public class NoticeService {
 				} catch (Exception e) {
 					e.printStackTrace();
 					
-					throw new RuntimeException();
 				}
 			}
 		}

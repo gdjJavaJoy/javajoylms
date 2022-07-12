@@ -159,7 +159,7 @@
 	                        <div class="flex items-center text-sm1">
 	                          <!-- Avatar with inset shadow -->
 	                          <div>
-			    		 	  	<p class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
+			    		 	  	<p class="block w-full mt-1 text-sm1 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">
 		                            	<input name="memberId" value="${loginUser}" readonly="readonly" id="memberId">
 		                        </p>
 	                          </div>
@@ -179,7 +179,7 @@
 		                        <div class="flex items-center text-sm1">
 		                          <!-- Avatar with inset shadow -->
 		                          <div>
-		                            <p class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">		                            	
+		                            <p class="block w-full mt-1 text-sm1 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input">		                            	
 		                            	<input type="text" name="subjectBoardTitle" id="subjectNoticeTitle" placeholder="강좌 공지사항 제목">
 		                            </p>
 		                          </div>
