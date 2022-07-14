@@ -61,6 +61,7 @@ public class LoginController {
 		log.debug(CF.YHJ + "LoginController.login.loginMap.memberId : " + loginMap.get("memberId") + CF.RESET);
 		log.debug(CF.YHJ + "LoginController.login.loginMap.memberActive : " + loginMap.get("memberActive") + CF.RESET);
 		log.debug(CF.YHJ + "LoginController.login.loginMap.level : " + loginMap.get("level") + CF.RESET);
+		log.debug(CF.YHJ + "LoginController.login.loginMap.period : " + loginMap.get("period") + CF.RESET);
 
 		// 로그인 실패 시
 		if(loginMap.get("memberId") == null) {
@@ -80,10 +81,13 @@ public class LoginController {
 		session.setAttribute("loginUser", loginMap.get("memberId"));
 		session.setAttribute("level", loginMap.get("level"));
 		
+		
 		// level과 active에 따른 로그인 분기
 		if(loginMap.get("level").equals("1")) { // 운영자일 경우
 			log.debug(CF.YHJ + "getSubjectByPage로 이동 " + CF.RESET);
 			return "redirect:getSubjectByPage";
+		} else if ((int)loginMap.get("period") >= 3) {
+			return "redirect:modifyPw";
 		} else if( (loginMap.get("level").equals("2")) || (loginMap.get("level").equals("3")) ) { // 강사나 학생일 때
 			if(loginMap.get("memberActive").equals("4")) { // 강사나 학생이 최초 로그인일 때
 				return "redirect:modifyPw";
