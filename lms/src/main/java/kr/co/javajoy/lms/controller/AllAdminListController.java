@@ -49,6 +49,6 @@ public class AllAdminListController {
 		return "redirect:/memberIndex";
 	}
 		// allAdminList.jsp로 이동
-		return "allAdminList";
+		return "/member/admin/allAdminList";
 	}
 }

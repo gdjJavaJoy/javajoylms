@@ -49,7 +49,7 @@ public class AllTeacherListController {
 		return "redirect:/memberIndex";
 	}
 		// allTeacherList.jsp로 이동
-		return "allTeacherList";
+		return "/member/teacher/allTeacherList";
 	}
 	
 	@GetMapping("/deleteTeacher")

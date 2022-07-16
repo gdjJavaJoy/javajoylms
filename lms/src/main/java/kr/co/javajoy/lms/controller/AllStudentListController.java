@@ -50,7 +50,7 @@ public class AllStudentListController {
 		return "redirect:/memberIndex";
 	} 
 		// studentList.jsp로 이동.
-		return "allStudentList";
+		return "/member/student/allStudentList";
 	}
 	
 	@GetMapping("/deleteStudent")
