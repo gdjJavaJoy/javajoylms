@@ -1,7 +1,3 @@
-Keyword
-# Spring Boot # MVC # Maven # Web Socket # STOMP # Ajax
-# chart.js # 강의 # 강습 # 학생관리 # 관리자
-
 학생들의 강의와 학습사항을 관리해 줄수있는 매니지먼트 기능이 있는 사이트 입니다.
 관리자는 회원 관리, 게시판 관리, 강좌 목록, 통계, 설문조사를 관리할 수 있습니다.
 
